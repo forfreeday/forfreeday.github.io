@@ -68,7 +68,6 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  message: update
-  repo: git@github.com:forfreeday/blog.git
-  branch: smaster
+  type:git
+  repo:git@github.com:forfreeday/blog.git
+  branch:master
