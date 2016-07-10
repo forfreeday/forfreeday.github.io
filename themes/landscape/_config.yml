@@ -1,7 +1,8 @@
-# Header
+﻿# Header
 menu:
   Home: /
   Archives: /archives
+  java: /java
 rss: /atom.xml
 
 # Content
