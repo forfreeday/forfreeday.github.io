@@ -68,6 +68,7 @@ theme: jacman
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:github
-  repository:git@github.com:forfreeday/blog.git
-  branch:master
+  type: git
+  message: update
+  repo: git@github.com:forfreeday/blog.git
+  branch: smaster
