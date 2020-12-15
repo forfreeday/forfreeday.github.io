@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liukay.com/"/>
-  <updated>2020-12-15T04:09:18.980Z</updated>
+  <updated>2020-12-15T06:02:52.057Z</updated>
   <id>http://liukay.com/</id>
   
   <author>
@@ -17,20 +17,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>集群容错模式</title>
-    <link href="http://liukay.com/2020/05/06/architecture-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://liukay.com/2020/05/06/architecture-集群容错模式/</id>
-    <published>2020-05-06T09:39:25.000Z</published>
-    <updated>2020-12-15T04:09:18.980Z</updated>
+    <title>算法-线stack-用栈实现队列</title>
+    <link href="http://liukay.com/2020/12/15/%E7%AE%97%E6%B3%95-%E7%BA%BFstack-%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/"/>
+    <id>http://liukay.com/2020/12/15/算法-线stack-用栈实现队列/</id>
+    <published>2020-12-15T05:57:25.000Z</published>
+    <updated>2020-12-15T06:02:52.057Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="Failfast-Cluster模式"><a href="#Failfast-Cluster模式" class="headerlink" title="Failfast Cluster模式"></a>Failfast Cluster模式</h3><p>这种模式称为快速失败模式，调用只执行一次，失败则立即报错。这种模式适用于非幂等性操作，每次调用的副作用是不同的，如写操作，比如交易系统我们要下订单，如果一次失败就应该让它失败，通常由服务消费方控制是否重新发起下订单操作请求（另一个新的订单）。<br>-Failsafe Cluster模式<br>失败安全模式，如果调用失败， 则直接忽略失败的调用，而是要记录下失败的调用到日志文件，以便后续审计。</p><h3 id="Failback-Cluster模式"><a href="#Failback-Cluster模式" class="headerlink" title="Failback Cluster模式"></a>Failback Cluster模式</h3><p>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。</p><h3 id="Forking-Cluster模式"><a href="#Forking-Cluster模式" class="headerlink" title="Forking Cluster模式"></a>Forking Cluster模式</h3><p>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。</p><h3 id="Broadcast-Cluster模式"><a href="#Broadcast-Cluster模式" class="headerlink" title="Broadcast Cluster模式"></a>Broadcast Cluster模式</h3><p>广播调用所有提供者，逐个调用，任意一台报错则报错（2.1.0开始支持）。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="用栈实现队列"><a href="#用栈实现队列" class="headerlink" title="用栈实现队列"></a>用栈实现队列</h2><p>这个是 Leetcode 232 题，用两个栈来实现一个先进先出的队列，实现了一个版本。</p><p><a href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">https://leetcode-cn.com/problems/implement-queue-using-stacks/</a></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Push element x to the back of queue.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        stack1.push(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Removes the element from in front of queue and returns that element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get the front element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.peek();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns whether the queue is empty.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack1.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;Failfast-Cluster模式&quot;&gt;&lt;a href=&quot;#Failfast-Cluster模式&quot; class=&quot;headerlink&quot; title=&quot;Failfast Cluster模式&quot;&gt;&lt;/a&gt;Failfast Cluster模式&lt;/h3&gt;&lt;p&gt;这种模式称为
+        &lt;h2 id=&quot;用栈实现队列&quot;&gt;&lt;a href=&quot;#用栈实现队列&quot; class=&quot;headerlink&quot; title=&quot;用栈实现队列&quot;&gt;&lt;/a&gt;用栈实现队列&lt;/h2&gt;&lt;p&gt;这个是 Leetcode 232 题，用两个栈来实现一个先进先出的队列，实现了一个版本。&lt;/p&gt;
+&lt;p&gt;&lt;a
       
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://liukay.com/categories/algorithm/"/>
+    
+      <category term="栈" scheme="http://liukay.com/categories/algorithm/%E6%A0%88/"/>
+    
+    
+      <category term="算法" scheme="http://liukay.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="栈" scheme="http://liukay.com/tags/%E6%A0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>集群容错模式</title>
+    <link href="http://liukay.com/2020/05/06/architecture-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://liukay.com/2020/05/06/architecture-集群容错模式/</id>
+    <published>2020-05-06T09:39:25.000Z</published>
+    <updated>2020-12-15T04:38:32.377Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Failfast-Cluster模式"><a href="#Failfast-Cluster模式" class="headerlink" title="Failfast Cluster模式"></a>Failfast Cluster模式</h3><p>这种模式称为快速失败模式，调用只执行一次，失败则立即报错。这种模式适用于非幂等性操作，每次调用的副作用是不同的，如写操作，比如交易系统我们要下订单，如果一次失败就应该让它失败，通常由服务消费方控制是否重新发起下订单操作请求（另一个新的订单）。<br>-Failsafe Cluster模式<br>失败安全模式，如果调用失败， 则直接忽略失败的调用，而是要记录下失败的调用到日志文件，以便后续审计。<br><a id="more"></a></p><h3 id="Failback-Cluster模式"><a href="#Failback-Cluster模式" class="headerlink" title="Failback Cluster模式"></a>Failback Cluster模式</h3><p>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。</p><h3 id="Forking-Cluster模式"><a href="#Forking-Cluster模式" class="headerlink" title="Forking Cluster模式"></a>Forking Cluster模式</h3><p>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。</p><h3 id="Broadcast-Cluster模式"><a href="#Broadcast-Cluster模式" class="headerlink" title="Broadcast Cluster模式"></a>Broadcast Cluster模式</h3><p>广播调用所有提供者，逐个调用，任意一台报错则报错（2.1.0开始支持）。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Failfast-Cluster模式&quot;&gt;&lt;a href=&quot;#Failfast-Cluster模式&quot; class=&quot;headerlink&quot; title=&quot;Failfast Cluster模式&quot;&gt;&lt;/a&gt;Failfast Cluster模式&lt;/h3&gt;&lt;p&gt;这种模式称为快速失败模式，调用只执行一次，失败则立即报错。这种模式适用于非幂等性操作，每次调用的副作用是不同的，如写操作，比如交易系统我们要下订单，如果一次失败就应该让它失败，通常由服务消费方控制是否重新发起下订单操作请求（另一个新的订单）。&lt;br&gt;-Failsafe Cluster模式&lt;br&gt;失败安全模式，如果调用失败， 则直接忽略失败的调用，而是要记录下失败的调用到日志文件，以便后续审计。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -583,38 +610,6 @@
       <category term="spring boot" scheme="http://liukay.com/tags/spring-boot/"/>
     
       <category term="算法" scheme="http://liukay.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于Reactor模型</title>
-    <link href="http://liukay.com/2018/08/05/architecture--Reactor-%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://liukay.com/2018/08/05/architecture--Reactor-模型/</id>
-    <published>2018-08-05T08:30:15.000Z</published>
-    <updated>2020-12-15T04:09:18.980Z</updated>
-    
-    <content type="html"><![CDATA[<p>看了一些 Reactor 相关的文章和资料，列举的一些 Reactor 模型的优点，包括极客时间的文章也有讲过在架构中的Reactor中的优点和缺点。<br>但是如果不使用 Reactor 模型的一般方式是什么样子的?会有什么问题？</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;看了一些 Reactor 相关的文章和资料，列举的一些 Reactor 模型的优点，包括极客时间的文章也有讲过在架构中的Reactor中的优点和缺点。&lt;br&gt;但是如果不使用 Reactor 模型的一般方式是什么样子的?会有什么问题？&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="architecture" scheme="http://liukay.com/categories/architecture/"/>
-    
-      <category term="中间件" scheme="http://liukay.com/categories/architecture/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="架构" scheme="http://liukay.com/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-      <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
-    
-      <category term="Reactor模型" scheme="http://liukay.com/tags/Reactor%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
