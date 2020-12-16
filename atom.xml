@@ -134,16 +134,14 @@
     <link href="http://liukay.com/2019/11/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/"/>
     <id>http://liukay.com/2019/11/01/java-nio-1-NIO概述/</id>
     <published>2019-11-01T15:12:02.000Z</published>
-    <updated>2020-12-15T04:09:18.987Z</updated>
+    <updated>2020-12-16T03:41:57.975Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="NIO-概述"><a href="#NIO-概述" class="headerlink" title="NIO 概述"></a>NIO 概述</h1><p>服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。<br>NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。<br>是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，<br>成为解决高并发与大量连接、I/O处理问题的有效方式。</p><h2 id="传统面向流的，单向的。"><a href="#传统面向流的，单向的。" class="headerlink" title="传统面向流的，单向的。"></a>传统面向流的，单向的。</h2><p>三个核心组件</p><ol><li>Channels</li><li>Buffers</li><li>Selectors</li></ol><h3 id="1-Channels-负责传输"><a href="#1-Channels-负责传输" class="headerlink" title="1.Channels  负责传输"></a>1.Channels  负责传输</h3><p>白话: 就是数据传输用的通道。作用是打开到IO设备的连接，文件、套接字都行。<br>绕绕话:   标准的IO基于字节流和字符流进行操作的，而NIO是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p><h3 id="2-Buffers-负责存储"><a href="#2-Buffers-负责存储" class="headerlink" title="2.Buffers  负责存储"></a>2.Buffers  负责存储</h3><p>缓冲区，用来存放具体要被传输的数据，比如文件、scoket 等。这里将数据装入 Buffers 再通过通道进行传输。</p><h3 id="3-Selector"><a href="#3-Selector" class="headerlink" title="3.Selector"></a>3.Selector</h3><p>负责监听事件和选择对应事件的渠道。</p><p>NIO 主要的编程模型来自 Reactor</p><h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>NIO基于Reactor，当socket有流可读或可写入socket时，操作系统会相应的通知引用程序进行处理，应用再将流读取到缓冲区或写入操作系统。<br>也就是说，这个时候，已经不是一个连接就要对应一个处理线程了，而是有效的请求，对应一个线程，当连接没有数据时，是没有工作线程来处理的。</p><h3 id="NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。"><a href="#NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。" class="headerlink" title="NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。"></a>NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。</h3><h3 id="BIO是一个连接一个线程。"><a href="#BIO是一个连接一个线程。" class="headerlink" title="BIO是一个连接一个线程。"></a>BIO是一个连接一个线程。</h3><h3 id="NIO是一个请求一个线程。"><a href="#NIO是一个请求一个线程。" class="headerlink" title="NIO是一个请求一个线程。"></a>NIO是一个请求一个线程。</h3><h3 id="AIO是一个有效请求一个线程。"><a href="#AIO是一个有效请求一个线程。" class="headerlink" title="AIO是一个有效请求一个线程。"></a>AIO是一个有效请求一个线程。</h3><h2 id="三种IO-的区别"><a href="#三种IO-的区别" class="headerlink" title="三种IO 的区别"></a>三种IO 的区别</h2><p>Java BIO:同步并阻塞<br>服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</p><p>Java NIO: 同步非阻塞<br>服务器实现模式为一个请求一个线程，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java AIO(NIO.2) :异步非阻塞<br>服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处。</p><h3 id="BIO、NIO、AIO适用场景分析"><a href="#BIO、NIO、AIO适用场景分析" class="headerlink" title="BIO、NIO、AIO适用场景分析:"></a>BIO、NIO、AIO适用场景分析:</h3><p>BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。<br>NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。<br>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</p>]]></content>
+    <content type="html"><![CDATA[<p>服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。<br>NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。<br>是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，<br>成为解决高并发与大量连接、I/O处理问题的有效方式。<br><a id="more"></a></p><h2 id="传统面向流的，单向的。"><a href="#传统面向流的，单向的。" class="headerlink" title="传统面向流的，单向的。"></a>传统面向流的，单向的。</h2><p>三个核心组件</p><ol><li>Channels</li><li>Buffers</li><li>Selectors</li></ol><h3 id="1-Channels-负责传输"><a href="#1-Channels-负责传输" class="headerlink" title="1.Channels  负责传输"></a>1.Channels  负责传输</h3><p>白话: 就是数据传输用的通道。作用是打开到IO设备的连接，文件、套接字都行。<br>绕绕话:   标准的IO基于字节流和字符流进行操作的，而NIO是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p><h3 id="2-Buffers-负责存储"><a href="#2-Buffers-负责存储" class="headerlink" title="2.Buffers  负责存储"></a>2.Buffers  负责存储</h3><p>缓冲区，用来存放具体要被传输的数据，比如文件、scoket 等。这里将数据装入 Buffers 再通过通道进行传输。</p><h3 id="3-Selector"><a href="#3-Selector" class="headerlink" title="3.Selector"></a>3.Selector</h3><p>负责监听事件和选择对应事件的渠道。</p><p>NIO 主要的编程模型来自 Reactor</p><h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>NIO基于Reactor，当socket有流可读或可写入socket时，操作系统会相应的通知引用程序进行处理，应用再将流读取到缓冲区或写入操作系统。<br>也就是说，这个时候，已经不是一个连接就要对应一个处理线程了，而是有效的请求，对应一个线程，当连接没有数据时，是没有工作线程来处理的。</p><h3 id="NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。"><a href="#NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。" class="headerlink" title="NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。"></a>NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。</h3><h3 id="BIO是一个连接一个线程。"><a href="#BIO是一个连接一个线程。" class="headerlink" title="BIO是一个连接一个线程。"></a>BIO是一个连接一个线程。</h3><h3 id="NIO是一个请求一个线程。"><a href="#NIO是一个请求一个线程。" class="headerlink" title="NIO是一个请求一个线程。"></a>NIO是一个请求一个线程。</h3><h3 id="AIO是一个有效请求一个线程。"><a href="#AIO是一个有效请求一个线程。" class="headerlink" title="AIO是一个有效请求一个线程。"></a>AIO是一个有效请求一个线程。</h3><h2 id="三种IO-的区别"><a href="#三种IO-的区别" class="headerlink" title="三种IO 的区别"></a>三种IO 的区别</h2><p>Java BIO:同步并阻塞<br>服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</p><p>Java NIO: 同步非阻塞<br>服务器实现模式为一个请求一个线程，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java AIO(NIO.2) :异步非阻塞<br>服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处。</p><h3 id="BIO、NIO、AIO适用场景分析"><a href="#BIO、NIO、AIO适用场景分析" class="headerlink" title="BIO、NIO、AIO适用场景分析:"></a>BIO、NIO、AIO适用场景分析:</h3><p>BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。<br>NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。<br>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</p>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;NIO-概述&quot;&gt;&lt;a href=&quot;#NIO-概述&quot; class=&quot;headerlink&quot; title=&quot;NIO 概述&quot;&gt;&lt;/a&gt;NIO 概述&lt;/h1&gt;&lt;p&gt;服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O
-      
+      &lt;p&gt;服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。&lt;/p&gt;
+&lt;p&gt;Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。&lt;br&gt;NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。&lt;br&gt;是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，&lt;br&gt;成为解决高并发与大量连接、I/O处理问题的有效方式。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -395,7 +393,7 @@
     <link href="http://liukay.com/2019/03/08/docker--run%E5%92%8Cstart%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://liukay.com/2019/03/08/docker--run和start的区别/</id>
     <published>2019-03-08T14:40:34.000Z</published>
-    <updated>2020-12-15T04:09:18.982Z</updated>
+    <updated>2020-12-16T03:42:44.646Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-docker-run"><a href="#1-docker-run" class="headerlink" title="1.docker run"></a>1.docker run</h3><p>docker run 只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker start 即可。<br>docker run相当于执行了两步操作：将镜像放入容器中（docker create）,然后将容器启动，使之变成运行时容器（docker start）。</p><h3 id="2-docker-start"><a href="#2-docker-start" class="headerlink" title="2.docker start"></a>2.docker start</h3><p>docker start的作用是，重新启动已存在的镜像。也就是说，如果使用这个命令，我们必须事先知道这个容器的ID，或者这个容器的名字，我们可以使用docker ps找到这个容器的信息。<br><a id="more"></a></p><h3 id="3-查看所有容器"><a href="#3-查看所有容器" class="headerlink" title="3.查看所有容器"></a>3.查看所有容器</h3><p>而要显示出所有容器，包括没有启动的，可以使用命令<br>docker ps -a</p><h3 id="4-重命名"><a href="#4-重命名" class="headerlink" title="4.重命名"></a>4.重命名</h3><p>docker rename old_name new_name</p><h3 id="5-启停"><a href="#5-启停" class="headerlink" title="5.启停"></a>5.启停</h3><p>docker [stop]|[start] name</p>]]></content>
     
@@ -406,12 +404,8 @@
     
     </summary>
     
-      <category term="architecture" scheme="http://liukay.com/categories/architecture/"/>
+      <category term="docker" scheme="http://liukay.com/categories/docker/"/>
     
-      <category term="docker" scheme="http://liukay.com/categories/architecture/docker/"/>
-    
-    
-      <category term="java" scheme="http://liukay.com/tags/java/"/>
     
       <category term="docker" scheme="http://liukay.com/tags/docker/"/>
     
@@ -426,7 +420,7 @@
     <link href="http://liukay.com/2019/03/04/docker--%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
     <id>http://liukay.com/2019/03/04/docker--基本操作/</id>
     <published>2019-03-04T13:40:34.000Z</published>
-    <updated>2020-12-15T04:09:18.982Z</updated>
+    <updated>2020-12-16T03:43:06.583Z</updated>
     
     <content type="html"><![CDATA[<p>最近在研究使用 docker 进行微服务改造，总结了一下常用的命令，docker 这东西，单个用简单，整体配合 k8s 和 spring cloud 坑还是不少，一个一个解决掉以后，他的易用性和高可用的特性确实很棒。</p><p>如果是业务日志需要输出到宿主机上，可以使用 -v 挂载。</p><h4 id="1-查看-docker-信息-info"><a href="#1-查看-docker-信息-info" class="headerlink" title="1.查看 docker 信息 info"></a>1.查看 docker 信息 info</h4><p>dorker info</p><a id="more"></a><p>####2.运行 docker 容器 run<br>docker run IMAGE    //启动容器<br>docker run ubuntu echo “en heng”<br>这种命令运行完就退出了。</p><h4 id="3-启动交互式容器"><a href="#3-启动交互式容器" class="headerlink" title="3.启动交互式容器"></a>3.启动交互式容器</h4><p>docker run -it IMAGE    //交互式，即进入容器<br>docker run -i -t ubuntu /bin/bash    //进入容器<br>ps -ef<br>exit        //退出</p><h4 id="4-查看容器-ps"><a href="#4-查看容器-ps" class="headerlink" title="4.查看容器 ps"></a>4.查看容器 ps</h4><p>docker ps [-a] [-l]<br>docker ps<br>docker ps -a        //-a 全部容器</p><p>CONTAINER ID        //docker为容器分配的id，即守护进程ID<br>NAME            //docker 自动为镜象创建的名称</p><h4 id="5-自定义容器名称-name"><a href="#5-自定义容器名称-name" class="headerlink" title="5.自定义容器名称 name"></a>5.自定义容器名称 name</h4><p>docker run –name=[自定义名称] -i -t ubuntu /bin/bash<br>docker run –name=container01 -i -t ubuntu /bin/bash</p><h4 id="6-重新启动停止的容器-start"><a href="#6-重新启动停止的容器-start" class="headerlink" title="6.重新启动停止的容器 start"></a>6.重新启动停止的容器 start</h4><p>docker start [-i] 容器ID<br>-i 交互模式<br>docker start  8cf94828c8e6<br>进入容器<br>docker exec -it 8cf94828c8e6 bash</p><h4 id="7-删除已经停止的容器"><a href="#7-删除已经停止的容器" class="headerlink" title="7.删除已经停止的容器"></a>7.删除已经停止的容器</h4><p>docker rm [容器id | 容器名]    //不能删除正在运行的容器</p>]]></content>
     
@@ -438,12 +432,8 @@
     
     </summary>
     
-      <category term="architecture" scheme="http://liukay.com/categories/architecture/"/>
+      <category term="docker" scheme="http://liukay.com/categories/docker/"/>
     
-      <category term="docker" scheme="http://liukay.com/categories/architecture/docker/"/>
-    
-    
-      <category term="java" scheme="http://liukay.com/tags/java/"/>
     
       <category term="docker" scheme="http://liukay.com/tags/docker/"/>
     
