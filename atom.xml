@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liukay.com/"/>
-  <updated>2020-12-16T03:21:23.915Z</updated>
+  <updated>2020-12-16T03:33:57.738Z</updated>
   <id>http://liukay.com/</id>
   
   <author>
@@ -17,9 +17,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>算法--leetcode-283-移动零</title>
+    <link href="http://liukay.com/2020/12/16/%E7%AE%97%E6%B3%95-leetcode-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/"/>
+    <id>http://liukay.com/2020/12/16/算法-leetcode-283-移动零/</id>
+    <published>2020-12-16T03:30:33.000Z</published>
+    <updated>2020-12-16T03:33:57.738Z</updated>
+    
+    <content type="html"><![CDATA[<p>相当于是使用 for 进行交换的一个小技巧的练习，后面会给出一些算法的小技巧，都是总结的一些算法的小技巧。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Integer[] arr = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] != <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">               arr[j] = arr[i];</span><br><span class="line">               arr[i] = temp;</span><br><span class="line">               j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;相当于是使用 for 进行交换的一个小技巧的练习，后面会给出一些算法的小技巧，都是总结的一些算法的小技巧。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;
+      
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://liukay.com/categories/algorithm/"/>
+    
+      <category term="leetcode" scheme="http://liukay.com/categories/algorithm/leetcode/"/>
+    
+    
+      <category term="算法" scheme="http://liukay.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="leetcode" scheme="http://liukay.com/tags/leetcode/"/>
+    
+  </entry>
+  
+  <entry>
     <title>算法-leetcode007-整数反转</title>
-    <link href="http://liukay.com/2020/12/16/%E7%AE%97%E6%B3%95-leetcode007-%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/"/>
-    <id>http://liukay.com/2020/12/16/算法-leetcode007-整数反转/</id>
+    <link href="http://liukay.com/2020/12/16/%E7%AE%97%E6%B3%95--leetcode007-%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/"/>
+    <id>http://liukay.com/2020/12/16/算法--leetcode007-整数反转/</id>
     <published>2020-12-16T03:14:32.000Z</published>
     <updated>2020-12-16T03:21:23.915Z</updated>
     
@@ -46,8 +76,8 @@
   
   <entry>
     <title>算法-栈stack-用栈实现队列-Leetcode232</title>
-    <link href="http://liukay.com/2020/12/15/%E7%AE%97%E6%B3%95-%E6%A0%88stack-%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/"/>
-    <id>http://liukay.com/2020/12/15/算法-栈stack-用栈实现队列/</id>
+    <link href="http://liukay.com/2020/12/15/%E7%AE%97%E6%B3%95--leetcode232-%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/"/>
+    <id>http://liukay.com/2020/12/15/算法--leetcode232-用栈实现队列/</id>
     <published>2020-12-15T05:57:25.000Z</published>
     <updated>2020-12-16T03:12:03.093Z</updated>
     
@@ -572,37 +602,6 @@
       <category term="spring boot" scheme="http://liukay.com/tags/spring-boot/"/>
     
       <category term="jar包" scheme="http://liukay.com/tags/jar%E5%8C%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python 实现 map的分词原理</title>
-    <link href="http://liukay.com/2018/08/19/bigdata--map%E4%BB%BB%E5%8A%A1python%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://liukay.com/2018/08/19/bigdata--map任务python实现/</id>
-    <published>2018-08-18T17:03:26.000Z</published>
-    <updated>2020-12-15T04:09:18.980Z</updated>
-    
-    <content type="html"><![CDATA[<p>Map 的作用，即数据的映射，用于把一组键值对映射成另一组新的键值对。<br>白话就是对数据按照一定的格式进行归整。<br>举个例子，有一遍文章，需要对文章中出现过的相同的单词进行归类，期望结果如下：<br>将map的输出作为reduce的输入的过程就是shuffle了，这个是mapreduce优化的重点地方。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;1&quot;, &quot;are&quot; : 1&#125;</span><br><span class="line">&#123;&quot;1&quot;, &quot;are&quot; : 1&#125;</span><br></pre></td></tr></table></figure></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#encodeing=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">        ss = line.strip().split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> ss:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">&#x27;\t&#x27;</span>.join([word.strip(), <span class="string">&#x27;1&#x27;</span>])</span><br></pre></td></tr></table></figure><p>测试数据： <code>THE_MAN_OF_PROPERTY.txt</code>，这里存一篇网上随机找的一篇英文长篇文章。</p><p>执行命令，并打印结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &#96;THE_MAN_OF_PROPERTY.txt&#96;  | &#96;python map.py&#96; | &#96;sort -k 1  &gt; 1.txt&#96;</span><br></pre></td></tr></table></figure></p><p>结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">to    1</span><br><span class="line">to    1</span><br><span class="line">to    1</span><br><span class="line">today    1</span><br><span class="line">tool    1</span><br><span class="line">topic    1</span><br><span class="line">two    1</span><br><span class="line">two    1</span><br><span class="line">···</span><br><span class="line">variants    1</span><br><span class="line">variants    1</span><br><span class="line">variants    1</span><br><span class="line">···</span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Map 的作用，即数据的映射，用于把一组键值对映射成另一组新的键值对。&lt;br&gt;白话就是对数据按照一定的格式进行归整。&lt;br&gt;举个例子，有一遍文章，需要对文章中出现过的相同的单词进行归类，期望结果如下：&lt;br&gt;将map的输出作为reduce的输入的过程就是shuffle了，这
-      
-    
-    </summary>
-    
-      <category term="bigdata" scheme="http://liukay.com/categories/bigdata/"/>
-    
-      <category term="mapreduce" scheme="http://liukay.com/categories/bigdata/mapreduce/"/>
-    
-    
-      <category term="大数据" scheme="http://liukay.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-      <category term="map 任务" scheme="http://liukay.com/tags/map-%E4%BB%BB%E5%8A%A1/"/>
-    
-      <category term="hadoop" scheme="http://liukay.com/tags/hadoop/"/>
     
   </entry>
   
