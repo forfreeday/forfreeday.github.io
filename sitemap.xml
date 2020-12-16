@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://liukay.com/2015/04/16/RocketMQ-%25E4%25B8%25BB%25E8%25A6%2581%25E8%25A7%2592%25E8%2589%25B21-Broker/</loc>
+    
+    <lastmod>2020-12-16T05:43:30.370Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://liukay.com/2015/04/09/RocketMQ-RocketMQ%25E5%25AE%2589%25E8%25A3%2585/</loc>
+    
+    <lastmod>2020-12-16T05:32:30.735Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://liukay.com/2019/03/04/docker--%25E5%259F%25BA%25E6%259C%25AC%25E6%2593%258D%25E4%25BD%259C/</loc>
     
     <lastmod>2020-12-16T03:43:06.583Z</lastmod>
@@ -605,13 +619,6 @@
   
   <url>
     <loc>http://liukay.com/2017/01/15/architecture--%25E4%25BB%2580%25E4%25B9%2588%25E6%2598%25AF%25E5%25B9%2582%25E7%25AD%2589/</loc>
-    
-    <lastmod>2020-12-15T04:09:18.980Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/2015/04/09/architecture-RocketMQ%25E5%25AE%2589%25E8%25A3%2585/</loc>
     
     <lastmod>2020-12-15T04:09:18.980Z</lastmod>
     
