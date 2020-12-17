@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://liukay.com/about/index.html</loc>
+    
+    <lastmod>2020-12-17T03:53:47.734Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://liukay.com/2015/04/09/architecture-RocketMQ%25E5%25AE%2589%25E8%25A3%2585/</loc>
     
     <lastmod>2020-12-17T03:07:12.717Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>http://liukay.com/tags/index.html</loc>
     
     <lastmod>2020-12-15T04:09:19.004Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/about/index.html</loc>
-    
-    <lastmod>2020-12-15T04:09:18.999Z</lastmod>
     
   </url>
   
