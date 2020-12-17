@@ -106,7 +106,7 @@
     <link href="http://liukay.com/2020/05/06/architecture-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99%E6%A8%A1%E5%BC%8F/"/>
     <id>http://liukay.com/2020/05/06/architecture-集群容错模式/</id>
     <published>2020-05-06T09:39:25.000Z</published>
-    <updated>2020-12-15T04:38:32.377Z</updated>
+    <updated>2020-12-17T04:11:52.922Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Failfast-Cluster模式"><a href="#Failfast-Cluster模式" class="headerlink" title="Failfast Cluster模式"></a>Failfast Cluster模式</h3><p>这种模式称为快速失败模式，调用只执行一次，失败则立即报错。这种模式适用于非幂等性操作，每次调用的副作用是不同的，如写操作，比如交易系统我们要下订单，如果一次失败就应该让它失败，通常由服务消费方控制是否重新发起下订单操作请求（另一个新的订单）。<br>-Failsafe Cluster模式<br>失败安全模式，如果调用失败， 则直接忽略失败的调用，而是要记录下失败的调用到日志文件，以便后续审计。<br><a id="more"></a></p><h3 id="Failback-Cluster模式"><a href="#Failback-Cluster模式" class="headerlink" title="Failback Cluster模式"></a>Failback Cluster模式</h3><p>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。</p><h3 id="Forking-Cluster模式"><a href="#Forking-Cluster模式" class="headerlink" title="Forking Cluster模式"></a>Forking Cluster模式</h3><p>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。</p><h3 id="Broadcast-Cluster模式"><a href="#Broadcast-Cluster模式" class="headerlink" title="Broadcast Cluster模式"></a>Broadcast Cluster模式</h3><p>广播调用所有提供者，逐个调用，任意一台报错则报错（2.1.0开始支持）。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>]]></content>
     
@@ -118,7 +118,7 @@
     
       <category term="architecture" scheme="http://liukay.com/categories/architecture/"/>
     
-      <category term="中间件" scheme="http://liukay.com/categories/architecture/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+      <category term="概念" scheme="http://liukay.com/categories/architecture/%E6%A6%82%E5%BF%B5/"/>
     
     
       <category term="架构" scheme="http://liukay.com/tags/%E6%9E%B6%E6%9E%84/"/>
@@ -126,6 +126,33 @@
       <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
       <category term="容错" scheme="http://liukay.com/tags/%E5%AE%B9%E9%94%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RocketMQ--主要角色2-NameServer</title>
+    <link href="http://liukay.com/2020/04/17/RocketMQ-%E4%B8%BB%E8%A6%81%E8%A7%92%E8%89%B22-NameServer/"/>
+    <id>http://liukay.com/2020/04/17/RocketMQ-主要角色2-NameServer/</id>
+    <published>2020-04-17T04:14:19.000Z</published>
+    <updated>2020-12-17T04:18:11.821Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="NameServer-名字服务"><a href="#NameServer-名字服务" class="headerlink" title="NameServer 名字服务"></a>NameServer 名字服务</h2><h3 id="作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多"><a href="#作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多" class="headerlink" title="作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多."></a>作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多.</h3><p>早期的版本中，使用的是 Zookeeper 做为配置中心，改名 RocketMQ 后使用了自己开发的 NameServer。</p><p>两个主要做用：</p><ol><li><p>NameServer 维护了一份 Broker 的地址列表和 Broker 在启动的时候会去 NameServer 进行注册，会维护 Broker 的存活状态。</p></li><li><p>NameServer 维护了一份 Topic 和 Topic 对应队列的地址列表，Broker 每次发送的心跳过来的时候会把 Topic 信息带上。</p></li></ol><p>是一个几乎无状态的节点，可集群部署，节点之间无任何信息同步</p><ol><li>互相独立，彼此没有通信关系，单台nameserver挂掉，不影响其他nameserver，即使全部挂掉，也不影响业务系统使用，这点类似于dubbo的zookeeper。</li><li>nameserver不会有频繁的读写，所以性能开销非常小，稳定性很高。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;NameServer-名字服务&quot;&gt;&lt;a href=&quot;#NameServer-名字服务&quot; class=&quot;headerlink&quot; title=&quot;NameServer 名字服务&quot;&gt;&lt;/a&gt;NameServer 名字服务&lt;/h2&gt;&lt;h3 id=&quot;作用：在系统中肯定是做命名
+      
+    
+    </summary>
+    
+      <category term="RocketMQ" scheme="http://liukay.com/categories/RocketMQ/"/>
+    
+    
+      <category term="RocketMQ" scheme="http://liukay.com/tags/RocketMQ/"/>
+    
+      <category term="NameServer" scheme="http://liukay.com/tags/NameServer/"/>
     
   </entry>
   
@@ -563,35 +590,6 @@
       <category term="java" scheme="http://liukay.com/tags/java/"/>
     
       <category term="spring boot" scheme="http://liukay.com/tags/spring-boot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring boot 使用 maven 打 jar 包配置</title>
-    <link href="http://liukay.com/2018/09/02/springboot--%E4%BD%BF%E7%94%A8%20maven%E6%89%93jar%E5%8C%85%E9%85%8D%E7%BD%AE/"/>
-    <id>http://liukay.com/2018/09/02/springboot--使用 maven打jar包配置/</id>
-    <published>2018-09-02T04:18:05.000Z</published>
-    <updated>2020-12-15T04:09:18.994Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用 ide 进行开发时，直接在ide上启动即可，如果要放到服务器上进行使用，就必须打成jar包，这里使用 maven 的打包插件进行打包。注意 <code>&lt;mainClass&gt;com.devops.WebApplication&lt;/mainClass&gt;</code> 这行要改成你的启动类。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>devops-web<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">addClasspath</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addClasspath</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">classpathPrefix</span>&gt;</span>lib<span class="tag">&lt;/<span class="name">classpathPrefix</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>com.devops.WebApplication<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">addMavenDescriptor</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addMavenDescriptor</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;使用 ide 进行开发时，直接在ide上启动即可，如果要放到服务器上进行使用，就必须打成jar包，这里使用 maven 的打包插件进行打包。注意 &lt;code&gt;&amp;lt;mainClass&amp;gt;com.devops.WebApplication&amp;lt;/mainClass&amp;g
-      
-    
-    </summary>
-    
-      <category term="java" scheme="http://liukay.com/categories/java/"/>
-    
-      <category term="spring boot" scheme="http://liukay.com/categories/java/spring-boot/"/>
-    
-    
-      <category term="spring boot" scheme="http://liukay.com/tags/spring-boot/"/>
-    
-      <category term="jar包" scheme="http://liukay.com/tags/jar%E5%8C%85/"/>
     
   </entry>
   
