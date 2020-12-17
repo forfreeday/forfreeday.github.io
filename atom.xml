@@ -158,33 +158,6 @@
   </entry>
   
   <entry>
-    <title>RocketMQ--主要角色2-NameServer</title>
-    <link href="http://liukay.com/2020/04/17/RocketMQ-%E4%B8%BB%E8%A6%81%E8%A7%92%E8%89%B22-NameServer/"/>
-    <id>http://liukay.com/2020/04/17/RocketMQ-主要角色2-NameServer/</id>
-    <published>2020-04-17T04:14:19.000Z</published>
-    <updated>2020-12-17T04:18:11.821Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="NameServer-名字服务"><a href="#NameServer-名字服务" class="headerlink" title="NameServer 名字服务"></a>NameServer 名字服务</h2><h3 id="作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多"><a href="#作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多" class="headerlink" title="作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多."></a>作用：在系统中肯定是做命名服务，服务治理方面的工作，功能应该是和zookeeper差不多.</h3><p>早期的版本中，使用的是 Zookeeper 做为配置中心，改名 RocketMQ 后使用了自己开发的 NameServer。</p><p>两个主要做用：</p><ol><li><p>NameServer 维护了一份 Broker 的地址列表和 Broker 在启动的时候会去 NameServer 进行注册，会维护 Broker 的存活状态。</p></li><li><p>NameServer 维护了一份 Topic 和 Topic 对应队列的地址列表，Broker 每次发送的心跳过来的时候会把 Topic 信息带上。</p></li></ol><p>是一个几乎无状态的节点，可集群部署，节点之间无任何信息同步</p><ol><li>互相独立，彼此没有通信关系，单台nameserver挂掉，不影响其他nameserver，即使全部挂掉，也不影响业务系统使用，这点类似于dubbo的zookeeper。</li><li>nameserver不会有频繁的读写，所以性能开销非常小，稳定性很高。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;NameServer-名字服务&quot;&gt;&lt;a href=&quot;#NameServer-名字服务&quot; class=&quot;headerlink&quot; title=&quot;NameServer 名字服务&quot;&gt;&lt;/a&gt;NameServer 名字服务&lt;/h2&gt;&lt;h3 id=&quot;作用：在系统中肯定是做命名
-      
-    
-    </summary>
-    
-      <category term="RocketMQ" scheme="http://liukay.com/categories/RocketMQ/"/>
-    
-    
-      <category term="RocketMQ" scheme="http://liukay.com/tags/RocketMQ/"/>
-    
-      <category term="NameServer" scheme="http://liukay.com/tags/NameServer/"/>
-    
-  </entry>
-  
-  <entry>
     <title>NIO概述</title>
     <link href="http://liukay.com/2019/11/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/"/>
     <id>http://liukay.com/2019/11/01/java-nio-1-NIO概述/</id>
@@ -588,6 +561,36 @@
       <category term="页面静态化" scheme="http://liukay.com/tags/%E9%A1%B5%E9%9D%A2%E9%9D%99%E6%80%81%E5%8C%96/"/>
     
       <category term="freemarker" scheme="http://liukay.com/tags/freemarker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>什么是上下文context</title>
+    <link href="http://liukay.com/2018/09/17/springboot-%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87context/"/>
+    <id>http://liukay.com/2018/09/17/springboot-什么是上下文context/</id>
+    <published>2018-09-17T02:56:00.000Z</published>
+    <updated>2020-12-15T04:09:18.996Z</updated>
+    
+    <content type="html"><![CDATA[<p>上下文(背景/语境) context<br>是当前运行程序的环境。<br>网上各种不可说，模糊不清，但是一个概念的提出肯定有最初的含义。</p><h3 id="总结上下文可以理解成："><a href="#总结上下文可以理解成：" class="headerlink" title="总结上下文可以理解成："></a>总结上下文可以理解成：</h3><ol><li>上下文指由代码已运行的程序环境，不是指代码。</li><li>一组状态，这个好理解，取 spring cloud 的官方文档的例子：<blockquote><p>一个Spring Cloud应用程序通过创建一个”引导”上下文来进行操作，这个上下文是主应用程序的父上下文。<br>引导上下文使用与主应用程序上下文不同的外部配置约定，因此使用bootstrap.yml application.yml（或.properties）代替引导和主上下文的外部配置。<br>这里所谓的 引导上下文 就是一组状态，实际就是一个保存配置的大对象，换个角度理就是环境。</p></blockquote></li><li>环境背景<br>每一段程序都有很多外部变量。只有像Add这种简单的函数才是没有外部变量的。一旦你的一段程序有了外部变量，这段程序就不完整，不能独立运行。你为了使他们运行，就要给所有的外部变量一个一个写一些值进去。这些值的集合就叫上下文。</li></ol><p>查了一下 context<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n.        语境; 上下文; 背景; 环境;</span><br></pre></td></tr></table></figure><br>谁用的翻译上下文，明明用背景、环境更贴切，</p><h3 id="摘自知乎"><a href="#摘自知乎" class="headerlink" title="摘自知乎"></a>摘自知乎</h3><blockquote><p>和其他传入对象参数没什么区别。<br>但是通常使用Context来描述有几个特点：<br>被传入Context的部分（组件），内部需要频繁的获取Context的data和调用function。<br>对context有很强的依赖，实现建立在context的基础上。<br>Context会被较为多数部分（组件）所需要，在软件实现部分Context会在某个scene下出现单一实例化，然后被多个部分（组件）实例对象调用。<br>出现局部全局化。<br>Context会持有很多状态data。<br>Coder习惯，命名选择困难下的胶合产物。</p></blockquote><p><a href="https://www.zhihu.com/question/26387327">https://www.zhihu.com/question/26387327</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;上下文(背景/语境) context&lt;br&gt;是当前运行程序的环境。&lt;br&gt;网上各种不可说，模糊不清，但是一个概念的提出肯定有最初的含义。&lt;/p&gt;
+&lt;h3 id=&quot;总结上下文可以理解成：&quot;&gt;&lt;a href=&quot;#总结上下文可以理解成：&quot; class=&quot;headerlink&quot; t
+      
+    
+    </summary>
+    
+      <category term="java" scheme="http://liukay.com/categories/java/"/>
+    
+      <category term="spring boot" scheme="http://liukay.com/categories/java/spring-boot/"/>
+    
+    
+      <category term="java" scheme="http://liukay.com/tags/java/"/>
+    
+      <category term="spring boot" scheme="http://liukay.com/tags/spring-boot/"/>
     
   </entry>
   
