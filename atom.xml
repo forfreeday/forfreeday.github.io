@@ -92,9 +92,9 @@
     <link href="http://liukay.com/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"/>
     <id>http://liukay.com/2021/04/14/blockchain--区块链01-技术架构/</id>
     <published>2021-04-14T10:50:49.000Z</published>
-    <updated>2021-04-25T10:42:51.719Z</updated>
+    <updated>2021-04-26T03:33:23.530Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>区块链技术，发展到目前，主流的区块链有两个代表，一个是以 比特币(BTC) 为代表的分布式去中心化计账本，一个是以 以态坊(ETH) 为代表的图灵完备的分布式去中心化计算机。名词解释会放到下面。</p></blockquote><h1 id="比特币-Bitcoin"><a href="#比特币-Bitcoin" class="headerlink" title="比特币(Bitcoin)"></a>比特币(Bitcoin)</h1><p>比特币的宗旨是做为一个去中心化的分布试记账本，仅为了计账而存在。<br>比特币的由来就不赘述，可自行了解。</p><h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><p>记账才是其主要功能，奖厉的币仅是副产物。</p><h2 id="币是什么"><a href="#币是什么" class="headerlink" title="币是什么"></a>币是什么</h2><p>BTC是一种点对点（Peer-2-Peer）传输的数字加密货币。宗旨在于使用从点网络节点，构成一个分布式、去中心化的加密货币网络。<br>机器只需要运行 BTC 程序，就可以加入到比特币网络当中，成为一个节点。</p><p>币是每个机器运行比特币服务，而获得的奖励，鼓厉大家都运行节点。就像是去玩某个游戏，每日登陆获取积分一样。<br>每个机器节点的硬盘上保留全量数据，就可以不依赖于中心化节点中的数据，从而实现去中心化。</p><h2 id="比特币白皮书"><a href="#比特币白皮书" class="headerlink" title="比特币白皮书"></a>比特币白皮书</h2><p><a href="https://bitcoin.org/bitcoin.pdf">比特币白皮书原版</a><br>当然还有中文版。</p><h1 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h1><p><strong>以太坊架构图</strong><br><img src="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/架构图.png" alt="架构图"></p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>区块链技术，发展到目前，主流的区块链有两个代表，一个是以 比特币(BTC) 为代表的分布式去中心化计账本，一个是以 以态坊(ETH) 为代表的图灵完备的分布式去中心化计算机。名词解释会放到下面。</p></blockquote><h2 id="比特币-Bitcoin"><a href="#比特币-Bitcoin" class="headerlink" title="比特币(Bitcoin)"></a>比特币(Bitcoin)</h2><p>比特币的宗旨是做为一个去中心化的分布试记账本，仅为了计账而存在。<br>比特币的由来就不赘述，可自行了解。</p><h3 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h3><p>记账才是其主要功能，奖厉的币仅是副产物。</p><h3 id="币是什么"><a href="#币是什么" class="headerlink" title="币是什么"></a>币是什么</h3><p>BTC是一种点对点（Peer-2-Peer）传输的数字加密货币。宗旨在于使用从点网络节点，构成一个分布式、去中心化的加密货币网络。<br>机器只需要运行 BTC 程序，就可以加入到比特币网络当中，成为一个节点。</p><p>币是每个机器运行比特币服务，而获得的奖励，鼓厉大家都运行节点。就像是去玩某个游戏，每日登陆获取积分一样。<br>每个机器节点的硬盘上保留全量数据，就可以不依赖于中心化节点中的数据，从而实现去中心化。</p><h3 id="比特币白皮书"><a href="#比特币白皮书" class="headerlink" title="比特币白皮书"></a>比特币白皮书</h3><p><a href="https://bitcoin.org/bitcoin.pdf">比特币白皮书原版</a><br>当然还有中文版。</p><h2 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h2><p><strong>以太坊架构图</strong><br><img src="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/架构图.png" alt="架构图"></p>]]></content>
     
     <summary type="html">
     
@@ -103,7 +103,7 @@
         &lt;blockquote&gt;
 &lt;p&gt;区块链技术，发展到目前，主流的区块链有两个代表，一个是以 比特币(BTC) 为代表的分布式去中心化计账本，一个是以 以态坊(ETH) 为代表的图灵完备的分布式去中心化计算机。名词解释会放到下面。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h1 id=&quot;
+&lt;h2 id=&quot;
       
     
     </summary>
