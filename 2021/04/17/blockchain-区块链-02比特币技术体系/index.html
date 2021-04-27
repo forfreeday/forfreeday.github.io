@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>区块链--02比特币技术体系 | 思想家</title><meta name="keywords" content="比特币,入门,体系"><meta name="author" content="咪雅先森"><meta name="copyright" content="咪雅先森"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。  比特币架构比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。  自上而下，共分6层  应用层 RPC 层 网络层 共识层 数据层 存储层  1.应用层包括比特币钱">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链--02比特币技术体系">
+<meta property="og:url" content="http://liukay.com/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/index.html">
+<meta property="og:site_name" content="思想家">
+<meta property="og:description" content="学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。  比特币架构比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。  自上而下，共分6层  应用层 RPC 层 网络层 共识层 数据层 存储层  1.应用层包括比特币钱">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-17T03:53:03.000Z">
+<meta property="article:modified_time" content="2021-04-27T06:16:43.046Z">
+<meta property="article:author" content="咪雅先森">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="比特币">
+<meta property="article:tag" content="技术体系">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://liukay.com/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-04-27 14:16:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.0.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">98</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">141</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/java/"><i class="fa-fw fas fa-folder-open"></i><span> 开发</span></a></div><div class="menus_item"><a class="site-page" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链</span></a></div><div class="menus_item"><a class="site-page" href="/categories/architecture/"><i class="fa-fw fas fa-folder-open"></i><span> 架构</span></a></div><div class="menus_item"><a class="site-page" href="/categories/algorithm/"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E9%9A%8F%E7%AC%94/"><i class="fa-fw fas fa-folder-open"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">思想家</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/java/"><i class="fa-fw fas fa-folder-open"></i><span> 开发</span></a></div><div class="menus_item"><a class="site-page" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链</span></a></div><div class="menus_item"><a class="site-page" href="/categories/architecture/"><i class="fa-fw fas fa-folder-open"></i><span> 架构</span></a></div><div class="menus_item"><a class="site-page" href="/categories/algorithm/"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E9%9A%8F%E7%AC%94/"><i class="fa-fw fas fa-folder-open"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">区块链--02比特币技术体系</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-17T03:53:03.000Z" title="发表于 2021-04-17 11:53:03">2021-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-27T06:16:43.046Z" title="更新于 2021-04-27 14:16:43">2021-04-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/BTC/">BTC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="区块链--02比特币技术体系"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p>
+</blockquote>
+<h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p>
+<p><img src="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC架构图.jpeg" alt="架构图"></p>
+<p>自上而下，共分6层</p>
+<ol>
+<li>应用层</li>
+<li>RPC 层</li>
+<li>网络层</li>
+<li>共识层</li>
+<li>数据层</li>
+<li>存储层</li>
+</ol>
+<h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包<br><img src="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC钱包.jpg" alt="PC钱包"></p>
+<h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">咪雅先森</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://liukay.com/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/">http://liukay.com/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://liukay.com" target="_blank">思想家</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><a class="post-meta__tags" href="/tags/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a><a class="post-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/">技术体系</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/17/blockchain-Tron%E4%BA%A4%E6%98%93%E6%8E%A5%E6%94%B6%E6%9C%BA%E5%88%B6/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">blockchain--Tron交易接收机制</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/16/blockchain-DPOS%E5%8D%8F%E8%AE%AE/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">blockchain--DPOS协议</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/15/blockchain-区块链-04比特币区块同步机制/" title="区块链--04比特币区块同步机制"><img class="cover" src="/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-04%E6%AF%94%E7%89%B9%E5%B8%81%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-15</div><div class="title">区块链--04比特币区块同步机制</div></div></a></div><div><a href="/2021/04/14/blockchain--区块链01-技术架构/" title="区块链--01区块链初识"><img class="cover" src="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-14</div><div class="title">区块链--01区块链初识</div></div></a></div><div><a href="/2021/04/16/blockchain-DPOS协议/" title="blockchain--DPOS协议"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-16</div><div class="title">blockchain--DPOS协议</div></div></a></div><div><a href="/2021/04/17/blockchain-Tron交易接收机制/" title="blockchain--Tron交易接收机制"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-17</div><div class="title">blockchain--Tron交易接收机制</div></div></a></div><div><a href="/2021/04/11/blockchain-区块链文章大纲/" title="blockchain--区块链文章大纲"><img class="cover" src="/2021/04/11/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE%E6%96%87%E7%AB%A0%E5%A4%A7%E7%BA%B2/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-11</div><div class="title">blockchain--区块链文章大纲</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">咪雅先森</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">98</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">141</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">练习一币通关</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">比特币架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">1.应用层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-RPC-%E5%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text">2.RPC 层</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/04/17/blockchain-Tron%E4%BA%A4%E6%98%93%E6%8E%A5%E6%94%B6%E6%9C%BA%E5%88%B6/" title="blockchain--Tron交易接收机制"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="blockchain--Tron交易接收机制"/></a><div class="content"><a class="title" href="/2021/04/17/blockchain-Tron%E4%BA%A4%E6%98%93%E6%8E%A5%E6%94%B6%E6%9C%BA%E5%88%B6/" title="blockchain--Tron交易接收机制">blockchain--Tron交易接收机制</a><time datetime="2021-04-17T06:00:28.000Z" title="发表于 2021-04-17 14:00:28">2021-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/" title="区块链--02比特币技术体系"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="区块链--02比特币技术体系"/></a><div class="content"><a class="title" href="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/" title="区块链--02比特币技术体系">区块链--02比特币技术体系</a><time datetime="2021-04-17T03:53:03.000Z" title="发表于 2021-04-17 11:53:03">2021-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/16/blockchain-DPOS%E5%8D%8F%E8%AE%AE/" title="blockchain--DPOS协议"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="blockchain--DPOS协议"/></a><div class="content"><a class="title" href="/2021/04/16/blockchain-DPOS%E5%8D%8F%E8%AE%AE/" title="blockchain--DPOS协议">blockchain--DPOS协议</a><time datetime="2021-04-16T07:05:43.000Z" title="发表于 2021-04-16 15:05:43">2021-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-04%E6%AF%94%E7%89%B9%E5%B8%81%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/" title="区块链--04比特币区块同步机制"><img src="/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-04%E6%AF%94%E7%89%B9%E5%B8%81%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/banner.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="区块链--04比特币区块同步机制"/></a><div class="content"><a class="title" href="/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-04%E6%AF%94%E7%89%B9%E5%B8%81%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/" title="区块链--04比特币区块同步机制">区块链--04比特币区块同步机制</a><time datetime="2021-04-15T03:41:28.000Z" title="发表于 2021-04-15 11:41:28">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/" title="区块链--01区块链初识"><img src="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/banner.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="区块链--01区块链初识"/></a><div class="content"><a class="title" href="/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/" title="区块链--01区块链初识">区块链--01区块链初识</a><time datetime="2021-04-14T10:50:49.000Z" title="发表于 2021-04-14 18:50:49">2021-04-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 咪雅先森</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

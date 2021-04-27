@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liukay.com/"/>
-  <updated>2021-04-27T06:04:32.247Z</updated>
+  <updated>2021-04-25T11:05:38.957Z</updated>
   <id>http://liukay.com/</id>
   
   <author>
@@ -17,13 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>blockchain--02比特币技术体系</title>
-    <link href="http://liukay.com/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
-    <id>http://liukay.com/2021/04/27/blockchain-区块链-02比特币技术体系/</id>
-    <published>2021-04-27T03:53:03.000Z</published>
-    <updated>2021-04-27T06:04:32.247Z</updated>
+    <title>blockchain--Tron交易接收机制</title>
+    <link href="http://liukay.com/2021/04/17/blockchain-Tron%E4%BA%A4%E6%98%93%E6%8E%A5%E6%94%B6%E6%9C%BA%E5%88%B6/"/>
+    <id>http://liukay.com/2021/04/17/blockchain-Tron交易接收机制/</id>
+    <published>2021-04-17T06:00:28.000Z</published>
+    <updated>2021-04-25T11:05:38.957Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p></blockquote><h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p><p><img src="/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC架构图.jpeg" alt="架构图"></p><p>自上而下，共分6层</p><ol><li>应用层</li><li>RPC 层</li><li>网络层</li><li>共识层</li><li>数据层</li><li>存储层</li></ol><h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包<br><img src="/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC钱包.jpg" alt="PC钱包"></p><h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3>]]></content>
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
+    
+    
+      <category term="blockchain" scheme="http://liukay.com/tags/blockchain/"/>
+    
+      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+      <category term="交易" scheme="http://liukay.com/tags/%E4%BA%A4%E6%98%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>区块链--02比特币技术体系</title>
+    <link href="http://liukay.com/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
+    <id>http://liukay.com/2021/04/17/blockchain-区块链-02比特币技术体系/</id>
+    <published>2021-04-17T03:53:03.000Z</published>
+    <updated>2021-04-27T06:16:43.046Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p></blockquote><h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p><p><img src="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC架构图.jpeg" alt="架构图"></p><p>自上而下，共分6层</p><ol><li>应用层</li><li>RPC 层</li><li>网络层</li><li>共识层</li><li>数据层</li><li>存储层</li></ol><h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包<br><img src="/2021/04/17/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC钱包.jpg" alt="PC钱包"></p><h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3>]]></content>
     
     <summary type="html">
     
@@ -47,28 +69,6 @@
       <category term="比特币" scheme="http://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
     
       <category term="技术体系" scheme="http://liukay.com/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>blockchain--Tron交易接收机制</title>
-    <link href="http://liukay.com/2021/04/17/blockchain-Tron%E4%BA%A4%E6%98%93%E6%8E%A5%E6%94%B6%E6%9C%BA%E5%88%B6/"/>
-    <id>http://liukay.com/2021/04/17/blockchain-Tron交易接收机制/</id>
-    <published>2021-04-17T06:00:28.000Z</published>
-    <updated>2021-04-25T11:05:38.957Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
-    
-    
-      <category term="blockchain" scheme="http://liukay.com/tags/blockchain/"/>
-    
-      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="交易" scheme="http://liukay.com/tags/%E4%BA%A4%E6%98%93/"/>
     
   </entry>
   
