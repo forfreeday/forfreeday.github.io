@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liukay.com/"/>
-  <updated>2021-04-25T11:05:38.957Z</updated>
+  <updated>2021-04-27T06:04:32.247Z</updated>
   <id>http://liukay.com/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>blockchain--02比特币技术体系</title>
+    <link href="http://liukay.com/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
+    <id>http://liukay.com/2021/04/27/blockchain-区块链-02比特币技术体系/</id>
+    <published>2021-04-27T03:53:03.000Z</published>
+    <updated>2021-04-27T06:04:32.247Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p></blockquote><h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p><p><img src="/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC架构图.jpeg" alt="架构图"></p><p>自上而下，共分6层</p><ol><li>应用层</li><li>RPC 层</li><li>网络层</li><li>共识层</li><li>数据层</li><li>存储层</li></ol><h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包<br><img src="/2021/04/27/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-02%E6%AF%94%E7%89%B9%E5%B8%81%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/BTC钱包.jpg" alt="PC钱包"></p><h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;比特币架构&quot;&gt;&lt;a href=&quot;#比特币架构&quot; class=&quot;headerlink&quot;
+      
+    
+    </summary>
+    
+      <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
+    
+      <category term="BTC" scheme="http://liukay.com/categories/blockchain/BTC/"/>
+    
+    
+      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+      <category term="比特币" scheme="http://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
+    
+      <category term="技术体系" scheme="http://liukay.com/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>blockchain--Tron交易接收机制</title>
@@ -61,29 +95,34 @@
   </entry>
   
   <entry>
-    <title>blockchain--区块同步机制</title>
-    <link href="http://liukay.com/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/"/>
-    <id>http://liukay.com/2021/04/15/blockchain-区块同步机制/</id>
+    <title>区块链--04比特币区块同步机制</title>
+    <link href="http://liukay.com/2021/04/15/blockchain-%E5%8C%BA%E5%9D%97%E9%93%BE-04%E6%AF%94%E7%89%B9%E5%B8%81%E5%8C%BA%E5%9D%97%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/"/>
+    <id>http://liukay.com/2021/04/15/blockchain-区块链-04比特币区块同步机制/</id>
     <published>2021-04-15T03:41:28.000Z</published>
-    <updated>2021-04-25T10:56:48.602Z</updated>
+    <updated>2021-04-27T04:11:58.666Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。<br>当一个区块打包好一个区块后，需要同步给其它节点，进行校验 和 上链。<br>只有上链的成功的区块，才算是区块链上的一个块。换句话说，区块可能上链成功，也有可能上链不成功。</p><h2 id="区块广播"><a href="#区块广播" class="headerlink" title="区块广播"></a>区块广播</h2><h2 id="区块验证"><a href="#区块验证" class="headerlink" title="区块验证"></a>区块验证</h2><h2 id="区块上链"><a href="#区块上链" class="headerlink" title="区块上链"></a>区块上链</h2><h2 id="区块回滚"><a href="#区块回滚" class="headerlink" title="区块回滚"></a>区块回滚</h2>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。<br>当一个区块打包好一个区块后，需要同步给其它节点，进行校验 和 上链。<br>只有上链的成功的区块，才算是区块链上的一个块。换句话说，区块可能上链成功，也有可能上链不成功。</p></blockquote><h2 id="同步区块中的问题"><a href="#同步区块中的问题" class="headerlink" title="同步区块中的问题"></a>同步区块中的问题</h2><ol><li>为什么要同步区块</li><li>如何保证同步</li><li>网络延迟如何解决</li><li>同时收到相同高度的块，该同步谁的块</li><li>如何得知块已被确认</li><li>被丢块的节点会怎么样</li></ol><h2 id="区块打包"><a href="#区块打包" class="headerlink" title="区块打包"></a>区块打包</h2><h2 id="区块广播"><a href="#区块广播" class="headerlink" title="区块广播"></a>区块广播</h2><h2 id="区块验证"><a href="#区块验证" class="headerlink" title="区块验证"></a>区块验证</h2><h2 id="区块上链"><a href="#区块上链" class="headerlink" title="区块上链"></a>区块上链</h2><h2 id="区块回滚"><a href="#区块回滚" class="headerlink" title="区块回滚"></a>区块回滚</h2>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。&lt;br&gt;当一个区块打包好一个区块后
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。&lt;br&gt;
       
     
     </summary>
     
       <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
     
+      <category term="BTC" scheme="http://liukay.com/categories/blockchain/BTC/"/>
+    
     
       <category term="blockchain" scheme="http://liukay.com/tags/blockchain/"/>
     
       <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+      <category term="比特币" scheme="http://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
     
   </entry>
   
@@ -558,33 +597,6 @@
       <category term="死锁" scheme="http://liukay.com/tags/%E6%AD%BB%E9%94%81/"/>
     
       <category term="并发" scheme="http://liukay.com/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你为什么学不会lambda</title>
-    <link href="http://liukay.com/2019/04/14/java--%E4%BD%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B8%8D%E4%BC%9Alamdbd/"/>
-    <id>http://liukay.com/2019/04/14/java--你为什么学不会lamdbd/</id>
-    <published>2019-04-13T19:12:56.000Z</published>
-    <updated>2020-12-15T04:09:18.985Z</updated>
-    
-    <content type="html"><![CDATA[<p>这个一篇对学习 Lambda 表达式进行解惑的文章，主要是总结了自己在学习 Lambda 表达式时候的一些理解不了的坑进行总结。长篇大论和详细语法，自行谷歌，这里只说一些理解起来不顺的概念。</p><h3 id="重要事情说三遍"><a href="#重要事情说三遍" class="headerlink" title="重要事情说三遍"></a>重要事情说三遍</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">首先 Lambda 表达式 ()-&gt;&#123; &#125; 是一种方法实现，并且在直接调用的时候才会执行。</span><br><span class="line">首先 Lambda 表达式 ()-&gt;&#123; &#125; 是一种方法实现，并且在直接调用的时候才会执行。</span><br><span class="line">首先 Lambda 表达式 ()-&gt;&#123; &#125; 是一种方法实现，并且在直接调用的时候才会执行。</span><br></pre></td></tr></table></figure><a id="more"></a><h3 id="1-什么是-gt"><a href="#1-什么是-gt" class="headerlink" title="1. 什么是 ()-&gt;{ }"></a>1. 什么是 ()-&gt;{ }</h3><p>理论造航母，程序就一行。<br>不提什么是函数式编程，用大白话，其实就是写了一个匿名实现，并且在需要使用这行匿名实现的时候调用了一下，才会直正去执行这个匿名实现方法。<br>Lambda 表达式，本质上是一种延迟加载执行。将预先写好的实现方法进行加载。到实际使用时，再执行。</p><h3 id="演示执行过程："><a href="#演示执行过程：" class="headerlink" title="演示执行过程："></a>演示执行过程：</h3><h4 id="1-声明一个-Lambda-表达式接口"><a href="#1-声明一个-Lambda-表达式接口" class="headerlink" title="1.声明一个 Lambda 表达式接口"></a>1.声明一个 Lambda 表达式接口</h4><h4 id="2-加载一下匿名实现方法"><a href="#2-加载一下匿名实现方法" class="headerlink" title="2.加载一下匿名实现方法"></a>2.加载一下匿名实现方法</h4><h4 id="3-执行一下"><a href="#3-执行一下" class="headerlink" title="3.执行一下"></a>3.执行一下</h4><ol><li>新建一个类，声明一个 Lambda 表达式接口<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFunctional</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//只允许存在一个 public abstract 方法</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li>新建一个测试类，加载一下匿名函数实现<br>用来测试 Lambda 表达式的执行顺序<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodReference</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1. 一般匿名写法，这里仅是声明了这个匿名写法，但是并没有执行任务操作</span></span><br><span class="line">        testRef((test) -&gt; &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">&quot;3. lambda 接口调用方法时传入的参数: %s&quot;</span>, test));</span><br><span class="line">            System.out.println(<span class="string">&quot;4.bbb&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> test;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testRef</span><span class="params">(MyFunctional myFunctional)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;1. 到这一步，lambda 表达式还没有执行&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;2. 传入一个参数&quot;</span>);</span><br><span class="line">        <span class="comment">// 2. 真正的去调用 lambda 表达式的实现方法</span></span><br><span class="line">        myFunctional.say(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>执行结果：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 到这一步，lambda 表达式还没有执行</span><br><span class="line"><span class="number">2.</span> 传入一个参数</span><br><span class="line"><span class="number">3.</span> lambda 接口调用方法时传入的参数: aaaa</span><br><span class="line"><span class="number">4.</span> bbb</span><br></pre></td></tr></table></figure></li></ol><p>用 IDEA 到 Functional 接口中点一下，可以看到，直接跳到 MethodReference 这个测试为的这一行 lambda 表达式中，也就是说，当有一个 lambda 表达式实现了 Functional 接口时，并通过以当前 Functional 为形参的方法传入时，可以被调用到。<br><img src="https://upload-images.jianshu.io/upload_images/6164010-9e0fc62a80bb14ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这个一篇对学习 Lambda 表达式进行解惑的文章，主要是总结了自己在学习 Lambda 表达式时候的一些理解不了的坑进行总结。长篇大论和详细语法，自行谷歌，这里只说一些理解起来不顺的概念。&lt;/p&gt;
-&lt;h3 id=&quot;重要事情说三遍&quot;&gt;&lt;a href=&quot;#重要事情说三遍&quot; class=&quot;headerlink&quot; title=&quot;重要事情说三遍&quot;&gt;&lt;/a&gt;重要事情说三遍&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;首先 Lambda 表达式 ()-&amp;gt;&amp;#123; &amp;#125; 是一种方法实现，并且在直接调用的时候才会执行。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;首先 Lambda 表达式 ()-&amp;gt;&amp;#123; &amp;#125; 是一种方法实现，并且在直接调用的时候才会执行。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;首先 Lambda 表达式 ()-&amp;gt;&amp;#123; &amp;#125; 是一种方法实现，并且在直接调用的时候才会执行。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://liukay.com/categories/java/"/>
-    
-      <category term="lambda" scheme="http://liukay.com/categories/java/lambda/"/>
-    
-    
-      <category term="java" scheme="http://liukay.com/tags/java/"/>
-    
-      <category term="lambda" scheme="http://liukay.com/tags/lambda/"/>
     
   </entry>
   
