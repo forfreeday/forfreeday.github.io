@@ -138,28 +138,6 @@
   </entry>
   
   <entry>
-    <title>blockchain--DPOS协议</title>
-    <link href="http://liukay.com/2021/04/16/blockchain-DPOS%E5%8D%8F%E8%AE%AE/"/>
-    <id>http://liukay.com/2021/04/16/blockchain-DPOS协议/</id>
-    <published>2021-04-16T07:05:43.000Z</published>
-    <updated>2021-04-26T02:40:04.225Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
-    
-    
-      <category term="blockchain" scheme="http://liukay.com/tags/blockchain/"/>
-    
-      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="DPOS协议" scheme="http://liukay.com/tags/DPOS%E5%8D%8F%E8%AE%AE/"/>
-    
-  </entry>
-  
-  <entry>
     <title>区块链--01区块链初识</title>
     <link href="http://liukay.com/2021/04/14/blockchain--%E5%8C%BA%E5%9D%97%E9%93%BE01-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"/>
     <id>http://liukay.com/2021/04/14/blockchain--区块链01-技术架构/</id>
@@ -601,6 +579,35 @@
       <category term="日志" scheme="http://liukay.com/tags/%E6%97%A5%E5%BF%97/"/>
     
       <category term="说明" scheme="http://liukay.com/tags/%E8%AF%B4%E6%98%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>产生线程死锁的原因和处理方式</title>
+    <link href="http://liukay.com/2019/04/20/java-%E4%BA%A7%E7%94%9F%E7%BA%BF%E7%A8%8B%E6%AD%BB%E9%94%81%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/"/>
+    <id>http://liukay.com/2019/04/20/java-产生线程死锁的原因和处理方式/</id>
+    <published>2019-04-20T13:14:38.000Z</published>
+    <updated>2020-12-15T04:09:18.988Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="产生背景"><a href="#产生背景" class="headerlink" title="产生背景"></a>产生背景</h2><p>线程同步(就是加锁)会有一个问题，就是产生死锁</p><h2 id="所谓死锁"><a href="#所谓死锁" class="headerlink" title="所谓死锁"></a>所谓死锁</h2><p>是指两个或两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。<br>发生死锁的具体原因如下:</p><a id="more"></a><ol><li>因为系统资源不足。</li><li>进程运行推进的顺序不合适。    </li><li>资源分配不当。</li></ol><h2 id="举列说明场景"><a href="#举列说明场景" class="headerlink" title="举列说明场景:"></a>举列说明场景:</h2><p>死锁是因为多线程访问共享资源，由于访问的顺序不当所造成的，通常是一个线程锁定了一个资源A，而又想去锁定资源B；在另一个线程中，锁定了资源B，而又想去锁定资源A以完成自身的操作，两个线程都想得到对方的资源，而不愿释放自己的资源，造成两个线程都在等待，而无法执行的情况。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">背景: 线程同步(就是加锁)会有一个问题，就是产生死锁</span><br><span class="line">所谓死锁: 是指两个或两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。</span><br><span class="line">帮助理解：</span><br><span class="line">地上放着两个桶泡面，一个老坛酸菜，一个小鸡炖磨茹。两个人一个产品，一个测试，同时出发去抢老坛酸菜和小鸡炖磨茹，产品老坛酸菜，测试拿到小鸡炖磨茹，同一时刻，产品伸要去拽测试怀里的小鸡炖磨茹，测试伸手去拽产品的老坛酸菜，两个僵持不下，就死在那了，叫死锁。如果没有开发将他们各打一顿解救出来，它们奖无法推进下去。</span><br><span class="line">发生死锁的具体原因如下:</span><br><span class="line">1. 因为系统资源不足。</span><br><span class="line">2. 进程运行推进的顺序不合适。    </span><br><span class="line">3. 资源分配不当。</span><br><span class="line">举列说明场景:</span><br><span class="line">死锁是因为多线程访问共享资源，由于访问的顺序不当所造成的，通常是一个线程锁定了一个资源A，而又想去锁定资源B；在另一个线程中，锁定了资源B，而又想去锁定资源A以完成自身的操作，两个线程都想得到对方的资源，而不愿释放自己的资源，造成两个线程都在等待，而无法执行的情况。</span><br><span class="line">死锁预防</span><br><span class="line">如果只使用一个锁就不会有死锁的问题，不过复杂场景下不太理实。</span><br><span class="line">1.以确定的顺序获得锁</span><br><span class="line">    线程A ---&gt; 锁定 A  ----&gt; 偿试锁定 B</span><br><span class="line">    线程B ---&gt; 锁定 A  ----&gt; 偿试锁定 B</span><br><span class="line">    这样就不会发生死锁</span><br><span class="line">2.超时放弃</span><br><span class="line">Lock接口提供了boolean tryLock(long time, TimeUnit unit) throws InterruptedException方法，该方法可以按照固定时长等待锁，因此线程可以在获取锁超时以后，主动释放之前已经获得的所有的锁。通过这种方式，也可以很有效地避免死锁。</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;产生背景&quot;&gt;&lt;a href=&quot;#产生背景&quot; class=&quot;headerlink&quot; title=&quot;产生背景&quot;&gt;&lt;/a&gt;产生背景&lt;/h2&gt;&lt;p&gt;线程同步(就是加锁)会有一个问题，就是产生死锁&lt;/p&gt;
+&lt;h2 id=&quot;所谓死锁&quot;&gt;&lt;a href=&quot;#所谓死锁&quot; class=&quot;headerlink&quot; title=&quot;所谓死锁&quot;&gt;&lt;/a&gt;所谓死锁&lt;/h2&gt;&lt;p&gt;是指两个或两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。&lt;br&gt;发生死锁的具体原因如下:&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://liukay.com/categories/java/"/>
+    
+      <category term="concurrent" scheme="http://liukay.com/categories/java/concurrent/"/>
+    
+    
+      <category term="多线程" scheme="http://liukay.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="死锁" scheme="http://liukay.com/tags/%E6%AD%BB%E9%94%81/"/>
+    
+      <category term="并发" scheme="http://liukay.com/tags/%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
