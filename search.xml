@@ -86,9 +86,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> BTC </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -1952,35 +1952,6 @@
     
     
     <entry>
-      <title>循环引用示例</title>
-      <link href="2017/03/02/jvm--%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B/"/>
-      <url>2017/03/02/jvm--%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B/</url>
-      
-        <content type="html"><![CDATA[<p>见过一个问题说，如果java里的对象出现了循环引用，对象会不会被回收。<br>结论是：会。<br>因为 java 的对象存活算法，使用的是可达性分析算法，而不是引用计算法，java中任务一款GC都没有使用过引用计算法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    A a = <span class="keyword">new</span> A();</span><br><span class="line">    B b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line">    a.bb = b;</span><br><span class="line">    b.aa = a;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//a = null;</span></span><br><span class="line">    <span class="comment">//b = null;</span></span><br><span class="line">    System.in.read();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-          <category> jvm </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> jvm </tag>
-            
-            <tag> 循环引用 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Java 虚拟机简单理解</title>
       <link href="2017/03/02/jvm--%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3/"/>
       <url>2017/03/02/jvm--%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3/</url>
@@ -2004,6 +1975,35 @@
             <tag> jvm </tag>
             
             <tag> 虚拟机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>循环引用示例</title>
+      <link href="2017/03/02/jvm--%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B/"/>
+      <url>2017/03/02/jvm--%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E7%A4%BA%E4%BE%8B/</url>
+      
+        <content type="html"><![CDATA[<p>见过一个问题说，如果java里的对象出现了循环引用，对象会不会被回收。<br>结论是：会。<br>因为 java 的对象存活算法，使用的是可达性分析算法，而不是引用计算法，java中任务一款GC都没有使用过引用计算法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    A a = <span class="keyword">new</span> A();</span><br><span class="line">    B b = <span class="keyword">new</span> B();</span><br><span class="line"></span><br><span class="line">    a.bb = b;</span><br><span class="line">    b.aa = a;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//a = null;</span></span><br><span class="line">    <span class="comment">//b = null;</span></span><br><span class="line">    System.in.read();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+            <tag> 循环引用 </tag>
             
         </tags>
       
@@ -2734,9 +2734,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> broker </tag>
+            
+            <tag> rocketmq </tag>
             
         </tags>
       
