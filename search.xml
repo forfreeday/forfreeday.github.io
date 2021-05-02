@@ -2888,6 +2888,37 @@
     
     
     <entry>
+      <title>多线程02--上下文切换</title>
+      <link href="2014/09/03/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/"/>
+      <url>2014/09/03/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/</url>
+      
+        <content type="html"><![CDATA[<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>即，不同线程之间的切换。<br>是存储和恢愎CPU 状态的过程，它使得线程执行能够从中断恢愎执行。<br>上下文切换是需要开销的。</p><h3 id="线程切点只在多核-CPU-中才有？"><a href="#线程切点只在多核-CPU-中才有？" class="headerlink" title="线程切点只在多核 CPU 中才有？"></a>线程切点只在多核 CPU 中才有？</h3><p>并不是，线程切换是CPU的功能，单核 CPU 也可以进行上下文切换。<br>CPU 执行线程的粒度是通过给分个线程分配时间切片来实现的。在单核时代，一个系统也会开很多程序，每个程序都会等待CPU来执行并不会等会某一个线程执行完毕。<br>比如单核时代玩 CS，可以边玩游戏边听千千静听。</p><p>CPU 通过切换时间分片来执行任务，切换前都会保存上一次任务的状态，这样下次再切回来的时候，可以继续执行当前这个状态。<br>这种保存再切换回来的操作，就是<strong>一次上下文切换</strong>。</p><h3 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h3><p>既然上下文切换会导致额外的开销，因此减少上下文切换次数便可以提高多线程程序的运行效率。</p><p>减少上下文切换的方法有：</p><ol><li>无锁并发编程</li><li>CAS算法</li><li>使用最少线程和使用协程</li><li>协程，go 当中使用</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> concurrent </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 并发 </tag>
+            
+            <tag> concurrent </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>模拟线程不安全</title>
       <link href="2014/08/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/"/>
       <url>2014/08/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/</url>
