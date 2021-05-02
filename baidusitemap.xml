@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://liukay.com/2014/09/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2021-05-02</lastmod>
+  </url>  <url>
     <loc>http://liukay.com/2014/09/03/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/</loc>
     <lastmod>2021-05-02</lastmod>
   </url>  <url>
@@ -191,9 +194,6 @@
     <lastmod>2020-12-15</lastmod>
   </url>  <url>
     <loc>http://liukay.com/2017/04/09/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%A6%82%E4%BD%95%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2020-12-15</lastmod>
-  </url>  <url>
-    <loc>http://liukay.com/2014/08/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2020-12-15</lastmod>
   </url>  <url>
     <loc>http://liukay.com/2015/01/15/java-socket02-ServerSocket%E6%9C%8D%E5%8A%A1%E7%AB%AF/</loc>

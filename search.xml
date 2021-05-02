@@ -2888,6 +2888,37 @@
     
     
     <entry>
+      <title>多线程--03模拟线程不安全</title>
+      <link href="2014/09/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/"/>
+      <url>2014/09/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/</url>
+      
+        <content type="html"><![CDATA[<p>由于线程在执行的时候是异步的，当所有线程操作共享数据时，有可以能出现都已经进入判断的情况下，共享数据已被改变，但是其后线程不知道，当线程醒来的时候，直接开始运行，这样就会出现数据不全安的问题。<br>错误原因：<br>多条语句操作一个共享数据时，一个线程对多条语句只执行了一部分，还没有执行完，另一个线程参与进来执行。导到共享数据的错误。</p><h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DemoRunnable run = <span class="keyword">new</span> DemoRunnable();</span><br><span class="line">Thread t1 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t2 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t3 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t4 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">  </span><br><span class="line">t1.start();</span><br><span class="line">t2.start();</span><br><span class="line">t3.start();</span><br><span class="line">t4.start();</span><br></pre></td></tr></table></figure><h3 id="实现类"><a href="#实现类" class="headerlink" title="实现类"></a>实现类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> ticket = <span class="number">100</span>;</span><br><span class="line">       </span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">       <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">          <span class="keyword">if</span> (ticket &gt; <span class="number">0</span>) &#123;                <span class="comment">//线程进入判断后睡10豪秒</span></span><br><span class="line">              <span class="keyword">try</span> &#123;</span><br><span class="line">                 Thread.sleep(<span class="number">10</span>);      <span class="comment">//让每一条进入的线程都sleep 10豪秒</span></span><br><span class="line">                 ticket--;           <span class="comment">//ticket也可以放到sleep上面，结果也是错的。</span></span><br><span class="line">                 System.out.println(ticket);</span><br><span class="line">              &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">              &#125;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              flag = <span class="keyword">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果：                //每次结果都是不一样的！！！切记。<br>0<br>-1<br>-2<br>-3</p><p>分析：上面的例子中有4条线程，4条进程都是在 ticket&gt;0 时进入。假设此时ticket为1，按1、2、3、4顺序执行的。<br>线程1先 sleep 10豪秒，然后 ticket–后此时为0。<br>线程2先sleep 10豪秒，然后 ticket–后此时为-1。<br>线程3先sleep 10豪秒，然后 ticket–后此时为-2。<br>线程4先sleep 10豪秒，然后 ticket–后此时为-3。<br>由于是异步的，所以每次的错误并不一定是相同的。<br>由于每次，线程都已进入了判断，而每次sleep异至线程在执行上，都走到了一起，然后配来后分别各自执行各自的代码，此时所有线程都已绕过了if的判断，所以出现了问题。一般CPU是交替执行线程的，但是每个线程被sleep后CPU就交换了执行权，当CPU再切换过来时，实际上次代码并没有执行完。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> concurrent </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> 进程线 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>多线程02--上下文切换</title>
       <link href="2014/09/03/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/"/>
       <url>2014/09/03/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/</url>
@@ -2911,37 +2942,6 @@
             <tag> 并发 </tag>
             
             <tag> concurrent </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>模拟线程不安全</title>
-      <link href="2014/08/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/"/>
-      <url>2014/08/16/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%A8%A1%E6%8B%9F%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8/</url>
-      
-        <content type="html"><![CDATA[<p>由于线程在执行的时候是异步的，当所有线程操作共享数据时，有可以能出现都已经进入判断的情况下，共享数据已被改变，但是其后线程不知道，当线程醒来的时候，直接开始运行，这样就会出现数据不全安的问题。<br>错误原因：<br>多条语句操作一个共享数据时，一个线程对多条语句只执行了一部分，还没有执行完，另一个线程参与进来执行。导到共享数据的错误。</p><h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DemoRunnable run = <span class="keyword">new</span> DemoRunnable();</span><br><span class="line">Thread t1 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t2 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t3 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">Thread t4 = <span class="keyword">new</span> Thread(run);</span><br><span class="line">  </span><br><span class="line">t1.start();</span><br><span class="line">t2.start();</span><br><span class="line">t3.start();</span><br><span class="line">t4.start();</span><br></pre></td></tr></table></figure><h3 id="实现类"><a href="#实现类" class="headerlink" title="实现类"></a>实现类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> ticket = <span class="number">100</span>;</span><br><span class="line">       </span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">       <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">          <span class="keyword">if</span> (ticket &gt; <span class="number">0</span>) &#123;                <span class="comment">//线程进入判断后睡10豪秒</span></span><br><span class="line">              <span class="keyword">try</span> &#123;</span><br><span class="line">                 Thread.sleep(<span class="number">10</span>);      <span class="comment">//让每一条进入的线程都sleep 10豪秒</span></span><br><span class="line">                 ticket--;           <span class="comment">//ticket也可以放到sleep上面，结果也是错的。</span></span><br><span class="line">                 System.out.println(ticket);</span><br><span class="line">              &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">              &#125;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              flag = <span class="keyword">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果：                //每次结果都是不一样的！！！切记。<br>0<br>-1<br>-2<br>-3</p><p>分析：上面的例子中有4条线程，4条进程都是在 ticket&gt;0 时进入。假设此时ticket为1，按1、2、3、4顺序执行的。<br>线程1先 sleep 10豪秒，然后 ticket–后此时为0。<br>线程2先sleep 10豪秒，然后 ticket–后此时为-1。<br>线程3先sleep 10豪秒，然后 ticket–后此时为-2。<br>线程4先sleep 10豪秒，然后 ticket–后此时为-3。<br>由于是异步的，所以每次的错误并不一定是相同的。<br>由于每次，线程都已进入了判断，而每次sleep异至线程在执行上，都走到了一起，然后配来后分别各自执行各自的代码，此时所有线程都已绕过了if的判断，所以出现了问题。一般CPU是交替执行线程的，但是每个线程被sleep后CPU就交换了执行权，当CPU再切换过来时，实际上次代码并没有执行完。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-          <category> concurrent </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> java </tag>
-            
-            <tag> 多线程 </tag>
-            
-            <tag> 进程线 </tag>
             
         </tags>
       
