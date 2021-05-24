@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://liukay.com/"/>
-  <updated>2021-05-24T10:13:15.605Z</updated>
+  <updated>2021-05-24T10:15:09.721Z</updated>
   <id>http://liukay.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>blockchain--06bitcore钱包使用</title>
+    <title>区块链--06bitcore钱包使用</title>
     <link href="http://liukay.com/2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/"/>
     <id>http://liukay.com/2021/05/24/blockchain-06bitcore钱包使用/</id>
     <published>2021-05-24T08:57:07.000Z</published>
-    <updated>2021-05-24T10:13:15.605Z</updated>
+    <updated>2021-05-24T10:15:09.721Z</updated>
     
     <content type="html"><![CDATA[<h2 id="比特币钱包"><a href="#比特币钱包" class="headerlink" title="比特币钱包"></a>比特币钱包</h2><p>不管是开发者，还是投资者，比特币钱包都是一个不错的学习工具，和常用的电子钱包相差不大。<br>开发者可以很好的从这个工具是学习比特币在客户端的应用，非常值得借鉴，包括现在很多项目都有比特币的影子，有些甚致直接拿到比特币的代码改改就发行自己加密货币。</p><p>比特币官网: <a href="https://bitcoin.org/zh_CN/">https://bitcoin.org/zh_CN/</a></p><p>直接跳到钱包选择页面: <a href="https://bitcoin.org/zh_CN/choose-your-wallet?step=5&amp;platform=mac">https://bitcoin.org/zh_CN/choose-your-wallet?step=5&amp;platform=mac</a></p><p>我这里使用的时 BitCore 钱包，这个钱包比较成熟。<br><a href="https://bitcoin.org/zh_CN/wallets/desktop/mac/bitcoincore/?step=5&amp;platform=mac">https://bitcoin.org/zh_CN/wallets/desktop/mac/bitcoincore/?step=5&amp;platform=mac</a></p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="1-同步数据"><a href="#1-同步数据" class="headerlink" title="1.同步数据"></a>1.同步数据</h3><p>初次使用比特币钱包，会进行一次全量数据同步，大概在 500G 左右，所以硬盘要保证够大，同步完成后，会进行裁剪。大几2G左右大小。</p><p><img src="/2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/1.jpg" alt="同步数据"></p><h3 id="2-创建钱包"><a href="#2-创建钱包" class="headerlink" title="2.创建钱包"></a>2.创建钱包</h3><p>同步完成后，才能进行后续的操作。<br>先创建钱包密码，这个密码会需要记住，不能忘记，否则会使用不了钱包。</p><p><img src="/2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/2.jpg" alt="创建密码"></p><p><img src="/2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/3.jpg" alt="创建钱包"></p><h3 id="3-导出私钥"><a href="#3-导出私钥" class="headerlink" title="3.导出私钥"></a>3.导出私钥</h3><p>私钥非常重要，保证你的钱包可以在不同设置之间进行使用，那么需要保存好私钥，不能丢失或泄露。大部份丢失的钱包都是因为丢失了私钥，找不回钱包。<br>在 “窗口”–&gt;”控制台” 通过命令行提取私钥。<br><img src="/2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/4.jpg" alt="控制台"></p><h4 id="解锁提取操作-walletpassphrase"><a href="#解锁提取操作-walletpassphrase" class="headerlink" title="解锁提取操作 walletpassphrase"></a>解锁提取操作 walletpassphrase</h4><blockquote><p>格式: walletpassphrase 密码 超时时间</p></blockquote><p>walletpassphrase test 120<br>在 120 秒超时时间内进行操作，如果超时了，重新执行一下上面的命令。</p><h4 id="提取私钥-dumpprivkey"><a href="#提取私钥-dumpprivkey" class="headerlink" title="提取私钥 dumpprivkey"></a>提取私钥 dumpprivkey</h4><blockquote><p>格式: dumpprivkey 钱包地址</p></blockquote><p>dumpprivkey 2testzjylkq9ldnvqwwtest</p><p>通过这个操作，就可以得到钱包的私钥，一定保存好这个私钥。</p>]]></content>
     
