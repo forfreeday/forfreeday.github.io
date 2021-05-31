@@ -414,35 +414,6 @@
     
     
     <entry>
-      <title>NIO概述</title>
-      <link href="2019/11/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/"/>
-      <url>2019/11/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/</url>
-      
-        <content type="html"><![CDATA[<p>服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。<br>NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。<br>是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，<br>成为解决高并发与大量连接、I/O处理问题的有效方式。<br><a id="more"></a></p><h2 id="传统面向流的，单向的。"><a href="#传统面向流的，单向的。" class="headerlink" title="传统面向流的，单向的。"></a>传统面向流的，单向的。</h2><p>三个核心组件</p><ol><li>Channels</li><li>Buffers</li><li>Selectors</li></ol><h3 id="1-Channels-负责传输"><a href="#1-Channels-负责传输" class="headerlink" title="1.Channels  负责传输"></a>1.Channels  负责传输</h3><p>白话: 就是数据传输用的通道。作用是打开到IO设备的连接，文件、套接字都行。<br>绕绕话:   标准的IO基于字节流和字符流进行操作的，而NIO是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p><h3 id="2-Buffers-负责存储"><a href="#2-Buffers-负责存储" class="headerlink" title="2.Buffers  负责存储"></a>2.Buffers  负责存储</h3><p>缓冲区，用来存放具体要被传输的数据，比如文件、scoket 等。这里将数据装入 Buffers 再通过通道进行传输。</p><h3 id="3-Selector"><a href="#3-Selector" class="headerlink" title="3.Selector"></a>3.Selector</h3><p>负责监听事件和选择对应事件的渠道。</p><p>NIO 主要的编程模型来自 Reactor</p><h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>NIO基于Reactor，当socket有流可读或可写入socket时，操作系统会相应的通知引用程序进行处理，应用再将流读取到缓冲区或写入操作系统。<br>也就是说，这个时候，已经不是一个连接就要对应一个处理线程了，而是有效的请求，对应一个线程，当连接没有数据时，是没有工作线程来处理的。</p><h3 id="NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。"><a href="#NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。" class="headerlink" title="NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。"></a>NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。</h3><h3 id="BIO是一个连接一个线程。"><a href="#BIO是一个连接一个线程。" class="headerlink" title="BIO是一个连接一个线程。"></a>BIO是一个连接一个线程。</h3><h3 id="NIO是一个请求一个线程。"><a href="#NIO是一个请求一个线程。" class="headerlink" title="NIO是一个请求一个线程。"></a>NIO是一个请求一个线程。</h3><h3 id="AIO是一个有效请求一个线程。"><a href="#AIO是一个有效请求一个线程。" class="headerlink" title="AIO是一个有效请求一个线程。"></a>AIO是一个有效请求一个线程。</h3><h2 id="三种IO-的区别"><a href="#三种IO-的区别" class="headerlink" title="三种IO 的区别"></a>三种IO 的区别</h2><p>Java BIO:同步并阻塞<br>服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</p><p>Java NIO: 同步非阻塞<br>服务器实现模式为一个请求一个线程，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java AIO(NIO.2) :异步非阻塞<br>服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处。</p><h3 id="BIO、NIO、AIO适用场景分析"><a href="#BIO、NIO、AIO适用场景分析" class="headerlink" title="BIO、NIO、AIO适用场景分析:"></a>BIO、NIO、AIO适用场景分析:</h3><p>BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。<br>NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。<br>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-          <category> nio </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> nio </tag>
-            
-            <tag> 概述 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Spring Gateway 静态路由--路径切割</title>
       <link href="2019/07/22/Spring-Spring-Cloud-Gateway-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1-%E8%B7%AF%E5%BE%84%E5%88%87%E5%89%B2/"/>
       <url>2019/07/22/Spring-Spring-Cloud-Gateway-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1-%E8%B7%AF%E5%BE%84%E5%88%87%E5%89%B2/</url>
@@ -1502,11 +1473,11 @@
     
     
     <entry>
-      <title>nio和bio的区别</title>
-      <link href="2018/02/14/java-nio-nio%E5%92%8Cbio%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-      <url>2018/02/14/java-nio-nio%E5%92%8Cbio%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <title>NIO--02nio和bio的区别</title>
+      <link href="2018/02/14/java-nio-2-nio%E5%92%8Cbio%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+      <url>2018/02/14/java-nio-2-nio%E5%92%8Cbio%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
       
-        <content type="html"><![CDATA[<p>BIO 和 NIO 的区别<br>    BIO 好比是通道传输，一来一回<br>    NIO 好比是管道传输，一堆来一堆回。</p><p>BIO 模型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">________                        _________</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|       |-----------输入--------|       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |-----------输出--------|       |</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|-------|                       |-------|</span><br></pre></td></tr></table></figure><br>输入和输出都需要建立一条管道。<br>    也就是说，数据的传输是单向的，出去从输出流通道走，回来从输入流通道走。<br>    面向流，通道传输的是流</p><p>NIO 模型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">_________                       _________</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |       输入-输出       |       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|-------|                       |-------|</span><br></pre></td></tr></table></figure><br>NIO 的通道没有传输数据的能力，通道的建立，相当于铺了铁路，而数据的传输需要火车。<br>火车指的就是缓冲区。<br>火车出发前会装一批人，而不会只装一个人。<br>火车来回都只用一条通道。<br>面向缓冲区，将数据装入缓冲区，由缓冲区进行传输。</p>]]></content>
+        <content type="html"><![CDATA[<p>BIO 和 NIO 的区别<br>BIO 好比是通道传输，一来一回<br>NIO 好比是管道传输，一堆来一堆回。</p><p>BIO 模型</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">________                        _________</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|       |-----------输入--------|       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |-----------输出--------|       |</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|-------|                       |-------|</span><br></pre></td></tr></table></figure><p>输入和输出都需要建立一条管道。<br>也就是说，数据的传输是单向的，出去从输出流通道走，回来从输入流通道走。<br>面向流，通道传输的是流</p><p>NIO 模型</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">_________                       _________</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |       输入-输出        |       |</span><br><span class="line">|       |                       |       |</span><br><span class="line">|       |-----------------------|       |</span><br><span class="line">|-------|                       |-------|</span><br></pre></td></tr></table></figure><p>NIO 的通道没有传输数据的能力，通道的建立，相当于铺了铁路，而数据的传输需要火车。<br>火车指的就是缓冲区。<br>火车出发前会装一批人，而不会只装一个人。<br>火车来回都只用一条通道。<br>面向缓冲区，将数据装入缓冲区，由缓冲区进行传输。</p>]]></content>
       
       
       <categories>
@@ -1523,6 +1494,35 @@
             <tag> java </tag>
             
             <tag> nio </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>NIO--01概述</title>
+      <link href="2018/02/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/"/>
+      <url>2018/02/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/</url>
+      
+        <content type="html"><![CDATA[<p>服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。<br>NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。<br>是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，<br>成为解决高并发与大量连接、I/O处理问题的有效方式。<br><a id="more"></a></p><h2 id="传统面向流的，单向的"><a href="#传统面向流的，单向的" class="headerlink" title="传统面向流的，单向的"></a>传统面向流的，单向的</h2><p>三个核心组件</p><ol><li>Channels</li><li>Buffers</li><li>Selectors</li></ol><h3 id="1-Channels-负责传输"><a href="#1-Channels-负责传输" class="headerlink" title="1.Channels  负责传输"></a>1.Channels  负责传输</h3><p>白话: 就是数据传输用的通道。作用是打开到IO设备的连接，文件、套接字都行。<br>绕绕话:   标准的IO基于字节流和字符流进行操作的，而NIO是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p><h3 id="2-Buffers-负责存储"><a href="#2-Buffers-负责存储" class="headerlink" title="2.Buffers  负责存储"></a>2.Buffers  负责存储</h3><p>缓冲区，用来存放具体要被传输的数据，比如文件、scoket 等。这里将数据装入 Buffers 再通过通道进行传输。</p><h3 id="3-Selector"><a href="#3-Selector" class="headerlink" title="3.Selector"></a>3.Selector</h3><p>负责监听事件和选择对应事件的渠道。</p><p>NIO 主要的编程模型来自 Reactor</p><h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>NIO基于Reactor，当socket有流可读或可写入socket时，操作系统会相应的通知引用程序进行处理，应用再将流读取到缓冲区或写入操作系统。<br>也就是说，这个时候，已经不是一个连接就要对应一个处理线程了，而是有效的请求，对应一个线程，当连接没有数据时，是没有工作线程来处理的。</p><h3 id="NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。"><a href="#NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。" class="headerlink" title="NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。"></a>NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。</h3><h3 id="BIO是一个连接一个线程。"><a href="#BIO是一个连接一个线程。" class="headerlink" title="BIO是一个连接一个线程。"></a>BIO是一个连接一个线程。</h3><h3 id="NIO是一个请求一个线程。"><a href="#NIO是一个请求一个线程。" class="headerlink" title="NIO是一个请求一个线程。"></a>NIO是一个请求一个线程。</h3><h3 id="AIO是一个有效请求一个线程。"><a href="#AIO是一个有效请求一个线程。" class="headerlink" title="AIO是一个有效请求一个线程。"></a>AIO是一个有效请求一个线程。</h3><h2 id="三种IO-的区别"><a href="#三种IO-的区别" class="headerlink" title="三种IO 的区别"></a>三种IO 的区别</h2><p>Java BIO:同步并阻塞<br>服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</p><p>Java NIO: 同步非阻塞<br>服务器实现模式为一个请求一个线程，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java AIO(NIO.2) :异步非阻塞<br>服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处。</p><h3 id="BIO、NIO、AIO适用场景分析"><a href="#BIO、NIO、AIO适用场景分析" class="headerlink" title="BIO、NIO、AIO适用场景分析"></a>BIO、NIO、AIO适用场景分析</h3><p>BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。<br>NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。<br>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> nio </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> nio </tag>
+            
+            <tag> 概述 </tag>
             
         </tags>
       
@@ -2768,6 +2768,31 @@
             <tag> String </tag>
             
             <tag> final </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>network--网络概念--冲突域</title>
+      <link href="2015/05/31/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5-%E5%86%B2%E7%AA%81%E5%9F%9F/"/>
+      <url>2015/05/31/network-%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5-%E5%86%B2%E7%AA%81%E5%9F%9F/</url>
+      
+        <content type="html"><![CDATA[<h3 id="冲突域-collision-domain"><a href="#冲突域-collision-domain" class="headerlink" title="冲突域 collision domain"></a>冲突域 collision domain</h3><blockquote><p>核心：冲突域是在同一个网络上两个比特同时进行传输则会产生冲突；</p></blockquote><p>先说人话：多N台计算机使连接在同一个集线器设备中，并同时往集线器发送数据要通过这个设备出去，但是这个设备同一时间内只能发送一个计算机的数据，所以会产生冲突。(便宜货就是问题多)</p><h4 id="1-简述"><a href="#1-简述" class="headerlink" title="1.简述"></a>1.简述</h4><p>冲突域是在同一个网络上两个比特同时进行传输则会产生冲突；在网路内部数据分组所产生与发生冲突的这样一个区域称为冲突域，</p><p>所有的共享介质环境都是一个冲突域，在共享介质环境中一定类型的冲突域是正常行为。总的来说,冲突域就是连接在同一导线上的所有工作站的集合,或者说是同一物理网段上所有节点的集合,或以太网上竞争同一带宽的节点集合.<br>一个交换机的端口就是一个冲突域。交换机本身就是一个冲突域，只不过，能隔离广播包。<br>物理原因：因为集线器这种设备比较低端，在交互机还没有出现的时候，使用集线器，集线器不具有路由选择功能，只是将接收到的数据以广播的形工发出，会产生广播风暴。</p><h4 id="2-为什么会有冲突"><a href="#2-为什么会有冲突" class="headerlink" title="2.为什么会有冲突"></a>2.为什么会有冲突</h4><p>如果同一时刻有两台设备试图传输数据，将导致冲突，而这两台设备必须分别重传数据，因此效率不高!这种情形通常出现在使用集线器的网络环境中一一与某个集线器相连的所有主机都属于同一个冲突域，且属于同一个广播域。与此相反，交换机的每个端口都是一个独立的冲突域。(也就是说，一个端口一个冲突域，这样就隔离了冲突域？)</p><p>集线器连接的计算机设备是冲突域，集线只能做连接，没有罗辑分段的功能。</p><p>一个使用集线器连接的基本 LAN 网络，它实际上只有一个冲突域和一个广播域。</p><p>所以，如果一个交换机的端口上没有连接使用了集线器的网络，那么一个端口一般只连接一台主机，那就没有冲突的可能了，就算使用了集线器的网络也没关系，如果发生了冲突，则不往外广播冲突包，冲突就在冲突域端口内部自行转发就完事了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> network </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络概念 </tag>
             
         </tags>
       

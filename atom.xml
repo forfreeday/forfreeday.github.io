@@ -437,33 +437,6 @@
   </entry>
   
   <entry>
-    <title>NIO概述</title>
-    <link href="http://liukay.com/2019/11/01/java-nio-1-NIO%E6%A6%82%E8%BF%B0/"/>
-    <id>http://liukay.com/2019/11/01/java-nio-1-NIO概述/</id>
-    <published>2019-11-01T15:12:02.000Z</published>
-    <updated>2020-12-16T03:41:57.975Z</updated>
-    
-    <content type="html"><![CDATA[<p>服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。<br>NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。<br>是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，<br>成为解决高并发与大量连接、I/O处理问题的有效方式。<br><a id="more"></a></p><h2 id="传统面向流的，单向的。"><a href="#传统面向流的，单向的。" class="headerlink" title="传统面向流的，单向的。"></a>传统面向流的，单向的。</h2><p>三个核心组件</p><ol><li>Channels</li><li>Buffers</li><li>Selectors</li></ol><h3 id="1-Channels-负责传输"><a href="#1-Channels-负责传输" class="headerlink" title="1.Channels  负责传输"></a>1.Channels  负责传输</h3><p>白话: 就是数据传输用的通道。作用是打开到IO设备的连接，文件、套接字都行。<br>绕绕话:   标准的IO基于字节流和字符流进行操作的，而NIO是基于通道（Channel）和缓冲区（Buffer）进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p><h3 id="2-Buffers-负责存储"><a href="#2-Buffers-负责存储" class="headerlink" title="2.Buffers  负责存储"></a>2.Buffers  负责存储</h3><p>缓冲区，用来存放具体要被传输的数据，比如文件、scoket 等。这里将数据装入 Buffers 再通过通道进行传输。</p><h3 id="3-Selector"><a href="#3-Selector" class="headerlink" title="3.Selector"></a>3.Selector</h3><p>负责监听事件和选择对应事件的渠道。</p><p>NIO 主要的编程模型来自 Reactor</p><h2 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h2><p>NIO基于Reactor，当socket有流可读或可写入socket时，操作系统会相应的通知引用程序进行处理，应用再将流读取到缓冲区或写入操作系统。<br>也就是说，这个时候，已经不是一个连接就要对应一个处理线程了，而是有效的请求，对应一个线程，当连接没有数据时，是没有工作线程来处理的。</p><h3 id="NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。"><a href="#NIO-是一种可以替代-Java-IO-API-的新API，提供了与标准-API-不同的工作方式。" class="headerlink" title="NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。"></a>NIO 是一种可以替代 Java IO API 的新API，提供了与标准 API 不同的工作方式。</h3><h3 id="BIO是一个连接一个线程。"><a href="#BIO是一个连接一个线程。" class="headerlink" title="BIO是一个连接一个线程。"></a>BIO是一个连接一个线程。</h3><h3 id="NIO是一个请求一个线程。"><a href="#NIO是一个请求一个线程。" class="headerlink" title="NIO是一个请求一个线程。"></a>NIO是一个请求一个线程。</h3><h3 id="AIO是一个有效请求一个线程。"><a href="#AIO是一个有效请求一个线程。" class="headerlink" title="AIO是一个有效请求一个线程。"></a>AIO是一个有效请求一个线程。</h3><h2 id="三种IO-的区别"><a href="#三种IO-的区别" class="headerlink" title="三种IO 的区别"></a>三种IO 的区别</h2><p>Java BIO:同步并阻塞<br>服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</p><p>Java NIO: 同步非阻塞<br>服务器实现模式为一个请求一个线程，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。</p><p>Java AIO(NIO.2) :异步非阻塞<br>服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处。</p><h3 id="BIO、NIO、AIO适用场景分析"><a href="#BIO、NIO、AIO适用场景分析" class="headerlink" title="BIO、NIO、AIO适用场景分析:"></a>BIO、NIO、AIO适用场景分析:</h3><p>BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。<br>NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。<br>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;服务器实现模式为一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。&lt;/p&gt;
-&lt;p&gt;Java NIO（Non-blocking / New IO）是从Java 1.4版本开始引入的一个新的IO API，可以替代标准的Java IO API。&lt;br&gt;NIO 和 IO 的区别在于，IO 是面向流，NIO 是面向缓存。&lt;br&gt;是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，&lt;br&gt;成为解决高并发与大量连接、I/O处理问题的有效方式。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://liukay.com/categories/java/"/>
-    
-      <category term="nio" scheme="http://liukay.com/categories/java/nio/"/>
-    
-    
-      <category term="nio" scheme="http://liukay.com/tags/nio/"/>
-    
-      <category term="概述" scheme="http://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Spring Gateway 静态路由--路径切割</title>
     <link href="http://liukay.com/2019/07/22/Spring-Spring-Cloud-Gateway-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1-%E8%B7%AF%E5%BE%84%E5%88%87%E5%89%B2/"/>
     <id>http://liukay.com/2019/07/22/Spring-Spring-Cloud-Gateway-静态路由-路径切割/</id>
@@ -605,6 +578,37 @@
       <category term="java" scheme="http://liukay.com/tags/java/"/>
     
       <category term="eureka" scheme="http://liukay.com/tags/eureka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spring cloud 四种服务下线方式</title>
+    <link href="http://liukay.com/2019/05/05/springcloud--%E5%9B%9B%E7%A7%8D%E6%9C%8D%E5%8A%A1%E4%B8%8B%E7%BA%BF%E6%96%B9%E5%BC%8F/"/>
+    <id>http://liukay.com/2019/05/05/springcloud--四种服务下线方式/</id>
+    <published>2019-05-05T12:06:54.000Z</published>
+    <updated>2020-12-15T04:09:18.996Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里指已经在 Eureka 注册中心注册的服务，如果需要停用，有四种方式进行停用。</p><h3 id="1-直接关闭"><a href="#1-直接关闭" class="headerlink" title="1.直接关闭"></a>1.直接关闭</h3><p>最粗暴。<br>写这个是因为，直接关闭，如果 Eureka 开了保护模式，会导至服务已关闭，但是未下线，还是会重试调用。如果不需强稳定性的话可以这么干。</p><h3 id="2-客户端主动通知注册中心下线"><a href="#2-客户端主动通知注册中心下线" class="headerlink" title="2.客户端主动通知注册中心下线"></a>2.客户端主动通知注册中心下线</h3><p>安全。<br>Eureka注册中心在收到某个客户端下线后不会马上通知所有的注册的客户端，而是等到客户端进行心跳的时候(心跳(续约)频率，默认30秒 )再将下的数据返回。通过这种方式下线的话，可以在某个服务下线后防止其他服务调用此服务失败。</p><p>白话就是，服务状态下线了，但是不通知其他服务。等到续约时间到了，再通知所有注册服务。</p><a id="more"></a><p>猜测，服务下线后，在没有心跳前，其他服务还是可以进行调用。等到心跳后，通知所有服务已下线，其他服务认为已下线，就不会再调该下线服务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> DiscoveryClient client;</span><br><span class="line">   <span class="meta">@ResponseBody</span></span><br><span class="line">   <span class="meta">@GetMapping(&quot;/eurekaUnRegister&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">shutDown</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       eurekaClient.shutdown();</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;eurekaUnRegistering&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><br>或<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/offline&quot;, method = RequestMethod.GET)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">offLine</span><span class="params">()</span></span>&#123;</span><br><span class="line">   DiscoveryManager.getInstance().shutdownComponent();</span><br><span class="line"> &#125;  </span><br></pre></td></tr></table></figure></p><h3 id="3-调用接口方式下线"><a href="#3-调用接口方式下线" class="headerlink" title="3.调用接口方式下线"></a>3.调用接口方式下线</h3><p><a href="http://10.168.62.58:9999/message/actuator/shutdown">http://10.168.62.58:9999/message/actuator/shutdown</a></p><p>返回结果<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Shutting down, bye...&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>本地起机器后，调试结果</p><p>结果就是服务线程关闭，服务停止：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Stopping beans in phase 2147483647</span><br><span class="line">Stopping beans in phase 0</span><br><span class="line">Unregistering JMX-exposed beans on shutdown</span><br><span class="line">DiscoveryClient_GROUP-MESSAGE&#x2F;group-message-provider-704 - registration status: 204</span><br><span class="line">Shutting down DiscoveryClient ...</span><br><span class="line">Unregistering ...</span><br><span class="line">DiscoveryClient_GROUP-MESSAGE&#x2F;group-message-provider-704 - deregister  status: 200</span><br></pre></td></tr></table></figure><br>网上博客<a href="https://blog.csdn.net/memmsc/article/details/78122962">https://blog.csdn.net/memmsc/article/details/78122962</a></p><h3 id="4-修改服务状态"><a href="#4-修改服务状态" class="headerlink" title="4.修改服务状态"></a>4.修改服务状态</h3><p>这种方式，服务不会停止，只是状态变为 DOWN，适合禁用该服务的操作。<br>DOWN 禁用<br>UP 启用<br><a href="http://10.168.62.58:9999/message/actuator/service-registry">http://10.168.62.58:9999/message/actuator/service-registry</a><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">       <span class="attr">&quot;status&quot;</span>: <span class="string">&quot;UP&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>sprinng boot 2.0 以上需要添加额外配置才能生效，否则报404<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line"> <span class="attr">endpoints:</span></span><br><span class="line">   <span class="attr">web:</span></span><br><span class="line">     <span class="attr">exposure:</span></span><br><span class="line">       <span class="attr">include:</span> <span class="string">&quot;*&quot;</span>                <span class="comment">#包含的路径，可以单个如 info</span></span><br><span class="line"> <span class="attr">endpoint:</span></span><br><span class="line">   <span class="attr">shutdown:</span></span><br><span class="line">     <span class="attr">enabled:</span> <span class="literal">true</span>                <span class="comment">#开启shutdown 关闭</span></span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里指已经在 Eureka 注册中心注册的服务，如果需要停用，有四种方式进行停用。&lt;/p&gt;
+&lt;h3 id=&quot;1-直接关闭&quot;&gt;&lt;a href=&quot;#1-直接关闭&quot; class=&quot;headerlink&quot; title=&quot;1.直接关闭&quot;&gt;&lt;/a&gt;1.直接关闭&lt;/h3&gt;&lt;p&gt;最粗暴。&lt;br&gt;写这个是因为，直接关闭，如果 Eureka 开了保护模式，会导至服务已关闭，但是未下线，还是会重试调用。如果不需强稳定性的话可以这么干。&lt;/p&gt;
+&lt;h3 id=&quot;2-客户端主动通知注册中心下线&quot;&gt;&lt;a href=&quot;#2-客户端主动通知注册中心下线&quot; class=&quot;headerlink&quot; title=&quot;2.客户端主动通知注册中心下线&quot;&gt;&lt;/a&gt;2.客户端主动通知注册中心下线&lt;/h3&gt;&lt;p&gt;安全。&lt;br&gt;Eureka注册中心在收到某个客户端下线后不会马上通知所有的注册的客户端，而是等到客户端进行心跳的时候(心跳(续约)频率，默认30秒 )再将下的数据返回。通过这种方式下线的话，可以在某个服务下线后防止其他服务调用此服务失败。&lt;/p&gt;
+&lt;p&gt;白话就是，服务状态下线了，但是不通知其他服务。等到续约时间到了，再通知所有注册服务。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://liukay.com/categories/java/"/>
+    
+      <category term="spring cloud" scheme="http://liukay.com/categories/java/spring-cloud/"/>
+    
+    
+      <category term="spring cloud" scheme="http://liukay.com/tags/spring-cloud/"/>
+    
+      <category term="java" scheme="http://liukay.com/tags/java/"/>
+    
+      <category term="服务下线" scheme="http://liukay.com/tags/%E6%9C%8D%E5%8A%A1%E4%B8%8B%E7%BA%BF/"/>
     
   </entry>
   
