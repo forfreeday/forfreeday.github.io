@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>blockchain--CKB相关</title>
+      <link href="2021/06/09/blockchain-CKB%E7%9B%B8%E5%85%B3/"/>
+      <url>2021/06/09/blockchain-CKB%E7%9B%B8%E5%85%B3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="CKB-钱包"><a href="#CKB-钱包" class="headerlink" title="CKB 钱包"></a>CKB 钱包</h2>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>区块链--06bitcore钱包使用</title>
       <link href="2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/"/>
       <url>2021/05/24/blockchain-06bitcore%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8/</url>
@@ -27,33 +40,6 @@
             <tag> 比特币 </tag>
             
             <tag> 钱包 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>区块链--Tron01波场项目简介</title>
-      <link href="2021/05/24/blockchain-tron01%E6%B3%A2%E5%9C%BA%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/"/>
-      <url>2021/05/24/blockchain-tron01%E6%B3%A2%E5%9C%BA%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Tron-项目"><a href="#Tron-项目" class="headerlink" title="Tron 项目"></a>Tron 项目</h2><p>波场项目，刚接触区块链时，网上查了一些关于国内的区块链项目，原以为是火币、币安的交易所的平台区块链项目，毕竟上大交易所，没想到网上都推这个号称国产第一公链，不排除营销的成份。这个是 java 版本的区块链项目，大部分区块链项目，不是 go 就是 rust，java 版本的比较少见，算是另辟蹊径吧，怎么保证速度，就是另一说了。</p><h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><p><strong>官网: <a href="https://tron.network/">https://tron.network/</a></strong></p><p><strong>github: <a href="https://github.com/tronprotocol/java-tron">https://github.com/tronprotocol/java-tron</a></strong></p><p><strong>波场文档</strong> <a href="https://tronprotocol.github.io/documentation-zh/">https://tronprotocol.github.io/documentation-zh/</a></p><p><img src="/2021/05/24/blockchain-tron01%E6%B3%A2%E5%9C%BA%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/tron.jpg" alt="TRON"></p><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol><li>转账速度快</li><li>DApp 应用多</li><li>费率极低</li></ol><p>以上三点看起来好像很平常，但是在大部分区块链项目当中，这三点都很难做到。</p><h3 id="转账速度快"><a href="#转账速度快" class="headerlink" title="转账速度快"></a>转账速度快</h3><p>大部分区块链项目包括: BTC、ETH，转一笔账，实际上并不快，由于大这些网络中，转账并不是零成本的，需要支付费用给矿工，费用高的优先转账，这样就造成了拥堵。<br>在波场的网络中，一笔转账的速度是很快的，转账成本也极低。</p><h3 id="DApp-应用多"><a href="#DApp-应用多" class="headerlink" title="DApp 应用多"></a>DApp 应用多</h3><p>DApp 是分布式去中心化应用，简单的理解为，你自己写一个应用，然后调用区块链项目的 Http 接口，进行账户操作。</p><h3 id="费率极低"><a href="#费率极低" class="headerlink" title="费率极低"></a>费率极低</h3><p>波场网络中，转账需要消耗是能量，每天固定发放免费的能量，足够每天的转账，即使用完了，每天的转账费用也很底。</p><h2 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h2><p>波场项目还有一个点就是和以太坊一样，可以执行以太坊智能合约，基于这一点，就可以执行自定义的编程。这就具备了图灵完备的功能，这是一个优势。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> blockchain </category>
-          
-          <category> tron </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 区块链 </tag>
             
         </tags>
       
