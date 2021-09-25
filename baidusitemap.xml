@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://liukay.com/2016/06/11/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%BD%BF%E7%94%A8wait-notify%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B/</loc>
+    <lastmod>2021-09-25</lastmod>
+  </url>  <url>
     <loc>http://liukay.com/2016/05/13/jvm-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8/</loc>
     <lastmod>2021-09-25</lastmod>
   </url>  <url>
@@ -206,9 +209,6 @@
     <lastmod>2020-12-15</lastmod>
   </url>  <url>
     <loc>http://liukay.com/2018/10/06/java-%E4%BD%BF%E7%94%A8freemarker%E9%A1%B5%E9%9D%A2%E9%9D%99%E6%80%81%E5%8C%96/</loc>
-    <lastmod>2020-12-15</lastmod>
-  </url>  <url>
-    <loc>http://liukay.com/2016/06/11/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%BD%BF%E7%94%A8wait-notify%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B/</loc>
     <lastmod>2020-12-15</lastmod>
   </url>  <url>
     <loc>http://liukay.com/2017/04/09/java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%A6%82%E4%BD%95%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B/</loc>
