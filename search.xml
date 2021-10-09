@@ -1383,35 +1383,6 @@
     
     
     <entry>
-      <title>linux-console-shell的一些常用命令</title>
-      <link href="2018/06/14/linux-console-shell%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-md/"/>
-      <url>2018/06/14/linux-console-shell%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-md/</url>
-      
-        <content type="html"><![CDATA[<p>linux 的命令行用了这么久的 linux 才开始整理这部分的内容，该罚站</p><h3 id="1-删除"><a href="#1-删除" class="headerlink" title="1.删除"></a>1.删除</h3><p>ctrl + w 往回删除一个单词，光标放在最末尾</p><p>ctl + u 删除光标以前的字符，其实这个是剪切<br>ctl + k 删除光标以后的字符</p><p>ctrl + y 粘贴由 Ctrl+u ，  Ctrl+w 剪走的单词<br>ctrl + d 从当前位置开始，向右边删除字符</p><h3 id="2-清屏"><a href="#2-清屏" class="headerlink" title="2.清屏"></a>2.清屏</h3><p>ctrl + l 清屏<br>ctrl + c 另起一行</p><h3 id="3-光标位置"><a href="#3-光标位置" class="headerlink" title="3.光标位置"></a>3.光标位置</h3><p>ctl + a 移动光标至的字符头<br>ctl + e 移动光标至的字符尾<br>ctrl + ? 撤消前一次输入</p><p>ctrl + s 锁住终端        //实际上只是不显示字符而已，命令照样执行。<br>ctrl + q 解锁终端</p><h3 id="4-历史和命令"><a href="#4-历史和命令" class="headerlink" title="4.历史和命令"></a>4.历史和命令</h3><p>ctrl + r 输入单词搜索历史命令，超好用<br>ctrl + o 重复执行命令</p><h3 id="5-屏幕输出"><a href="#5-屏幕输出" class="headerlink" title="5.屏幕输出"></a>5.屏幕输出</h3><p>Ctrl+S 暂停屏幕输出<br>Ctrl+Q 继续屏幕输出</p><h3 id="6-上下翻屏"><a href="#6-上下翻屏" class="headerlink" title="6.上下翻屏"></a>6.上下翻屏</h3><p>这个是找了N久才查到的命令<br>shift + pageUp/pageDown        //纯linux console 下测试有效，但不能一翻到顶，网上说只能翻最近15页<br>shift + home/end                //只有 xshell 下可用<br>shift + 上/下                        //xshell 下可用</p><h3 id="7-连续执行命令echo-commond-1-echo-commond-1-不论前面成功失败，每条都会执行"><a href="#7-连续执行命令echo-commond-1-echo-commond-1-不论前面成功失败，每条都会执行" class="headerlink" title="7.连续执行命令echo commond 1 ; echo  commond 1                //不论前面成功失败，每条都会执行"></a>7.连续执行命令echo commond 1 ; echo  commond 1                //不论前面成功失败，每条都会执行</h3><p>commond 1 &amp;&amp; commond 1        //第一条成功则后面执行<br>commond 1 || commond 1        //第一条失败，才执行</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> linux </category>
-          
-          <category> shell </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> linux </tag>
-            
-            <tag> shell </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>pagehelper报错解决方法</title>
       <link href="2018/05/08/springboot--pagehelper%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
       <url>2018/05/08/springboot--pagehelper%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
@@ -2747,6 +2718,39 @@
             <tag> java </tag>
             
             <tag> List </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>shell的一些常用命令</title>
+      <link href="2015/06/14/linux-console%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+      <url>2015/06/14/linux-console%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      
+        <content type="html"><![CDATA[<p>linux 的命令行用了这么久的 linux 才开始整理这部分的内容，该罚站</p><h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ctrl + w    #往回删除一个单词，光标放在最末尾</span><br><span class="line"></span><br><span class="line">ctl + u     #删除光标以前的字符，其实这个是剪切</span><br><span class="line">ctl + k     #删除光标以后的字符</span><br><span class="line"></span><br><span class="line">ctrl + y    #粘贴由 ctrl+u 和 ctrl+w 剪走的单词</span><br><span class="line">ctrl + d    #从当前位置开始，向右边删除字符</span><br></pre></td></tr></table></figure><h3 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + l    #清屏</span><br><span class="line">ctrl + c    #另起一行</span><br></pre></td></tr></table></figure><h3 id="光标位置"><a href="#光标位置" class="headerlink" title="光标位置"></a>光标位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ctl + a     #移动光标至的字符头</span><br><span class="line">ctl + e     #移动光标至的字符尾</span><br><span class="line">ctrl + ?    #撤消前一次输入</span><br><span class="line"></span><br><span class="line">ctrl + s 锁住终端    #实际上只是不显示字符而已，命令照样执行。</span><br><span class="line">ctrl + q 解锁终端</span><br></pre></td></tr></table></figure><h3 id="历史和命令"><a href="#历史和命令" class="headerlink" title="历史和命令"></a>历史和命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + r    #输入单词搜索历史命令，超好用</span><br><span class="line">ctrl + o    #重复执行命令</span><br></pre></td></tr></table></figure><h3 id="屏幕输出"><a href="#屏幕输出" class="headerlink" title="屏幕输出"></a>屏幕输出</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+S      #暂停屏幕输出</span><br><span class="line">Ctrl+Q      #继续屏幕输出</span><br></pre></td></tr></table></figure><h3 id="上下翻屏"><a href="#上下翻屏" class="headerlink" title="上下翻屏"></a>上下翻屏</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这个是找了N久才查到的命令</span><br><span class="line">shift + pageUp/pageDown        #纯linux console 下测试有效，但不能一翻到顶，网上说只能翻最近15页</span><br><span class="line">shift + home/end               #只有 xshell 下可用</span><br><span class="line">shift + 上/下                  #xshell 下可用</span><br></pre></td></tr></table></figure><h3 id="连续执行命令"><a href="#连续执行命令" class="headerlink" title="连续执行命令"></a>连续执行命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo commond 1 ; echo commond 1   #用 ; 分隔,不论前面成功失败，每条都会执行</span><br><span class="line">commond 1 &amp;&amp; commond 1        #第一条成功则后面执行</span><br><span class="line">commond 1 || commond 1        #第一条失败，才执行</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+          <category> shell </category>
+          
+          <category> console </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> shell </tag>
+            
+            <tag> console </tag>
             
         </tags>
       
