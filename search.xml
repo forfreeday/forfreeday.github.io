@@ -2728,11 +2728,11 @@
     
     
     <entry>
-      <title>List分类算法</title>
+      <title>List分组</title>
       <link href="2015/07/22/java--List%E5%88%86%E7%B1%BB%E7%AE%97/"/>
       <url>2015/07/22/java--List%E5%88%86%E7%B1%BB%E7%AE%97/</url>
       
-        <content type="html"><![CDATA[<p>对一个 List 里面相同属性的内容进行分类，如：对相同部门的员工进行分类。<br>思路是使可以区分类型的属性进行分类，以部门类型为例。</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">```java</span><br><span class="line">List&lt;Devloper&gt; devlopers = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">1</span>, <span class="string">&quot;嗯哼&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">2</span>, <span class="string">&quot;啊哈&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">3</span>, <span class="string">&quot;哦吼&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">4</span>, <span class="string">&quot;呃呵&quot;</span>, <span class="number">2</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">5</span>, <span class="string">&quot;呜唿&quot;</span>, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Devloper&gt;&gt; devloperMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (Devloper devloper: devlopers) &#123;</span><br><span class="line">    <span class="keyword">if</span> (devloperMap.containsKey(devloper.getDept())) &#123;</span><br><span class="line">        devloperMap.get(devloper.getDept()).add(devloper);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        List&lt;Devloper&gt; devs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        devs.add(devloper);</span><br><span class="line">        devloperMap.put(devloper.getDept(), devs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``````</span><br><span class="line">### **结果：**</span><br></pre></td></tr></table></figure><pre><code class="json">&#123;1=[    Devloper&#123;id=1, name=&#39;嗯哼&#39;, dept=1&#125;,     Devloper&#123;id=2, name=&#39;啊哈&#39;, dept=1&#125;,     Devloper&#123;id=3, name=&#39;哦吼&#39;, dept=1&#125;    ], 2=[    Devloper&#123;id=4, name=&#39;呃呵&#39;, dept=2&#125;,     Devloper&#123;id=5, name=&#39;呜唿&#39;, dept=2&#125;    ]&#125;```</code></pre>]]></content>
+        <content type="html"><![CDATA[<p>对一个 List 里面相同属性的内容进行分类，如：对相同部门的员工进行分类。<br>思路是使可以区分类型的属性进行分类，以部门类型为例。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Devloper&gt; devlopers = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">1</span>, <span class="string">&quot;嗯哼&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">2</span>, <span class="string">&quot;啊哈&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">3</span>, <span class="string">&quot;哦吼&quot;</span>, <span class="number">1</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">4</span>, <span class="string">&quot;呃呵&quot;</span>, <span class="number">2</span>));</span><br><span class="line">devlopers.add(<span class="keyword">new</span> Devloper(<span class="number">5</span>, <span class="string">&quot;呜唿&quot;</span>, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">Map&lt;Integer, List&lt;Devloper&gt;&gt; devloperMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (Devloper devloper: devlopers) &#123;</span><br><span class="line">    <span class="keyword">if</span> (devloperMap.containsKey(devloper.getDept())) &#123;</span><br><span class="line">        devloperMap.get(devloper.getDept()).add(devloper);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        List&lt;Devloper&gt; devs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        devs.add(devloper);</span><br><span class="line">        devloperMap.put(devloper.getDept(), devs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="结果："><a href="#结果：" class="headerlink" title="结果："></a><strong>结果：</strong></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">1=[</span><br><span class="line">    Devloper&#123;id=1, name=&#x27;嗯哼&#x27;, dept=1&#125;, </span><br><span class="line">    Devloper&#123;id=2, name=&#x27;啊哈&#x27;, dept=1&#125;, </span><br><span class="line">    Devloper&#123;id=3, name=&#x27;哦吼&#x27;, dept=1&#125;</span><br><span class="line">    ], </span><br><span class="line">2=[</span><br><span class="line">    Devloper&#123;id=4, name=&#x27;呃呵&#x27;, dept=2&#125;, </span><br><span class="line">    Devloper&#123;id=5, name=&#x27;呜唿&#x27;, dept=2&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -2747,35 +2747,6 @@
             <tag> java </tag>
             
             <tag> List </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>几个 String 的知识点</title>
-      <link href="2015/07/22/java--String%E7%B1%BB%E7%9B%B8%E5%85%B3/"/>
-      <url>2015/07/22/java--String%E7%B1%BB%E7%9B%B8%E5%85%B3/</url>
-      
-        <content type="html"><![CDATA[<h3 id="String-类"><a href="#String-类" class="headerlink" title="String 类"></a>String 类</h3><p>不可变字符对象。<br>所以每次String对象的改变实际是创建了一个新对象。<br>String 是 final 的也不能被继承。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String test1 = <span class="keyword">new</span> String(<span class="string">&quot;ABCD&quot;</span>);</span><br><span class="line">String test2 = <span class="string">&quot;ABCD&quot;</span>;    <span class="comment">//通过字符串常量创建一个String对象。</span></span><br><span class="line">String test3 = <span class="string">&quot;ABCD&quot;</span>;</span><br><span class="line">test3 += <span class="string">&quot;EFGH&quot;</span>;         <span class="comment">//创建了一个新的String对象。</span></span><br><span class="line">StringBuilder test4 = <span class="keyword">new</span> StringBuilder(test3);</span><br><span class="line"></span><br><span class="line">System.out.println(test1==test2);</span><br><span class="line">System.out.println(test1.equals(test2));</span><br></pre></td></tr></table></figure></p><p>由于String每次相加时都是创建一个新对象，所以尽量避免创建大是的String对象。比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    test1 += test1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><a id="more"></a><br>如果非得用这种方式的话，尽量用StringBuild来创建。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    test4.append(<span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="防乱码处现"><a href="#防乱码处现" class="headerlink" title="防乱码处现"></a>防乱码处现</h3><p>如果IO流中有泛及到中文，那肯定有乱码问题。处现方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="string">&quot;teachername&quot;</span>.equals(fileItem.getFieldName()))&#123;</span><br><span class="line">        String value = fileItem.getString();</span><br><span class="line">        teacherName = <span class="keyword">new</span> String(value.getBytes(<span class="string">&quot;ISO-8859-1&quot;</span>),<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="空窜注意"><a href="#空窜注意" class="headerlink" title="空窜注意"></a>空窜注意</h3><p>在使用split切割后判断字符串空串时，要注意，” “一个空格不能用一个空格” “来判断，而是用”” 无任何空格的空串来进行判断才能成功。便是单个string判断空串确没有问题？？？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">&quot;aa bb   ccc       ddd&quot;</span>;</span><br><span class="line">        String[] newStr = str.split(<span class="string">&quot; &quot;</span>);</span><br><span class="line">        System.out.println(Arrays.toString(newStr));</span><br><span class="line">        <span class="keyword">for</span>(String str2 : newStr)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!<span class="string">&quot;&quot;</span>.equals(str2))&#123;</span><br><span class="line">                System.out.println(str2);</span><br><span class="line">            &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><pre><code>结果：[aa, bb, , , ccc, , , , , , , ddd]aabbcccddd</code></pre>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> java </tag>
-            
-            <tag> String </tag>
-            
-            <tag> final </tag>
             
         </tags>
       
@@ -2969,35 +2940,6 @@
             <tag> java </tag>
             
             <tag> socket </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>抽象类总结</title>
-      <link href="2014/12/29/java--%E6%8A%BD%E8%B1%A1%E7%B1%BB%E6%80%BB%E7%BB%93/"/>
-      <url>2014/12/29/java--%E6%8A%BD%E8%B1%A1%E7%B1%BB%E6%80%BB%E7%BB%93/</url>
-      
-        <content type="html"><![CDATA[<h4 id="抽象意义：抽出象的部分"><a href="#抽象意义：抽出象的部分" class="headerlink" title="抽象意义：抽出象的部分"></a>抽象意义：抽出象的部分</h4><ol><li>抽象类可以没有抽象方法，但是有抽象方法的类必须定义为抽象类。</li><li>static 与 abstract 不能同时修饰一个方法。因为abstract的语义就是说这个方法是抽象方法，需要子类去实现。而static方法则是在本类中实现的，编译期绑定，不具有多态行为。</li><li>抽象方法必须存放在抽象类中。</li><li>不能用new去创建抽象对象，因为抽象类没有具体的方法体，创建没有意义。所以可以被继承，不能被实例化。</li><li><p>抽象类和抽象方法都必须用abstract修饰。</p></li><li><p>抽象类中的抽象方法要被使用，必须由子类复写其所有的抽象方法后，建立子类对象的调用。如果子类只覆盖部分抽象方法，那么该子类是一个抽象类。如果子类想不成为抽象类，那必须复写所有的父类的抽象方法。也就是说父类的抽象方法，可以只实现部分，但那样自己就必须改变成抽象类。</p></li><li>如果子类没有全部重写父类的所有方法，则子类自已也需要变成抽象类，要用abstract修饰，那么子类将不能被实例化。反之则可以。</li></ol>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> java </tag>
-            
-            <tag> 抽象 </tag>
-            
-            <tag> 总结 </tag>
             
         </tags>
       

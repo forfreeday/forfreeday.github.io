@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://liukay.com/2015/07/22/java--List%25E5%2588%2586%25E7%25B1%25BB%25E7%25AE%2597/</loc>
+    
+    <lastmod>2021-10-09T09:23:08.238Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://liukay.com/2016/06/11/java-%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B-%25E4%25BD%25BF%25E7%2594%25A8wait-notify%25E7%25AE%2580%25E5%258D%2595%25E7%25A4%25BA%25E4%25BE%258B/</loc>
     
-    <lastmod>2021-09-25T11:20:28.349Z</lastmod>
+    <lastmod>2021-09-25T11:20:50.000Z</lastmod>
     
   </url>
   
@@ -180,13 +187,6 @@
     <loc>http://liukay.com/2018/08/05/architecture--Reactor-%25E6%25A8%25A1%25E5%259E%258B/</loc>
     
     <lastmod>2021-04-16T07:38:28.139Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/2015/07/22/java--List%25E5%2588%2586%25E7%25B1%25BB%25E7%25AE%2597/</loc>
-    
-    <lastmod>2021-04-16T07:17:30.153Z</lastmod>
     
   </url>
   
@@ -597,13 +597,6 @@
   </url>
   
   <url>
-    <loc>http://liukay.com/2014/12/29/java--%25E6%258A%25BD%25E8%25B1%25A1%25E7%25B1%25BB%25E6%2580%25BB%25E7%25BB%2593/</loc>
-    
-    <lastmod>2020-12-15T04:09:18.986Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://liukay.com/2016/04/02/java--%25E6%259C%2589%25E7%258A%25B6%25E6%2580%2581%25E5%2592%258C%25E6%2597%25A0%25E7%258A%25B6%25E6%2580%2581%25E5%25AF%25B9%25E8%25B1%25A1/</loc>
     
     <lastmod>2020-12-15T04:09:18.986Z</lastmod>
@@ -614,13 +607,6 @@
     <loc>http://liukay.com/2018/07/26/java--%25E8%25A7%25A3%25E5%2586%25B3database-driver-class-for-database-type-NONE/</loc>
     
     <lastmod>2020-12-15T04:09:18.986Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/2015/07/22/java--String%25E7%25B1%25BB%25E7%259B%25B8%25E5%2585%25B3/</loc>
-    
-    <lastmod>2020-12-15T04:09:18.985Z</lastmod>
     
   </url>
   
