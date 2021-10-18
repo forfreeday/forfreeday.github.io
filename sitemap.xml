@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://liukay.com/2014/09/16/java-%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B-%25E6%25A8%25A1%25E6%258B%259F%25E7%25BA%25BF%25E7%25A8%258B%25E4%25B8%258D%25E5%25AE%2589%25E5%2585%25A8/</loc>
+    <loc>http://liukay.com/2018/10/10/java-lambda-Functional%25E6%258E%25A5%25E5%258F%25A3/</loc>
     
-    <lastmod>2021-10-15T13:17:55.612Z</lastmod>
+    <lastmod>2021-10-18T02:35:08.508Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://liukay.com/2018/10/10/java-lambda-Functional%25E6%258E%25A5%25E5%258F%25A3/</loc>
+    <loc>http://liukay.com/2019/04/14/java--lambda--%25E4%25BD%25A0%25E4%25B8%25BA%25E4%25BB%2580%25E4%25B9%2588%25E5%25AD%25A6%25E4%25B8%258D%25E4%25BC%259Alamdbd/</loc>
     
-    <lastmod>2021-10-15T13:10:32.059Z</lastmod>
+    <lastmod>2021-10-18T01:48:38.933Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://liukay.com/2014/09/16/java-%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B-%25E6%25A8%25A1%25E6%258B%259F%25E7%25BA%25BF%25E7%25A8%258B%25E4%25B8%258D%25E5%25AE%2589%25E5%2585%25A8/</loc>
+    
+    <lastmod>2021-10-15T13:17:55.612Z</lastmod>
     
   </url>
   
@@ -633,13 +640,6 @@
   
   <url>
     <loc>http://liukay.com/2017/09/30/java--%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B--%25E7%25AB%259F%25E6%2580%2581%25E6%259D%25A1%25E4%25BB%25B6/</loc>
-    
-    <lastmod>2020-12-15T04:09:18.985Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/2019/04/14/java--lambda--%25E4%25BD%25A0%25E4%25B8%25BA%25E4%25BB%2580%25E4%25B9%2588%25E5%25AD%25A6%25E4%25B8%258D%25E4%25BC%259Alamdbd/</loc>
     
     <lastmod>2020-12-15T04:09:18.985Z</lastmod>
     
