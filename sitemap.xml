@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://liukay.com/tags/index.html</loc>
+    
+    <lastmod>2021-11-09T06:44:25.461Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://liukay.com/categories/index-1.html</loc>
+    
+    <lastmod>2021-11-09T06:42:48.543Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://liukay.com/tags/index-1.html</loc>
+    
+    <lastmod>2021-11-09T06:42:39.752Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://liukay.com/2015/11/08/linux/shell-%25E5%258F%2598%25E9%2587%258F/</loc>
     
     <lastmod>2021-11-08T14:04:40.000Z</lastmod>
@@ -838,13 +859,6 @@
     <loc>http://liukay.com/2017/06/02/%25E9%259D%25A2%25E8%25AF%2595/%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598--hashcode%25E7%2594%25A8%25E5%259C%25A8%25E5%2593%25AA/</loc>
     
     <lastmod>2020-12-17T04:36:33.163Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://liukay.com/tags/index.html</loc>
-    
-    <lastmod>2020-12-15T04:09:19.004Z</lastmod>
     
   </url>
   
