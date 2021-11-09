@@ -178,11 +178,11 @@
       <category term="Tendermint" scheme="http://liukay.com/categories/Tendermint/"/>
     
     
+      <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
+    
       <category term="Tendermint" scheme="http://liukay.com/tags/Tendermint/"/>
     
       <category term="概述" scheme="http://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
-    
-      <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
       <category term="快速入门" scheme="http://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
@@ -252,11 +252,11 @@
       <category term="tendermint" scheme="http://liukay.com/categories/tendermint/"/>
     
     
+      <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
+    
       <category term="Tendermint" scheme="http://liukay.com/tags/Tendermint/"/>
     
       <category term="概述" scheme="http://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
-    
-      <category term="概念" scheme="http://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
       <category term="快速入门" scheme="http://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
@@ -313,11 +313,11 @@
       <category term="go" scheme="http://liukay.com/categories/go/"/>
     
     
+      <category term="安装" scheme="http://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
+    
       <category term="golang" scheme="http://liukay.com/tags/golang/"/>
     
       <category term="go" scheme="http://liukay.com/tags/go/"/>
-    
-      <category term="安装" scheme="http://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
   </entry>
   
@@ -342,11 +342,11 @@
       <category term="rabbitmq" scheme="http://liukay.com/categories/rabbitmq/"/>
     
     
+      <category term="mq" scheme="http://liukay.com/tags/mq/"/>
+    
       <category term="安装" scheme="http://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="matic" scheme="http://liukay.com/tags/matic/"/>
-    
-      <category term="mq" scheme="http://liukay.com/tags/mq/"/>
     
   </entry>
   
@@ -602,9 +602,9 @@
       <category term="blockchain" scheme="http://liukay.com/categories/blockchain/"/>
     
     
-      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="架构" scheme="http://liukay.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="区块链" scheme="http://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="blockchain" scheme="http://liukay.com/tags/blockchain/"/>
     
