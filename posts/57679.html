@@ -151,9 +151,9 @@
 <h3 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure>
 <h2 id="管理插件"><a href="#管理插件" class="headerlink" title="管理插件"></a>管理插件</h2><p>安装好之后，就可以使用它管理插件，下面以 nvim 为例管理插件。<br>配置文件路径： <code>~/.config/nvim/init.vim</code><br>从 <code>call plug#begin(PLUGIN_DIRECTORY)</code> 开始，<code>PLUGIN_DIRECTORY</code>表示插件指定下载目录，可以自定义。<br>并以 <code>plug#end()</code> 结束，插件写在中间，如：</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> plug#begin(<span class="string">&#x27;~/.vim/plugged&#x27;</span>)</span><br><span class="line">Plug <span class="string">&#x27;scrooloose/nerdtree&#x27;</span>, &#123; <span class="string">&#x27;on&#x27;</span>: <span class="string">&#x27;NERDTreeToggle&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">call</span> plug#end()</span><br></pre></td></tr></table></figure>
-<p><img src="/posts/57679.htm/配置文件.jpg" alt="配置文件"></p>
+<p><img src="/posts/57679/配置文件.jpg" alt="配置文件"></p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>在命令模式下输入：<code>:PlugInstall</code> 进行安装。图片当中是我已经安装的插件，所以显示<code>Already installed</code>。<br>剩下的就是安装自己需要的插件了，有很多vim插件推荐网站，可以从上面找到自己想要的插件。</p>
-<p><img src="/posts/57679.htm/安装插件.jpg" alt="安装插件"></p>
+<p><img src="/posts/57679/安装插件.jpg" alt="安装插件"></p>
 <h2 id="插件命令"><a href="#插件命令" class="headerlink" title="插件命令"></a>插件命令</h2><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p><code>:PlugInstall</code></p>
 <h3 id="检查状态"><a href="#检查状态" class="headerlink" title="检查状态"></a>检查状态</h3><p><code>:PlugStatus</code></p>
 <h3 id="更新插件"><a href="#更新插件" class="headerlink" title="更新插件"></a>更新插件</h3><p><code>:PlugUpdate</code></p>

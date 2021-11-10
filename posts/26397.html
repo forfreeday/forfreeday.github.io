@@ -146,13 +146,13 @@
 <h3 id="1-文件头部注释"><a href="#1-文件头部注释" class="headerlink" title="1.文件头部注释"></a>1.文件头部注释</h3><p>次创建新文件时会自动添加到文件头<br><code>Perferences---Editor---&gt;File and Code Templates---&gt;Includes</code><br>即是，不过这里设值类似Eclipse用 ${ }</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> $&#123;USER&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> $&#123;DATE&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 <p>看效果</p>
-<p><img src="/posts/26397.htm/File.png" alt=""></p>
+<p><img src="/posts/26397/File.png" alt=""></p>
 <h3 id="2-方法注释"><a href="#2-方法注释" class="headerlink" title="2.方法注释"></a>2.方法注释</h3><ol>
 <li>创建 Template Group</li>
 <li>创建 Live Template</li>
 </ol>
 <h4 id="创建-Template-Group"><a href="#创建-Template-Group" class="headerlink" title="创建 Template Group"></a>创建 Template Group</h4><p>idea 做的相当不错的，可以根据自定义注释名称来生成自己设定的注释<br><code>Perferences---Editor---&gt;Live Templates</code><br>点 + 创建 <code>Template Group</code> 输入自己的 Template</p>
-<p><img src="/posts/26397.htm/method.png" alt=""></p>
+<p><img src="/posts/26397/method.png" alt=""></p>
 <h4 id="创建-Live-Template"><a href="#创建-Live-Template" class="headerlink" title="创建 Live Template"></a>创建 Live Template</h4><p>再点 + 创建 Live Temp 剩下的不用看也明白了，这里做一个模板：<br>Abb reviation 是自定义快捷语，在代码中输入自定义名称回车就能出来。<br>define  选择注释生效的范围</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* method:</span></span><br><span class="line"><span class="comment">* description:</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> $user$</span></span><br><span class="line"><span class="comment">* <span class="doctag">@data</span> $data$ $time$</span></span><br><span class="line"><span class="comment">* $parameter$</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> $return$</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 <p>Edit variables 中编辑对应的值多行需要在方法内部就可以实现，方法外部参数就是出不来。好 low</p>

@@ -145,7 +145,7 @@
 <p>堆，才有分代的概念。<br>堆，才有分代的概念。<br>堆，才有分代的概念。</p>
 </blockquote>
 <h2 id="分代"><a href="#分代" class="headerlink" title="分代"></a>分代</h2><p>JVM 将内存分为大致分为三个区域，1.8 前后有区别</p>
-<p><img src="/posts/30555.htm/1.jpeg" alt="jvm"></p>
+<p><img src="/posts/30555/1.jpeg" alt="jvm"></p>
 <h3 id="为什么要分代"><a href="#为什么要分代" class="headerlink" title="为什么要分代"></a>为什么要分代</h3><blockquote>
 <p>不分代行不行</p>
 </blockquote>
@@ -158,7 +158,7 @@
 <li>Eden 区，即新生对象区，除大对象以外，新生对象都创建在这里。</li>
 <li>Survivor 区，即幸存区，该区域又分两个空间<br>s0 和 s1 分别也叫 from 和 to，默认比例8:1。</li>
 </ol>
-<p><img src="/posts/30555.htm/2.png" alt="young"></p>
+<p><img src="/posts/30555/2.png" alt="young"></p>
 <h4 id="对象经历的过程"><a href="#对象经历的过程" class="headerlink" title="对象经历的过程"></a>对象经历的过程</h4><ol>
 <li>新创建对象，分配到Eden区，除大对象特殊处理。</li>
 <li>在 Eden 区经过一次GC后，如果仍存活，移到 Survivor。</li>
@@ -170,7 +170,7 @@
 <p>是复制算法。</p>
 </blockquote>
 <p>为什么选复制算法？<br>因为：年轻代中的80%以上的对象很快就死亡。<br>所以，在年轻代的垃圾回收算法使用的是复制算法。即，将内存分为两块，每次中使用其中一块（Eden 和 From），当一块使用完，则将还存活的对象复制到别一块上。复制算法不会产生碎片。</p>
-<p><img src="/posts/30555.htm/3.jpeg" alt="复制算法"></p>
+<p><img src="/posts/30555/3.jpeg" alt="复制算法"></p>
 <h4 id="From-和-to-区的复制过程"><a href="#From-和-to-区的复制过程" class="headerlink" title="From 和 to 区的复制过程"></a>From 和 to 区的复制过程</h4><p>对上一节的说明，演示复制的过程：</p>
 <ol>
 <li>在 GC 开始的前，对象只会存在于 Eden区 和 From 区。为什么 From 区会有对象？</li>
