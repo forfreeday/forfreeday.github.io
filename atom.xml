@@ -37,9 +37,9 @@
       <category term="go" scheme="https://lllll.cf/categories/go/"/>
     
     
-      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
-    
       <category term="go" scheme="https://lllll.cf/tags/go/"/>
+    
+      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
     
       <category term="defer" scheme="https://lllll.cf/tags/defer/"/>
     
@@ -112,9 +112,9 @@
     
       <category term="BlockChain" scheme="https://lllll.cf/tags/BlockChain/"/>
     
-      <category term="共识" scheme="https://lllll.cf/tags/%E5%85%B1%E8%AF%86/"/>
-    
       <category term="源码分析" scheme="https://lllll.cf/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    
+      <category term="共识" scheme="https://lllll.cf/tags/%E5%85%B1%E8%AF%86/"/>
     
   </entry>
   
@@ -315,9 +315,9 @@
     
       <category term="安装" scheme="https://lllll.cf/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
-    
       <category term="go" scheme="https://lllll.cf/tags/go/"/>
+    
+      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
     
   </entry>
   

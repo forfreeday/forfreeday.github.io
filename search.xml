@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -92,9 +92,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 共识 </tag>
-            
             <tag> 源码分析 </tag>
+            
+            <tag> 共识 </tag>
             
         </tags>
       
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -3388,9 +3388,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> broker </tag>
+            
+            <tag> rocketmq </tag>
             
         </tags>
       
