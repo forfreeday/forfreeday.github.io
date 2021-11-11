@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
         </tags>
       
@@ -1357,9 +1357,9 @@
             
             <tag> java </tag>
             
-            <tag> 算法 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -2204,9 +2204,9 @@
       
         <tags>
             
-            <tag> 面试题 </tag>
-            
             <tag> 多线程 </tag>
+            
+            <tag> 面试题 </tag>
             
         </tags>
       
@@ -3007,9 +3007,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 概念 </tag>
+            
+            <tag> java </tag>
             
             <tag> final </tag>
             
@@ -3468,9 +3468,9 @@
       
       <categories>
           
-          <category> rocketMQ </category>
-          
           <category> architecture </category>
+          
+          <category> rocketMQ </category>
           
           <category> rocketMQ </category>
           
@@ -3725,9 +3725,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 概念 </tag>
+            
+            <tag> java </tag>
             
             <tag> 多线程 </tag>
             
