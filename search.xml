@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -88,9 +88,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> 区块链 </tag>
-            
             <tag> BlockChain </tag>
+            
+            <tag> 区块链 </tag>
             
             <tag> 共识 </tag>
             
@@ -125,9 +125,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> 区块链 </tag>
-            
             <tag> BlockChain </tag>
+            
+            <tag> 区块链 </tag>
             
             <tag> 源码分析 </tag>
             
@@ -166,11 +166,11 @@
             
             <tag> 快速入门 </tag>
             
-            <tag> ABCI </tag>
+            <tag> BlockChain </tag>
             
             <tag> 区块链 </tag>
             
-            <tag> BlockChain </tag>
+            <tag> ABCI </tag>
             
         </tags>
       
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -572,33 +572,6 @@
     
     
     <entry>
-      <title>blockchain--区块链文章大纲</title>
-      <link href="posts/61275.html"/>
-      <url>posts/61275.html</url>
-      
-        <content type="html"><![CDATA[<p>现在从业区块链行业的架构研发，记录对区块链的理解，创建一个文章目录，将需要理解的东西一一记录下来。</p><h1 id="区块链文章大纲"><a href="#区块链文章大纲" class="headerlink" title="区块链文章大纲"></a>区块链文章大纲</h1><h2 id="区块链架构"><a href="#区块链架构" class="headerlink" title="区块链架构"></a>区块链架构</h2><h2 id="快速使用体验"><a href="#快速使用体验" class="headerlink" title="快速使用体验"></a>快速使用体验</h2><ul><li>钱包</li><li>交易<h2 id="如何交易"><a href="#如何交易" class="headerlink" title="如何交易"></a>如何交易</h2></li></ul><h2 id="成为矿工"><a href="#成为矿工" class="headerlink" title="成为矿工"></a>成为矿工</h2><h2 id="区块链共识"><a href="#区块链共识" class="headerlink" title="区块链共识"></a>区块链共识</h2><h2 id="区块链存储"><a href="#区块链存储" class="headerlink" title="区块链存储"></a>区块链存储</h2><h2 id="区块链网络"><a href="#区块链网络" class="headerlink" title="区块链网络"></a>区块链网络</h2><h2 id="区块链加密"><a href="#区块链加密" class="headerlink" title="区块链加密"></a>区块链加密</h2><h2 id="跨链"><a href="#跨链" class="headerlink" title="跨链"></a>跨链</h2><h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> blockchain </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 区块链 </tag>
-            
-            <tag> blockchain </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>vim 插件管理器plug插件</title>
       <link href="posts/57679.html"/>
       <url>posts/57679.html</url>
@@ -751,9 +724,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> LeetCode </tag>
-            
             <tag> 栈 </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> algorithm </tag>
             
