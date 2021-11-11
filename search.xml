@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -92,9 +92,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 源码分析 </tag>
-            
             <tag> 共识 </tag>
+            
+            <tag> 源码分析 </tag>
             
         </tags>
       
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
         </tags>
       
@@ -1324,11 +1324,11 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -3388,9 +3388,9 @@
       
         <tags>
             
-            <tag> broker </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> broker </tag>
             
         </tags>
       
