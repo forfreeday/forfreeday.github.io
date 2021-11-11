@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -88,9 +88,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 共识 </tag>
             
@@ -125,9 +125,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 源码分析 </tag>
             
@@ -166,11 +166,11 @@
             
             <tag> 快速入门 </tag>
             
-            <tag> BlockChain </tag>
+            <tag> ABCI </tag>
             
             <tag> 区块链 </tag>
             
-            <tag> ABCI </tag>
+            <tag> BlockChain </tag>
             
         </tags>
       
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
         </tags>
       
@@ -724,9 +724,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> 栈 </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> 栈 </tag>
             
             <tag> algorithm </tag>
             
@@ -2113,9 +2113,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> git </tag>
+            
+            <tag> java </tag>
             
             <tag> 取消跟踪 </tag>
             
@@ -2144,9 +2144,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> git </tag>
+            
+            <tag> java </tag>
             
             <tag> 分支 </tag>
             
@@ -2767,9 +2767,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> git </tag>
+            
+            <tag> java </tag>
             
             <tag> checkout </tag>
             
