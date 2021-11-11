@@ -5,9 +5,9 @@
   <subtitle>有限的时间，编写先限的可能</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://lllll.cf/"/>
+  <link href="https://liukay.com/"/>
   <updated>2021-11-05T03:15:34.000Z</updated>
-  <id>https://lllll.cf/</id>
+  <id>https://liukay.com/</id>
   
   <author>
     <name>咪雅先森</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>go defer关键字</title>
-    <link href="https://lllll.cf/posts/20130.html"/>
-    <id>https://lllll.cf/posts/20130.html</id>
+    <link href="https://liukay.com/posts/20130.html"/>
+    <id>https://liukay.com/posts/20130.html</id>
     <published>2021-11-05T03:15:34.000Z</published>
     <updated>2021-11-05T03:15:34.000Z</updated>
     
@@ -34,23 +34,23 @@
     
     </summary>
     
-      <category term="go" scheme="https://lllll.cf/categories/go/"/>
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
+      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
     
-      <category term="go" scheme="https://lllll.cf/tags/go/"/>
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
-      <category term="defer" scheme="https://lllll.cf/tags/defer/"/>
+      <category term="defer" scheme="https://liukay.com/tags/defer/"/>
     
-      <category term="关键字" scheme="https://lllll.cf/tags/%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+      <category term="关键字" scheme="https://liukay.com/tags/%E5%85%B3%E9%94%AE%E5%AD%97/"/>
     
   </entry>
   
   <entry>
     <title>go 空白标识符</title>
-    <link href="https://lllll.cf/posts/29773.html"/>
-    <id>https://lllll.cf/posts/29773.html</id>
+    <link href="https://liukay.com/posts/29773.html"/>
+    <id>https://liukay.com/posts/29773.html</id>
     <published>2021-11-05T03:08:40.000Z</published>
     <updated>2021-11-05T03:08:40.000Z</updated>
     
@@ -68,60 +68,60 @@
     
     </summary>
     
-      <category term="go" scheme="https://lllll.cf/categories/go/"/>
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="go" scheme="https://lllll.cf/tags/go/"/>
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
-      <category term="语法" scheme="https://lllll.cf/tags/%E8%AF%AD%E6%B3%95/"/>
+      <category term="语法" scheme="https://liukay.com/tags/%E8%AF%AD%E6%B3%95/"/>
     
-      <category term="空白标识符" scheme="https://lllll.cf/tags/%E7%A9%BA%E7%99%BD%E6%A0%87%E8%AF%86%E7%AC%A6/"/>
+      <category term="空白标识符" scheme="https://liukay.com/tags/%E7%A9%BA%E7%99%BD%E6%A0%87%E8%AF%86%E7%AC%A6/"/>
     
   </entry>
   
   <entry>
-    <title>Tendermint-共识源码分析</title>
-    <link href="https://lllll.cf/posts/4334.html"/>
-    <id>https://lllll.cf/posts/4334.html</id>
+    <title>Tendermint 共识源码分析</title>
+    <link href="https://liukay.com/posts/4334.html"/>
+    <id>https://liukay.com/posts/4334.html</id>
     <published>2021-11-03T07:59:17.000Z</published>
     <updated>2021-11-03T07:59:17.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>Tendermint的共识算法可以看成是POS+BFT，Tendermint在进行BFT共识算法确认区块前，首先使用POS算法从Validators中选举出Proposer。<br>然后由Proposer进行提案，最后使用BFT算法生成区块。Tendermint 的共识协议使用的gossip协议。</p><h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><p>Tendermint 共识网络中有两个重要角色，</p><ol><li><strong>Validator</strong>: 网络的参与者，也是区块的验证者（预先配置的网络中的一般验证者账户们）</li><li><strong>Proposer</strong>: 从validator中选举出一个节点成为出块人（选举出的出块人），选举不需要网络通信，这点后面从源码中说明。</li></ol><h2 id="共识5个阶段"><a href="#共识5个阶段" class="headerlink" title="共识5个阶段"></a>共识5个阶段</h2><ol><li>NewHeight</li><li>propose</li><li>prevote</li><li>precommit</li><li>commit</li></ol><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">                        +--------------------------------------+</span><br><span class="line">                        v                                      |(Wait til `CommmitTime+timeoutCommit`)</span><br><span class="line">                   +-----------+                         +-----+-----+</span><br><span class="line">      +----------&gt; |  Propose  +--------------+          | NewHeight |</span><br><span class="line">      |            +-----------+              |          +-----------+</span><br><span class="line">      |                                       |                ^</span><br><span class="line">      |(Else, after timeoutPrecommit)         v                |</span><br><span class="line">+-----+-----+                           +-----------+          |</span><br><span class="line">| Precommit |  &lt;------------------------+  Prevote  |          |</span><br><span class="line">+-----+-----+                           +-----------+          |</span><br><span class="line">      |(When +2/3 Precommits for block found)                  |</span><br><span class="line">      v                                                        |</span><br><span class="line">+--------------------------------------------------------------------+</span><br><span class="line">|  Commit                                                            |</span><br><span class="line">|                                                                    |</span><br><span class="line">|  * Set CommitTime = now;                                           |</span><br><span class="line">|  * Wait for block, then stage/save/commit block;                   |</span><br><span class="line">+--------------------------------------------------------------------+</span><br></pre></td></tr></table></figure><p>阶段：Propose阶段、Prevote阶段、Precommit阶段<br>投票种类：prevote、precommit、commit</p><h2 id="round-based-协议"><a href="#round-based-协议" class="headerlink" title="round-based 协议"></a>round-based 协议</h2><p>整个Tendermint区块链网络需要通过Round-based协议来决定下一个区块，在区块链中共识的直接目的就是确定下一个区块内容、链接下一个区块</p><p>round-based 协议是一个状态机，主要有:</p><blockquote><p>NewHeigh -&gt; Propose -&gt; Prevote -&gt; Precommit -&gt; Commit</p></blockquote><p>上述每个状态都被称为一个 Step。首尾的 NewHeigh 和 Commit ，这两个 Steps 被称为特殊的 Step。</p><h3 id="Round"><a href="#Round" class="headerlink" title="Round"></a>Round</h3><p>而中间循环三个 Steps则被称为一个 <code>Round</code>(<code>Propose</code> -&gt; <code>Prevote</code> -&gt; <code>Precommit</code>)，是<code>共识阶段</code>，也是算法的核心原理所在。</p><p>一个块的最终提交（Commit）可能需要多个 Round 过程，这是因为有许多原因可能会导致当前 Round 不成功（比如出块节点 Offline，提出的块是无效块，收到的 Prevote 或者 Precommit 票数不够 +2/3 等等）。</p><h3 id="共识失败怎么办"><a href="#共识失败怎么办" class="headerlink" title="共识失败怎么办"></a>共识失败怎么办</h3><p>如果出块节点 Offline，提出的块是无效块，收到的 Prevote 或者 Precommit 票数不够 +2/3<br>出现这些情况的话，解决方案就是移步到下一轮，或者增加 timeout 时间。</p><h3 id="共识流程"><a href="#共识流程" class="headerlink" title="共识流程"></a>共识流程</h3><ol><li><strong>NewHeight 阶段：</strong>当区块链达到一个新的高度时进入 NewHeight 阶段。</li><li><strong>propose 阶段：</strong>接下来 Propose 阶段会提交一个 proposal ，</li><li><strong>prevote 阶段：</strong>prevote 阶段会对收到的 proposal 进行 prevote 投票。</li><li><strong>precommit 阶段：</strong>在 precommit 阶段收集到+⅔ prevote 投票后，对 block 进行 precommit 投票。</li><li><strong>commit阶段：</strong><ul><li>如果收集到+⅔ precommit 投票后则进入 commit 阶段，</li><li>如果没有收集到+⅔ precommit 投票，会再次进入 propose 段。<br>在共识阶段期间如果收到+⅔ commit 投票那么直接进入 commit 阶段。<br>以上就是算法运行的整体过程，接下来分阶段来阐述各个阶段。</li></ul></li></ol><h2 id="Round0-首轮共识分析"><a href="#Round0-首轮共识分析" class="headerlink" title="Round0 首轮共识分析"></a>Round0 首轮共识分析</h2><p>服务刚启动时，节点进入第一轮状态共识，Tendenmint 称之为<code>Round0</code>。<br>启动流程如下</p><p><img src="/posts/4334/启动首论共识.png" alt="启动首论共识"></p><h3 id="Round0-是什么做用？做了哪些事"><a href="#Round0-是什么做用？做了哪些事" class="headerlink" title="Round0 是什么做用？做了哪些事"></a>Round0 是什么做用？做了哪些事</h3><h4 id="共识核心方法说明"><a href="#共识核心方法说明" class="headerlink" title="共识核心方法说明"></a>共识核心方法说明</h4><p>1.receiveRoutine 核心方法<br>这个函数就比较重要了，它处理了可能导致状态转换的消息。<br>其中超时消息、完成一个提案和超过2/3的投票都会导致状态转换。<br>通过监听各种 Queue 的消息类型来处理</p><p>state.go 源码分析</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OnStart loads the latest state via the WAL, and starts the timeout and</span></span><br><span class="line"><span class="comment">// receive routines.</span></span><br><span class="line"><span class="comment">// OnStart通过WAL加载最新状态，并启动超时和接收程序。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cs *State)</span> <span class="title">OnStart</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// We may set the WAL in testing before calling Start, so only OpenWAL if its</span></span><br><span class="line">    <span class="comment">// still the nilWAL.</span></span><br><span class="line">    <span class="comment">// 在测试中，我们可能会在调用Start之前设置WAL，所以只有在其仍然是nilWAL的情况下才会打开WAL。</span></span><br><span class="line">    <span class="keyword">if</span> _, ok := cs.wal.(nilWAL); ok &#123;</span><br><span class="line">        <span class="keyword">if</span> err := cs.loadWalFile(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We may have lost some votes if the process crashed reload from consensus</span></span><br><span class="line">    <span class="comment">// log to catchup.</span></span><br><span class="line">    <span class="comment">// 如果从共识日志到追赶的过程中崩溃重新加载，我们可能会失去一些票数。</span></span><br><span class="line">    <span class="keyword">if</span> cs.doWALCatchup &#123;</span><br><span class="line">        repairAttempted := <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    LOOP:</span><br><span class="line">        <span class="keyword">for</span> &#123;</span><br><span class="line">            err := cs.catchupReplay(cs.Height)</span><br><span class="line">            <span class="keyword">switch</span> &#123;</span><br><span class="line">            <span class="keyword">case</span> err == <span class="literal">nil</span>:</span><br><span class="line">                <span class="keyword">break</span> LOOP</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> !IsDataCorruptionError(err):</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;error on catchup replay; proceeding to start state anyway&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">                <span class="keyword">break</span> LOOP</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> repairAttempted:</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Error(<span class="string">&quot;the WAL file is corrupted; attempting repair&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 1) prep work</span></span><br><span class="line">            <span class="keyword">if</span> err := cs.wal.Stop(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            repairAttempted = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2) backup original WAL file</span></span><br><span class="line">            corruptedFile := fmt.Sprintf(<span class="string">&quot;%s.CORRUPTED&quot;</span>, cs.config.WalFile())</span><br><span class="line">            <span class="keyword">if</span> err := tmos.CopyFile(cs.config.WalFile(), corruptedFile); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Debug(<span class="string">&quot;backed up WAL file&quot;</span>, <span class="string">&quot;src&quot;</span>, cs.config.WalFile(), <span class="string">&quot;dst&quot;</span>, corruptedFile)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3) try to repair (WAL file will be overwritten!)</span></span><br><span class="line">            <span class="keyword">if</span> err := repairWalFile(corruptedFile, cs.config.WalFile()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;the WAL repair failed&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Info(<span class="string">&quot;successful WAL repair&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// reload WAL file</span></span><br><span class="line">            <span class="keyword">if</span> err := cs.loadWalFile(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// EventSwitch 只监听 EventNewRoundStep、EventValidBlock和EventVote 这三种事件</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.evsw.Start(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// we need the timeoutRoutine for replay so</span></span><br><span class="line">    <span class="comment">// we don&#x27;t block on the tick chan.</span></span><br><span class="line">    <span class="comment">// <span class="doctag">NOTE:</span> we will get a build up of garbage go routines</span></span><br><span class="line">    <span class="comment">// firing on the tockChan until the receiveRoutine is started</span></span><br><span class="line">    <span class="comment">// to deal with them (by that point, at most one will be valid)</span></span><br><span class="line">    <span class="comment">// 我们需要重放的timeoutRoutine，这样我们就不会在tick chan上阻塞。</span></span><br><span class="line">    <span class="comment">// 注意：我们将得到大量的垃圾程序</span></span><br><span class="line">    <span class="comment">// 直到receiveRoutine开始处理它们（到那时，最多只有一个是有效的）来处理它们（到那时，最多只有一个是有效的）。</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.timeoutTicker.Start(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Double Signing Risk Reduction</span></span><br><span class="line">    <span class="comment">// 检查双重验签</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.checkDoubleSigningRisk(cs.Height); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// now start the receiveRoutine</span></span><br><span class="line">    <span class="comment">// 启动接收程序</span></span><br><span class="line">    <span class="keyword">go</span> cs.receiveRoutine(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// schedule the first round!</span></span><br><span class="line">    <span class="comment">// use GetRoundState so we don&#x27;t race the receiveRoutine for access</span></span><br><span class="line">    <span class="comment">// 安排第一轮!</span></span><br><span class="line">    <span class="comment">// 使用GetRoundState，这样我们就不会和receiveRoutine争夺访问权了。</span></span><br><span class="line">    cs.scheduleRound0(cs.GetRoundState())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Tendermint的共识算法可以看成是POS+BFT，Tendermint在进行BFT共识算法确认区块前，首先使用POS算法从Validators中选举出Proposer。<br>然后由Proposer进行提案，最后使用BFT算法生成区块。Tendermint 的共识协议使用的gossip协议。</p><p>另外，源码分析部分由于代码篇幅太长，会省略部分源码，不影响阅读。</p><h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><p>Tendermint 共识网络中有两个重要角色</p><ol><li><strong>Validator</strong>: 网络的参与者，也是区块的验证者（预先配置的网络中的一般验证者账户们）</li><li><strong>Proposer</strong>: 从validator中选举出一个节点成为出块人（选举出的出块人），选举不需要网络通信，这点后面从源码中说明。</li></ol><h2 id="共识5个阶段"><a href="#共识5个阶段" class="headerlink" title="共识5个阶段"></a>共识5个阶段</h2><ol><li>NewHeight</li><li>propose</li><li>prevote</li><li>precommit</li><li>commit</li></ol><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">                        +--------------------------------------+</span><br><span class="line">                        v                                      |(Wait til `CommmitTime+timeoutCommit`)</span><br><span class="line">                   +-----------+                         +-----+-----+</span><br><span class="line">      +----------&gt; |  Propose  +--------------+          | NewHeight |</span><br><span class="line">      |            +-----------+              |          +-----------+</span><br><span class="line">      |                                       |                ^</span><br><span class="line">      |(Else, after timeoutPrecommit)         v                |</span><br><span class="line">+-----+-----+                           +-----------+          |</span><br><span class="line">| Precommit |  &lt;------------------------+  Prevote  |          |</span><br><span class="line">+-----+-----+                           +-----------+          |</span><br><span class="line">      |(When +2/3 Precommits for block found)                  |</span><br><span class="line">      v                                                        |</span><br><span class="line">+--------------------------------------------------------------------+</span><br><span class="line">|  Commit                                                            |</span><br><span class="line">|                                                                    |</span><br><span class="line">|  * Set CommitTime = now;                                           |</span><br><span class="line">|  * Wait for block, then stage/save/commit block;                   |</span><br><span class="line">+--------------------------------------------------------------------+</span><br></pre></td></tr></table></figure><p>阶段：Propose阶段、Prevote阶段、Precommit阶段<br>投票种类：prevote、precommit、commit</p><h2 id="round-based-协议"><a href="#round-based-协议" class="headerlink" title="round-based 协议"></a>round-based 协议</h2><p>整个Tendermint区块链网络需要通过Round-based协议来决定下一个区块，在区块链中共识的直接目的就是确定下一个区块内容、链接下一个区块</p><p>round-based 协议是一个状态机，主要有:</p><blockquote><p>NewHeigh -&gt; Propose -&gt; Prevote -&gt; Precommit -&gt; Commit</p></blockquote><p>上述每个状态都被称为一个 Step。首尾的 NewHeigh 和 Commit ，这两个 Steps 被称为特殊的 Step。</p><h3 id="Round"><a href="#Round" class="headerlink" title="Round"></a>Round</h3><p>而中间循环三个 Steps则被称为一个 <code>Round</code>(<code>Propose</code> -&gt; <code>Prevote</code> -&gt; <code>Precommit</code>)，是<code>共识阶段</code>，也是算法的核心原理所在。</p><p>一个块的最终提交（Commit）可能需要多个 Round 过程，这是因为有许多原因可能会导致当前 Round 不成功（比如出块节点 Offline，提出的块是无效块，收到的 Prevote 或者 Precommit 票数不够 +2/3 等等）。</p><h3 id="共识失败怎么办"><a href="#共识失败怎么办" class="headerlink" title="共识失败怎么办"></a>共识失败怎么办</h3><p>如果出块节点 Offline，提出的块是无效块，收到的 Prevote 或者 Precommit 票数不够 +2/3<br>出现这些情况的话，解决方案就是移步到下一轮，或者增加 timeout 时间。</p><h3 id="共识流程"><a href="#共识流程" class="headerlink" title="共识流程"></a>共识流程</h3><ol><li><strong>NewHeight 阶段：</strong>当区块链达到一个新的高度时进入 NewHeight 阶段。</li><li><strong>propose 阶段：</strong>接下来 Propose 阶段会提交一个 proposal ，</li><li><strong>prevote 阶段：</strong>prevote 阶段会对收到的 proposal 进行 prevote 投票。</li><li><strong>precommit 阶段：</strong>在 precommit 阶段收集到+⅔ prevote 投票后，对 block 进行 precommit 投票。</li><li><strong>commit阶段：</strong><ul><li>如果收集到+⅔ precommit 投票后则进入 commit 阶段，</li><li>如果没有收集到+⅔ precommit 投票，会再次进入 propose 段。<br>在共识阶段期间如果收到+⅔ commit 投票那么直接进入 commit 阶段。<br>以上就是算法运行的整体过程，接下来分阶段来阐述各个阶段。</li></ul></li></ol><h2 id="Round0-首轮共识分析"><a href="#Round0-首轮共识分析" class="headerlink" title="Round0 首轮共识分析"></a>Round0 首轮共识分析</h2><p>服务刚启动时，节点进入第一轮状态共识，Tendenmint 称之为<code>Round0</code>。<br>启动流程如下</p><p><img src="/posts/4334/启动首论共识.png" alt="启动首论共识"></p><h3 id="Round0-是什么做用？做了哪些事"><a href="#Round0-是什么做用？做了哪些事" class="headerlink" title="Round0 是什么做用？做了哪些事"></a>Round0 是什么做用？做了哪些事</h3><p>主要是通过监听消息，来处理对应消息类型携带的事件。</p><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ol><li>OnStart</li><li>receiveRoutine 启动接收程序<br>go cs.receiveRoutine</li><li>scheduleRound0: 注意，这个发送的是内部消息，不是 peer消息</li><li>scheduleTimeout 发送<code>round0</code> 的事件，事件类型：<code>receiveRoutine</code></li><li>receiveRoutine: 处理事件</li></ol><h4 id="共识核心方法说明"><a href="#共识核心方法说明" class="headerlink" title="共识核心方法说明"></a>共识核心方法说明</h4><p>receiveRoutine 核心方法<br>这个函数就比较重要了，它处理了可能导致状态转换的消息。<br>其中超时消息、完成一个提案和超过2/3的投票都会导致状态转换。<br>通过监听各种 Queue 的消息类型来处理</p><p>state.go 源码分析</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OnStart loads the latest state via the WAL, and starts the timeout and</span></span><br><span class="line"><span class="comment">// receive routines.</span></span><br><span class="line"><span class="comment">// OnStart通过WAL加载最新状态，并启动超时和接收程序。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cs *State)</span> <span class="title">OnStart</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// We may set the WAL in testing before calling Start, so only OpenWAL if its</span></span><br><span class="line">    <span class="comment">// still the nilWAL.</span></span><br><span class="line">    <span class="comment">// 在测试中，我们可能会在调用Start之前设置WAL，所以只有在其仍然是nilWAL的情况下才会打开WAL。</span></span><br><span class="line">    <span class="keyword">if</span> _, ok := cs.wal.(nilWAL); ok &#123;</span><br><span class="line">        <span class="keyword">if</span> err := cs.loadWalFile(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We may have lost some votes if the process crashed reload from consensus</span></span><br><span class="line">    <span class="comment">// log to catchup.</span></span><br><span class="line">    <span class="comment">// 如果从共识日志到追赶的过程中崩溃重新加载，我们可能会失去一些票数。</span></span><br><span class="line">    <span class="keyword">if</span> cs.doWALCatchup &#123;</span><br><span class="line">        repairAttempted := <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    LOOP:</span><br><span class="line">        <span class="keyword">for</span> &#123;</span><br><span class="line">            err := cs.catchupReplay(cs.Height)</span><br><span class="line">            <span class="keyword">switch</span> &#123;</span><br><span class="line">            <span class="keyword">case</span> err == <span class="literal">nil</span>:</span><br><span class="line">                <span class="keyword">break</span> LOOP</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> !IsDataCorruptionError(err):</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;error on catchup replay; proceeding to start state anyway&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">                <span class="keyword">break</span> LOOP</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> repairAttempted:</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Error(<span class="string">&quot;the WAL file is corrupted; attempting repair&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 1) prep work</span></span><br><span class="line">            <span class="keyword">if</span> err := cs.wal.Stop(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            repairAttempted = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2) backup original WAL file</span></span><br><span class="line">            corruptedFile := fmt.Sprintf(<span class="string">&quot;%s.CORRUPTED&quot;</span>, cs.config.WalFile())</span><br><span class="line">            <span class="keyword">if</span> err := tmos.CopyFile(cs.config.WalFile(), corruptedFile); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Debug(<span class="string">&quot;backed up WAL file&quot;</span>, <span class="string">&quot;src&quot;</span>, cs.config.WalFile(), <span class="string">&quot;dst&quot;</span>, corruptedFile)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3) try to repair (WAL file will be overwritten!)</span></span><br><span class="line">            <span class="keyword">if</span> err := repairWalFile(corruptedFile, cs.config.WalFile()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;the WAL repair failed&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cs.Logger.Info(<span class="string">&quot;successful WAL repair&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// reload WAL file</span></span><br><span class="line">            <span class="keyword">if</span> err := cs.loadWalFile(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> err</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// EventSwitch 只监听 EventNewRoundStep、EventValidBlock和EventVote 这三种事件</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.evsw.Start(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// we need the timeoutRoutine for replay so</span></span><br><span class="line">    <span class="comment">// we don&#x27;t block on the tick chan.</span></span><br><span class="line">    <span class="comment">// <span class="doctag">NOTE:</span> we will get a build up of garbage go routines</span></span><br><span class="line">    <span class="comment">// firing on the tockChan until the receiveRoutine is started</span></span><br><span class="line">    <span class="comment">// to deal with them (by that point, at most one will be valid)</span></span><br><span class="line">    <span class="comment">// 我们需要重放的timeoutRoutine，这样我们就不会在tick chan上阻塞。</span></span><br><span class="line">    <span class="comment">// 注意：我们将得到大量的垃圾程序</span></span><br><span class="line">    <span class="comment">// 直到receiveRoutine开始处理它们（到那时，最多只有一个是有效的）来处理它们（到那时，最多只有一个是有效的）。</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.timeoutTicker.Start(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Double Signing Risk Reduction</span></span><br><span class="line">    <span class="comment">// 检查双重验签</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.checkDoubleSigningRisk(cs.Height); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// now start the receiveRoutine</span></span><br><span class="line">    <span class="comment">// 启动接收程序</span></span><br><span class="line">    <span class="keyword">go</span> cs.receiveRoutine(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// schedule the first round!</span></span><br><span class="line">    <span class="comment">// use GetRoundState so we don&#x27;t race the receiveRoutine for access</span></span><br><span class="line">    <span class="comment">// 安排第一轮!</span></span><br><span class="line">    <span class="comment">// 使用GetRoundState，这样我们就不会和receiveRoutine争夺访问权了。</span></span><br><span class="line">    cs.scheduleRound0(cs.GetRoundState())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="发送内部消息-cs-scheduleRound0"><a href="#发送内部消息-cs-scheduleRound0" class="headerlink" title="发送内部消息 cs.scheduleRound0"></a>发送内部消息 cs.scheduleRound0</h2><p>scheduleRound0 的作用是将消息发送到内部的 chan 当中，receiveRoutine 负责监听不同类型事件，会监听到这个事件。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// enterNewRound(height, 0) at cs.StartTime.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cs *State)</span> <span class="title">scheduleRound0</span><span class="params">(rs *cstypes.RoundState)</span></span> &#123;</span><br><span class="line">    <span class="comment">// cs.Logger.Info(&quot;scheduleRound0&quot;, &quot;now&quot;, tmtime.Now(), &quot;startTime&quot;, cs.StartTime)</span></span><br><span class="line">    sleepDuration := rs.StartTime.Sub(tmtime.Now())</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这一轮是发送了 cstypes.RoundStepNewHeight 事件类型</span></span><br><span class="line">    cs.scheduleTimeout(sleepDuration, rs.Height, <span class="number">0</span>, cstypes.RoundStepNewHeight)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>发送内部消息，最终将消息发送到 chan</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ScheduleTimeout schedules a new timeout by sending on the internal tickChan.</span></span><br><span class="line"><span class="comment">// The timeoutRoutine is always available to read from tickChan, so this won&#x27;t block.</span></span><br><span class="line"><span class="comment">// The scheduling may fail if the timeoutRoutine has already scheduled a timeout for a later height/round/step.</span></span><br><span class="line"><span class="comment">// ScheduleTimeout通过在内部tickChan上发送来安排一个新的超时。</span></span><br><span class="line"><span class="comment">// timeoutRoutine总是可以从tickChan中读取，所以这不会阻塞。</span></span><br><span class="line"><span class="comment">// 如果timeoutRoutine已经为以后的高度/轮次/步长安排了一个超时，则调度可能会失败。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *timeoutTicker)</span> <span class="title">ScheduleTimeout</span><span class="params">(ti timeoutInfo)</span></span> &#123;</span><br><span class="line">    t.tickChan &lt;- ti</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="核心处理逻辑"><a href="#核心处理逻辑" class="headerlink" title="核心处理逻辑"></a>核心处理逻辑</h2><h3 id="主要是-receiveRoutine-处理"><a href="#主要是-receiveRoutine-处理" class="headerlink" title="主要是 receiveRoutine 处理"></a>主要是 receiveRoutine 处理</h3><p>receiveRoutine 处理消息类型</p><ol><li>peerMsgQueue 来自节点的消息</li><li>internalMsgQueue 内部消息</li><li>timeoutTicker 超时的消息<br>timeoutTicker 这个消息，就是被上面流程中<code>scheduleRound0</code>发出的消息</li></ol><h3 id="receiveRoutine-处理流程"><a href="#receiveRoutine-处理流程" class="headerlink" title="receiveRoutine 处理流程"></a>receiveRoutine 处理流程</h3><ol><li>根据类型选把处理器<br>cs.timeoutTicker.Chan()</li><li>handleTimeout 处理<br>处理具体类型</li></ol><h3 id="handleTimeout-处理具体事件类型"><a href="#handleTimeout-处理具体事件类型" class="headerlink" title="handleTimeout 处理具体事件类型"></a>handleTimeout 处理具体事件类型</h3><ol><li>监听<code>RoundStepNewHeight</code>事件<br>case cstypes.RoundStepNewHeight:</li><li>进入 Round 流程<br>这个就重点了，概据官方文档说明，每一次共识都有 5 个步骤，这个是第一步。<br>cs.enterNewRound(ti.Height, 0)</li></ol><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-----------------------------------------</span></span><br><span class="line"><span class="comment">// the main go routines</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// receiveRoutine handles messages which may cause state transitions.</span></span><br><span class="line"><span class="comment">// it&#x27;s argument (n) is the number of messages to process before exiting - use 0 to run forever</span></span><br><span class="line"><span class="comment">// It keeps the RoundState and is the only thing that updates it.</span></span><br><span class="line"><span class="comment">// Updates (state transitions) happen on timeouts, complete proposals, and 2/3 majorities.</span></span><br><span class="line"><span class="comment">// State must be locked before any internal state is updated.</span></span><br><span class="line"><span class="comment">// receiveRoutine处理可能导致状态转换的消息。</span></span><br><span class="line"><span class="comment">// 它的参数(n)是退出前要处理的消息的数量--用0表示永远运行。</span></span><br><span class="line"><span class="comment">// 它保持RoundState，并且是唯一能更新它的东西。</span></span><br><span class="line"><span class="comment">// 更新（状态转换）发生在超时、完整提案和2/3多数的情况下。</span></span><br><span class="line"><span class="comment">// 在任何内部状态被更新之前，状态必须被锁定。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cs *State)</span> <span class="title">receiveRoutine</span><span class="params">(maxSteps <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// 拿到当前链状态</span></span><br><span class="line">        rs := cs.RoundState</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 注意，这个是接收的 reactor 的消息</span></span><br><span class="line">        <span class="keyword">var</span> mi msgInfo</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理三种类型的消息</span></span><br><span class="line">        <span class="comment">// 1.peerMsgQueue 来自节点的消息</span></span><br><span class="line">        <span class="comment">// 2.internalMsgQueue 内部消息</span></span><br><span class="line">        <span class="comment">// 3.timeoutTicker 超时的消息</span></span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-cs.txNotifier.TxsAvailable():</span><br><span class="line">            cs.handleTxsAvailable()</span><br><span class="line"></span><br><span class="line">            <span class="comment">// peer 节点消息</span></span><br><span class="line">        <span class="keyword">case</span> mi = &lt;-cs.peerMsgQueue:</span><br><span class="line">            <span class="keyword">if</span> err := cs.wal.Write(mi); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;failed writing to WAL&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// handles proposals, block parts, votes</span></span><br><span class="line">            <span class="comment">// may generate internal events (votes, complete proposals, 2/3 majorities)</span></span><br><span class="line">            cs.handleMsg(mi)</span><br><span class="line"></span><br><span class="line">            <span class="comment">//监听内部队列消息</span></span><br><span class="line">        <span class="keyword">case</span> mi = &lt;-cs.internalMsgQueue:</span><br><span class="line">            err := cs.wal.WriteSync(mi) <span class="comment">// <span class="doctag">NOTE:</span> fsync</span></span><br><span class="line">            <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="built_in">panic</span>(fmt.Sprintf(</span><br><span class="line">                    <span class="string">&quot;failed to write %v msg to consensus WAL due to %v; check your file system and restart the node&quot;</span>,</span><br><span class="line">                    mi, err,</span><br><span class="line">                ))</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// handles proposals, block parts, votes</span></span><br><span class="line">            <span class="comment">// 核心的状态逻辑处理，处理 proposals, block parts, votes</span></span><br><span class="line">            cs.handleMsg(mi)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 注意这个监听，ScheduleTimeout 的 channel</span></span><br><span class="line">        <span class="keyword">case</span> ti := &lt;-cs.timeoutTicker.Chan(): <span class="comment">// tockChan:</span></span><br><span class="line">            <span class="keyword">if</span> err := cs.wal.Write(ti); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                cs.Logger.Error(<span class="string">&quot;failed writing to WAL&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// if the timeout is relevant to the rs</span></span><br><span class="line">            <span class="comment">// go to the next step</span></span><br><span class="line">            cs.handleTimeout(ti, rs)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> &lt;-cs.Quit():</span><br><span class="line">            onExit(cs)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="handleTimeout-分析"><a href="#handleTimeout-分析" class="headerlink" title="handleTimeout 分析"></a>handleTimeout 分析</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进入新一轮</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cs *State)</span> <span class="title">enterNewRound</span><span class="params">(height <span class="keyword">int64</span>, round <span class="keyword">int32</span>)</span></span> &#123;</span><br><span class="line">    logger := cs.Logger.With(<span class="string">&quot;height&quot;</span>, height, <span class="string">&quot;round&quot;</span>, round)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> cs.Height != height || round &lt; cs.Round || (cs.Round == round &amp;&amp; cs.Step != cstypes.RoundStepNewHeight) &#123;</span><br><span class="line">        logger.Debug(</span><br><span class="line">            <span class="string">&quot;entering new round with invalid args&quot;</span>,</span><br><span class="line">            <span class="string">&quot;current&quot;</span>, fmt.Sprintf(<span class="string">&quot;%v/%v/%v&quot;</span>, cs.Height, cs.Round, cs.Step),</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> now := tmtime.Now(); cs.StartTime.After(now) &#123;</span><br><span class="line">        logger.Debug(<span class="string">&quot;need to set a buffer and log message here for sanity&quot;</span>, <span class="string">&quot;start_time&quot;</span>, cs.StartTime, <span class="string">&quot;now&quot;</span>, now)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logger.Debug(<span class="string">&quot;entering new round&quot;</span>, <span class="string">&quot;current&quot;</span>, fmt.Sprintf(<span class="string">&quot;%v/%v/%v&quot;</span>, cs.Height, cs.Round, cs.Step))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// increment validators if necessary</span></span><br><span class="line">    <span class="comment">// 必要时增加 validator</span></span><br><span class="line">    validators := cs.Validators</span><br><span class="line">    <span class="keyword">if</span> cs.Round &lt; round &#123;</span><br><span class="line">        validators = validators.Copy()</span><br><span class="line">        validators.IncrementProposerPriority(tmmath.SafeSubInt32(round, cs.Round))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setup new round</span></span><br><span class="line">    <span class="comment">// we don&#x27;t fire newStep for this step,</span></span><br><span class="line">    <span class="comment">// but we fire an event, so update the round step first</span></span><br><span class="line">    <span class="comment">// 只是 set 值，并没有接口调用</span></span><br><span class="line">    cs.updateRoundStep(round, cstypes.RoundStepNewRound)</span><br><span class="line">    ...<span class="comment">//省略部分代码</span></span><br><span class="line">    cs.Votes.SetRound(tmmath.SafeAddInt32(round, <span class="number">1</span>)) <span class="comment">// also track next round (round+1) to allow round-skipping</span></span><br><span class="line">    cs.TriggeredTimeoutPrecommit = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发布事件？？</span></span><br><span class="line">    <span class="keyword">if</span> err := cs.eventBus.PublishEventNewRound(cs.NewRoundEvent()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        cs.Logger.Error(<span class="string">&quot;failed publishing new round&quot;</span>, <span class="string">&quot;err&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cs.metrics.Rounds.Set(<span class="keyword">float64</span>(round))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait for txs to be available in the mempool</span></span><br><span class="line">    <span class="comment">// before we enterPropose in round 0. If the last block changed the app hash,</span></span><br><span class="line">    <span class="comment">// we may need an empty &quot;proof&quot; block, and enterPropose immediately.</span></span><br><span class="line">    <span class="comment">// 进入 round0 之前，等待mempool中的txs可用。</span></span><br><span class="line">    <span class="comment">// 如果最后一个区块改变了应用程序的哈希值，我们可能需要一个空的 &quot;证明 &quot;区块，并立即输入Propose。</span></span><br><span class="line">    waitForTxs := cs.config.WaitForTxs() &amp;&amp; round == <span class="number">0</span> &amp;&amp; !cs.needProofBlock(height)</span><br><span class="line">    <span class="keyword">if</span> waitForTxs &#123;</span><br><span class="line">        <span class="keyword">if</span> cs.config.CreateEmptyBlocksInterval &gt; <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// 构建空块证明，进入下一个阶段</span></span><br><span class="line">            cs.scheduleTimeout(cs.config.CreateEmptyBlocksInterval, height, round,</span><br><span class="line">                cstypes.RoundStepNewRound)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 进入 propose 阶段</span></span><br><span class="line">        cs.enterPropose(height, round)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h1&gt;&lt;p&gt;Tendermint的共识算法可以看成是POS+BFT，Tendermint在进行BFT共识算法确认区块前，首先使用POS算法从Valida
+        &lt;h2 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h2&gt;&lt;p&gt;Tendermint的共识算法可以看成是POS+BFT，Tendermint在进行BFT共识算法确认区块前，首先使用POS算法从Valida
       
     
     </summary>
     
-      <category term="tendermint" scheme="https://lllll.cf/categories/tendermint/"/>
+      <category term="tendermint" scheme="https://liukay.com/categories/tendermint/"/>
     
-      <category term="源码分析" scheme="https://lllll.cf/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="https://liukay.com/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
-      <category term="Tendermint" scheme="https://lllll.cf/categories/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/categories/Tendermint/"/>
     
-      <category term="源码分析" scheme="https://lllll.cf/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="https://liukay.com/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
     
-      <category term="Tendermint" scheme="https://lllll.cf/tags/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="BlockChain" scheme="https://lllll.cf/tags/BlockChain/"/>
+      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
     
-      <category term="共识" scheme="https://lllll.cf/tags/%E5%85%B1%E8%AF%86/"/>
+      <category term="共识" scheme="https://liukay.com/tags/%E5%85%B1%E8%AF%86/"/>
     
-      <category term="源码分析" scheme="https://lllll.cf/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="https://liukay.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
   <entry>
     <title>Tendermint 启动流程</title>
-    <link href="https://lllll.cf/posts/11173.html"/>
-    <id>https://lllll.cf/posts/11173.html</id>
+    <link href="https://liukay.com/posts/11173.html"/>
+    <id>https://liukay.com/posts/11173.html</id>
     <published>2021-11-03T06:31:52.000Z</published>
     <updated>2021-11-03T06:31:52.000Z</updated>
     
@@ -136,29 +136,29 @@
     
     </summary>
     
-      <category term="tendermint" scheme="https://lllll.cf/categories/tendermint/"/>
+      <category term="tendermint" scheme="https://liukay.com/categories/tendermint/"/>
     
-      <category term="Tendermint" scheme="https://lllll.cf/categories/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/categories/Tendermint/"/>
     
-      <category term="源码分析" scheme="https://lllll.cf/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="https://liukay.com/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
     
-      <category term="Tendermint" scheme="https://lllll.cf/tags/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="BlockChain" scheme="https://lllll.cf/tags/BlockChain/"/>
+      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
     
-      <category term="源码分析" scheme="https://lllll.cf/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="https://liukay.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
-      <category term="启动流程" scheme="https://lllll.cf/tags/%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/"/>
+      <category term="启动流程" scheme="https://liukay.com/tags/%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>Tendermint ABCI概述</title>
-    <link href="https://lllll.cf/posts/6715.html"/>
-    <id>https://lllll.cf/posts/6715.html</id>
+    <link href="https://liukay.com/posts/6715.html"/>
+    <id>https://liukay.com/posts/6715.html</id>
     <published>2021-11-02T03:35:30.000Z</published>
     <updated>2021-11-02T03:35:30.000Z</updated>
     
@@ -173,31 +173,31 @@
     
     </summary>
     
-      <category term="tendermint" scheme="https://lllll.cf/categories/tendermint/"/>
+      <category term="tendermint" scheme="https://liukay.com/categories/tendermint/"/>
     
-      <category term="Tendermint" scheme="https://lllll.cf/categories/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/categories/Tendermint/"/>
     
     
-      <category term="概念" scheme="https://lllll.cf/tags/%E6%A6%82%E5%BF%B5/"/>
+      <category term="概念" scheme="https://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
-      <category term="Tendermint" scheme="https://lllll.cf/tags/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="概述" scheme="https://lllll.cf/tags/%E6%A6%82%E8%BF%B0/"/>
+      <category term="概述" scheme="https://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
     
-      <category term="快速入门" scheme="https://lllll.cf/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
+      <category term="快速入门" scheme="https://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
-      <category term="ABCI" scheme="https://lllll.cf/tags/ABCI/"/>
+      <category term="ABCI" scheme="https://liukay.com/tags/ABCI/"/>
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="BlockChain" scheme="https://lllll.cf/tags/BlockChain/"/>
+      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
     
   </entry>
   
   <entry>
     <title>go 数组</title>
-    <link href="https://lllll.cf/posts/10187.html"/>
-    <id>https://lllll.cf/posts/10187.html</id>
+    <link href="https://liukay.com/posts/10187.html"/>
+    <id>https://liukay.com/posts/10187.html</id>
     <published>2021-11-02T02:45:56.000Z</published>
     <updated>2021-11-02T02:45:56.000Z</updated>
     
@@ -219,19 +219,19 @@
     
     </summary>
     
-      <category term="go" scheme="https://lllll.cf/categories/go/"/>
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="数组" scheme="https://lllll.cf/tags/%E6%95%B0%E7%BB%84/"/>
+      <category term="数组" scheme="https://liukay.com/tags/%E6%95%B0%E7%BB%84/"/>
     
-      <category term="go" scheme="https://lllll.cf/tags/go/"/>
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>Tendermint概述</title>
-    <link href="https://lllll.cf/posts/51570.html"/>
-    <id>https://lllll.cf/posts/51570.html</id>
+    <link href="https://liukay.com/posts/51570.html"/>
+    <id>https://liukay.com/posts/51570.html</id>
     <published>2021-11-01T09:19:26.000Z</published>
     <updated>2021-11-01T09:19:26.000Z</updated>
     
@@ -249,23 +249,23 @@
     
     </summary>
     
-      <category term="tendermint" scheme="https://lllll.cf/categories/tendermint/"/>
+      <category term="tendermint" scheme="https://liukay.com/categories/tendermint/"/>
     
     
-      <category term="概念" scheme="https://lllll.cf/tags/%E6%A6%82%E5%BF%B5/"/>
+      <category term="概念" scheme="https://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
-      <category term="Tendermint" scheme="https://lllll.cf/tags/Tendermint/"/>
+      <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="概述" scheme="https://lllll.cf/tags/%E6%A6%82%E8%BF%B0/"/>
+      <category term="概述" scheme="https://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
     
-      <category term="快速入门" scheme="https://lllll.cf/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
+      <category term="快速入门" scheme="https://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
   </entry>
   
   <entry>
     <title>leveldb-整体架构</title>
-    <link href="https://lllll.cf/posts/18926.html"/>
-    <id>https://lllll.cf/posts/18926.html</id>
+    <link href="https://liukay.com/posts/18926.html"/>
+    <id>https://liukay.com/posts/18926.html</id>
     <published>2021-10-31T14:14:50.000Z</published>
     <updated>2021-10-31T14:14:50.000Z</updated>
     
@@ -280,21 +280,21 @@
     
     </summary>
     
-      <category term="leveldb" scheme="https://lllll.cf/categories/leveldb/"/>
+      <category term="leveldb" scheme="https://liukay.com/categories/leveldb/"/>
     
     
-      <category term="架构" scheme="https://lllll.cf/tags/%E6%9E%B6%E6%9E%84/"/>
+      <category term="架构" scheme="https://liukay.com/tags/%E6%9E%B6%E6%9E%84/"/>
     
-      <category term="数据库" scheme="https://lllll.cf/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+      <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-      <category term="leveldb" scheme="https://lllll.cf/tags/leveldb/"/>
+      <category term="leveldb" scheme="https://liukay.com/tags/leveldb/"/>
     
   </entry>
   
   <entry>
     <title>go 安装</title>
-    <link href="https://lllll.cf/posts/33246.html"/>
-    <id>https://lllll.cf/posts/33246.html</id>
+    <link href="https://liukay.com/posts/33246.html"/>
+    <id>https://liukay.com/posts/33246.html</id>
     <published>2021-10-27T02:49:38.000Z</published>
     <updated>2021-11-04T07:04:48.100Z</updated>
     
@@ -310,21 +310,21 @@
     
     </summary>
     
-      <category term="go" scheme="https://lllll.cf/categories/go/"/>
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="安装" scheme="https://lllll.cf/tags/%E5%AE%89%E8%A3%85/"/>
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="golang" scheme="https://lllll.cf/tags/golang/"/>
+      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
     
-      <category term="go" scheme="https://lllll.cf/tags/go/"/>
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>rabbitmq-安装</title>
-    <link href="https://lllll.cf/posts/60633.html"/>
-    <id>https://lllll.cf/posts/60633.html</id>
+    <link href="https://liukay.com/posts/60633.html"/>
+    <id>https://liukay.com/posts/60633.html</id>
     <published>2021-10-26T09:42:56.000Z</published>
     <updated>2021-11-06T05:04:34.408Z</updated>
     
@@ -339,21 +339,21 @@
     
     </summary>
     
-      <category term="rabbitmq" scheme="https://lllll.cf/categories/rabbitmq/"/>
+      <category term="rabbitmq" scheme="https://liukay.com/categories/rabbitmq/"/>
     
     
-      <category term="mq" scheme="https://lllll.cf/tags/mq/"/>
+      <category term="mq" scheme="https://liukay.com/tags/mq/"/>
     
-      <category term="安装" scheme="https://lllll.cf/tags/%E5%AE%89%E8%A3%85/"/>
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="matic" scheme="https://lllll.cf/tags/matic/"/>
+      <category term="matic" scheme="https://liukay.com/tags/matic/"/>
     
   </entry>
   
   <entry>
     <title>matic checkpoint理解</title>
-    <link href="https://lllll.cf/posts/6413.html"/>
-    <id>https://lllll.cf/posts/6413.html</id>
+    <link href="https://liukay.com/posts/6413.html"/>
+    <id>https://liukay.com/posts/6413.html</id>
     <published>2021-10-19T06:24:10.000Z</published>
     <updated>2021-11-10T06:36:19.846Z</updated>
     
@@ -368,25 +368,25 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
-      <category term="matic" scheme="https://lllll.cf/categories/blockchain/matic/"/>
+      <category term="matic" scheme="https://liukay.com/categories/blockchain/matic/"/>
     
     
-      <category term="概念" scheme="https://lllll.cf/tags/%E6%A6%82%E5%BF%B5/"/>
+      <category term="概念" scheme="https://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
     
-      <category term="matic" scheme="https://lllll.cf/tags/matic/"/>
+      <category term="matic" scheme="https://liukay.com/tags/matic/"/>
     
-      <category term="checkpoint" scheme="https://lllll.cf/tags/checkpoint/"/>
+      <category term="checkpoint" scheme="https://liukay.com/tags/checkpoint/"/>
     
-      <category term="polygon" scheme="https://lllll.cf/tags/polygon/"/>
+      <category term="polygon" scheme="https://liukay.com/tags/polygon/"/>
     
   </entry>
   
   <entry>
     <title>CMS 问题定位与排查</title>
-    <link href="https://lllll.cf/posts/28187.html"/>
-    <id>https://lllll.cf/posts/28187.html</id>
+    <link href="https://liukay.com/posts/28187.html"/>
+    <id>https://liukay.com/posts/28187.html</id>
     <published>2021-07-21T03:56:03.000Z</published>
     <updated>2021-11-11T07:25:02.627Z</updated>
     
@@ -401,27 +401,27 @@
     
     </summary>
     
-      <category term="java" scheme="https://lllll.cf/categories/java/"/>
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
     
-      <category term="jvm" scheme="https://lllll.cf/categories/java/jvm/"/>
+      <category term="jvm" scheme="https://liukay.com/categories/java/jvm/"/>
     
     
-      <category term="java" scheme="https://lllll.cf/tags/java/"/>
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
     
-      <category term="jvm" scheme="https://lllll.cf/tags/jvm/"/>
+      <category term="jvm" scheme="https://liukay.com/tags/jvm/"/>
     
-      <category term="gc" scheme="https://lllll.cf/tags/gc/"/>
+      <category term="gc" scheme="https://liukay.com/tags/gc/"/>
     
-      <category term="cms" scheme="https://lllll.cf/tags/cms/"/>
+      <category term="cms" scheme="https://liukay.com/tags/cms/"/>
     
-      <category term="调优" scheme="https://lllll.cf/tags/%E8%B0%83%E4%BC%98/"/>
+      <category term="调优" scheme="https://liukay.com/tags/%E8%B0%83%E4%BC%98/"/>
     
   </entry>
   
   <entry>
     <title>区块链--04coinbase交易</title>
-    <link href="https://lllll.cf/posts/3428.html"/>
-    <id>https://lllll.cf/posts/3428.html</id>
+    <link href="https://liukay.com/posts/3428.html"/>
+    <id>https://liukay.com/posts/3428.html</id>
     <published>2021-05-24T02:56:14.000Z</published>
     <updated>2021-11-10T06:30:57.630Z</updated>
     
@@ -439,19 +439,19 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
-      <category term="coinbase交易" scheme="https://lllll.cf/tags/coinbase%E4%BA%A4%E6%98%93/"/>
+      <category term="coinbase交易" scheme="https://liukay.com/tags/coinbase%E4%BA%A4%E6%98%93/"/>
     
   </entry>
   
   <entry>
     <title>区块链--05比特币区块同步机制</title>
-    <link href="https://lllll.cf/posts/15476.html"/>
-    <id>https://lllll.cf/posts/15476.html</id>
+    <link href="https://liukay.com/posts/15476.html"/>
+    <id>https://liukay.com/posts/15476.html</id>
     <published>2021-04-29T03:41:28.000Z</published>
     <updated>2021-11-10T06:37:38.886Z</updated>
     
@@ -467,23 +467,23 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
-      <category term="BTC" scheme="https://lllll.cf/categories/blockchain/BTC/"/>
+      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
     
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
-      <category term="比特币" scheme="https://lllll.cf/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
+      <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
     
   </entry>
   
   <entry>
     <title>区块链--04交易广播和打包上链</title>
-    <link href="https://lllll.cf/posts/42563.html"/>
-    <id>https://lllll.cf/posts/42563.html</id>
+    <link href="https://liukay.com/posts/42563.html"/>
+    <id>https://liukay.com/posts/42563.html</id>
     <published>2021-04-27T06:00:28.000Z</published>
     <updated>2021-11-10T06:33:59.078Z</updated>
     
@@ -498,23 +498,23 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
-      <category term="BTC" scheme="https://lllll.cf/categories/blockchain/BTC/"/>
+      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
     
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
-      <category term="交易" scheme="https://lllll.cf/tags/%E4%BA%A4%E6%98%93/"/>
+      <category term="交易" scheme="https://liukay.com/tags/%E4%BA%A4%E6%98%93/"/>
     
   </entry>
   
   <entry>
     <title>区块链--03比特币区块结构</title>
-    <link href="https://lllll.cf/posts/38615.html"/>
-    <id>https://lllll.cf/posts/38615.html</id>
+    <link href="https://liukay.com/posts/38615.html"/>
+    <id>https://liukay.com/posts/38615.html</id>
     <published>2021-04-20T03:23:16.000Z</published>
     <updated>2021-11-10T06:30:24.371Z</updated>
     
@@ -531,25 +531,25 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
-      <category term="BTC" scheme="https://lllll.cf/categories/blockchain/BTC/"/>
+      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
     
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
-      <category term="BTC" scheme="https://lllll.cf/tags/BTC/"/>
+      <category term="BTC" scheme="https://liukay.com/tags/BTC/"/>
     
-      <category term="比特币" scheme="https://lllll.cf/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
+      <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
     
   </entry>
   
   <entry>
     <title>区块链--02比特币技术体系</title>
-    <link href="https://lllll.cf/posts/17877.html"/>
-    <id>https://lllll.cf/posts/17877.html</id>
+    <link href="https://liukay.com/posts/17877.html"/>
+    <id>https://liukay.com/posts/17877.html</id>
     <published>2021-04-17T03:53:03.000Z</published>
-    <updated>2021-11-11T07:29:26.163Z</updated>
+    <updated>2021-11-11T07:29:26.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p></blockquote><h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p><p><img src="/posts/17877/BTC架构图.jpeg" alt="架构图"></p><p>自上而下，共分6层</p><ol><li>应用层</li><li>RPC 层</li><li>网络层</li><li>共识层</li><li>数据层</li><li>存储层</li></ol><h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包，早期这个钱包还保留有CPU挖矿功能。现在版本已不支持，可以参考官方 Github 文档:</p><p><a href="https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md">https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md</a><br><img src="/posts/17877/BTC钱包.jpg" alt="PC钱包"></p><h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3><p>RPC 层的作用是进行RPC 通信。测试可以使用 BitCore 这个工具来进行测试。</p><p>测试一个 RPC 命令，查看区块信息: <strong>getblockchaininfo</strong><br><strong>命令行</strong><br><img src="/posts/17877/命令行.jpg" alt="钱包"></p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;chain&quot;</span>: <span class="string">&quot;main&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;blocks&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;headers&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;bestblockhash&quot;</span>: <span class="string">&quot;0000000000000000000133b07fdf287ddca3cca80162b4a06a05d6904190cd37&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;difficulty&quot;</span>: <span class="number">23581981443663.85</span>,</span><br><span class="line">  <span class="attr">&quot;mediantime&quot;</span>: <span class="number">1619518237</span>,</span><br><span class="line">  <span class="attr">&quot;verificationprogress&quot;</span>: <span class="number">0.999995596389184</span>,</span><br><span class="line">  <span class="attr">&quot;initialblockdownload&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;chainwork&quot;</span>: <span class="string">&quot;00000000000000000000000000000000000000001c943902d1cf6cdd1387c75c&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;size_on_disk&quot;</span>: <span class="number">1904190175</span>,</span><br><span class="line">  <span class="attr">&quot;pruned&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;pruneheight&quot;</span>: <span class="number">679647</span>,</span><br><span class="line">  <span class="attr">&quot;automatic_pruning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;prune_target_size&quot;</span>: <span class="number">1999634432</span>,</span><br><span class="line">  <span class="attr">&quot;softforks&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bip34&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">227931</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip66&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">363725</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip65&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">388381</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;csv&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">419328</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;segwit&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">481824</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;warnings&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3.网络层"></a>3.网络层</h3><p>网络层使用 Peer-to-Peer，即点对点通信。每个BTC网络当中的节点中的通信，没有中心化的节点进行转发，需要通过节点发现，进行通信。<br>这也体现出BTC网络中当，每个节点都是平等的节点，没有哪个节点可以控制其他节点。</p><p>这种去中心化的好处就是可以做到节点之间的平等，但是也存在几个问题。</p><ol><li>网络延迟</li><li>联合作敝</li></ol><p>3.1 网络延迟很好理解，由于节点之间是平等的，每个节点都会呈现为网状的连接，当一个区块被生产出来后，会同步到相邻的网络节点当中，进行相邻转发。并不是通过中心节点订阅或转发的，一个区块到达所有的节点会有网络延迟。</p><p>3.2 联合作敝，去中心化的通信，节点间的数据只能依赖于依赖于各个节点间的验证，那就给做敝留下了空间。</p><h3 id="4-共识层"><a href="#4-共识层" class="headerlink" title="4.共识层"></a>4.共识层</h3><p>什么是共识，这个非常重要，非常重要。<br>因为在平等的网络当中，每个节点都是分散的，该如何保证每个节点的验证、转发是一致？<br>这就需要每个节点与节点之间达成共识。以此来保证所有节点的行为一致。</p><p><strong>什么是共识</strong><br>共识就是，共识即认可，比特币中有很多节点，要让这些节点达成一致性，比特币采用的是：POW 工作量证明。<br>比特币共识：说白点就是大家通过计算一个随机生成的Hash值的方式，来决定谁先打包。是不是感觉没什么，计算这个Hash并不是一件马上就可以算出来的事情。<br>大概流程：</p><ol><li>所有比特币中的交易会向所有节点广播，所有节点接收到交易后，放于交易队列当中</li><li>全世界所有节点通过计算 Hash 来决定谁交这些交易打包，先算出者，打包交易成一个区块并广播区块</li><li>打包者，将一个随机数加处块头中，使得计算的哈希结果小于或等于块头中目标值</li><li>其他节点收到区块后，验证区块和区块内的交易，验证正确保留该区块</li></ol><p><strong>为什么要给一个随机Hash数来给节点计算</strong><br>为了证明这个块的正确性。比特币的区块链当中，第一个节点产生的第一个块叫做：创世块，这个块是比特币运行时产生的第一个块，这个块会产生一个随机Hash数，打包进第一个块的块头中，然后广播。<br>其他节点收到区块后，对这个创世块进行验证。先验出者，证明了这个块是正确的，然后根据这个创建块，将收到的交易进行打包，并链接到这个创世块后面，就成了第二个块，并且这个节点也根据收到的交易产生了个随机Hash，广播给其它节点。<br>其他节点收到后，重复这个流程，证明这个块的正确性，并进行上链。这个就是 POW 的义意。</p><h3 id="5-数据层"><a href="#5-数据层" class="headerlink" title="5.数据层"></a>5.数据层</h3><p>数据层是指比特币的数据结构。比特币的数据结构比较典型，很多后来的区块链都借鉴这些数据模型。</p><ol><li>区块</li><li>区块链</li><li>Merkle树，也称，默克尔树</li><li>Hash</li><li>时间戳</li></ol><h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>是指将交易进行打构的区块数据结构，包含：区块头、区块体、哈希、时间戳 等。</p><h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>是指由区块构成的链条，就是指区块链，比较直白。</p><h4 id="Merkle树，也称，默克尔树"><a href="#Merkle树，也称，默克尔树" class="headerlink" title="Merkle树，也称，默克尔树"></a>Merkle树，也称，默克尔树</h4><p>Merkle树的作用：防窜改。<br>这里仅需要知道即可，这些点每一个展开都是一个大点，后续会做很详细的讲解。<br>Merkle树的构成是通过将每一笔交易的哈希，自上而下，相邻两个节点向上构建出一个新的父哈希值，由此来构建一棵哈希树。</p><h3 id="6-存储层"><a href="#6-存储层" class="headerlink" title="6.存储层"></a>6.存储层</h3><p>存储主要使用的是 LevelDB，进行存储，LevelDB 是基于 SSTable 进行设计实现的一个数据引擎。很多数据库都是基 LevelDB 进开发。<br>LevelDB 本身具体高性能读写，通过在内存缓存 和 多层级文件存储而取名 LevelDB。</p>]]></content>
     
@@ -565,23 +565,23 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
-      <category term="BTC" scheme="https://lllll.cf/categories/blockchain/BTC/"/>
+      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
     
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="比特币" scheme="https://lllll.cf/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
+      <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
     
-      <category term="技术体系" scheme="https://lllll.cf/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
+      <category term="技术体系" scheme="https://liukay.com/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
     
   </entry>
   
   <entry>
     <title>区块链--01区块链初识</title>
-    <link href="https://lllll.cf/posts/64659.html"/>
-    <id>https://lllll.cf/posts/64659.html</id>
+    <link href="https://liukay.com/posts/64659.html"/>
+    <id>https://liukay.com/posts/64659.html</id>
     <published>2021-04-14T10:50:49.000Z</published>
     <updated>2021-11-10T06:32:50.231Z</updated>
     
@@ -599,23 +599,23 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
     
-      <category term="架构" scheme="https://lllll.cf/tags/%E6%9E%B6%E6%9E%84/"/>
+      <category term="架构" scheme="https://liukay.com/tags/%E6%9E%B6%E6%9E%84/"/>
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
   </entry>
   
   <entry>
     <title>blockchain--区块链文章大纲</title>
-    <link href="https://lllll.cf/posts/61275.html"/>
-    <id>https://lllll.cf/posts/61275.html</id>
+    <link href="https://liukay.com/posts/61275.html"/>
+    <id>https://liukay.com/posts/61275.html</id>
     <published>2021-04-11T03:43:03.000Z</published>
-    <updated>2021-11-11T03:16:21.366Z</updated>
+    <updated>2021-11-11T03:16:21.000Z</updated>
     
     <content type="html"><![CDATA[<p>现在从业区块链行业的架构研发，记录对区块链的理解，创建一个文章目录，将需要理解的东西一一记录下来。</p><h1 id="区块链文章大纲"><a href="#区块链文章大纲" class="headerlink" title="区块链文章大纲"></a>区块链文章大纲</h1><h2 id="区块链架构"><a href="#区块链架构" class="headerlink" title="区块链架构"></a>区块链架构</h2><h2 id="快速使用体验"><a href="#快速使用体验" class="headerlink" title="快速使用体验"></a>快速使用体验</h2><ul><li>钱包</li><li>交易<h2 id="如何交易"><a href="#如何交易" class="headerlink" title="如何交易"></a>如何交易</h2></li></ul><h2 id="成为矿工"><a href="#成为矿工" class="headerlink" title="成为矿工"></a>成为矿工</h2><h2 id="区块链共识"><a href="#区块链共识" class="headerlink" title="区块链共识"></a>区块链共识</h2><h2 id="区块链存储"><a href="#区块链存储" class="headerlink" title="区块链存储"></a>区块链存储</h2><h2 id="区块链网络"><a href="#区块链网络" class="headerlink" title="区块链网络"></a>区块链网络</h2><h2 id="区块链加密"><a href="#区块链加密" class="headerlink" title="区块链加密"></a>区块链加密</h2><h2 id="跨链"><a href="#跨链" class="headerlink" title="跨链"></a>跨链</h2><h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2>]]></content>
     
@@ -629,19 +629,19 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://lllll.cf/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
     
     
-      <category term="区块链" scheme="https://lllll.cf/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="blockchain" scheme="https://lllll.cf/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
   </entry>
   
   <entry>
     <title>vim 插件管理器plug插件</title>
-    <link href="https://lllll.cf/posts/57679.html"/>
-    <id>https://lllll.cf/posts/57679.html</id>
+    <link href="https://liukay.com/posts/57679.html"/>
+    <id>https://liukay.com/posts/57679.html</id>
     <published>2020-12-29T02:04:35.000Z</published>
     <updated>2020-12-29T02:04:35.000Z</updated>
     
@@ -659,16 +659,16 @@
     
     </summary>
     
-      <category term="linux" scheme="https://lllll.cf/categories/linux/"/>
+      <category term="linux" scheme="https://liukay.com/categories/linux/"/>
     
-      <category term="vim" scheme="https://lllll.cf/categories/linux/vim/"/>
+      <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
     
-      <category term="linux" scheme="https://lllll.cf/tags/linux/"/>
+      <category term="linux" scheme="https://liukay.com/tags/linux/"/>
     
-      <category term="vim" scheme="https://lllll.cf/tags/vim/"/>
+      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
     
-      <category term="插件" scheme="https://lllll.cf/tags/%E6%8F%92%E4%BB%B6/"/>
+      <category term="插件" scheme="https://liukay.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
