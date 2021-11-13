@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -284,9 +284,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
         </tags>
       
@@ -2126,12 +2126,10 @@
       <link href="posts/14823.html"/>
       <url>posts/14823.html</url>
       
-        <content type="html"><![CDATA[<p>取消跟踪</p><ol><li>未提交文件忽略<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached FILENAME</span><br></pre></td></tr></table></figure></li></ol><p>这样就可以了，如果后面跟的是目录就加上个 -r  就行了<br>（这个操作不会删除这个文件）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cached DIR</span><br></pre></td></tr></table></figure></p><ol start="2"><li>已提交文件忽略<br>已经维护起来的文件即已经 commit 后的文件，即使加上了gitignore，也无济于事。<br>用下面这个命令：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git update-index --assume-unchanged logs&#x2F;*.log</span><br></pre></td></tr></table></figure></li></ol>]]></content>
+        <content type="html"><![CDATA[<h2 id="取消跟踪"><a href="#取消跟踪" class="headerlink" title="取消跟踪"></a>取消跟踪</h2><p>未提交文件忽略</p><blockquote><p>git rm –cached FILENAME</p></blockquote><p>这样就可以了，如果后面跟的是目录就加上个 -r  就行了<br>（这个操作不会删除这个文件）</p><blockquote><p>git rm -r –cached DIR</p></blockquote><h2 id="已提交文件忽略"><a href="#已提交文件忽略" class="headerlink" title="已提交文件忽略"></a>已提交文件忽略</h2><p>已经维护起来的文件即已经 commit 后的文件，即使加上了<code>.gitignore</code>也无济于事。<br>用下面这个命令：</p><blockquote><p>git update-index –assume-unchanged <code>logs/*.log</code></p></blockquote>]]></content>
       
       
       <categories>
-          
-          <category> java </category>
           
           <category> git </category>
           
@@ -2139,8 +2137,6 @@
       
       
         <tags>
-            
-            <tag> java </tag>
             
             <tag> git </tag>
             
@@ -2162,16 +2158,12 @@
       
       <categories>
           
-          <category> java </category>
-          
           <category> git </category>
           
       </categories>
       
       
         <tags>
-            
-            <tag> java </tag>
             
             <tag> git </tag>
             
@@ -2639,6 +2631,35 @@
     
     
     <entry>
+      <title>git-工作区、暂存区、版本库</title>
+      <link href="posts/ddc7c25.html"/>
+      <url>posts/ddc7c25.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h2><p>就是 git init 的目录，就是工程目录。<br>工作区下包含着版本库 .git 文件夹。</p><h2 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h2><p>暂存区就存在于 <code>.git</code> 版本库文件夹内。<br>称为 <code>stage</code>，这并不是指某个目录的名称，而是一个逻辑概念。<br>一般存放在 .git 目录下的 index 文件（.git/index）中。</p><p>创建版本库的同时，会创建一个唯一的 master 分支。<br>git add    是往暂存区提交<br>git commit 是往 master分支提交</p><p>在实际开发中，这个作用很大，比如在编写一段时间的代码后，想要拉一下远程分支的代码，或者想回到之前的修改，但是又不想删掉这些修改，就可以用 stage 来暂存修改，暂存后，代码恢复未修改前的样子。</p><h2 id="版本库"><a href="#版本库" class="headerlink" title="版本库"></a>版本库</h2><p>工作区有一个隐藏目录 .git，虽然这个目录在工作区的工程目录下，但是目录是管理git的。这个不算工作区，而是 Git 的版本库。<br>工作区中的文件的修改和 stage 暂存区中的修改都会被 git 监控到。<br>不同的区之前的修改是独立互不影响的。工作区中的修改是不会被 commit 的。只有暂存区的才会被 commit。</p><p><img src="/posts/ddc7c25/git.jpeg" alt="版本库"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+            <tag> 版本管理 </tag>
+            
+            <tag> vcs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>java 反射获取方法调用栈</title>
       <link href="posts/9804.html"/>
       <url>posts/9804.html</url>
@@ -2780,12 +2801,10 @@
       <link href="posts/25206.html"/>
       <url>posts/25206.html</url>
       
-        <content type="html"><![CDATA[<p>这个命令是个多功能的命令用法很灵活。<br>切换分支、撤消修改<br>下面文中是 <code>--</code> 两个杠框是连在一起，中间没有空格，因为字体太小，所说中间给个空格看着明显一些。</p><h3 id="1-切换分支"><a href="#1-切换分支" class="headerlink" title="1.切换分支"></a>1.切换分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;name&gt;</span><br></pre></td></tr></table></figure><h3 id="2-创建并切换分支"><a href="#2-创建并切换分支" class="headerlink" title="2.创建并切换分支"></a>2.创建并切换分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b &lt;name&gt;</span><br><span class="line">这其实可以拆解成两步操作 -b 应该就是branch</span><br></pre></td></tr></table></figure><h3 id="3-撤销工作区修改"><a href="#3-撤销工作区修改" class="headerlink" title="3.撤销工作区修改"></a>3.撤销工作区修改</h3><p>实际就是“以旧换新”的操作<br>有两种情况：<br>1.如果未添加到暂存区，则把版本库中的最新版本覆盖<br>2.如果已添加到暂存区，则把暂存区中的修改拿出覆盖</p><p>撤销工作区修改:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout - - &lt;file&gt;</span><br></pre></td></tr></table></figure><br>清除全部 - - 不能丢，不然就成了上面的切换切支命令了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout - - .</span><br></pre></td></tr></table></figure></p><h3 id="4-连招"><a href="#4-连招" class="headerlink" title="4.连招"></a>4.连招</h3><p>假如有一个文件，做了修改，但是不确定后面的修改是不是想要的。先添加到暂存区中，过了一会这个修改是不想要的，想要把工作区的文件从暂存区撤回覆盖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add                   &#x2F;&#x2F;放一份当前写到一半觉得没问题的放到暂存区中</span><br><span class="line">git checkout - - file     &#x2F;&#x2F;将 版本库 中的修改替换到 工作区中</span><br></pre></td></tr></table></figure><br>没有 add 的情况下，直接拿版本来覆盖本地，这样搞的话，之前工作区的文件的修改就没了。用这招就看之前修改要不要了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout - - file</span><br></pre></td></tr></table></figure></p>]]></content>
+        <content type="html"><![CDATA[<p>这个命令是个多功能的命令用法很灵活。<br>切换分支、撤消修改<br>下面文中是 <code>--</code> 两个杠框是连在一起，中间没有空格，因为字体太小，所说中间给个空格看着明显一些。</p><h3 id="1-切换分支"><a href="#1-切换分支" class="headerlink" title="1.切换分支"></a>1.切换分支</h3><blockquote><p>git checkout <code>&lt;name&gt;</code></p></blockquote><h3 id="2-创建并切换分支"><a href="#2-创建并切换分支" class="headerlink" title="2.创建并切换分支"></a>2.创建并切换分支</h3><blockquote><p>git checkout -b <code>&lt;name&gt;</code><br>这其实可以拆解成两步操作 -b 应该就是branch</p></blockquote><h3 id="3-撤销工作区修改"><a href="#3-撤销工作区修改" class="headerlink" title="3.撤销工作区修改"></a>3.撤销工作区修改</h3><p>实际就是“以旧换新”的操作<br>有两种情况：<br>1.如果未添加到暂存区，则把版本库中的最新版本覆盖<br>2.如果已添加到暂存区，则把暂存区中的修改拿出覆盖</p><p>撤销工作区修改:</p><blockquote><p>git checkout <code>-- &lt;file&gt;</code></p></blockquote><blockquote><p><code>git checkout -- .</code></p></blockquote><h3 id="4-连招"><a href="#4-连招" class="headerlink" title="4.连招"></a>4.连招</h3><p>假如有一个文件，做了修改，但是不确定后面的修改是不是想要的。先添加到暂存区中，过了一会这个修改是不想要的，想要把工作区的文件从暂存区撤回覆盖。</p><blockquote><p>git add                   //放一份当前写到一半觉得没问题的放到暂存区中</p></blockquote><blockquote><p>git checkout - - file     //将 版本库 中的修改替换到 工作区中<br>没有 add 的情况下，直接拿版本来覆盖本地，这样搞的话，之前工作区的文件的修改就没了。用这招就看之前修改要不要了。</p></blockquote><blockquote><p>git checkout - - file</p></blockquote>]]></content>
       
       
       <categories>
-          
-          <category> java </category>
           
           <category> git </category>
           
@@ -2793,8 +2812,6 @@
       
       
         <tags>
-            
-            <tag> java </tag>
             
             <tag> git </tag>
             
@@ -2881,12 +2898,10 @@
       <link href="posts/2763.html"/>
       <url>posts/2763.html</url>
       
-        <content type="html"><![CDATA[<h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>拉取并合并远程代码<br>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p><h3 id="1-拉取"><a href="#1-拉取" class="headerlink" title="1.拉取"></a>1.拉取</h3><p>git pull origin fast:master把远程的<br>next 分支 拉到 本 master。</p><h3 id="2-拉取到当前分支"><a href="#2-拉取到当前分支" class="headerlink" title="2.拉取到当前分支"></a>2.拉取到当前分支</h3><p>git pull origin fast<br>省略定法，表示拉取并合并自当前分支</p><h3 id="3-等价上面的操作"><a href="#3-等价上面的操作" class="headerlink" title="3.等价上面的操作"></a>3.等价上面的操作</h3><p>git fetch origin<br>git merge origin/fast</p><h3 id="4-手动建立跟踪"><a href="#4-手动建立跟踪" class="headerlink" title="4.手动建立跟踪"></a>4.手动建立跟踪</h3><p>跟踪不是只能跟踪 master，可以指定本地和远程不同的分支。<br>意义在于可以使用简化命令 git push/pull，而不需要显示指定的版本库。<br>git branch –set-upstream master origin/fast<br>git branch –set-upstream develop origin/develop</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>拉取并合并远程代码</p><blockquote><p>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p></blockquote><h3 id="1-拉取"><a href="#1-拉取" class="headerlink" title="1.拉取"></a>1.拉取</h3><p>next 分支 拉到 本 master。</p><blockquote><p>git pull origin fast:master把远程的  </p></blockquote><h3 id="2-拉取到当前分支"><a href="#2-拉取到当前分支" class="headerlink" title="2.拉取到当前分支"></a>2.拉取到当前分支</h3><p>省略定法，表示拉取并合并自当前分支</p><blockquote><p>git pull origin fast  </p></blockquote><h3 id="3-等价上面的操作"><a href="#3-等价上面的操作" class="headerlink" title="3.等价上面的操作"></a>3.等价上面的操作</h3><blockquote><p>git fetch origin<br>git merge origin/fast</p></blockquote><h3 id="4-手动建立跟踪"><a href="#4-手动建立跟踪" class="headerlink" title="4.手动建立跟踪"></a>4.手动建立跟踪</h3><p>跟踪不是只能跟踪 master，可以指定本地和远程不同的分支。<br>意义在于可以使用简化命令 git push/pull，而不需要显示指定的版本库。  </p><blockquote><p>git branch –set-upstream master origin/fast<br>git branch –set-upstream develop origin/develop</p></blockquote>]]></content>
       
       
       <categories>
-          
-          <category> java </category>
           
           <category> git </category>
           
