@@ -108,9 +108,9 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="共识" scheme="https://liukay.com/tags/%E5%85%B1%E8%AF%86/"/>
     
@@ -145,9 +145,9 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="源码分析" scheme="https://liukay.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
@@ -182,15 +182,15 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
+      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
       <category term="概述" scheme="https://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
     
       <category term="快速入门" scheme="https://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
       <category term="ABCI" scheme="https://liukay.com/tags/ABCI/"/>
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
     
   </entry>
   
@@ -639,22 +639,19 @@
   </entry>
   
   <entry>
-    <title>vim 插件管理器plug插件</title>
-    <link href="https://liukay.com/posts/57679.html"/>
-    <id>https://liukay.com/posts/57679.html</id>
-    <published>2020-12-29T02:04:35.000Z</published>
-    <updated>2020-12-29T02:04:35.000Z</updated>
+    <title>oh-my-zsh插件 zsh-autosuggestion自动补全 和 zsh-syntax-highlighting语法高亮</title>
+    <link href="https://liukay.com/posts/2bd7c1ad.html"/>
+    <id>https://liukay.com/posts/2bd7c1ad.html</id>
+    <published>2021-01-16T02:54:10.000Z</published>
+    <updated>2021-11-16T04:24:15.932Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>管理插件的插件</p></blockquote><p>vim 如果不添加插件，仅仅只有原来的编译文本等功能，加上插件之后，就可以做更多事情，加快处理效率，比如可以把它打造成一个写作环境、开发IDE，相当之好用。<br>插件可以手动添加，手动添加步骤需要下载、解压、将文件放到对应目录下步骤多一些。可以使用挺件管理，很方便的添加自己需要的插件</p><h2 id="Plug-插件管理"><a href="#Plug-插件管理" class="headerlink" title="Plug 插件管理"></a>Plug 插件管理</h2><p>vim 有很多插件管理器，如Vundle、vim-plug。<br><code>Vundle</code> 是 Vim bundle 的简称。<br><code>vim-plug</code>是一个开源、速度非常快的、极简的vim插件管理器。</p><h2 id="安装-vim-plug"><a href="#安装-vim-plug" class="headerlink" title="安装 vim-plug"></a>安装 vim-plug</h2><p>我是基于 nvim 安装的插件，nvim 默认路径在 <code>~/.config/nvim/</code>，vim-plug 这个插件需要安装在 <code>autoload</code> 这个目录下。</p><h3 id="nvim"><a href="#nvim" class="headerlink" title="nvim"></a>nvim</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure><h3 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure><h2 id="管理插件"><a href="#管理插件" class="headerlink" title="管理插件"></a>管理插件</h2><p>安装好之后，就可以使用它管理插件，下面以 nvim 为例管理插件。<br>配置文件路径： <code>~/.config/nvim/init.vim</code><br>从 <code>call plug#begin(PLUGIN_DIRECTORY)</code> 开始，<code>PLUGIN_DIRECTORY</code>表示插件指定下载目录，可以自定义。<br>并以 <code>plug#end()</code> 结束，插件写在中间，如：</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> plug#begin(<span class="string">&#x27;~/.vim/plugged&#x27;</span>)</span><br><span class="line">Plug <span class="string">&#x27;scrooloose/nerdtree&#x27;</span>, &#123; <span class="string">&#x27;on&#x27;</span>: <span class="string">&#x27;NERDTreeToggle&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">call</span> plug#end()</span><br></pre></td></tr></table></figure><p><img src="/posts/57679/配置文件.jpg" alt="配置文件"></p><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>在命令模式下输入：<code>:PlugInstall</code> 进行安装。图片当中是我已经安装的插件，所以显示<code>Already installed</code>。<br>剩下的就是安装自己需要的插件了，有很多vim插件推荐网站，可以从上面找到自己想要的插件。</p><p><img src="/posts/57679/安装插件.jpg" alt="安装插件"></p><h2 id="插件命令"><a href="#插件命令" class="headerlink" title="插件命令"></a>插件命令</h2><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p><code>:PlugInstall</code></p><h3 id="检查状态"><a href="#检查状态" class="headerlink" title="检查状态"></a>检查状态</h3><p><code>:PlugStatus</code></p><h3 id="更新插件"><a href="#更新插件" class="headerlink" title="更新插件"></a>更新插件</h3><p><code>:PlugUpdate</code></p><h3 id="审查插件"><a href="#审查插件" class="headerlink" title="审查插件"></a>审查插件</h3><p><code>:PlugDiff</code></p><p>有时，更新的插件可能有新的 bug 或无法正常工作。要解决这个问题，你可以简单地回滚有问题的插件。输入 :PlugDiff 命令，然后按回车键查看上次 :PlugUpdate的更改，并在每个段落上按 X 将每个插件回滚到更新前的前一个状态</p><h3 id="删除特件"><a href="#删除特件" class="headerlink" title="删除特件"></a>删除特件</h3><p>注释之前的插件之后，重新<code>:PlugInstall</code>即可。<br>最后，运行以下命令卸载插件：<br><code>:PlugClean</code><br>该命令将删除 vim 配置文件中所有未声明的插件。</p><h3 id="升级-Vim-plug"><a href="#升级-Vim-plug" class="headerlink" title="升级 Vim-plug"></a>升级 Vim-plug</h3><p>升级vim-plug本身<br><code>:PlugUpgrad</code></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="安装-on-my-zsh-插件"><a href="#安装-on-my-zsh-插件" class="headerlink" title="安装 on-my-zsh 插件"></a>安装 on-my-zsh 插件</h2><p>插件在 .zshrc 的 plugins 中进行添加。</p><p>这些插件可以让oh-my-zsh更好用，推荐安装，不安装对使用vim也没什么影响。<br>分两步</p><p><code>$ZSH_CUSTOM</code> 安装完 zsh 后，默认已经存在。</p><h2 id="安装-zsh-autosuggestions"><a href="#安装-zsh-autosuggestions" class="headerlink" title="安装 zsh-autosuggestions"></a>安装 zsh-autosuggestions</h2><p>这是一个超级好用的插件，直接显示命令的操作记录，可以快速使用重复命令。</p><blockquote><p>git clone git://github.com/zsh-users/zsh-autosuggestions <code>$ZSH_CUSTOM</code>/plugins/zsh-autosuggestions</p></blockquote><p>看效果</p><p><img src="/posts/2bd7c1ad/2.jpg" alt="补全效果"></p><h2 id="安装-zsh-syntax-highlighting"><a href="#安装-zsh-syntax-highlighting" class="headerlink" title="安装 zsh-syntax-highlighting"></a>安装 zsh-syntax-highlighting</h2><blockquote><p>git clone <a href="https://github.com/zsh-users/zsh-syntax-highlighting.git">https://github.com/zsh-users/zsh-syntax-highlighting.git</a> <code>$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</code>/plugins/zsh-syntax-highlighting</p></blockquote><p>这个插件会在终端以颜色的方式提示命令是否正确。</p><p>正确命令</p><p><img src="/posts/2bd7c1ad/3.jpg" alt="正确命令"></p><p>不正确的命令</p><p><img src="/posts/2bd7c1ad/4.jpg" alt="不正确的命令"></p><h2 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h2><p><code>zsh-autosuggestion</code> 和 <code>zsh-syntax-highlighting</code></p><p>vim ~/.zshrc 在 plugins 中换行添加即可</p><p><img src="/posts/2bd7c1ad/1.jpg" alt="plugins"></p><p>复制代码</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">    git</span><br><span class="line">    zsh-autosuggestions</span><br><span class="line">    autojump</span><br><span class="line">    zsh-<span class="keyword">syntax</span>-highlighting</span><br><span class="line">)</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;blockquote&gt;
-&lt;p&gt;管理插件的插件&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;vim 如果不添加插件，仅仅只有原来的编译文本等功能，加上插件之后，就可以做更多事情，加快处理效率，比如可以把它打造成一个写作环境、开发IDE，相当之好用。&lt;br&gt;插件可以手动添加，手动添加
+        &lt;h2 id=&quot;安装-on-my-zsh-插件&quot;&gt;&lt;a href=&quot;#安装-on-my-zsh-插件&quot; class=&quot;headerlink&quot; title=&quot;安装 on-my-zsh 插件&quot;&gt;&lt;/a&gt;安装 on-my-zsh 插件&lt;/h2&gt;&lt;p&gt;插件在 .zshrc 的 plugi
       
     
     </summary>
@@ -663,10 +660,16 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
+      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+    
+      <category term="oh-my-zsh" scheme="https://liukay.com/categories/vim/oh-my-zsh/"/>
+    
     
       <category term="linux" scheme="https://liukay.com/tags/linux/"/>
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+    
+      <category term="oh-my-zsh" scheme="https://liukay.com/tags/oh-my-zsh/"/>
     
       <category term="插件" scheme="https://liukay.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
