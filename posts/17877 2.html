@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>区块链--02比特币技术体系 | 思想家</title><meta name="keywords" content="比特币,比特币入门,比特币开发"><meta name="author" content="咪雅先森"><meta name="copyright" content="咪雅先森"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。  比特币架构比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。  自上而下，共分6层  应用层 RPC 层 网络层 共识层 数据层 存储层  1.应用层包括比特币钱">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链--02比特币技术体系">
+<meta property="og:url" content="https://liukay.com/posts/17877.html">
+<meta property="og:site_name" content="思想家">
+<meta property="og:description" content="学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。  比特币架构比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。  自上而下，共分6层  应用层 RPC 层 网络层 共识层 数据层 存储层  1.应用层包括比特币钱">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/cover/blockchain/banner.jpeg">
+<meta property="article:published_time" content="2021-04-17T03:53:03.000Z">
+<meta property="article:modified_time" content="2021-11-11T07:29:26.000Z">
+<meta property="article:author" content="咪雅先森">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="比特币">
+<meta property="article:tag" content="技术体系">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/cover/blockchain/banner.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/posts/17877"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//s4.cnzz.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" data-pjax="data-pjax" src="https://s4.cnzz.com/z_stat.php?id=1262480717&amp;web_id=1262480717"></script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-11 15:29:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.0.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">123</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">189</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">54</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/%E5%8F%8D%E5%B0%84"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/%E6%B3%A8%E8%A7%A3"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> 函数式</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/java/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/java/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 架构和中间件</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 理论</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 三高</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 中间件</span></a></li><li><a class="site-page child" href="/categories/apm"><i class="fa-fw fas fa-folder-open"></i><span> 链路追踪</span></a></li><li><a class="site-page child" href="/categories/rocketMQ"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 区块链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链技术</span></a></li><li><a class="site-page child" href="/categories/blockchain/BTC"><i class="fa-fw fas fa-folder-open"></i><span> 比特币</span></a></li><li><a class="site-page child" href="/categories/blockchain/ETH"><i class="fa-fw fas fa-folder-open"></i><span> 以太坊</span></a></li><li><a class="site-page child" href="/categories/blockchain/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 源码</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/serialization"><i class="fa-fw fas fa-folder-open"></i><span> 序列化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/cover/blockchain/banner.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">思想家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/%E5%8F%8D%E5%B0%84"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/%E6%B3%A8%E8%A7%A3"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> 函数式</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/java/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/java/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 架构和中间件</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 理论</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 三高</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 中间件</span></a></li><li><a class="site-page child" href="/categories/apm"><i class="fa-fw fas fa-folder-open"></i><span> 链路追踪</span></a></li><li><a class="site-page child" href="/categories/rocketMQ"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 区块链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链技术</span></a></li><li><a class="site-page child" href="/categories/blockchain/BTC"><i class="fa-fw fas fa-folder-open"></i><span> 比特币</span></a></li><li><a class="site-page child" href="/categories/blockchain/ETH"><i class="fa-fw fas fa-folder-open"></i><span> 以太坊</span></a></li><li><a class="site-page child" href="/categories/blockchain/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 源码</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/serialization"><i class="fa-fw fas fa-folder-open"></i><span> 序列化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">区块链--02比特币技术体系</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-04-17T03:53:03.000Z" title="undefined 2021-04-17 11:53:03">2021-04-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/BTC/">BTC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="区块链--02比特币技术体系"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p>
+</blockquote>
+<h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p>
+<p><img src="/posts/17877/BTC架构图.jpeg" alt="架构图"></p>
+<p>自上而下，共分6层</p>
+<ol>
+<li>应用层</li>
+<li>RPC 层</li>
+<li>网络层</li>
+<li>共识层</li>
+<li>数据层</li>
+<li>存储层</li>
+</ol>
+<h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包，早期这个钱包还保留有CPU挖矿功能。现在版本已不支持，可以参考官方 Github 文档:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md">https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md</a><br><img src="/posts/17877/BTC钱包.jpg" alt="PC钱包"></p>
+<h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3><p>RPC 层的作用是进行RPC 通信。测试可以使用 BitCore 这个工具来进行测试。</p>
+<p>测试一个 RPC 命令，查看区块信息: <strong>getblockchaininfo</strong><br><strong>命令行</strong><br><img src="/posts/17877/命令行.jpg" alt="钱包"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;chain&quot;</span>: <span class="string">&quot;main&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;blocks&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;headers&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;bestblockhash&quot;</span>: <span class="string">&quot;0000000000000000000133b07fdf287ddca3cca80162b4a06a05d6904190cd37&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;difficulty&quot;</span>: <span class="number">23581981443663.85</span>,</span><br><span class="line">  <span class="attr">&quot;mediantime&quot;</span>: <span class="number">1619518237</span>,</span><br><span class="line">  <span class="attr">&quot;verificationprogress&quot;</span>: <span class="number">0.999995596389184</span>,</span><br><span class="line">  <span class="attr">&quot;initialblockdownload&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;chainwork&quot;</span>: <span class="string">&quot;00000000000000000000000000000000000000001c943902d1cf6cdd1387c75c&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;size_on_disk&quot;</span>: <span class="number">1904190175</span>,</span><br><span class="line">  <span class="attr">&quot;pruned&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;pruneheight&quot;</span>: <span class="number">679647</span>,</span><br><span class="line">  <span class="attr">&quot;automatic_pruning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;prune_target_size&quot;</span>: <span class="number">1999634432</span>,</span><br><span class="line">  <span class="attr">&quot;softforks&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bip34&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">227931</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip66&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">363725</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip65&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">388381</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;csv&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">419328</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;segwit&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">481824</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;warnings&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3.网络层"></a>3.网络层</h3><p>网络层使用 Peer-to-Peer，即点对点通信。每个BTC网络当中的节点中的通信，没有中心化的节点进行转发，需要通过节点发现，进行通信。<br>这也体现出BTC网络中当，每个节点都是平等的节点，没有哪个节点可以控制其他节点。</p>
+<p>这种去中心化的好处就是可以做到节点之间的平等，但是也存在几个问题。</p>
+<ol>
+<li>网络延迟</li>
+<li>联合作敝</li>
+</ol>
+<p>3.1 网络延迟很好理解，由于节点之间是平等的，每个节点都会呈现为网状的连接，当一个区块被生产出来后，会同步到相邻的网络节点当中，进行相邻转发。并不是通过中心节点订阅或转发的，一个区块到达所有的节点会有网络延迟。</p>
+<p>3.2 联合作敝，去中心化的通信，节点间的数据只能依赖于依赖于各个节点间的验证，那就给做敝留下了空间。</p>
+<h3 id="4-共识层"><a href="#4-共识层" class="headerlink" title="4.共识层"></a>4.共识层</h3><p>什么是共识，这个非常重要，非常重要。<br>因为在平等的网络当中，每个节点都是分散的，该如何保证每个节点的验证、转发是一致？<br>这就需要每个节点与节点之间达成共识。以此来保证所有节点的行为一致。</p>
+<p><strong>什么是共识</strong><br>共识就是，共识即认可，比特币中有很多节点，要让这些节点达成一致性，比特币采用的是：POW 工作量证明。<br>比特币共识：说白点就是大家通过计算一个随机生成的Hash值的方式，来决定谁先打包。是不是感觉没什么，计算这个Hash并不是一件马上就可以算出来的事情。<br>大概流程：</p>
+<ol>
+<li>所有比特币中的交易会向所有节点广播，所有节点接收到交易后，放于交易队列当中</li>
+<li>全世界所有节点通过计算 Hash 来决定谁交这些交易打包，先算出者，打包交易成一个区块并广播区块</li>
+<li>打包者，将一个随机数加处块头中，使得计算的哈希结果小于或等于块头中目标值</li>
+<li>其他节点收到区块后，验证区块和区块内的交易，验证正确保留该区块</li>
+</ol>
+<p><strong>为什么要给一个随机Hash数来给节点计算</strong><br>为了证明这个块的正确性。比特币的区块链当中，第一个节点产生的第一个块叫做：创世块，这个块是比特币运行时产生的第一个块，这个块会产生一个随机Hash数，打包进第一个块的块头中，然后广播。<br>其他节点收到区块后，对这个创世块进行验证。先验出者，证明了这个块是正确的，然后根据这个创建块，将收到的交易进行打包，并链接到这个创世块后面，就成了第二个块，并且这个节点也根据收到的交易产生了个随机Hash，广播给其它节点。<br>其他节点收到后，重复这个流程，证明这个块的正确性，并进行上链。这个就是 POW 的义意。</p>
+<h3 id="5-数据层"><a href="#5-数据层" class="headerlink" title="5.数据层"></a>5.数据层</h3><p>数据层是指比特币的数据结构。比特币的数据结构比较典型，很多后来的区块链都借鉴这些数据模型。</p>
+<ol>
+<li>区块</li>
+<li>区块链</li>
+<li>Merkle树，也称，默克尔树</li>
+<li>Hash</li>
+<li>时间戳</li>
+</ol>
+<h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>是指将交易进行打构的区块数据结构，包含：区块头、区块体、哈希、时间戳 等。</p>
+<h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>是指由区块构成的链条，就是指区块链，比较直白。</p>
+<h4 id="Merkle树，也称，默克尔树"><a href="#Merkle树，也称，默克尔树" class="headerlink" title="Merkle树，也称，默克尔树"></a>Merkle树，也称，默克尔树</h4><p>Merkle树的作用：防窜改。<br>这里仅需要知道即可，这些点每一个展开都是一个大点，后续会做很详细的讲解。<br>Merkle树的构成是通过将每一笔交易的哈希，自上而下，相邻两个节点向上构建出一个新的父哈希值，由此来构建一棵哈希树。</p>
+<h3 id="6-存储层"><a href="#6-存储层" class="headerlink" title="6.存储层"></a>6.存储层</h3><p>存储主要使用的是 LevelDB，进行存储，LevelDB 是基于 SSTable 进行设计实现的一个数据引擎。很多数据库都是基 LevelDB 进开发。<br>LevelDB 本身具体高性能读写，通过在内存缓存 和 多层级文件存储而取名 LevelDB。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">咪雅先森</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://liukay.com/posts/17877.html">https://liukay.com/posts/17877.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://liukay.com" target="_blank">思想家</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a><a class="post-meta__tags" href="/tags/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a><a class="post-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/">技术体系</a></div><div class="post_share"><div class="social-share" data-image="/images/cover/blockchain/banner.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/38615.html"><img class="prev-cover" src="/images/cover/blockchain/banner1.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">区块链--03比特币区块结构</div></div></a></div><div class="next-post pull-right"><a href="/posts/64659.html"><img class="next-cover" src="/images/cover/blockchain/banner.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">区块链--01区块链初识</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/15476.html" title="区块链--05比特币区块同步机制"><img class="cover" src="/images/cover/blockchain/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-29</div><div class="title">区块链--05比特币区块同步机制</div></div></a></div><div><a href="/posts/6715.html" title="Tendermint ABCI概述"><img class="cover" src="/images/cover/cover-tendermint.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-02</div><div class="title">Tendermint ABCI概述</div></div></a></div><div><a href="/posts/4334.html" title="Tendermint 共识源码分析"><img class="cover" src="/images/cover/cover-tendermint.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-03</div><div class="title">Tendermint 共识源码分析</div></div></a></div><div><a href="/posts/11173.html" title="Tendermint 启动流程"><img class="cover" src="/images/cover/cover-tendermint.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-03</div><div class="title">Tendermint 启动流程</div></div></a></div><div><a href="/posts/64659.html" title="区块链--01区块链初识"><img class="cover" src="/images/cover/blockchain/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-14</div><div class="title">区块链--01区块链初识</div></div></a></div><div><a href="/posts/42563.html" title="区块链--04交易广播和打包上链"><img class="cover" src="/images/cover/blockchain/banner3.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-27</div><div class="title">区块链--04交易广播和打包上链</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">咪雅先森</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">123</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">189</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">54</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">自强不息，练习一币通关。笔记搬运中...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">比特币架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">1.应用层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-RPC-%E5%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text">2.RPC 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">1.3.</span> <span class="toc-text">3.网络层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B1%E8%AF%86%E5%B1%82"><span class="toc-number">1.4.</span> <span class="toc-text">4.共识层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%B1%82"><span class="toc-number">1.5.</span> <span class="toc-text">5.数据层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97"><span class="toc-number">1.5.1.</span> <span class="toc-text">区块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="toc-number">1.5.2.</span> <span class="toc-text">区块链</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Merkle%E6%A0%91%EF%BC%8C%E4%B9%9F%E7%A7%B0%EF%BC%8C%E9%BB%98%E5%85%8B%E5%B0%94%E6%A0%91"><span class="toc-number">1.5.3.</span> <span class="toc-text">Merkle树，也称，默克尔树</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%AD%98%E5%82%A8%E5%B1%82"><span class="toc-number">1.6.</span> <span class="toc-text">6.存储层</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/20130.html" title="go defer关键字"><img src="/images/cover/cover-go.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go defer关键字"/></a><div class="content"><a class="title" href="/posts/20130.html" title="go defer关键字">go defer关键字</a><time datetime="2021-11-05T03:15:34.000Z" title="发表于 2021-11-05 11:15:34">2021-11-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/29773.html" title="go 空白标识符"><img src="/images/cover/cover-go.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go 空白标识符"/></a><div class="content"><a class="title" href="/posts/29773.html" title="go 空白标识符">go 空白标识符</a><time datetime="2021-11-05T03:08:40.000Z" title="发表于 2021-11-05 11:08:40">2021-11-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4334.html" title="Tendermint 共识源码分析"><img src="/images/cover/cover-tendermint.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Tendermint 共识源码分析"/></a><div class="content"><a class="title" href="/posts/4334.html" title="Tendermint 共识源码分析">Tendermint 共识源码分析</a><time datetime="2021-11-03T07:59:17.000Z" title="发表于 2021-11-03 15:59:17">2021-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/11173.html" title="Tendermint 启动流程"><img src="/images/cover/cover-tendermint.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Tendermint 启动流程"/></a><div class="content"><a class="title" href="/posts/11173.html" title="Tendermint 启动流程">Tendermint 启动流程</a><time datetime="2021-11-03T06:31:52.000Z" title="发表于 2021-11-03 14:31:52">2021-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6715.html" title="Tendermint ABCI概述"><img src="/images/cover/cover-tendermint.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Tendermint ABCI概述"/></a><div class="content"><a class="title" href="/posts/6715.html" title="Tendermint ABCI概述">Tendermint ABCI概述</a><time datetime="2021-11-02T03:35:30.000Z" title="发表于 2021-11-02 11:35:30">2021-11-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 咪雅先森</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'a07a71eb5860a45bcde7',
+      clientSecret: '3bcb41581dad800b346c4f8197da39f4777c0916',
+      repo: 'forfreeday.github.io',
+      owner: 'forfreeday',
+      admin: ['forfreeday'],
+      id: 'de8a2d182560d76a49e8a94f6ab3953c',
+      language: 'zh-CN',
+      perPage: 10,
+      distractionFreeMode: false,
+      pagerDirection: 'last',
+      createIssueManually: false,
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

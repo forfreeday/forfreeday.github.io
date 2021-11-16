@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2021-11-05T03:15:34.000Z</updated>
+  <updated>2021-11-16T06:09:05.428Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go 函数多个返回值</title>
+    <link href="https://liukay.com/posts/b9c503bd.html"/>
+    <id>https://liukay.com/posts/b9c503bd.html</id>
+    <published>2021-11-16T06:03:51.000Z</published>
+    <updated>2021-11-16T06:09:05.428Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>结构和别的语言略有不同。<br>go 的特点，返回可以有多个返回值。</p><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">function_name</span><span class="params">( [parameter list] )</span> [<span class="title">return_types</span>]</span> &#123;</span><br><span class="line">   函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="单个返回值方法"><a href="#单个返回值方法" class="headerlink" title="单个返回值方法"></a>单个返回值方法</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数返回两个数的最大值 */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(num1, num2 <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">   <span class="comment">/* 声明局部变量 */</span></span><br><span class="line">   <span class="keyword">var</span> result <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (num1 &gt; num2) &#123;</span><br><span class="line">      result = num1</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result = num2</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="两个返回值方法"><a href="#两个返回值方法" class="headerlink" title="两个返回值方法"></a>两个返回值方法</h2><p>实际上可以返回多个值，这里演示，所以只写两个返回值</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">   <span class="keyword">return</span> y, x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   a, b := swap(<span class="string">&quot;Google&quot;</span>, <span class="string">&quot;Runoob&quot;</span>)</span><br><span class="line">   fmt.Println(a, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;函数&quot;&gt;&lt;a href=&quot;#函数&quot; class=&quot;headerlink&quot; title=&quot;函数&quot;&gt;&lt;/a&gt;函数&lt;/h2&gt;&lt;p&gt;结构和别的语言略有不同。&lt;br&gt;go 的特点，返回可以有多个返回值。&lt;/p&gt;
+&lt;h2 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class
+      
+    
+    </summary>
+    
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
+    
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
+    
+      <category term="语法" scheme="https://liukay.com/tags/%E8%AF%AD%E6%B3%95/"/>
+    
+      <category term="函数" scheme="https://liukay.com/tags/%E5%87%BD%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go 函数介绍</title>
+    <link href="https://liukay.com/posts/b9c503bd.html"/>
+    <id>https://liukay.com/posts/b9c503bd.html</id>
+    <published>2021-11-16T02:13:52.000Z</published>
+    <updated>2021-11-16T06:43:14.366Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h2><p>函数是基本的代码块。<br>Go是编译型语言，函数编写的顺序是无关紧要的；鉴于可读性的需求，最好把 main() 函数写在文件的底部，类似于C语言的习惯。</p><p>Go 语言函数定义格式如下：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">function_name</span><span class="params">( [parameter list] )</span> [<span class="title">return_types</span>]</span> &#123;</span><br><span class="line">   函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>func：函数声明关键字，函数由 func 开始声明</li><li>function_name：函数名称，参数列表和返回值类型构成了函数签名。</li><li>parameter list：参数列表。</li><li>return_types：返回类型，函数返回一列值。<br>return_types 是该列值的数据类型。有些功能不需要返回值，这种情况下 return_types 不是必须的。</li><li>函数体：函数定义的代码集合。</li></ul><h2 id="Go-里面拥三种类型的函数"><a href="#Go-里面拥三种类型的函数" class="headerlink" title="Go 里面拥三种类型的函数"></a>Go 里面拥三种类型的函数</h2><ul><li>普通函数</li><li>匿名函数或者lambda函数</li><li>方法（Methods）<br>说下方法，确实有这种类型。go是为了兼容面向对象的特性，实现了方法这种特性。</li></ul><h2 id="调用示例"><a href="#调用示例" class="headerlink" title="调用示例"></a>调用示例</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    getTest()</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">&quot;main&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getTest</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">&quot;test&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="带入参返回值"><a href="#带入参返回值" class="headerlink" title="带入参返回值"></a>带入参返回值</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   <span class="comment">/* 定义局部变量 */</span></span><br><span class="line">   <span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">100</span></span><br><span class="line">   <span class="keyword">var</span> b <span class="keyword">int</span> = <span class="number">200</span></span><br><span class="line">   <span class="keyword">var</span> ret <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/* 调用函数并返回最大值 */</span></span><br><span class="line">   ret = max(a, b)</span><br><span class="line"></span><br><span class="line">   fmt.Printf( <span class="string">&quot;最大值是 : %d\n&quot;</span>, ret )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 函数返回两个数的最大值 */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(num1, num2 <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">   <span class="comment">/* 定义局部变量 */</span></span><br><span class="line">   <span class="keyword">var</span> result <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (num1 &gt; num2) &#123;</span><br><span class="line">      result = num1</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result = num2</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;函数定义&quot;&gt;&lt;a href=&quot;#函数定义&quot; class=&quot;headerlink&quot; title=&quot;函数定义&quot;&gt;&lt;/a&gt;函数定义&lt;/h2&gt;&lt;p&gt;函数是基本的代码块。&lt;br&gt;Go是编译型语言，函数编写的顺序是无关紧要的；鉴于可读性的需求，最好把 main() 函数写在文
+      
+    
+    </summary>
+    
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
+    
+  </entry>
   
   <entry>
     <title>go defer关键字</title>
@@ -607,71 +660,6 @@
       <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>blockchain--区块链文章大纲</title>
-    <link href="https://liukay.com/posts/61275.html"/>
-    <id>https://liukay.com/posts/61275.html</id>
-    <published>2021-04-11T03:43:03.000Z</published>
-    <updated>2021-11-11T03:16:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>现在从业区块链行业的架构研发，记录对区块链的理解，创建一个文章目录，将需要理解的东西一一记录下来。</p><h1 id="区块链文章大纲"><a href="#区块链文章大纲" class="headerlink" title="区块链文章大纲"></a>区块链文章大纲</h1><h2 id="区块链架构"><a href="#区块链架构" class="headerlink" title="区块链架构"></a>区块链架构</h2><h2 id="快速使用体验"><a href="#快速使用体验" class="headerlink" title="快速使用体验"></a>快速使用体验</h2><ul><li>钱包</li><li>交易<h2 id="如何交易"><a href="#如何交易" class="headerlink" title="如何交易"></a>如何交易</h2></li></ul><h2 id="成为矿工"><a href="#成为矿工" class="headerlink" title="成为矿工"></a>成为矿工</h2><h2 id="区块链共识"><a href="#区块链共识" class="headerlink" title="区块链共识"></a>区块链共识</h2><h2 id="区块链存储"><a href="#区块链存储" class="headerlink" title="区块链存储"></a>区块链存储</h2><h2 id="区块链网络"><a href="#区块链网络" class="headerlink" title="区块链网络"></a>区块链网络</h2><h2 id="区块链加密"><a href="#区块链加密" class="headerlink" title="区块链加密"></a>区块链加密</h2><h2 id="跨链"><a href="#跨链" class="headerlink" title="跨链"></a>跨链</h2><h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;现在从业区块链行业的架构研发，记录对区块链的理解，创建一个文章目录，将需要理解的东西一一记录下来。&lt;/p&gt;
-&lt;h1 id=&quot;区块链文章大纲&quot;&gt;&lt;a href=&quot;#区块链文章大纲&quot; class=&quot;headerlink&quot; title=&quot;区块链文章大纲&quot;&gt;&lt;/a&gt;区块链文章大纲&lt;
-      
-    
-    </summary>
-    
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
-    
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>oh-my-zsh插件 zsh-autosuggestion自动补全 和 zsh-syntax-highlighting语法高亮</title>
-    <link href="https://liukay.com/posts/2bd7c1ad.html"/>
-    <id>https://liukay.com/posts/2bd7c1ad.html</id>
-    <published>2021-01-16T02:54:10.000Z</published>
-    <updated>2021-11-16T04:24:15.932Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="安装-on-my-zsh-插件"><a href="#安装-on-my-zsh-插件" class="headerlink" title="安装 on-my-zsh 插件"></a>安装 on-my-zsh 插件</h2><p>插件在 .zshrc 的 plugins 中进行添加。</p><p>这些插件可以让oh-my-zsh更好用，推荐安装，不安装对使用vim也没什么影响。<br>分两步</p><p><code>$ZSH_CUSTOM</code> 安装完 zsh 后，默认已经存在。</p><h2 id="安装-zsh-autosuggestions"><a href="#安装-zsh-autosuggestions" class="headerlink" title="安装 zsh-autosuggestions"></a>安装 zsh-autosuggestions</h2><p>这是一个超级好用的插件，直接显示命令的操作记录，可以快速使用重复命令。</p><blockquote><p>git clone git://github.com/zsh-users/zsh-autosuggestions <code>$ZSH_CUSTOM</code>/plugins/zsh-autosuggestions</p></blockquote><p>看效果</p><p><img src="/posts/2bd7c1ad/2.jpg" alt="补全效果"></p><h2 id="安装-zsh-syntax-highlighting"><a href="#安装-zsh-syntax-highlighting" class="headerlink" title="安装 zsh-syntax-highlighting"></a>安装 zsh-syntax-highlighting</h2><blockquote><p>git clone <a href="https://github.com/zsh-users/zsh-syntax-highlighting.git">https://github.com/zsh-users/zsh-syntax-highlighting.git</a> <code>$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</code>/plugins/zsh-syntax-highlighting</p></blockquote><p>这个插件会在终端以颜色的方式提示命令是否正确。</p><p>正确命令</p><p><img src="/posts/2bd7c1ad/3.jpg" alt="正确命令"></p><p>不正确的命令</p><p><img src="/posts/2bd7c1ad/4.jpg" alt="不正确的命令"></p><h2 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h2><p><code>zsh-autosuggestion</code> 和 <code>zsh-syntax-highlighting</code></p><p>vim ~/.zshrc 在 plugins 中换行添加即可</p><p><img src="/posts/2bd7c1ad/1.jpg" alt="plugins"></p><p>复制代码</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">    git</span><br><span class="line">    zsh-autosuggestions</span><br><span class="line">    autojump</span><br><span class="line">    zsh-<span class="keyword">syntax</span>-highlighting</span><br><span class="line">)</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;安装-on-my-zsh-插件&quot;&gt;&lt;a href=&quot;#安装-on-my-zsh-插件&quot; class=&quot;headerlink&quot; title=&quot;安装 on-my-zsh 插件&quot;&gt;&lt;/a&gt;安装 on-my-zsh 插件&lt;/h2&gt;&lt;p&gt;插件在 .zshrc 的 plugi
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="https://liukay.com/categories/linux/"/>
-    
-      <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
-    
-      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
-    
-      <category term="oh-my-zsh" scheme="https://liukay.com/categories/vim/oh-my-zsh/"/>
-    
-    
-      <category term="linux" scheme="https://liukay.com/tags/linux/"/>
-    
-      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
-    
-      <category term="oh-my-zsh" scheme="https://liukay.com/tags/oh-my-zsh/"/>
-    
-      <category term="插件" scheme="https://liukay.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
