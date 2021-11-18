@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>netty 简述</title>
+      <link href="posts/9321f70b.html"/>
+      <url>posts/9321f70b.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="什么是netty"><a href="#什么是netty" class="headerlink" title="什么是netty"></a>什么是netty</h2><p>Netty是一个异步的基于事件驱动(Reactor)的网络框架。<br>Netty是一个NIO客户服务器框架，它能够快速和容易地开发网络应用，如协议服务器和客户端。它大大简化了网络编程，如TCP和UDP套接字服务器。</p><h2 id="为什么选择netty"><a href="#为什么选择netty" class="headerlink" title="为什么选择netty"></a>为什么选择netty</h2><p>主要原因是 netty 简化了使用nio时对网络编程的复杂性，提供更多的抽象性和功能方便网络编程开发。</p><p>列举一个特点：<br>1.Netty支持三种IO模型同时支持三种Reactor模式。</p><p>2.Netty支持很多应用层的协议，提供了很多decoder和encoder。</p><p>3.Netty能够解决TCP长连接所带来的缺陷（粘包、半包等）</p><p>4.Netty支持应用层的KeepAlive。</p><p>5.Netty规避了JAVA NIO中的很多BUG，性能更好。</p><h2 id="使用-netty-能做什么"><a href="#使用-netty-能做什么" class="headerlink" title="使用 netty 能做什么"></a>使用 netty 能做什么</h2><p>1.实现节点间通信<br>2.实现自己的协议<br> dubbo、rocketmq 等底层都使用 netty 实现自己的协议</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> netty </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> netty </tag>
+            
+            <tag> 简述 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>go 函数多个返回值</title>
       <link href="posts/b9c503bd.html"/>
       <url>posts/b9c503bd.html</url>
@@ -68,9 +95,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -136,9 +163,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 共识 </tag>
             
@@ -173,9 +200,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 源码分析 </tag>
             
@@ -210,15 +237,15 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
-            <tag> 区块链 </tag>
-            
             <tag> 概述 </tag>
             
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
         </tags>
       
@@ -332,9 +359,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -673,9 +700,9 @@
             
             <tag> vim </tag>
             
-            <tag> oh-my-zsh </tag>
-            
             <tag> 插件 </tag>
+            
+            <tag> oh-my-zsh </tag>
             
         </tags>
       
@@ -770,13 +797,13 @@
             
             <tag> mac </tag>
             
-            <tag> nvim </tag>
-            
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
             
             <tag> 配置 </tag>
+            
+            <tag> nvim </tag>
             
         </tags>
       
@@ -2242,7 +2269,7 @@
       <link href="posts/14823.html"/>
       <url>posts/14823.html</url>
       
-        <content type="html"><![CDATA[<h2 id="取消跟踪"><a href="#取消跟踪" class="headerlink" title="取消跟踪"></a>取消跟踪</h2><p>未提交文件忽略</p><blockquote><p>git rm –cached FILENAME</p></blockquote><p>这样就可以了，如果后面跟的是目录就加上个 -r  就行了<br>（这个操作不会删除这个文件）</p><blockquote><p>git rm -r –cached DIR</p></blockquote><h2 id="已提交文件忽略"><a href="#已提交文件忽略" class="headerlink" title="已提交文件忽略"></a>已提交文件忽略</h2><p>已经维护起来的文件即已经 commit 后的文件，即使加上了<code>.gitignore</code>也无济于事。<br>用下面这个命令：</p><blockquote><p>git update-index –assume-unchanged <code>logs/*.log</code></p></blockquote>]]></content>
+        <content type="html"><![CDATA[<h2 id="取消跟踪"><a href="#取消跟踪" class="headerlink" title="取消跟踪"></a>取消跟踪</h2><p>未提交文件忽略</p><blockquote><p>git rm <code>--cached FILENAME</code></p></blockquote><p>这样就可以了，如果后面跟的是目录就加上个 -r  就行了<br>（这个操作不会删除这个文件）</p><blockquote><p>git rm -r <code>--cached DIR</code></p></blockquote><h2 id="已提交文件忽略"><a href="#已提交文件忽略" class="headerlink" title="已提交文件忽略"></a>已提交文件忽略</h2><p>已经维护起来的文件即已经 commit 后的文件，即使加上了<code>.gitignore</code>也无济于事。<br>用下面这个命令：</p><blockquote><p>git update-index <code>--assume-unchanged logs/*.log</code></p></blockquote>]]></content>
       
       
       <categories>
