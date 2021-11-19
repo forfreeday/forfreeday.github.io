@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>maven 项目模型</title>
+      <link href="posts/15dcd314.html"/>
+      <url>posts/15dcd314.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="pom-xml-项目对象模型"><a href="#pom-xml-项目对象模型" class="headerlink" title="pom.xml 项目对象模型"></a>pom.xml 项目对象模型</h2><p>每一个项目都有一个pom.xml，Project Object Model，项目对象模型。<br>用面向对象的思维还看这个文件，它就是一个项目。<br>该文件用于管理：源代码、配置文件、开发者的信息和角色、问题追踪系统、组织信息、项目授权、项目的url、项目的依赖关系等等。</p><p>所有的pom.xml都要配置三个最基本的东西，其它的不配都没关系。下面的配置只需要知道即可，因为工具会自动生成。</p><p>示例：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 固定的头部信息,不要去改变 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 项目座标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure><p>说明：</p><ol><li>modelVersion: 永远的4.0.0，这个固定存在的。</li><li>groupId: 项目的项目组，就是把域名反转，一样的。如:com.test.study</li><li>artifactId: 项目中的哪一个模块。一般用”项目名-模块名”。如：study-frist</li><li>version: 快照版本一般是1.0-SNAPSHOT，或SNAPSHOT-0.0.1</li></ol><p>groupId、artifactId、version 还有一个作用，就是可以被其他的项目引用时，当作引用部头。这就是模块化的管项目管理理念。</p><h2 id="项目座标"><a href="#项目座标" class="headerlink" title="项目座标"></a>项目座标</h2><h3 id="什么是项目座标"><a href="#什么是项目座标" class="headerlink" title="什么是项目座标"></a>什么是项目座标</h3><p>项目座标，是为了让别人maven项目在引用当前项目时可以定位到的信息。这就是项目座标的意义。<br>两个项目之前之所以可以互相调用就是因为项目座标起了作用，maven通过识别项目座标来识别项目中的信息包括版本，包路径之类的信息。<br>注意，不要陷入理解的误区，maven是项目和管理的工具，但他不是项目的一部分。maven通过pom.xml识别项目信息从而帮助项目进行添加、打包、引用等操作，但不代表java项目代码本身会被maven影响，只是项目的构建形式不同了而已。项目是项目、代码是代码，不要混为一谈。maven做的是项目构造方面的操作，而不是代码的操作，仔细分析maven的功能，没有一个是对会代码产生影响的，maven的操作都是对项目构建产生影响。</p><h3 id="项目座标命名规则"><a href="#项目座标命名规则" class="headerlink" title="项目座标命名规则"></a>项目座标命名规则</h3><p>1.GroupID是分组ID，以包名方式命名，实际上就是命名空间的作用。惯例以部门命名。</p><blockquote><p>com.company.department<br>com.test.cash<br>com.test.deployment</p></blockquote><p>2.ArtifactID就是项目的唯一的标识符,也就是模块名称。实际对应项目的名称，</p><blockquote><p>admin        //view层<br>bussiness        //service、dao<br>commont        //公共代码库</p></blockquote><p>问题：不同的项目之前的部门名称可以相同，只是ArtifactID 不同可以吗？<br>答案是的，以模块的思想去看待。不同的项目只是不同的模块，把每一个不同的项目看成是不同功能的模块但是他们是同属于一个项目下的，所以可以以同一个GroupID命名。</p><p>3.引用项目座标</p><p>A项目的pom.xml中项目座标</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure><p>B项目引用A项目座标</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- A项目的项目座标 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure><p>作用：B项目即可引用A项目中的类了进行使用了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> maven </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
+            
+            <tag> 项目模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>netty 简述</title>
       <link href="posts/9321f70b.html"/>
       <url>posts/9321f70b.html</url>
@@ -3230,6 +3261,64 @@
             <tag> 有状态 </tag>
             
             <tag> 无状态 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>maven 安装</title>
+      <link href="posts/5e421f68.html"/>
+      <url>posts/5e421f68.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装maven"><a href="#安装maven" class="headerlink" title="安装maven"></a>安装maven</h2><p>官网 <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></p><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><blockquote><p>wget <a href="https://mirrors.bfsu.edu.cn/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz">https://mirrors.bfsu.edu.cn/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz</a></p></blockquote><h2 id="配置maven环境变量"><a href="#配置maven环境变量" class="headerlink" title="配置maven环境变量"></a>配置maven环境变量</h2><blockquote><p>export MAVEN_HOME=/data/apache-maven-3.6.3<br>export PATH=${MAVEN_HOME}/bin:${PATH}</p></blockquote><h2 id="配置maven本地仓库的位置"><a href="#配置maven本地仓库的位置" class="headerlink" title="配置maven本地仓库的位置"></a>配置maven本地仓库的位置</h2><blockquote><p>vim /data/apache-maven-3.3.9/settings.xml</p><p>#设置本地仓库的位置<br><code>&lt;localRepository&gt;/data/maven/repo&lt;/localRepository&gt;</code></p></blockquote><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><blockquote><p>mvn -v<br>mvn clean</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> maven </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>maven 概念</title>
+      <link href="posts/f7d15fa4.html"/>
+      <url>posts/f7d15fa4.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>maven 是用于项目构建 和 包管理的工具。<br>maven 只对项目构建进行影响，但是不会对java编码、代码产生任何的影响。</p><h2 id="maven有什么用"><a href="#maven有什么用" class="headerlink" title="maven有什么用"></a>maven有什么用</h2><ol><li>项目构建</li><li>包管理</li></ol><p>maven属于工具，下载安装后也需要配置path。非常简单。<br>而对maven的使用就是在使用maven的操作规范的情况下，用cmd输入maven命令即可。</p><p>使用maven必须在有网络的情况下，否则不可能成功。因为maven是自动去中央仓库中下载插件的，并把插件下到本地仓库中。</p><p>推荐书 《maven实战》</p><p>学习maven必须要有两个新概念要劳记：<br>1.模块<br>2.版本</p><p>大概摸到maven 命令的规律，maven的命令一般以模块或插件为基础比如</p><blockquote><p>mvn eclipse:eclipse        //生成eclipse 项目<br>mvn assembly:singl -DdescriptorId=project        //mvn 插件:插件模块 <code>-D</code>参数<br>maven 的perperties 标签可以影响到作域，在.properties 文件中用<code>$&#123; &#125;</code>可以取到sitting.xml中的值，如果是pom中的properties标签是否也能被取到。</p></blockquote><h2 id="maven公共仓库"><a href="#maven公共仓库" class="headerlink" title="maven公共仓库"></a>maven公共仓库</h2><p><a href="http://www.mvnrepository.com">www.mvnrepository.com</a></p><h2 id="maven-项目结构"><a href="#maven-项目结构" class="headerlink" title="maven 项目结构"></a>maven 项目结构</h2><p>假设一个测试名为TestMaven的新项目来说明。src目录和一个pom.xml的配置文件。后面根据程序运行会有新目录产生。<br>1.项目目录下的结构三个同级：</p><blockquote><p>TestMaven\pom.xml        项目模型文件<br>TestMaven\src                代码存放处<br>TestMaven\target        生成的报告、class文件、jar包都在这里。不要把这个更新到svn中去。</p></blockquote><p>2.src目录下固定必须是main 和 test 不能有任何不同。<br>所有的代码必须放在java目录中。可以从java目录开始建包。</p><blockquote><p>\src\main\java        正式的JAVA代码，这是规定。<br>\src\main\resources        放资源文件，比如spring.xml、log4j这些配置。这个文件夹自己创建。<br>\src\test\java        所有测试项目都放这里。<br>\src\test\resources        放测试文件的配置。<br>\src\test\webapp        所有web文件，js、jsp之类下面包含的还是WEB-INFO。不要被名字搞蒙。</p></blockquote><p>这些在Effective pom 中可以查看</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ol><li>clean</li><li>compile</li><li>pacakge</li><li>install</li><li>test</li><li>archetype</li></ol><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>项目之前存在继承关系<br>子项目可以继承父项目的配置。<br>在 maven 中，不同项目之前存在依赖时，其父项目中的配继，是可以被子项目继承的。</p><h2 id="仓库位置"><a href="#仓库位置" class="headerlink" title="仓库位置"></a>仓库位置</h2><p>maven 仓库有两种意思:</p><ol><li>本地仓库</li><li>中央仓库</li></ol><h3 id="本地仓库"><a href="#本地仓库" class="headerlink" title="本地仓库"></a>本地仓库</h3><p>本地仓库的作用就是保存pom.xml中配置的插件的jar包从网上下载下来存在本地。<br>默认的位置：</p><blockquote><p>${USER}/.m2</p></blockquote><h3 id="中央仓库"><a href="#中央仓库" class="headerlink" title="中央仓库"></a>中央仓库</h3><p>默认仓库，这个就是所有maven的中心了，pom.xml配置后之所以能自动下载，原因就是配置文件通过地址去中央仓库中去把jar包下载到本地的。本地的jar包就是这么来的。中央仓库的地址是可以自定义的。网上有很多第三方的maven仓库。公司里的所谓maven私服也是这个道理，私服中放了很多平时需要用的jar包，从公司下比从网上下要快。</p><h3 id="查找顺序"><a href="#查找顺序" class="headerlink" title="查找顺序"></a>查找顺序</h3><p>先查找本地仓库，再查找远程仓库。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> maven </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
         </tags>
       

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2021-11-17T02:07:33.060Z</updated>
+  <updated>2021-11-19T08:02:59.137Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -17,11 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>maven 项目模型</title>
+    <link href="https://liukay.com/posts/15dcd314.html"/>
+    <id>https://liukay.com/posts/15dcd314.html</id>
+    <published>2021-11-19T07:53:56.000Z</published>
+    <updated>2021-11-19T08:02:59.137Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="pom-xml-项目对象模型"><a href="#pom-xml-项目对象模型" class="headerlink" title="pom.xml 项目对象模型"></a>pom.xml 项目对象模型</h2><p>每一个项目都有一个pom.xml，Project Object Model，项目对象模型。<br>用面向对象的思维还看这个文件，它就是一个项目。<br>该文件用于管理：源代码、配置文件、开发者的信息和角色、问题追踪系统、组织信息、项目授权、项目的url、项目的依赖关系等等。</p><p>所有的pom.xml都要配置三个最基本的东西，其它的不配都没关系。下面的配置只需要知道即可，因为工具会自动生成。</p><p>示例：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 固定的头部信息,不要去改变 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 项目座标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure><p>说明：</p><ol><li>modelVersion: 永远的4.0.0，这个固定存在的。</li><li>groupId: 项目的项目组，就是把域名反转，一样的。如:com.test.study</li><li>artifactId: 项目中的哪一个模块。一般用”项目名-模块名”。如：study-frist</li><li>version: 快照版本一般是1.0-SNAPSHOT，或SNAPSHOT-0.0.1</li></ol><p>groupId、artifactId、version 还有一个作用，就是可以被其他的项目引用时，当作引用部头。这就是模块化的管项目管理理念。</p><h2 id="项目座标"><a href="#项目座标" class="headerlink" title="项目座标"></a>项目座标</h2><h3 id="什么是项目座标"><a href="#什么是项目座标" class="headerlink" title="什么是项目座标"></a>什么是项目座标</h3><p>项目座标，是为了让别人maven项目在引用当前项目时可以定位到的信息。这就是项目座标的意义。<br>两个项目之前之所以可以互相调用就是因为项目座标起了作用，maven通过识别项目座标来识别项目中的信息包括版本，包路径之类的信息。<br>注意，不要陷入理解的误区，maven是项目和管理的工具，但他不是项目的一部分。maven通过pom.xml识别项目信息从而帮助项目进行添加、打包、引用等操作，但不代表java项目代码本身会被maven影响，只是项目的构建形式不同了而已。项目是项目、代码是代码，不要混为一谈。maven做的是项目构造方面的操作，而不是代码的操作，仔细分析maven的功能，没有一个是对会代码产生影响的，maven的操作都是对项目构建产生影响。</p><h3 id="项目座标命名规则"><a href="#项目座标命名规则" class="headerlink" title="项目座标命名规则"></a>项目座标命名规则</h3><p>1.GroupID是分组ID，以包名方式命名，实际上就是命名空间的作用。惯例以部门命名。</p><blockquote><p>com.company.department<br>com.test.cash<br>com.test.deployment</p></blockquote><p>2.ArtifactID就是项目的唯一的标识符,也就是模块名称。实际对应项目的名称，</p><blockquote><p>admin        //view层<br>bussiness        //service、dao<br>commont        //公共代码库</p></blockquote><p>问题：不同的项目之前的部门名称可以相同，只是ArtifactID 不同可以吗？<br>答案是的，以模块的思想去看待。不同的项目只是不同的模块，把每一个不同的项目看成是不同功能的模块但是他们是同属于一个项目下的，所以可以以同一个GroupID命名。</p><p>3.引用项目座标</p><p>A项目的pom.xml中项目座标</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure><p>B项目引用A项目座标</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- A项目的项目座标 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.app<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure><p>作用：B项目即可引用A项目中的类了进行使用了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;pom-xml-项目对象模型&quot;&gt;&lt;a href=&quot;#pom-xml-项目对象模型&quot; class=&quot;headerlink&quot; title=&quot;pom.xml 项目对象模型&quot;&gt;&lt;/a&gt;pom.xml 项目对象模型&lt;/h2&gt;&lt;p&gt;每一个项目都有一个pom.xml，Proje
+      
+    
+    </summary>
+    
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
+    
+      <category term="maven" scheme="https://liukay.com/categories/java/maven/"/>
+    
+    
+      <category term="maven" scheme="https://liukay.com/tags/maven/"/>
+    
+      <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
+    
+      <category term="项目模型" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>netty 简述</title>
     <link href="https://liukay.com/posts/9321f70b.html"/>
     <id>https://liukay.com/posts/9321f70b.html</id>
     <published>2021-11-16T07:07:38.000Z</published>
-    <updated>2021-11-17T02:07:33.060Z</updated>
+    <updated>2021-11-19T08:04:05.653Z</updated>
     
     <content type="html"><![CDATA[<h2 id="什么是netty"><a href="#什么是netty" class="headerlink" title="什么是netty"></a>什么是netty</h2><p>Netty是一个异步的基于事件驱动(Reactor)的网络框架。<br>Netty是一个NIO客户服务器框架，它能够快速和容易地开发网络应用，如协议服务器和客户端。它大大简化了网络编程，如TCP和UDP套接字服务器。</p><h2 id="为什么选择netty"><a href="#为什么选择netty" class="headerlink" title="为什么选择netty"></a>为什么选择netty</h2><p>主要原因是 netty 简化了使用nio时对网络编程的复杂性，提供更多的抽象性和功能方便网络编程开发。</p><p>列举一个特点：<br>1.Netty支持三种IO模型同时支持三种Reactor模式。</p><p>2.Netty支持很多应用层的协议，提供了很多decoder和encoder。</p><p>3.Netty能够解决TCP长连接所带来的缺陷（粘包、半包等）</p><p>4.Netty支持应用层的KeepAlive。</p><p>5.Netty规避了JAVA NIO中的很多BUG，性能更好。</p><h2 id="使用-netty-能做什么"><a href="#使用-netty-能做什么" class="headerlink" title="使用 netty 能做什么"></a>使用 netty 能做什么</h2><p>1.实现节点间通信<br>2.实现自己的协议<br> dubbo、rocketmq 等底层都使用 netty 实现自己的协议</p>]]></content>
     
@@ -621,40 +652,6 @@
       <category term="BTC" scheme="https://liukay.com/tags/BTC/"/>
     
       <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区块链--02比特币技术体系</title>
-    <link href="https://liukay.com/posts/17877.html"/>
-    <id>https://liukay.com/posts/17877.html</id>
-    <published>2021-04-17T03:53:03.000Z</published>
-    <updated>2021-11-11T07:29:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。</p></blockquote><h2 id="比特币架构"><a href="#比特币架构" class="headerlink" title="比特币架构"></a>比特币架构</h2><p>比特币通过将各项技术进行结合，创造出来的这个产品，其本质的功能是记账，副做用是炒。<br>比特币的设计是为了保证所有数据是分布式的、去中心化的保存数据，防止数据在中心的节点中保存。</p><p><img src="/posts/17877/BTC架构图.jpeg" alt="架构图"></p><p>自上而下，共分6层</p><ol><li>应用层</li><li>RPC 层</li><li>网络层</li><li>共识层</li><li>数据层</li><li>存储层</li></ol><h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h3><p>包括比特币钱包、客户端等种上层的应用，一般是比特币程序本身的外部应用。<br>以比特币钱包为例，比特币钱包有很多种，可以上官网上下载不同钱包，比如最简单的钱包，早期这个钱包还保留有CPU挖矿功能。现在版本已不支持，可以参考官方 Github 文档:</p><p><a href="https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md">https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.13.0.md</a><br><img src="/posts/17877/BTC钱包.jpg" alt="PC钱包"></p><h3 id="2-RPC-层"><a href="#2-RPC-层" class="headerlink" title="2.RPC 层"></a>2.RPC 层</h3><p>RPC 层的作用是进行RPC 通信。测试可以使用 BitCore 这个工具来进行测试。</p><p>测试一个 RPC 命令，查看区块信息: <strong>getblockchaininfo</strong><br><strong>命令行</strong><br><img src="/posts/17877/命令行.jpg" alt="钱包"></p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;chain&quot;</span>: <span class="string">&quot;main&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;blocks&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;headers&quot;</span>: <span class="number">680816</span>,</span><br><span class="line">  <span class="attr">&quot;bestblockhash&quot;</span>: <span class="string">&quot;0000000000000000000133b07fdf287ddca3cca80162b4a06a05d6904190cd37&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;difficulty&quot;</span>: <span class="number">23581981443663.85</span>,</span><br><span class="line">  <span class="attr">&quot;mediantime&quot;</span>: <span class="number">1619518237</span>,</span><br><span class="line">  <span class="attr">&quot;verificationprogress&quot;</span>: <span class="number">0.999995596389184</span>,</span><br><span class="line">  <span class="attr">&quot;initialblockdownload&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;chainwork&quot;</span>: <span class="string">&quot;00000000000000000000000000000000000000001c943902d1cf6cdd1387c75c&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;size_on_disk&quot;</span>: <span class="number">1904190175</span>,</span><br><span class="line">  <span class="attr">&quot;pruned&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;pruneheight&quot;</span>: <span class="number">679647</span>,</span><br><span class="line">  <span class="attr">&quot;automatic_pruning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;prune_target_size&quot;</span>: <span class="number">1999634432</span>,</span><br><span class="line">  <span class="attr">&quot;softforks&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bip34&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">227931</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip66&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">363725</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;bip65&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">388381</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;csv&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">419328</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;segwit&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;buried&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;active&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;height&quot;</span>: <span class="number">481824</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;warnings&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3.网络层"></a>3.网络层</h3><p>网络层使用 Peer-to-Peer，即点对点通信。每个BTC网络当中的节点中的通信，没有中心化的节点进行转发，需要通过节点发现，进行通信。<br>这也体现出BTC网络中当，每个节点都是平等的节点，没有哪个节点可以控制其他节点。</p><p>这种去中心化的好处就是可以做到节点之间的平等，但是也存在几个问题。</p><ol><li>网络延迟</li><li>联合作敝</li></ol><p>3.1 网络延迟很好理解，由于节点之间是平等的，每个节点都会呈现为网状的连接，当一个区块被生产出来后，会同步到相邻的网络节点当中，进行相邻转发。并不是通过中心节点订阅或转发的，一个区块到达所有的节点会有网络延迟。</p><p>3.2 联合作敝，去中心化的通信，节点间的数据只能依赖于依赖于各个节点间的验证，那就给做敝留下了空间。</p><h3 id="4-共识层"><a href="#4-共识层" class="headerlink" title="4.共识层"></a>4.共识层</h3><p>什么是共识，这个非常重要，非常重要。<br>因为在平等的网络当中，每个节点都是分散的，该如何保证每个节点的验证、转发是一致？<br>这就需要每个节点与节点之间达成共识。以此来保证所有节点的行为一致。</p><p><strong>什么是共识</strong><br>共识就是，共识即认可，比特币中有很多节点，要让这些节点达成一致性，比特币采用的是：POW 工作量证明。<br>比特币共识：说白点就是大家通过计算一个随机生成的Hash值的方式，来决定谁先打包。是不是感觉没什么，计算这个Hash并不是一件马上就可以算出来的事情。<br>大概流程：</p><ol><li>所有比特币中的交易会向所有节点广播，所有节点接收到交易后，放于交易队列当中</li><li>全世界所有节点通过计算 Hash 来决定谁交这些交易打包，先算出者，打包交易成一个区块并广播区块</li><li>打包者，将一个随机数加处块头中，使得计算的哈希结果小于或等于块头中目标值</li><li>其他节点收到区块后，验证区块和区块内的交易，验证正确保留该区块</li></ol><p><strong>为什么要给一个随机Hash数来给节点计算</strong><br>为了证明这个块的正确性。比特币的区块链当中，第一个节点产生的第一个块叫做：创世块，这个块是比特币运行时产生的第一个块，这个块会产生一个随机Hash数，打包进第一个块的块头中，然后广播。<br>其他节点收到区块后，对这个创世块进行验证。先验出者，证明了这个块是正确的，然后根据这个创建块，将收到的交易进行打包，并链接到这个创世块后面，就成了第二个块，并且这个节点也根据收到的交易产生了个随机Hash，广播给其它节点。<br>其他节点收到后，重复这个流程，证明这个块的正确性，并进行上链。这个就是 POW 的义意。</p><h3 id="5-数据层"><a href="#5-数据层" class="headerlink" title="5.数据层"></a>5.数据层</h3><p>数据层是指比特币的数据结构。比特币的数据结构比较典型，很多后来的区块链都借鉴这些数据模型。</p><ol><li>区块</li><li>区块链</li><li>Merkle树，也称，默克尔树</li><li>Hash</li><li>时间戳</li></ol><h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>是指将交易进行打构的区块数据结构，包含：区块头、区块体、哈希、时间戳 等。</p><h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>是指由区块构成的链条，就是指区块链，比较直白。</p><h4 id="Merkle树，也称，默克尔树"><a href="#Merkle树，也称，默克尔树" class="headerlink" title="Merkle树，也称，默克尔树"></a>Merkle树，也称，默克尔树</h4><p>Merkle树的作用：防窜改。<br>这里仅需要知道即可，这些点每一个展开都是一个大点，后续会做很详细的讲解。<br>Merkle树的构成是通过将每一笔交易的哈希，自上而下，相邻两个节点向上构建出一个新的父哈希值，由此来构建一棵哈希树。</p><h3 id="6-存储层"><a href="#6-存储层" class="headerlink" title="6.存储层"></a>6.存储层</h3><p>存储主要使用的是 LevelDB，进行存储，LevelDB 是基于 SSTable 进行设计实现的一个数据引擎。很多数据库都是基 LevelDB 进开发。<br>LevelDB 本身具体高性能读写，通过在内存缓存 和 多层级文件存储而取名 LevelDB。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;学习区块链技术，首先应该了解最经典的 比特币。比特币做为最早的分布式去中心化的区块链应用，其经典设计值得学习。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;比特币架构&quot;&gt;&lt;a href=&quot;#比特币架构&quot; class=&quot;headerlink&quot;
-      
-    
-    </summary>
-    
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
-    
-      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
-    
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
-    
-      <category term="技术体系" scheme="https://liukay.com/tags/%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB/"/>
     
   </entry>
   
