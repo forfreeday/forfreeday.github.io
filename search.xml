@@ -2292,11 +2292,40 @@
     
     
     <entry>
-      <title>Parallel Scavenge 新生代收集器</title>
+      <title>jstat统计JVM信息</title>
+      <link href="posts/b8477805.html"/>
+      <url>posts/b8477805.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>重要参数是要看 FGC 执行了多少次。</p></blockquote><p>JVM Statistics Monitoring Tool<br>用于监控虚拟机各种运行状态信息的命令行工具，查看虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。</p><h2 id="统计垃圾回收堆的行为"><a href="#统计垃圾回收堆的行为" class="headerlink" title="统计垃圾回收堆的行为"></a>统计垃圾回收堆的行为</h2><blockquote><p>jstat -gc pid</p></blockquote><p>显示格式：</p><p><img src="/posts/b8477805/1.jpg" alt="显示结果"></p><p>列说明</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">S0C: survivor0区的总容量</span><br><span class="line">S1C: survivor1区的总容量</span><br><span class="line">S0U: survivor0区已使用的容量</span><br><span class="line">S1U: survivor1区已使用的容量</span><br><span class="line">EC: Eden区的总容量</span><br><span class="line">EU: Eden区已使用的容量</span><br><span class="line">OC: Old区的总容量</span><br><span class="line">OU: Old区已使用的容量</span><br><span class="line">PC: 当前perm的容量 (KB)</span><br><span class="line">PU: perm的使用 (KB)</span><br><span class="line">YGC: 新生代垃圾回收次数</span><br><span class="line">YGCT: 新生代垃圾回收时间</span><br><span class="line">FGC: 老年代垃圾回收次数</span><br><span class="line">FGCT: 老年代垃圾回收时间</span><br><span class="line">GCT: 垃圾回收总消耗时间</span><br></pre></td></tr></table></figure><h2 id="单位时间内显示次数"><a href="#单位时间内显示次数" class="headerlink" title="单位时间内显示次数"></a>单位时间内显示次数</h2><blockquote><p>jstat -gc pid 秒 次数<br>这个命令意思就是每隔2000ms输出gc情况，一共输出20次。</p></blockquote><p><img src="/posts/b8477805/2.jpg" alt="显示结果"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> jvm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>新生代收集器 Parallel Scavenge</title>
       <link href="posts/31744.html"/>
       <url>posts/31744.html</url>
       
-        <content type="html"><![CDATA[<p>新生代，多线程，使用复制算法，是<strong>多线程</strong>的并行的收集器。<br>目标：达到一个可控的<strong>吞吐量(Throughput)</strong>。<br>吞吐量：CPU用于运行代码时间 与 CPU总消耗时间的 比<br>公式： 吞吐量 = 运行代码时间 / ( 运行代码时间 + GC时间）<br>虚拟机运行 100 分钟，GC用掉1分钟，则吞吐量为99%。  100 /(100 + 1) = 0.99</p><h4 id="1-停顿时间越短越好"><a href="#1-停顿时间越短越好" class="headerlink" title="1.停顿时间越短越好"></a>1.停顿时间越短越好</h4><p><strong>-XX:MaxGCPauseMillis</strong>： 最大GC停顿时间，最小可为0<br><strong>-XX:GCTimeRatio</strong>:   吞吐量大小,1-100<br><a id="more"></a></p><h4 id="2-停顿时间与空间成反比"><a href="#2-停顿时间与空间成反比" class="headerlink" title="2.停顿时间与空间成反比"></a>2.停顿时间与空间成反比</h4><p>停顿时间越短，则新生代的空间就越小。<br>通过减小新生代的空间，让里面的垃圾变少，从而加快了集速度。<br>原来：500MB 垃圾，10秒收集一次，每次停顿100毫秒<br>为了缩短时间，修改<strong> -XX:MaxGCPauseMillis</strong> 参数，使新生代空间变小，产生的垃圾就少了，停顿时间短了：<br>现在：300MB 垃圾，5秒收集一次， 每次停顿70毫秒。</p><p>那时问题来了，停顿时间下降了，但是频率高了，则吞吐量也跟着降下来了。</p><h4 id="3-GC-时间占总时间的比例"><a href="#3-GC-时间占总时间的比例" class="headerlink" title="3.GC 时间占总时间的比例"></a>3.GC 时间占总时间的比例</h4><p>GCTimeRatio 进行这个设置1-100之间，相当于吞量的倒数。<br>计算方法:<br>1.设置为 19 则： 1 / (1 + 19) = 5%，即最大 5% 的收集时间<br>2.设置为 99 则:  1 / (1 + 99) = 1%，即最大 1% 的收集时间</p>]]></content>
+        <content type="html"><![CDATA[<p>新生代，多线程，使用复制算法，是<strong>多线程</strong>的并行的收集器。<br>目标：达到一个可控的<strong>吞吐量(Throughput)</strong>。<br>吞吐量：CPU用于运行代码时间 与 CPU总消耗时间的 比<br>公式： 吞吐量 = 运行代码时间 / ( 运行代码时间 + GC时间）<br>虚拟机运行 100 分钟，GC用掉1分钟，则吞吐量为99%。  100 /(100 + 1) = 0.99</p><h2 id="停顿时间越短越好"><a href="#停顿时间越短越好" class="headerlink" title="停顿时间越短越好"></a>停顿时间越短越好</h2><p><strong>-XX:MaxGCPauseMillis</strong>： 最大GC停顿时间，最小可为0<br><strong>-XX:GCTimeRatio</strong>:   吞吐量大小,1-100<br><a id="more"></a></p><h2 id="停顿时间与空间成反比"><a href="#停顿时间与空间成反比" class="headerlink" title="停顿时间与空间成反比"></a>停顿时间与空间成反比</h2><p>停顿时间越短，则新生代的空间就越小。<br>通过减小新生代的空间，让里面的垃圾变少，从而加快了集速度。<br>原来：500MB 垃圾，10秒收集一次，每次停顿100毫秒<br>为了缩短时间，修改<strong> -XX:MaxGCPauseMillis</strong> 参数，使新生代空间变小，产生的垃圾就少了，停顿时间短了：<br>现在：300MB 垃圾，5秒收集一次， 每次停顿70毫秒。</p><p>那时问题来了，停顿时间下降了，但是频率高了，则吞吐量也跟着降下来了。</p><h2 id="GC-时间占总时间的比例"><a href="#GC-时间占总时间的比例" class="headerlink" title="GC 时间占总时间的比例"></a>GC 时间占总时间的比例</h2><p>GCTimeRatio 进行这个设置1-100之间，相当于吞量的倒数。<br>计算方法:<br>1.设置为 19 则： <code>1 / (1 + 19) = 5%</code>，即最大 5% 的收集时间<br>2.设置为 99 则:  <code>1 / (1 + 99) = 1%</code>，即最大 1% 的收集时间</p>]]></content>
       
       
       <categories>
@@ -2534,11 +2563,11 @@
     
     
     <entry>
-      <title>jvm--对象的创建</title>
+      <title>对象的创建</title>
       <link href="posts/62665.html"/>
       <url>posts/62665.html</url>
       
-        <content type="html"><![CDATA[<p>这里指普通 Java 对象，而非数组 和 Class对象等。</p><h2 id="1-创建对象的过程："><a href="#1-创建对象的过程：" class="headerlink" title="1.创建对象的过程："></a>1.创建对象的过程：</h2><p>new —&gt; 到常量池中检查是否存在一个类的符号引用 —&gt; 如果有，检查这个符号引用代表的类是否已被加载、解析、初始化 —&gt; 没有，则执行类加载过程。</p><h2 id="2-分配对象"><a href="#2-分配对象" class="headerlink" title="2.分配对象"></a>2.分配对象</h2><p>类加载完毕后，为新生对象分配内存。<br>对象所需内存大小在类加载完成后便完全确定。分配空间。即，从JVM堆中划出一块确定大小的内存空间。</p><h2 id="3-分配方法"><a href="#3-分配方法" class="headerlink" title="3.分配方法"></a>3.分配方法</h2><p>有两种分配方法：</p><ol><li>指针碰撞：<br>使用这种方式的前提是，内存是规整的。<br>左边是空闲的空间，右边是已使用的内存空间，用一块，就往左边移一块，就像秤砣在称中间移动一样。</li><li>空闲列表<br>内存不规整，此时不能使用指针碰撞。JVM 就需要维护一个列表，记录哪些空间可用并给对象。</li></ol><p>堆内存是否规整决定了使用哪种分配方法。<br>而堆是否会规整则由GC是否带有压缩整理功能决定。<br><a id="more"></a></p><h2 id="4-避免并发操作同一片内存的问题"><a href="#4-避免并发操作同一片内存的问题" class="headerlink" title="4.避免并发操作同一片内存的问题"></a>4.避免并发操作同一片内存的问题</h2><p>并发时，A线程 拿着指针在为对象分配 0x111111 这片空间，分配动作执行到一半，B线程 也进来了拿着同一个指针在同一个地址上分配空间。这就出现了问题。</p><h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><ol><li>CAS 配置失败重试的方式保证更新操作的原子性。</li><li>为每个线程开一小块内存空间，称为本地内存分配缓冲(TLAB)。线程在自己的TLAB是分配。</li></ol><h2 id="5-初始化"><a href="#5-初始化" class="headerlink" title="5.初始化"></a>5.初始化</h2><p>当分配完成后，JVM将分配到的内存空间开始进行初始化为 0 值(不包括对象头)，0值就是数学中的0。如果是TLAB方式，提前到TLAB中分配时进行。<br>这就是使用对象时，程序访问某些字段的数据类型默认有0的原因。就可以不用赋值也可以使用。</p><h2 id="6-必要设置"><a href="#6-必要设置" class="headerlink" title="6.必要设置"></a>6.必要设置</h2><p>接下来JVM对对象进行必要设置。<br>设置如：对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、GC分代年龄等。<br>这些信息存放在对象头中。<br>对JVM来说，对象已分配完成，一个新对象就此产生。<br>但从 java 程序的角度来说对象创建才刚开始。调用 init 方法前，所有字段都是默认的0。执行init方法，对象进行初始化，这样一个真正可用的对象才算完全产生。</p>]]></content>
+        <content type="html"><![CDATA[<p>这里指普通 Java 对象，而非数组 和 Class对象等。</p><h2 id="1-创建对象的过程"><a href="#1-创建对象的过程" class="headerlink" title="1.创建对象的过程"></a>1.创建对象的过程</h2><p>new —&gt; 到常量池中检查是否存在一个类的符号引用 —&gt; 如果有，检查这个符号引用代表的类是否已被加载、解析、初始化 —&gt; 没有，则执行类加载过程。</p><h2 id="2-分配对象"><a href="#2-分配对象" class="headerlink" title="2.分配对象"></a>2.分配对象</h2><p>类加载完毕后，为新生对象分配内存。<br>对象所需内存大小在类加载完成后便完全确定。分配空间。即，从JVM堆中划出一块确定大小的内存空间。</p><h2 id="3-分配方法"><a href="#3-分配方法" class="headerlink" title="3.分配方法"></a>3.分配方法</h2><p>有两种分配方法：</p><ol><li>指针碰撞：<br>使用这种方式的前提是，内存是规整的。<br>左边是空闲的空间，右边是已使用的内存空间，用一块，就往左边移一块，就像秤砣在称中间移动一样。</li><li>空闲列表<br>内存不规整，此时不能使用指针碰撞。JVM 就需要维护一个列表，记录哪些空间可用并给对象。</li></ol><p>堆内存是否规整决定了使用哪种分配方法。<br>而堆是否会规整则由GC是否带有压缩整理功能决定。<br><a id="more"></a></p><h2 id="4-避免并发操作同一片内存的问题"><a href="#4-避免并发操作同一片内存的问题" class="headerlink" title="4.避免并发操作同一片内存的问题"></a>4.避免并发操作同一片内存的问题</h2><p>并发时，A线程 拿着指针在为对象分配 <code>0x111111</code> 这片空间，分配动作执行到一半，B线程 也进来了拿着同一个指针在同一个地址上分配空间。这就出现了问题。</p><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol><li>CAS 配置失败重试的方式保证更新操作的原子性。</li><li>为每个线程开一小块内存空间，称为本地内存分配缓冲(TLAB)。线程在自己的TLAB是分配。</li></ol><h2 id="5-初始化"><a href="#5-初始化" class="headerlink" title="5.初始化"></a>5.初始化</h2><p>当分配完成后，JVM将分配到的内存空间开始进行初始化为 0 值(不包括对象头)，0值就是数学中的0。如果是TLAB方式，提前到TLAB中分配时进行。<br>这就是使用对象时，程序访问某些字段的数据类型默认有0的原因。就可以不用赋值也可以使用。</p><h2 id="6-必要设置"><a href="#6-必要设置" class="headerlink" title="6.必要设置"></a>6.必要设置</h2><p>接下来JVM对对象进行必要设置。<br>设置如：对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、GC分代年龄等。<br>这些信息存放在对象头中。<br>对JVM来说，对象已分配完成，一个新对象就此产生。<br>但从 java 程序的角度来说对象创建才刚开始。调用 init 方法前，所有字段都是默认的0。执行init方法，对象进行初始化，这样一个真正可用的对象才算完全产生。</p>]]></content>
       
       
       <categories>
@@ -2552,9 +2581,11 @@
       
         <tags>
             
-            <tag> jvm </tag>
+            <tag> java </tag>
             
-            <tag> 对象的创建 </tag>
+            <tag> 对象 </tag>
+            
+            <tag> jvm </tag>
             
         </tags>
       
@@ -2596,7 +2627,7 @@
       <link href="posts/60275.html"/>
       <url>posts/60275.html</url>
       
-        <content type="html"><![CDATA[<p>Java 堆 是虚拟机管理的最大的一块内存。是被所有线程所共享的一块内存区域，在虚拟机启动时创建。</p><h3 id="1-分配内存方式："><a href="#1-分配内存方式：" class="headerlink" title="1.分配内存方式："></a>1.分配内存方式：</h3><p>所有的实例和数组都在要堆上分配，但是随着JIT编译器的发展与逃逸分析技术的逐渐成熟，栈上分配、标量替换优化技术将会导至一些变化，所有的对象都分配在堆上也变得不那么绝对。</p><p>Java 堆是垃圾收集器管理的主要区域，也叫CG堆。由于现在收集器基本都爱用分代收集算法，<br>所以Java堆中还可以细分为：<br><code>新生代</code> 和 <code>老年代</code>。再细致一点的有 : <code>Eden 空间</code>、<code>From Survivor 空间</code>、<code>To Survivor 空间</code>等。从内存分配的角度来看，线程共享的Java堆中可能划多个线程私有的分配缓存区。</p><p>如何划分与存放内容无关，无论哪个区域，存储的都仍然是对象实例。进一步划分的目的是为了更好的回收内存、或都更快的分配内存。</p><h3 id="2-存放特点："><a href="#2-存放特点：" class="headerlink" title="2.存放特点："></a>2.存放特点：</h3><p>Java 堆可以处于物理上不连续的内存空间中，只要逻辑上是连续的即可，就像磁盘空间。<br>堆的实现，即可固定大小，也可以扩展，通过 -Xms 和 -Xmx 控制。<br>如果堆中没有内存实例分配，并助理堆无法再扩展时，抛出 OutOfMemoryError</p>]]></content>
+        <content type="html"><![CDATA[<p>Java 堆 是虚拟机管理的最大的一块内存。是被所有线程所共享的一块内存区域，在虚拟机启动时创建。</p><h2 id="分配内存方式"><a href="#分配内存方式" class="headerlink" title="分配内存方式"></a>分配内存方式</h2><p>所有的实例和数组都在要堆上分配，但是随着JIT编译器的发展与逃逸分析技术的逐渐成熟，栈上分配、标量替换优化技术将会导至一些变化，所有的对象都分配在堆上也变得不那么绝对。</p><p>Java 堆是垃圾收集器管理的主要区域，也叫CG堆。由于现在收集器基本都爱用分代收集算法，<br>所以Java堆中还可以细分为：<br><code>新生代</code> 和 <code>老年代</code>。再细致一点的有: <code>Eden 空间</code>、<code>From Survivor 空间</code>、<code>To Survivor 空间</code>等。从内存分配的角度来看，线程共享的Java堆中可能划多个线程私有的分配缓存区。</p><p>如何划分与存放内容无关，无论哪个区域，存储的都仍然是对象实例。进一步划分的目的是为了更好的回收内存、或都更快的分配内存。</p><h2 id="存放特点"><a href="#存放特点" class="headerlink" title="存放特点"></a>存放特点</h2><p>Java 堆可以处于物理上不连续的内存空间中，只要逻辑上是连续的即可，就像磁盘空间。<br>堆的实现，即可固定大小，也可以扩展，通过 -Xms 和 -Xmx 控制。<br>如果堆中没有内存实例分配，并助理堆无法再扩展时，抛出 OutOfMemoryError</p>]]></content>
       
       
       <categories>
@@ -2658,7 +2689,7 @@
       <link href="posts/51565.html"/>
       <url>posts/51565.html</url>
       
-        <content type="html"><![CDATA[<p>与PC寄存器一样，Java虚拟机栈也是线程私有的。每一个JVM线程都有自己的java虚拟机栈，这个栈与线程同时创建，它的生命周期与线程相同。</p><h3 id="1-虚拟机栈的特点："><a href="#1-虚拟机栈的特点：" class="headerlink" title="1.虚拟机栈的特点："></a>1.虚拟机栈的特点：</h3><p>“虚拟机栈”描述的是Java方法执行的内存模型：  </p><ol><li>每个方法被执行的时候都会同时创建一个<code>栈帧（Stack Frame）</code>用于存储:<code>局部变量表</code>、<code>操作数栈</code>、<code>动态链接</code>、<code>方法出口</code>等信息。(栈帧我的理解就是一个对象，用来存储信息用)</li><li>每一个方法被调用直至执行完成的过程就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</li></ol><h3 id="2-局部变量表："><a href="#2-局部变量表：" class="headerlink" title="2.局部变量表："></a>2.局部变量表：</h3><ol><li>存放了8种基本数据 类型</li><li>对象引用 类型</li><li>returnAddress 类型</li></ol><a id="more"></a><p>除64位 long 和 duble 占2个局部空间外，其余的数据类型只占1个。<br>注意，局部变量表所需的内存空间在编译期间完成分配，所以进入某个方法时，这个方法需要在栈桢中分配多大的空间完全是确定的，在方法运行时是不会改变局部变量表的大小的。</p><h3 id="3-虚拟机栈出现异常两种情况："><a href="#3-虚拟机栈出现异常两种情况：" class="headerlink" title="3.虚拟机栈出现异常两种情况："></a>3.虚拟机栈出现异常两种情况：</h3><ol><li>如果线程请求的深度大于虚拟机所允许的深度，将抛出 StackOverflowError 异常;</li><li>如果虚拟机进行动态扩展，而扩展时无法申请到足够的内存，则抛出 OutOfMemoryError 异常。</li></ol><p>注，大部分 Java 虚拟机分为：<code>固定长度</code> 和 <code>动态扩展</code> 两种</p><h3 id="4-关于动态扩展："><a href="#4-关于动态扩展：" class="headerlink" title="4.关于动态扩展：　　"></a>4.关于动态扩展：　　</h3><p>JVM stack 可以被实现成固定大小，也可以根据计算动态扩展。<br>如果采用固定大小的JVM stack设计，那么每一条线程的JVM Stack容量应该在线程创建时独立地选定。JVM实现应该提供调节JVM Stack初始容量的手段；如果采用动态扩展和收缩的JVM Stack方式，应该提供调节最大、最小容量的手段。</p><p>如果线程请求的栈深度大于虚拟机所允许的深度将抛出StackOverflowError；<br>如果JVM Stack可以动态扩展，但是在尝试扩展时无法申请到足够的内存时抛出<code>OutOfMemoryError</code>。</p>]]></content>
+        <content type="html"><![CDATA[<p>与PC寄存器一样，Java虚拟机栈也是线程私有的。每一个JVM线程都有自己的java虚拟机栈，这个栈与线程同时创建，它的生命周期与线程相同。</p><h2 id="1-虚拟机栈的特点"><a href="#1-虚拟机栈的特点" class="headerlink" title="1.虚拟机栈的特点"></a>1.虚拟机栈的特点</h2><p>“虚拟机栈”描述的是Java方法执行的内存模型：  </p><ol><li>每个方法被执行的时候都会同时创建一个<code>栈帧（Stack Frame）</code>用于存储:<code>局部变量表</code>、<code>操作数栈</code>、<code>动态链接</code>、<code>方法出口</code>等信息。(栈帧我的理解就是一个对象，用来存储信息用)</li><li>每一个方法被调用直至执行完成的过程就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</li></ol><h2 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h2><ol><li>存放了8种基本数据 类型</li><li>对象引用 类型</li><li>returnAddress 类型</li></ol><a id="more"></a><p>除64位 long 和 duble 占2个局部空间外，其余的数据类型只占1个。<br>注意，局部变量表所需的内存空间在编译期间完成分配，所以进入某个方法时，这个方法需要在栈桢中分配多大的空间完全是确定的，在方法运行时是不会改变局部变量表的大小的。</p><h2 id="3-虚拟机栈出现异常两种情况"><a href="#3-虚拟机栈出现异常两种情况" class="headerlink" title="3.虚拟机栈出现异常两种情况"></a>3.虚拟机栈出现异常两种情况</h2><ol><li>如果线程请求的深度大于虚拟机所允许的深度，将抛出 StackOverflowError 异常;</li><li>如果虚拟机进行动态扩展，而扩展时无法申请到足够的内存，则抛出 OutOfMemoryError 异常。</li></ol><p>注，大部分 Java 虚拟机分为：<code>固定长度</code> 和 <code>动态扩展</code> 两种</p><h2 id="关于动态扩展"><a href="#关于动态扩展" class="headerlink" title="关于动态扩展"></a>关于动态扩展</h2><p>JVM stack 可以被实现成固定大小，也可以根据计算动态扩展。<br>如果采用固定大小的JVM stack设计，那么每一条线程的JVM Stack容量应该在线程创建时独立地选定。<br>JVM实现应该提供调节JVM Stack初始容量的手段；如果采用动态扩展和收缩的JVM Stack方式，应该提供调节最大、最小容量的手段。</p><p>如果线程请求的栈深度大于虚拟机所允许的深度将抛出StackOverflowError；<br>如果JVM Stack可以动态扩展，但是在尝试扩展时无法申请到足够的内存时抛出<code>OutOfMemoryError</code>。</p>]]></content>
       
       
       <categories>
@@ -3157,7 +3188,7 @@
       <link href="posts/30555.html"/>
       <url>posts/30555.html</url>
       
-        <content type="html"><![CDATA[<blockquote><p>堆，才有分代的概念。<br>堆，才有分代的概念。<br>堆，才有分代的概念。</p></blockquote><h2 id="分代"><a href="#分代" class="headerlink" title="分代"></a>分代</h2><p>JVM 将内存分为大致分为三个区域，1.8 前后有区别</p><p><img src="/posts/30555/1.jpeg" alt="jvm"></p><h3 id="为什么要分代"><a href="#为什么要分代" class="headerlink" title="为什么要分代"></a>为什么要分代</h3><blockquote><p>不分代行不行</p></blockquote><p>不分代完全可以，但是分代的唯一理由是为了优化GC性能。<br>怎么优化？<br>如果不进行分代，每次GC都要把整片堆扫一遍来寻找垃圾对象，太慢。分代直接把对象创建到某一个分代区，这样GC就可以针对这一分代区域就行优化，就不费劲了。</p><h3 id="年轻代"><a href="#年轻代" class="headerlink" title="年轻代"></a>年轻代</h3><blockquote><p>eden、survivor、from、to</p></blockquote><p>年轻代分三个部分：</p><ol><li>Eden 区，即新生对象区，除大对象以外，新生对象都创建在这里。</li><li>Survivor 区，即幸存区，该区域又分两个空间<br>s0 和 s1 分别也叫 from 和 to，默认比例8:1。</li></ol><p><img src="/posts/30555/2.png" alt="young"></p><h4 id="对象经历的过程"><a href="#对象经历的过程" class="headerlink" title="对象经历的过程"></a>对象经历的过程</h4><ol><li>新创建对象，分配到Eden区，除大对象特殊处理。</li><li>在 Eden 区经过一次GC后，如果仍存活，移到 Survivor。</li><li>在 Survivor 中又经历一次 GC，年龄会增加一岁。</li><li>年龄到一定程度，移到老年代。</li></ol><a id="more"></a><h4 id="年轻代使用什么GC算法"><a href="#年轻代使用什么GC算法" class="headerlink" title="年轻代使用什么GC算法"></a>年轻代使用什么GC算法</h4><blockquote><p>是复制算法。</p></blockquote><p>为什么选复制算法？<br>因为：年轻代中的80%以上的对象很快就死亡。<br>所以，在年轻代的垃圾回收算法使用的是复制算法。即，将内存分为两块，每次中使用其中一块（Eden 和 From），当一块使用完，则将还存活的对象复制到别一块上。复制算法不会产生碎片。</p><p><img src="/posts/30555/3.jpeg" alt="复制算法"></p><h4 id="From-和-to-区的复制过程"><a href="#From-和-to-区的复制过程" class="headerlink" title="From 和 to 区的复制过程"></a>From 和 to 区的复制过程</h4><p>对上一节的说明，演示复制的过程：</p><ol><li>在 GC 开始的前，对象只会存在于 Eden区 和 From 区。为什么 From 区会有对象？</li><li>From区有对象很容易理解，开始发生 GC ,Eden 中的对象被复制到了 To 区中。</li></ol><p>而 From 中的对象只有两个结果：</p><ol><li>年龄达到一定值(年龄阈值，可以通过-XX:MaxTenuringThreshold来设置)的对象会被移动到年老代中。</li><li>没有到达的复制到 To 区中</li><li>这次 GC 后，Eden 和 From 被清空。此时，To 和 From 互相交换换角色，也就是说 To 变成 GC 前的 From，类推。</li></ol><p>到现在清楚了，为什么 From 中也会有对象，因为第一次发生GC时复制过到 To 区后，交换角色而来的。</p><h3 id="年轻代相关的JVM参数"><a href="#年轻代相关的JVM参数" class="headerlink" title="年轻代相关的JVM参数"></a>年轻代相关的JVM参数</h3><ol><li><code>-XX:NewSize和-XX:MaxNewSize</code>  用于设置年轻代的大小，建议设为整个堆大小的1/3或者1/4,两个值设为一样大。</li><li><code>-XX:SurvivorRatio</code><br>用于设置Eden和其中一个Survivor的比值，这个值也比较重要。</li><li><code>-XX:+PrintTenuringDistribution</code><br>这个参数用于显示每次Minor GC时Survivor区中各个年龄段的对象的大小。</li><li><code>-XX:InitialTenuringThreshol</code>和<code>-XX:MaxTenuringThreshold</code><br>用于设置晋升到老年代的对象年龄的最小值和最大值，每个对象在坚持过一次Minor GC之后，年龄就加1。</li></ol>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>堆，才有分代的概念。<br>堆，才有分代的概念。<br>堆，才有分代的概念。</p></blockquote><h2 id="分代"><a href="#分代" class="headerlink" title="分代"></a>分代</h2><p>JVM 将内存分为大致分为三个区域，1.8 前后有区别</p><p><img src="/posts/30555/1.jpeg" alt="jvm"></p><h3 id="为什么要分代"><a href="#为什么要分代" class="headerlink" title="为什么要分代"></a>为什么要分代</h3><blockquote><p>不分代行不行</p></blockquote><p>不分代完全可以，但是分代的唯一理由是为了优化GC性能。<br>怎么优化？<br>如果不进行分代，每次GC都要把整片堆扫一遍来寻找垃圾对象，太慢。分代直接把对象创建到某一个分代区，这样GC就可以针对这一分代区域就行优化，就不费劲了。</p><h3 id="年轻代"><a href="#年轻代" class="headerlink" title="年轻代"></a>年轻代</h3><blockquote><p>eden、survivor、from、to</p></blockquote><p>年轻代分三个部分：</p><ol><li>Eden 区，即新生对象区，除大对象以外，新生对象都创建在这里。</li><li>Survivor 区，即幸存区，该区域又分两个空间<br>s0 和 s1 分别也叫 from 和 to，默认比例8:1。</li></ol><p><img src="/posts/30555/2.png" alt="young"></p><h4 id="对象经历的过程"><a href="#对象经历的过程" class="headerlink" title="对象经历的过程"></a>对象经历的过程</h4><ol><li>新创建对象，分配到Eden区，除大对象特殊处理。</li><li>在 Eden 区经过一次GC后，如果仍存活，移到 Survivor。</li><li>在 Survivor 中又经历一次 GC，年龄会增加一岁。</li><li>年龄到一定程度，移到老年代。</li></ol><a id="more"></a><h4 id="年轻代使用什么GC算法"><a href="#年轻代使用什么GC算法" class="headerlink" title="年轻代使用什么GC算法"></a>年轻代使用什么GC算法</h4><blockquote><p>是复制算法。</p></blockquote><p>为什么选复制算法？<br>因为：年轻代中的80%以上的对象很快就死亡。<br>所以，在年轻代的垃圾回收算法使用的是复制算法。即，将内存分为两块，每次中使用其中一块（Eden 和 From），当一块使用完，则将还存活的对象复制到别一块上。复制算法不会产生碎片。</p><p><img src="/posts/30555/3.jpeg" alt="复制算法"></p><h4 id="From-和-to-区的复制过程"><a href="#From-和-to-区的复制过程" class="headerlink" title="From 和 to 区的复制过程"></a>From 和 to 区的复制过程</h4><p>对上一节的说明，演示复制的过程：</p><ol><li>在 GC 开始的前，对象只会存在于 Eden区 和 From 区。为什么 From 区会有对象？</li><li>From区有对象很容易理解，开始发生 GC ,Eden 中的对象被复制到了 To 区中。</li></ol><p>而 From 中的对象只有两个结果：</p><ol><li>年龄达到一定值(年龄阈值，可以通过-XX:MaxTenuringThreshold来设置)的对象会被移动到年老代中。</li><li>没有到达的复制到 To 区中</li><li>这次 GC 后，Eden 和 From 被清空。此时，To 和 From 互相交换换角色，也就是说 To 变成 GC 前的 From，类推。</li></ol><p>到现在清楚了，为什么 From 中也会有对象，因为第一次发生GC时复制过到 To 区后，交换角色而来的。</p><h3 id="年轻代相关的JVM参数"><a href="#年轻代相关的JVM参数" class="headerlink" title="年轻代相关的JVM参数"></a>年轻代相关的JVM参数</h3><ol><li><code>-XX:NewSize和-XX:MaxNewSize</code>: 用于设置年轻代的大小，建议设为整个堆大小的1/3或者1/4,两个值设为一样大。</li><li><code>-XX:SurvivorRatio</code><br>用于设置Eden和其中一个Survivor的比值，这个值也比较重要。</li><li><code>-XX:+PrintTenuringDistribution</code><br>这个参数用于显示每次Minor GC时Survivor区中各个年龄段的对象的大小。</li><li><code>-XX:InitialTenuringThreshol</code>和<code>-XX:MaxTenuringThreshold</code><br>用于设置晋升到老年代的对象年龄的最小值和最大值，每个对象在坚持过一次Minor GC之后，年龄就加1。</li></ol>]]></content>
       
       
       <categories>
