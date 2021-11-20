@@ -55,7 +55,7 @@
     <link href="https://liukay.com/posts/9321f70b.html"/>
     <id>https://liukay.com/posts/9321f70b.html</id>
     <published>2021-11-16T07:07:38.000Z</published>
-    <updated>2021-11-19T08:04:05.653Z</updated>
+    <updated>2021-11-20T13:04:36.763Z</updated>
     
     <content type="html"><![CDATA[<h2 id="什么是netty"><a href="#什么是netty" class="headerlink" title="什么是netty"></a>什么是netty</h2><p>Netty是一个异步的基于事件驱动(Reactor)的网络框架。<br>Netty是一个NIO客户服务器框架，它能够快速和容易地开发网络应用，如协议服务器和客户端。它大大简化了网络编程，如TCP和UDP套接字服务器。</p><h2 id="为什么选择netty"><a href="#为什么选择netty" class="headerlink" title="为什么选择netty"></a>为什么选择netty</h2><p>主要原因是 netty 简化了使用nio时对网络编程的复杂性，提供更多的抽象性和功能方便网络编程开发。</p><p>列举一个特点：<br>1.Netty支持三种IO模型同时支持三种Reactor模式。</p><p>2.Netty支持很多应用层的协议，提供了很多decoder和encoder。</p><p>3.Netty能够解决TCP长连接所带来的缺陷（粘包、半包等）</p><p>4.Netty支持应用层的KeepAlive。</p><p>5.Netty规避了JAVA NIO中的很多BUG，性能更好。</p><h2 id="使用-netty-能做什么"><a href="#使用-netty-能做什么" class="headerlink" title="使用 netty 能做什么"></a>使用 netty 能做什么</h2><p>1.实现节点间通信<br>2.实现自己的协议<br> dubbo、rocketmq 等底层都使用 netty 实现自己的协议</p>]]></content>
     
@@ -68,7 +68,9 @@
     
     </summary>
     
-      <category term="netty" scheme="https://liukay.com/categories/netty/"/>
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
+    
+      <category term="netty" scheme="https://liukay.com/categories/java/netty/"/>
     
     
       <category term="netty" scheme="https://liukay.com/tags/netty/"/>

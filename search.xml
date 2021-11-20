@@ -46,6 +46,8 @@
       
       <categories>
           
+          <category> java </category>
+          
           <category> netty </category>
           
       </categories>
