@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>IDEA 2021 CPU 超100% 问题解决</title>
+      <link href="posts/f271493a.html"/>
+      <url>posts/f271493a.html</url>
+      
+        <content type="html"><![CDATA[<p>用了IDEA 2021之后cpu超过200，打开一个类文件就卡住一会，起初以为是语法检查的问题，把所有语法检查一个不留全关闭，还是没解决。</p><p>最终解决方式，配置IDEA 的JVM参数：</p><p><img src="/posts/f271493a/1.png" alt="修改参数"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#堆栈设置</span><br><span class="line">-Xms4096m</span><br><span class="line">-Xmx4096m</span><br><span class="line">-Xmn3072m</span><br><span class="line">-XX:MetaspaceSize&#x3D;1024m</span><br><span class="line">-XX:MaxMetaspaceSize&#x3D;1024m</span><br><span class="line">-XX:+AlwaysPreTouch</span><br><span class="line">-XX:InitialCodeCacheSize&#x3D;1200m</span><br><span class="line">-XX:ReservedCodeCacheSize&#x3D;1200m</span><br><span class="line">-XX:+UseCompressedOops</span><br><span class="line">-Dfile.encoding&#x3D;UTF-8</span><br><span class="line"></span><br><span class="line"># 采用何种垃圾回收参数</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br><span class="line">-XX:ParallelGCThreads&#x3D;4</span><br><span class="line">-XX:SoftRefLRUPolicyMSPerMB&#x3D;50</span><br><span class="line">-ea</span><br><span class="line"># JIT 参数</span><br><span class="line">-XX:CICompilerCount&#x3D;2</span><br><span class="line">-XX:TieredStopAtLevel&#x3D;1</span><br><span class="line">-XX:MaxInlineLevel&#x3D;3</span><br><span class="line">-XX:Tier4MinInvocationThreshold&#x3D;100000</span><br><span class="line">-XX:Tier4InvocationThreshold&#x3D;110000</span><br><span class="line">-XX:Tier4CompileThreshold&#x3D;120000</span><br><span class="line"></span><br><span class="line">-Dsun.io.useCanonPrefixCache&#x3D;false</span><br><span class="line">-Djava.net.preferIPv4Stack&#x3D;true</span><br><span class="line">-Djdk.http.auth.tunneling.disabledSchemes&#x3D;&quot;&quot;</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-Djdk.attach.allowAttachSelf</span><br><span class="line">-Xverify:none</span><br><span class="line"></span><br><span class="line">-XX:ErrorFile&#x3D;$USER_HOME&#x2F;java_error_in_idea_%p.log</span><br><span class="line">-XX:HeapDumpPath&#x3D;$USER_HOME&#x2F;java_error_in_idea.hprof</span><br></pre></td></tr></table></figure><p>立杆见影，原因不是垃圾回收造成的cpu负载过高 而是由于JIT Compiler 及时编译将class文件编译成本地机器代码占用了大量的cpu资源导致的卡顿。</p><p>具体请参考国外idea bug追踪他们的idea cpu 100% 讨论<br><a href="https://youtrack.jetbrains.com/issue/IDEA-207243">https://youtrack.jetbrains.com/issue/IDEA-207243</a></p><p>参考：<a href="https://www.jianshu.com/p/ac72a14afc24">https://www.jianshu.com/p/ac72a14afc24</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> idea </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> idea </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>netty 构建一个简易服务</title>
       <link href="posts/fab0cb81.html"/>
       <url>posts/fab0cb81.html</url>
