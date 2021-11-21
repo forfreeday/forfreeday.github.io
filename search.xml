@@ -3878,10 +3878,6 @@
       
       <categories>
           
-          <category> architecture </category>
-          
-          <category> rocketmq </category>
-          
           <category> rocketmq </category>
           
       </categories>
@@ -3889,7 +3885,7 @@
       
         <tags>
             
-            <tag> RocketMQ </tag>
+            <tag> rocketmq </tag>
             
             <tag> architecture </tag>
             
