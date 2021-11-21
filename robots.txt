@@ -1,0 +1,10 @@
+User-agent: * Allow: /
+Allow: /archives/
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+Sitemap: http://liukay.com/sitemap.xml
+Sitemap: http://liukay.com/baidusitemap.xml

@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>关于Reactor模型 | 思想家</title><meta name="keywords" content="架构,Reactor模型"><meta name="author" content="咪雅先森"><meta name="copyright" content="咪雅先森"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="核心思想：分治  看了一些 Reactor 相关的文章和资料，列举的一些 Reactor 模型的优点，包括极客时间的文章也有讲过在架构中的Reactor中的优点和缺点。但是如果不使用 Reactor 模型的一般方式是什么样子的?会有什么问题？ 思想：分而治之+事件驱动1）分而治之一个连接里完整的网络处理过程一般分为accept、read、decode、process、encode、send这几步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Reactor模型">
+<meta property="og:url" content="https://liukay.com/posts/62292.html">
+<meta property="og:site_name" content="思想家">
+<meta property="og:description" content="核心思想：分治  看了一些 Reactor 相关的文章和资料，列举的一些 Reactor 模型的优点，包括极客时间的文章也有讲过在架构中的Reactor中的优点和缺点。但是如果不使用 Reactor 模型的一般方式是什么样子的?会有什么问题？ 思想：分而治之+事件驱动1）分而治之一个连接里完整的网络处理过程一般分为accept、read、decode、process、encode、send这几步">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/img/messageboard.jpeg">
+<meta property="article:published_time" content="2018-08-05T08:30:15.000Z">
+<meta property="article:modified_time" content="2021-11-02T02:36:15.569Z">
+<meta property="article:author" content="咪雅先森">
+<meta property="article:tag" content="架构">
+<meta property="article:tag" content="概念">
+<meta property="article:tag" content="Reactor模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/img/messageboard.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/posts/62292"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//s4.cnzz.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script async="async" data-pjax="data-pjax" src="https://s4.cnzz.com/z_stat.php?id=1262480717&amp;web_id=1262480717"></script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-02 10:36:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.0.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">139</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">202</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">59</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/%E5%8F%8D%E5%B0%84"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/%E6%B3%A8%E8%A7%A3"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> 函数式</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/java/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/java/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 架构和中间件</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 理论</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 三高</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 中间件</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 性能调优</span></a></li><li><a class="site-page child" href="/categories/apm"><i class="fa-fw fas fa-folder-open"></i><span> 链路追踪</span></a></li><li><a class="site-page child" href="/categories/rocketmq"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 区块链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链技术</span></a></li><li><a class="site-page child" href="/categories/blockchain/BTC"><i class="fa-fw fas fa-folder-open"></i><span> 比特币</span></a></li><li><a class="site-page child" href="/categories/blockchain/ETH"><i class="fa-fw fas fa-folder-open"></i><span> 以太坊</span></a></li><li><a class="site-page child" href="/categories/blockchain/tron"><i class="fa-fw fas fa-folder-open"></i><span> TRON</span></a></li><li><a class="site-page child" href="/categories/blockchain/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li><li><a class="site-page child" href="/categories/blockchain/polygon"><i class="fa-fw fas fa-folder-open"></i><span> Polygon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 源码</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java/spring/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/level/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li><li><a class="site-page child" href="/categories/rocketmq/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li><li><a class="site-page child" href="/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> 设计模式</span></a></li><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/serialization"><i class="fa-fw fas fa-folder-open"></i><span> 序列化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/messageboard.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">思想家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/%E5%8F%8D%E5%B0%84"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/%E6%B3%A8%E8%A7%A3"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> 函数式</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/java/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/java/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 架构和中间件</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 理论</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 三高</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 中间件</span></a></li><li><a class="site-page child" href="/categories/arch"><i class="fa-fw fas fa-folder-open"></i><span> 性能调优</span></a></li><li><a class="site-page child" href="/categories/apm"><i class="fa-fw fas fa-folder-open"></i><span> 链路追踪</span></a></li><li><a class="site-page child" href="/categories/rocketmq"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> 算法</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 区块链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> 区块链技术</span></a></li><li><a class="site-page child" href="/categories/blockchain/BTC"><i class="fa-fw fas fa-folder-open"></i><span> 比特币</span></a></li><li><a class="site-page child" href="/categories/blockchain/ETH"><i class="fa-fw fas fa-folder-open"></i><span> 以太坊</span></a></li><li><a class="site-page child" href="/categories/blockchain/tron"><i class="fa-fw fas fa-folder-open"></i><span> TRON</span></a></li><li><a class="site-page child" href="/categories/blockchain/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li><li><a class="site-page child" href="/categories/blockchain/polygon"><i class="fa-fw fas fa-folder-open"></i><span> Polygon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 源码</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java/spring/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/level/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li><li><a class="site-page child" href="/categories/rocketmq/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> RocketMQ</span></a></li><li><a class="site-page child" href="/categories/tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><i class="fa-fw fas fa-folder-open"></i><span> Tendermint</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> 设计模式</span></a></li><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/serialization"><i class="fa-fw fas fa-folder-open"></i><span> 序列化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">关于Reactor模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-08-05T08:30:15.000Z" title="undefined 2018-08-05 16:30:15">2018-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/architecture/">architecture</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/nio/">nio</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/architecture/%E6%A6%82%E5%BF%B5/">概念</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/nio/%E6%A6%82%E5%BF%B5/">概念</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="关于Reactor模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>核心思想：分治</p>
+</blockquote>
+<p>看了一些 Reactor 相关的文章和资料，列举的一些 Reactor 模型的优点，包括极客时间的文章也有讲过在架构中的Reactor中的优点和缺点。<br>但是如果不使用 Reactor 模型的一般方式是什么样子的?会有什么问题？</p>
+<h2 id="思想：分而治之-事件驱动"><a href="#思想：分而治之-事件驱动" class="headerlink" title="思想：分而治之+事件驱动"></a>思想：分而治之+事件驱动</h2><p>1）分而治之<br>一个连接里完整的网络处理过程一般分为accept、read、decode、process、encode、send这几步。<br>Reactor模式将每个步骤映射为一个Task，服务端线程执行的最小逻辑单元不再是一次完整的网络请求，而是Task，且采用非阻塞方式执行。</p>
+<p>2）事件驱动<br>每个Task对应特定网络事件。当Task准备就绪时，Reactor收到对应的网络事件通知，并将Task分发给绑定了对应网络事件的Handler执行。</p>
+<p>3）几个角色<br>reactor：负责绑定管理事件和处理接口；<br>selector：负责监听响应事件，将事件分发给绑定了该事件的Handler处理；<br>Handler：事件处理器，绑定了某类事件，负责执行对应事件的Task对事件进行处理；<br>Acceptor：Handler的一种，绑定了connect事件。当客户端发起connect请求时，Reactor会将accept事件分发给Acceptor处理。</p>
+<h2 id="Reactor是什么？"><a href="#Reactor是什么？" class="headerlink" title="Reactor是什么？"></a>Reactor是什么？</h2><ol>
+<li>事件驱动</li>
+<li>可以处理一个或多个输入源</li>
+<li>通过多路复用将请求的事件分发给对应的处理器处理</li>
+</ol>
+<p>Reactor模式首先是事件驱动的，有一个或多个并发输入源，有一个Service Handler，有多个Request Handlers；这个Service Handler会同步的将输入的请求（Event）多路复用的分发给相应的Request Handler。</p>
+<p><img src="/posts/62292/reactor.png" alt="reactor"></p>
+<p>从结构上，这有点类似生产者消费者模式，即有一个或多个生产者将事件放入一个Queue中，而一个或多个消费者主动的从这个Queue中Poll事件来处理；而Reactor模式则并没有Queue来做缓冲，每当一个Event输入到Service Handler之后，该Service Handler会主动的根据不同的Event类型将其分发给对应的Request Handler来处理。</p>
+<h2 id="Reactor模式结构"><a href="#Reactor模式结构" class="headerlink" title="Reactor模式结构"></a>Reactor模式结构</h2><p>在解决了什么是Reactor模式后，我们来看看Reactor模式是由什么模块构成。</p>
+<p><img src="/posts/62292/Reactor_Structures.png" alt="Reactor结构"></p>
+<ol>
+<li><strong>Handle</strong>：即操作系统中的句柄，是对资源在操作系统层面上的一种抽象，它可以是打开的文件、一个连接(Socket)、Timer等。由于Reactor模式一般使用在网络编程中，因而这里一般指Socket Handle，即一个网络连接（Connection，在Java NIO中的Channel）。这个Channel注册到Synchronous Event Demultiplexer中，以监听Handle中发生的事件，对ServerSocketChannnel可以是CONNECT事件，对SocketChannel可以是READ、WRITE、CLOSE事件等。</li>
+<li><strong>Synchronous Event Demultiplexer</strong>：阻塞等待一系列的Handle中的事件到来，如果阻塞等待返回，即表示在返回的Handle中可以不阻塞的执行返回的事件类型。这个模块一般使用操作系统的select来实现。在Java NIO中用Selector来封装，当Selector.select()返回时，可以调用Selector的selectedKeys()方法获取Set<SelectionKey>，一个SelectionKey表达一个有事件发生的Channel以及该Channel上的事件类型。上图的Synchronous Event Demultiplexer —notifies–&gt; Handle”的流程如果是对的，那内部实现应该是select()方法在事件到来后会先设置Handle的状态，然后返回。不了解内部实现机制，因而保留原图。</SelectionKey></li>
+<li><strong>Initiation Dispatcher</strong>：用于管理Event Handler，即EventHandler的容器，用以注册、移除EventHandler等；另外，它还作为Reactor模式的入口调用Synchronous Event Demultiplexer的select方法以阻塞等待事件返回，当阻塞等待返回时，根据事件发生的Handle将其分发给对应的Event Handler处理，即回调EventHandler中的handle_event()方法。</li>
+<li><strong>Event Handler</strong>：定义事件处理方法：handle_event()，以供InitiationDispatcher回调使用。</li>
+<li><strong>Concrete Event Handler</strong>：事件EventHandler接口，实现特定事件处理逻辑。</li>
+</ol>
+<h2 id="为什么需要-Reactor-模型"><a href="#为什么需要-Reactor-模型" class="headerlink" title="为什么需要 Reactor 模型"></a>为什么需要 Reactor 模型</h2><p>最最原始的网络编程思路就是服务器用一个while循环，不断监听端口是否有新的套接字连接，如果有，那么就调用一个处理函数处理，类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">  socket = accept();</span><br><span class="line">  handle(socket)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方法的最大问题是无法并发，效率太低，如果当前的请求没有处理完，那么后面的请求只能被阻塞，服务器的吞吐量太低。<br>之后，想到了使用多线程，也就是很经典的connection per thread，每一个连接用一个线程处理，类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">  socket = accept();</span><br><span class="line">  <span class="keyword">new</span> thread(socket);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>tomcat服务器的早期版本确实是这样实现的。多线程的方式确实一定程度上极大地提高了服务器的吞吐量，因为之前的请求在read阻塞以后，不会影响到后续的请求，因为他们在不同的线程中。这也是为什么通常会讲“一个线程只能对应一个socket”的原因。最开始对这句话很不理解，线程中创建多个socket不行吗？语法上确实可以，但是实际上没有用，每一个socket都是阻塞的，所以在一个线程里只能处理一个socket，就算accept了多个也没用，前一个socket被阻塞了，后面的是无法被执行到的。</p>
+<p>缺点在于资源要求太高，系统中创建线程是需要比较高的系统资源的，如果连接数太高，系统无法承受，而且，线程的反复创建-销毁也需要代价。<br>线程池本身可以缓解线程创建-销毁的代价，这样优化确实会好很多，不过还是存在一些问题的，就是线程的粒度太大。每一个线程把一次交互的事情全部做了，包括读取和返回，甚至连接，表面上似乎连接不在线程里，但是如果线程不够，有了新的连接，也无法得到处理，所以，目前的方案线程里可以看成要做三件事，连接，读取和写入。<br>线程同步的粒度太大了，限制了吞吐量。应该把一次连接的操作分为更细的粒度或者过程，这些更细的粒度是更小的线程。整个线程池的数目会翻倍，但是线程更简单，任务更加单一。这其实就是Reactor出现的原因，在Reactor中，这些被拆分的小线程或者子过程对应的是handler，每一种handler会出处理一种event。这里会有一个全局的管理者selector，我们需要把channel注册感兴趣的事件，那么这个selector就会不断在channel上检测是否有该类型的事件发生，如果没有，那么主线程就会被阻塞，否则就会调用相应的事件处理函数即handler来处理。典型的事件有连接，读取和写入，当然我们就需要为这些事件分别提供处理器，每一个处理器可以采用线程的方式实现。一个连接来了，显示被读取线程或者handler处理了，然后再执行写入，那么之前的读取就可以被后面的请求复用，吞吐量就提高了。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="http://www.blogjava.net/DLevin/archive/2015/09/02/427045.html">Reactor模式详解</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/doit8791/p/7461479.html">高性能IO之Reactor模式</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">咪雅先森</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://liukay.com/posts/62292.html">https://liukay.com/posts/62292.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://liukay.com" target="_blank">思想家</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9E%B6%E6%9E%84/">架构</a><a class="post-meta__tags" href="/tags/%E6%A6%82%E5%BF%B5/">概念</a><a class="post-meta__tags" href="/tags/Reactor%E6%A8%A1%E5%9E%8B/">Reactor模型</a></div><div class="post_share"><div class="social-share" data-image="/img/messageboard.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/23547.html"><img class="prev-cover" src="/img/messageboard.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">spring boot 添加默认根路径跳转</div></div></a></div><div class="next-post pull-right"><a href="/posts/17384.html"><img class="next-cover" src="/img/messageboard.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">springboot打war包</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/28470.html" title="什么是幂等"><img class="cover" src="/img/messageboard.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-01-15</div><div class="title">什么是幂等</div></div></a></div><div><a href="/posts/14131.html" title="集群容错模式"><img class="cover" src="/img/messageboard.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-06</div><div class="title">集群容错模式</div></div></a></div><div><a href="/posts/64659.html" title="区块链--01区块链初识"><img class="cover" src="/images/cover/blockchain/banner.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-14</div><div class="title">区块链--01区块链初识</div></div></a></div><div><a href="/posts/18926.html" title="leveldb-整体架构"><img class="cover" src="/images/cover/cover-leveldb.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-31</div><div class="title">leveldb-整体架构</div></div></a></div><div><a href="/posts/6715.html" title="Tendermint ABCI概述"><img class="cover" src="/images/cover/cover-tendermint.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-02</div><div class="title">Tendermint ABCI概述</div></div></a></div><div><a href="/posts/51570.html" title="Tendermint概述"><img class="cover" src="/images/cover/cover-tendermint.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">Tendermint概述</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">咪雅先森</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">139</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">202</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">59</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">自强不息，练习一币通关。笔记搬运中...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E6%83%B3%EF%BC%9A%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B-%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.</span> <span class="toc-text">思想：分而治之+事件驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactor%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">Reactor是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactor%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">Reactor模式结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-Reactor-%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">为什么需要 Reactor 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">4.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/f271493a.html" title="IDEA 2021 CPU 超100% 问题解决"><img src="/images/cover/cover-idea.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IDEA 2021 CPU 超100% 问题解决"/></a><div class="content"><a class="title" href="/posts/f271493a.html" title="IDEA 2021 CPU 超100% 问题解决">IDEA 2021 CPU 超100% 问题解决</a><time datetime="2021-11-20T13:44:47.000Z" title="发表于 2021-11-20 21:44:47">2021-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fab0cb81.html" title="netty 构建一个简易服务"><img src="/img/messageboard.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty 构建一个简易服务"/></a><div class="content"><a class="title" href="/posts/fab0cb81.html" title="netty 构建一个简易服务">netty 构建一个简易服务</a><time datetime="2021-11-19T08:08:20.000Z" title="发表于 2021-11-19 16:08:20">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9321f70b.html" title="netty 简述"><img src="/img/messageboard.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty 简述"/></a><div class="content"><a class="title" href="/posts/9321f70b.html" title="netty 简述">netty 简述</a><time datetime="2021-11-16T07:07:38.000Z" title="发表于 2021-11-16 15:07:38">2021-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b9c503bd.html" title="go 函数多个返回值"><img src="/images/cover/cover-go.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go 函数多个返回值"/></a><div class="content"><a class="title" href="/posts/b9c503bd.html" title="go 函数多个返回值">go 函数多个返回值</a><time datetime="2021-11-16T06:03:51.000Z" title="发表于 2021-11-16 14:03:51">2021-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b9c503bd.html" title="go 函数介绍"><img src="/images/cover/cover-go.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go 函数介绍"/></a><div class="content"><a class="title" href="/posts/b9c503bd.html" title="go 函数介绍">go 函数介绍</a><time datetime="2021-11-16T02:13:52.000Z" title="发表于 2021-11-16 10:13:52">2021-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 咪雅先森</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'a07a71eb5860a45bcde7',
+      clientSecret: '3bcb41581dad800b346c4f8197da39f4777c0916',
+      repo: 'forfreeday.github.io',
+      owner: 'forfreeday',
+      admin: ['forfreeday'],
+      id: '1b71b9ab1d5e76e2ab948511fca9a685',
+      language: 'zh-CN',
+      perPage: 10,
+      distractionFreeMode: false,
+      pagerDirection: 'last',
+      createIssueManually: false,
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
