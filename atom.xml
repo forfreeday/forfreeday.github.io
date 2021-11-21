@@ -184,9 +184,9 @@
       <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="go" scheme="https://liukay.com/tags/go/"/>
-    
       <category term="golang" scheme="https://liukay.com/tags/golang/"/>
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
       <category term="defer" scheme="https://liukay.com/tags/defer/"/>
     
@@ -255,9 +255,9 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="共识" scheme="https://liukay.com/tags/%E5%85%B1%E8%AF%86/"/>
     
@@ -292,9 +292,9 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="源码分析" scheme="https://liukay.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
@@ -329,15 +329,15 @@
     
       <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
     
+      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
       <category term="概述" scheme="https://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
     
       <category term="快速入门" scheme="https://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
       <category term="ABCI" scheme="https://liukay.com/tags/ABCI/"/>
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="BlockChain" scheme="https://liukay.com/tags/BlockChain/"/>
     
   </entry>
   
@@ -462,9 +462,9 @@
     
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="go" scheme="https://liukay.com/tags/go/"/>
-    
       <category term="golang" scheme="https://liukay.com/tags/golang/"/>
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
   </entry>
   
