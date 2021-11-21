@@ -159,9 +159,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -227,9 +227,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 共识 </tag>
             
@@ -264,9 +264,9 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
             <tag> 源码分析 </tag>
             
@@ -301,15 +301,15 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
-            <tag> 区块链 </tag>
-            
             <tag> 概述 </tag>
             
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> BlockChain </tag>
             
         </tags>
       
@@ -423,9 +423,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -797,13 +797,13 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
             
-            <tag> oh-my-zsh </tag>
+            <tag> vim </tag>
             
             <tag> 插件 </tag>
+            
+            <tag> oh-my-zsh </tag>
             
         </tags>
       
@@ -861,9 +861,9 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
+            
+            <tag> vim </tag>
             
             <tag> 插件 </tag>
             
@@ -892,19 +892,19 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
             
-            <tag> mac </tag>
+            <tag> vim </tag>
             
-            <tag> nvim </tag>
+            <tag> mac </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
             
             <tag> 配置 </tag>
+            
+            <tag> nvim </tag>
             
         </tags>
       
@@ -3598,7 +3598,7 @@
       
       <categories>
           
-          <category> rocketMQ </category>
+          <category> rocketmq </category>
           
           <category> nameserver </category>
           
