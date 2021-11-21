@@ -159,9 +159,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -423,9 +423,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
         </tags>
       
@@ -797,13 +797,13 @@
       
         <tags>
             
-            <tag> linux </tag>
-            
             <tag> vim </tag>
             
-            <tag> 插件 </tag>
+            <tag> linux </tag>
             
             <tag> oh-my-zsh </tag>
+            
+            <tag> 插件 </tag>
             
         </tags>
       
@@ -861,9 +861,9 @@
       
         <tags>
             
-            <tag> linux </tag>
-            
             <tag> vim </tag>
+            
+            <tag> linux </tag>
             
             <tag> 插件 </tag>
             
@@ -892,19 +892,19 @@
       
         <tags>
             
-            <tag> linux </tag>
-            
             <tag> vim </tag>
             
+            <tag> linux </tag>
+            
             <tag> mac </tag>
+            
+            <tag> nvim </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
             
             <tag> 配置 </tag>
-            
-            <tag> nvim </tag>
             
         </tags>
       
@@ -3599,8 +3599,6 @@
       <categories>
           
           <category> rocketmq </category>
-          
-          <category> nameserver </category>
           
       </categories>
       
