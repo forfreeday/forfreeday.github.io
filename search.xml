@@ -3771,6 +3771,8 @@
       
         <tags>
             
+            <tag> mq </tag>
+            
             <tag> RocketMQ原理 </tag>
             
             <tag> NameServer原理 </tag>
@@ -3797,6 +3799,8 @@
       
       
         <tags>
+            
+            <tag> mq </tag>
             
             <tag> rocketmq </tag>
             
@@ -3825,6 +3829,8 @@
       
         <tags>
             
+            <tag> mq </tag>
+            
             <tag> rocketmq </tag>
             
             <tag> 中间件 </tag>
@@ -3851,6 +3857,8 @@
       
       
         <tags>
+            
+            <tag> mq </tag>
             
             <tag> 架构设计 </tag>
             
@@ -3884,6 +3892,8 @@
       
       
         <tags>
+            
+            <tag> mq </tag>
             
             <tag> rocketmq </tag>
             
