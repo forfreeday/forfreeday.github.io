@@ -3081,6 +3081,37 @@
     
     
     <entry>
+      <title>jvm--手动触发gc</title>
+      <link href="posts/733b48b5.html"/>
+      <url>posts/733b48b5.html</url>
+      
+        <content type="html"><![CDATA[<p>很多时候我们在学习JVM时，往往需要查看JVM的回收日志，查看JVM的相关运行参数，这时候我们可以通过手动触发的形式获取JVM的运行回收情况。</p><p>加上参数 -Xms1024m -Xmx1024m -Xmn512m -XX:+PrintGCDetails。<br><img src="/posts/733b48b5/手动触发gc.jpeg" alt="手动触发gc"></p><p>关键的一行在于 System.gc();</p><h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestGCRoots01</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> _10MB = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">byte</span>[] memory = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span> * _10MB];</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      method01();</span><br><span class="line">      System.out.println(<span class="string">&quot;返回main方法&quot;</span>);</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第二次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      TestGCRoots01 t = <span class="keyword">new</span> TestGCRoots01();</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第一次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[GC (System.gc()) [PSYoungGen: 97648K-&gt;624K(458752K)] 97648K-&gt;82552K(983040K), 0.0805172 secs] [Times: user&#x3D;0.06 sys&#x3D;0.04, real&#x3D;0.08 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 624K-&gt;0K(458752K)] [ParOldGen: 81928K-&gt;82426K(524288K)] 82552K-&gt;82426K(983040K), [Metaspace: 3305K-&gt;3305K(1056768K)], 0.0252976 secs] [Times: user&#x3D;0.02 sys&#x3D;0.00, real&#x3D;0.03 secs] </span><br><span class="line">第一次GC完成</span><br><span class="line">返回main方法</span><br><span class="line">[GC (System.gc()) [PSYoungGen: 7864K-&gt;64K(458752K)] 90291K-&gt;82490K(983040K), 0.0017362 secs] [Times: user&#x3D;0.01 sys&#x3D;0.00, real&#x3D;0.00 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 64K-&gt;0K(458752K)] [ParOldGen: 82426K-&gt;494K(524288K)] 82490K-&gt;494K(983040K), [Metaspace: 3306K-&gt;3306K(1056768K)], 0.0115159 secs] [Times: user&#x3D;0.01 sys&#x3D;0.00, real&#x3D;0.01 secs] </span><br><span class="line">第二次GC完成</span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total 458752K, used 23593K [0x00000007a0000000, 0x00000007c0000000, 0x00000007c0000000)</span><br><span class="line">  eden space 393216K, 6% used [0x00000007a0000000,0x00000007a170a568,0x00000007b8000000)</span><br><span class="line">  from space 65536K, 0% used [0x00000007bc000000,0x00000007bc000000,0x00000007c0000000)</span><br><span class="line">  to   space 65536K, 0% used [0x00000007b8000000,0x00000007b8000000,0x00000007bc000000)</span><br><span class="line"> ParOldGen       total 524288K, used 494K [0x0000000780000000, 0x00000007a0000000, 0x00000007a0000000)</span><br><span class="line">  object space 524288K, 0% used [0x0000000780000000,0x000000078007bb70,0x00000007a0000000)</span><br><span class="line"> Metaspace       used 3313K, capacity 4496K, committed 4864K, reserved 1056768K</span><br><span class="line">  class space    used 365K, capacity 388K, committed 512K, reserved 1048576K</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> jvm </tag>
+            
+            <tag> gc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>git-工作区、暂存区、版本库</title>
       <link href="posts/ddc7c25.html"/>
       <url>posts/ddc7c25.html</url>
