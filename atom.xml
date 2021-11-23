@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2021-11-23T01:57:10.042Z</updated>
+  <updated>2021-11-23T02:31:58.523Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -17,11 +17,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>idea-2021tomcat启动时间超长</title>
+    <title>gradle 安装</title>
+    <link href="https://liukay.com/posts/d723a7c4.html"/>
+    <id>https://liukay.com/posts/d723a7c4.html</id>
+    <published>2021-11-23T02:13:46.000Z</published>
+    <updated>2021-11-23T02:31:58.523Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网</p><p><a href="https://gradle.org/">https://gradle.org/</a></p><p>下载页面<br><a href="https://gradle.org/releases/">https://gradle.org/releases/</a></p><p>选择自己需要的版本，下载已经编译好的二进制文件<br>Download: binary-only</p><p><img src="/posts/d723a7c4/安装.jpg" alt="安装"></p><h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><p>设置 .bash_profile 文件添加</p><blockquote><p>export PATH=$PATH:/Users/liukai/workspaces/application/gradle-6.6.1/bin</p></blockquote><p>验证一下</p><p><img src="/posts/d723a7c4/验证.jpg" alt="验证"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;官网&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gradle.org/&quot;&gt;https://gradle.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p
+      
+    
+    </summary>
+    
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
+    
+      <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
+    
+    
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
+    
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
+    
+      <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
+    
+      <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA2021使用tomcat启动时间超长</title>
     <link href="https://liukay.com/posts/719ff018.html"/>
     <id>https://liukay.com/posts/719ff018.html</id>
     <published>2021-11-22T08:40:22.000Z</published>
-    <updated>2021-11-23T01:57:10.042Z</updated>
+    <updated>2021-11-23T02:11:07.292Z</updated>
     
     <content type="html"><![CDATA[<p>最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。</p><p>新电脑问题多。</p><p>直接说怎么解决的。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><blockquote><p>scutil –set HostName “localhost”</p></blockquote><h2 id="无效的偿试-修改生成随机数"><a href="#无效的偿试-修改生成随机数" class="headerlink" title="无效的偿试-修改生成随机数"></a>无效的偿试-修改生成随机数</h2><p>IDEA2021 添加tomcat启动参数，JRE默认使用 /dev/random作为随机数来源，当熵池大小不够的时候，random会很慢，造成随机数生成调用阻塞。</p><blockquote><p>JAVA_OPTS=”-Djava.security.egd=file:/dev/urandom”<br>无效，依然该怎么慢还怎么慢。</p></blockquote><h2 id="真正原因-Jvm需要很长时间解析localhost的IP地址"><a href="#真正原因-Jvm需要很长时间解析localhost的IP地址" class="headerlink" title="真正原因 Jvm需要很长时间解析localhost的IP地址"></a>真正原因 Jvm需要很长时间解析localhost的IP地址</h2><p>原因分析<br><a href="https://www.codenong.com/39636792/">https://www.codenong.com/39636792/</a></p>]]></content>
     
@@ -629,36 +664,6 @@
       <category term="cms" scheme="https://liukay.com/tags/cms/"/>
     
       <category term="调优" scheme="https://liukay.com/tags/%E8%B0%83%E4%BC%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区块链--04coinbase交易</title>
-    <link href="https://liukay.com/posts/3428.html"/>
-    <id>https://liukay.com/posts/3428.html</id>
-    <published>2021-05-24T02:56:14.000Z</published>
-    <updated>2021-11-10T06:30:57.630Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>coinbase交易，也是被打包在区块中的第一笔交易，只是这笔是区块的第一笔交易，是挖矿产生的奖励。</p></blockquote><h2 id="查看-coinbase交易"><a href="#查看-coinbase交易" class="headerlink" title="查看 coinbase交易"></a>查看 coinbase交易</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.blockcypher.com/v1/btc/main/txs/1a44cb6551af919652eac49d953c50ab2acb1ebdfe7d2b20ed3c1944bd37ac96</span><br></pre></td></tr></table></figure><h2 id="coinbase-结构"><a href="#coinbase-结构" class="headerlink" title="coinbase 结构"></a>coinbase 结构</h2><p>可以很明显的看到，除了公共字段外，有 outputs、inputs 两个字段。</p><ol><li>outputs: 交易输出</li><li>inputs: 交易输入</li></ol><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  block_hash: &quot;00000000000000000000bca6ccc2ef309fd814f80a55b3e08a4212326137d7d2&quot;,</span><br><span class="line">  block_height: 681181,</span><br><span class="line">  block_index: 0,</span><br><span class="line">  hash: &quot;1a44cb6551af919652eac49d953c50ab2acb1ebdfe7d2b20ed3c1944bd37ac96&quot;,</span><br><span class="line">  addresses: [</span><br><span class="line">    <span class="string">&quot;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  total: 680382463,</span><br><span class="line">  fees: 0,</span><br><span class="line">  size: 378,</span><br><span class="line">  vsize: 351,</span><br><span class="line">  preference: &quot;low&quot;,</span><br><span class="line">  confirmed: &quot;2021-04-30T05:03:17.197Z&quot;,</span><br><span class="line">  received: &quot;2021-04-30T05:03:17.197Z&quot;,</span><br><span class="line">  ver: 1,</span><br><span class="line">  lock_time: 1241604347,</span><br><span class="line">  double_spend: false,</span><br><span class="line">  vin_sz: 1,</span><br><span class="line">  vout_sz: 4,</span><br><span class="line">  opt_in_rbf: true,</span><br><span class="line">  data_protocol: &quot;unknown&quot;,</span><br><span class="line">  confirmations: 3552,</span><br><span class="line">  confidence: 1,</span><br><span class="line">  inputs: [</span><br><span class="line">    &#123;</span><br><span class="line">      output_index: -1,</span><br><span class="line">      script: &quot;03dd640a2cfabe6d6ddc65590fdf47b7f8d0805179ce336bb1dfb8fc6697e67bac15286de7910b4a7610000000f09f909f082f4632506f6f6c2f114d696e6564206279206c67316467737472000000000000000000000000000000000000050000000000&quot;,</span><br><span class="line">      sequence: 420554726,</span><br><span class="line">      script_type: &quot;empty&quot;,</span><br><span class="line">      age: 681181</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  outputs: [</span><br><span class="line">    &#123;</span><br><span class="line">      value: 680382463,</span><br><span class="line">      script: &quot;76a914c825a1ecf2a6830c4401620c3a16f1995057c2ab88ac&quot;,</span><br><span class="line">      spent_by: &quot;e80511c1ed5deec12f50d918614a94145d3089f269e33522a0aa72b0054a5c96&quot;,</span><br><span class="line">      addresses: [</span><br><span class="line">        <span class="string">&quot;1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      script_type: &quot;pay-to-pubkey-hash&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      value: 0,</span><br><span class="line">      script: &quot;6a24aa21a9ed24ea773c9b58e4a4ad4c14ae4b75ff79cb1adbb08b0d3960d532d655414030dc&quot;,</span><br><span class="line">      addresses: null,</span><br><span class="line">      script_type: &quot;null-data&quot;,</span><br><span class="line">      data_hex: &quot;aa21a9ed24ea773c9b58e4a4ad4c14ae4b75ff79cb1adbb08b0d3960d532d655414030dc&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      value: 0,</span><br><span class="line">      script: &quot;6a3448617468ae18c94d8ebfbebe1e8a6567fee08b7023579133e65a4ad2ac48ef7c13b6f444a3bf7eac9e8b418186649d337d64fee1&quot;,</span><br><span class="line">      addresses: null,</span><br><span class="line">      script_type: &quot;null-data&quot;,</span><br><span class="line">      data_hex: &quot;48617468ae18c94d8ebfbebe1e8a6567fee08b7023579133e65a4ad2ac48ef7c13b6f444a3bf7eac9e8b418186649d337d64fee1&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      value: 0,</span><br><span class="line">      script: &quot;6a24b9e11b6d267720bd57a3442dd397de915eb9c2d46e3dc90633755d504e5458ef23804ff2&quot;,</span><br><span class="line">      addresses: null,</span><br><span class="line">      script_type: &quot;null-data&quot;,</span><br><span class="line">      data_hex: &quot;b9e11b6d267720bd57a3442dd397de915eb9c2d46e3dc90633755d504e5458ef23804ff2&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="总体结构说明"><a href="#总体结构说明" class="headerlink" title="总体结构说明"></a>总体结构说明</h2><table><thead><tr><th style="text-align:center">字节</th><th style="text-align:center">字段</th><th style="text-align:center">字段说明</th><th style="text-align:center">描述</th></tr></thead><tbody><tr><td style="text-align:center">4</td><td style="text-align:center">ver</td><td style="text-align:center">交易版本号</td><td style="text-align:center">明确这笔交易参照的规则</td></tr><tr><td style="text-align:center">1-9</td><td style="text-align:center">vin_sz</td><td style="text-align:center">输入计数器</td><td style="text-align:center">包含的交易输入数量</td></tr><tr><td style="text-align:center">不定</td><td style="text-align:center">inputs</td><td style="text-align:center">交易输入</td><td style="text-align:center">一个或多个交易输入</td></tr><tr><td style="text-align:center">1-9</td><td style="text-align:center">vout_sz</td><td style="text-align:center">输出计数器</td><td style="text-align:center">包含的交易输出数量</td></tr><tr><td style="text-align:center">不定</td><td style="text-align:center">outputs</td><td style="text-align:center">交易输出</td><td style="text-align:center">一个或多个交易输出</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">lock_time</td><td style="text-align:center">锁定时间</td><td style="text-align:center">一个区块号或UNIX时间戳</td></tr></tbody></table><h3 id="inputs-交易输入"><a href="#inputs-交易输入" class="headerlink" title="inputs 交易输入"></a>inputs 交易输入</h3><table><thead><tr><th style="text-align:center">字节长度</th><th style="text-align:center">字段</th><th style="text-align:center">说明</th></tr></thead><tbody><tr><td style="text-align:center">32</td><td style="text-align:center">交易哈希值</td><td style="text-align:center">固定为全0</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">输出索引</td><td style="text-align:center">固定为全1</td></tr><tr><td style="text-align:center">1-9</td><td style="text-align:center">Coinbase脚本长度</td><td style="text-align:center">coinbase的脚本字节长度</td></tr><tr><td style="text-align:center">不定</td><td style="text-align:center">coinbase脚本</td><td style="text-align:center">coinbase脚本，可以任意填充</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">序列号</td><td style="text-align:center">固定值0xFFFFFFFF</td></tr></tbody></table><h3 id="outputs-交易输出"><a href="#outputs-交易输出" class="headerlink" title="outputs 交易输出"></a>outputs 交易输出</h3><table><thead><tr><th style="text-align:center">字节长度</th><th style="text-align:center">字段</th><th style="text-align:center">说明</th></tr></thead><tbody><tr><td style="text-align:center">字节长度</td><td style="text-align:center">字段</td><td style="text-align:center">说明</td></tr><tr><td style="text-align:center">8</td><td style="text-align:center">总量</td><td style="text-align:center">用聪表示的比特币值</td></tr><tr><td style="text-align:center">1-9</td><td style="text-align:center">锁定脚本大小</td><td style="text-align:center">用字节表示的后面的锁定脚本长度</td></tr><tr><td style="text-align:center">不定</td><td style="text-align:center">锁定脚本</td><td style="text-align:center">一个定义了支付输出所需条件的脚本</td></tr></tbody></table>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;coinbase交易，也是被打包在区块中的第一笔交易，只是这笔是区块的第一笔交易，是挖矿产生的奖励。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;查看-coinbase交易&quot;&gt;&lt;a href=&quot;#查看-coinbase交易&quot; class=&quot;
-      
-    
-    </summary>
-    
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
-    
-    
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
-    
-      <category term="coinbase交易" scheme="https://liukay.com/tags/coinbase%E4%BA%A4%E6%98%93/"/>
     
   </entry>
   

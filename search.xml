@@ -4,7 +4,40 @@
   
     
     <entry>
-      <title>idea-2021tomcat启动时间超长</title>
+      <title>gradle 安装</title>
+      <link href="posts/d723a7c4.html"/>
+      <url>posts/d723a7c4.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网</p><p><a href="https://gradle.org/">https://gradle.org/</a></p><p>下载页面<br><a href="https://gradle.org/releases/">https://gradle.org/releases/</a></p><p>选择自己需要的版本，下载已经编译好的二进制文件<br>Download: binary-only</p><p><img src="/posts/d723a7c4/安装.jpg" alt="安装"></p><h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><p>设置 .bash_profile 文件添加</p><blockquote><p>export PATH=$PATH:/Users/liukai/workspaces/application/gradle-6.6.1/bin</p></blockquote><p>验证一下</p><p><img src="/posts/d723a7c4/验证.jpg" alt="验证"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> gradle </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 安装 </tag>
+            
+            <tag> java </tag>
+            
+            <tag> 项目构建 </tag>
+            
+            <tag> gradle </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IDEA2021使用tomcat启动时间超长</title>
       <link href="posts/719ff018.html"/>
       <url>posts/719ff018.html</url>
       
