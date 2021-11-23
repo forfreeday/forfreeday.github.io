@@ -676,6 +676,8 @@
           
           <category> blockchain </category>
           
+          <category> btc </category>
+          
       </categories>
       
       
@@ -683,7 +685,11 @@
             
             <tag> blockchain </tag>
             
+            <tag> 比特币 </tag>
+            
             <tag> coinbase交易 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -703,7 +709,7 @@
           
           <category> blockchain </category>
           
-          <category> BTC </category>
+          <category> btc </category>
           
       </categories>
       
@@ -715,6 +721,8 @@
             <tag> blockchain </tag>
             
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -765,7 +773,7 @@
           
           <category> blockchain </category>
           
-          <category> BTC </category>
+          <category> btc </category>
           
       </categories>
       
@@ -774,9 +782,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> BTC </tag>
-            
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -796,7 +804,7 @@
           
           <category> blockchain </category>
           
-          <category> BTC </category>
+          <category> btc </category>
           
       </categories>
       
@@ -808,6 +816,8 @@
             <tag> 比特币 </tag>
             
             <tag> 技术体系 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -827,6 +837,8 @@
           
           <category> blockchain </category>
           
+          <category> btc </category>
+          
       </categories>
       
       
@@ -837,6 +849,10 @@
             <tag> 区块链 </tag>
             
             <tag> blockchain </tag>
+            
+            <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
