@@ -4,6 +4,45 @@
   
     
     <entry>
+      <title>spring 源码阅读环境</title>
+      <link href="posts/992b6df6.html"/>
+      <url>posts/992b6df6.html</url>
+      
+        <content type="html"><![CDATA[<p>要进行源码阅读之前，强调需要先对一个产品有熟悉的使用，就好像你想要造车，要先会开车，再去学习如何造车，否则一切都是停在理轮上，完全不了解这个车是如何运行的，没有概念。<br>推荐对需要阅读的源码先保存在自己仓库中，并创建一个源码分支，可以在阅读分析的过程中对重要点进行注释帮助加深理解。</p><h2 id="fork源码"><a href="#fork源码" class="headerlink" title="fork源码"></a>fork源码</h2><p>Spring 官方github源码仓库</p><p><a href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p><p><img src="/posts/992b6df6/fork源码.jpg" alt="fork源码"></p><h2 id="构建源码阅读环境"><a href="#构建源码阅读环境" class="headerlink" title="构建源码阅读环境"></a>构建源码阅读环境</h2><p>将代码 clone 到本地，克隆完成后，IDEA自动打开项目。</p><p><img src="/posts/992b6df6/clone代码.jpg" alt="clone代码"></p><p>报错处理，首次打开会报个错，别慌这是因为IDEA缺少必要插件，点右侧 gradle 的构建按钮构建一次。<br><img src="/posts/992b6df6/报错.jpg" alt="报错"></p><p>首次构建需要下载的包比较多，</p><p><img src="/posts/992b6df6/构建.jpg" alt="构建"></p><h2 id="直接使用-git-clone-方式"><a href="#直接使用-git-clone-方式" class="headerlink" title="直接使用 git clone 方式"></a>直接使用 git clone 方式</h2><p>直接使用命令行git clone 项目的话，拉完代码后，IDEA 通过导入的方式导入项目。</p><blockquote><p>file—&gt;new—&gt;Project from Exisitings Sources</p></blockquote><p>后续步骤相同。</p><h2 id="gradle-问题"><a href="#gradle-问题" class="headerlink" title="gradle 问题"></a>gradle 问题</h2><p>spring 是基于gradle进行构建的，如果没有安装gradle也没有关系，IDEA会在启动时，自动根据当前环境下载gradle及插件。</p><p><img src="/posts/992b6df6/gradle.jpg" alt="gradle"></p><h2 id="构建成功"><a href="#构建成功" class="headerlink" title="构建成功"></a>构建成功</h2><p><img src="/posts/992b6df6/成功.jpg" alt="成功"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> spring </category>
+          
+          <category> spring </category>
+          
+          <category> 源码分析 </category>
+          
+          <category> code </category>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> spring </tag>
+            
+            <tag> 源码 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>gradle 安装</title>
       <link href="posts/d723a7c4.html"/>
       <url>posts/d723a7c4.html</url>
@@ -1604,6 +1643,35 @@
             <tag> java </tag>
             
             <tag> spring boot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>spring boot 使用 maven 打 jar 包配置</title>
+      <link href="posts/506887e3.html"/>
+      <url>posts/506887e3.html</url>
+      
+        <content type="html"><![CDATA[<p>使用 ide 进行开发时，直接在ide上启动即可，如果要放到服务器上进行使用，就必须打成jar包，这里使用 maven 的打包插件进行打包。注意 <code>&lt;mainClass&gt;com.devops.WebApplication&lt;/mainClass&gt;</code> 这行要改成你的启动类。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>devops-web<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">addClasspath</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addClasspath</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">classpathPrefix</span>&gt;</span>lib<span class="tag">&lt;/<span class="name">classpathPrefix</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>com.devops.WebApplication<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">addMavenDescriptor</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addMavenDescriptor</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> springboot </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spring boot </tag>
+            
+            <tag> jar包 </tag>
             
         </tags>
       
