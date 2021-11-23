@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2021-11-21T01:06:06.149Z</updated>
+  <updated>2021-11-23T01:57:10.042Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>idea-2021tomcat启动时间超长</title>
+    <link href="https://liukay.com/posts/719ff018.html"/>
+    <id>https://liukay.com/posts/719ff018.html</id>
+    <published>2021-11-22T08:40:22.000Z</published>
+    <updated>2021-11-23T01:57:10.042Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。</p><p>新电脑问题多。</p><p>直接说怎么解决的。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><blockquote><p>scutil –set HostName “localhost”</p></blockquote><h2 id="无效的偿试-修改生成随机数"><a href="#无效的偿试-修改生成随机数" class="headerlink" title="无效的偿试-修改生成随机数"></a>无效的偿试-修改生成随机数</h2><p>IDEA2021 添加tomcat启动参数，JRE默认使用 /dev/random作为随机数来源，当熵池大小不够的时候，random会很慢，造成随机数生成调用阻塞。</p><blockquote><p>JAVA_OPTS=”-Djava.security.egd=file:/dev/urandom”<br>无效，依然该怎么慢还怎么慢。</p></blockquote><h2 id="真正原因-Jvm需要很长时间解析localhost的IP地址"><a href="#真正原因-Jvm需要很长时间解析localhost的IP地址" class="headerlink" title="真正原因 Jvm需要很长时间解析localhost的IP地址"></a>真正原因 Jvm需要很长时间解析localhost的IP地址</h2><p>原因分析<br><a href="https://www.codenong.com/39636792/">https://www.codenong.com/39636792/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。&lt;/p&gt;
+&lt;p&gt;新电脑问题多。&lt;/p&gt;
+&lt;p&gt;直接说怎么解决的。&lt;/p&gt;
+&lt;h2 id=&quot;解决&quot;&gt;&lt;a href=&quot;#
+      
+    
+    </summary>
+    
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
+    
+      <category term="idea" scheme="https://liukay.com/categories/java/idea/"/>
+    
+    
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
+    
+      <category term="idea" scheme="https://liukay.com/tags/idea/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo 分类或标签单词开头大写出现404</title>
+    <link href="https://liukay.com/posts/4631c4c2.html"/>
+    <id>https://liukay.com/posts/4631c4c2.html</id>
+    <published>2021-11-21T06:21:06.000Z</published>
+    <updated>2021-11-21T06:27:51.841Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近搬运笔记到博客，编辑的文章多了，今天突然发现，有一个分类点进去404，本地运行正常没有问题。查了一圈发现是git的大小写区分问题。</p><p>将大写字母改成小写，hexo 部署正确，但是博客上还是不正确出现404</p><p>网上查了许多资料，才发现，git中设置了大小写不敏感。</p><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改 git 设置不忽略大小写</p><p>进入博客文件夹，进入 git 目录：<code>.deploy_git</code>，修改 .git 文件中的配置文件 config，将ignorecase=true 改为 ignorecase=false</p><blockquote><p>vim . deploy_git/.git/config<br>ignorecase = false</p></blockquote><p>重写清空部署项目</p><p>如果还没有解决，清空部署到 github 上的文件，重新发布：</p><blockquote><p>cd .deploy_git<br>git rm -rf *<br>git commit -m ‘clean all file’<br>git push</p></blockquote><p>进入博客文件夹，用 hexo 重新生成部署</p><blockquote><p>hexo clean &amp;&amp; hexo g -d</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近搬运笔记到博客，编辑的文章多了，今天突然发现，有一个分类点进去404，本地运行正常没有问题。查了一圈发现是git的大小写区分问题。&lt;/p&gt;
+&lt;p&gt;将大写字母改成小写，hexo 部署正确，但是博客上还是不正确出现404&lt;/p&gt;
+&lt;p&gt;网上查了许多资料，才发现，git中设置
+      
+    
+    </summary>
+    
+      <category term="hexo" scheme="https://liukay.com/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="https://liukay.com/tags/hexo/"/>
+    
+      <category term="404" scheme="https://liukay.com/tags/404/"/>
+    
+  </entry>
   
   <entry>
     <title>IDEA 2021 CPU 超100% 问题解决</title>
@@ -184,9 +245,9 @@
       <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
-    
       <category term="go" scheme="https://liukay.com/tags/go/"/>
+    
+      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
     
       <category term="defer" scheme="https://liukay.com/tags/defer/"/>
     
@@ -462,9 +523,9 @@
     
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
-    
       <category term="go" scheme="https://liukay.com/tags/go/"/>
+    
+      <category term="golang" scheme="https://liukay.com/tags/golang/"/>
     
   </entry>
   
@@ -598,69 +659,6 @@
       <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
     
       <category term="coinbase交易" scheme="https://liukay.com/tags/coinbase%E4%BA%A4%E6%98%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区块链--05比特币区块同步机制</title>
-    <link href="https://liukay.com/posts/15476.html"/>
-    <id>https://liukay.com/posts/15476.html</id>
-    <published>2021-04-29T03:41:28.000Z</published>
-    <updated>2021-11-10T06:37:38.886Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。<br>当一个区块打包好一个区块后，需要同步给其它节点，进行校验 和 上链。<br>只有上链的成功的区块，才算是区块链上的一个块。换句话说，区块可能上链成功，也有可能上链不成功。</p></blockquote><h2 id="同步区块中的问题"><a href="#同步区块中的问题" class="headerlink" title="同步区块中的问题"></a>同步区块中的问题</h2><ol><li>为什么要同步区块</li><li>如何保证同步</li><li>网络延迟如何解决</li><li>同时收到相同高度的块，该同步谁的块</li><li>如何得知块已被确认</li><li>被丢块的节点会怎么样</li></ol><h2 id="区块打包"><a href="#区块打包" class="headerlink" title="区块打包"></a>区块打包</h2><h2 id="区块广播"><a href="#区块广播" class="headerlink" title="区块广播"></a>区块广播</h2><h2 id="区块验证"><a href="#区块验证" class="headerlink" title="区块验证"></a>区块验证</h2><h2 id="区块上链"><a href="#区块上链" class="headerlink" title="区块上链"></a>区块上链</h2><h2 id="区块回滚"><a href="#区块回滚" class="headerlink" title="区块回滚"></a>区块回滚</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;一个区块生产出来之后，需要进行同步给其它的节点。由于区块链是去中心化的，所以所有节点都保留相同的全量数据。&lt;br&gt;
-      
-    
-    </summary>
-    
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
-    
-      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
-    
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
-    
-      <category term="比特币" scheme="https://liukay.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区块链--04交易广播和打包上链</title>
-    <link href="https://liukay.com/posts/42563.html"/>
-    <id>https://liukay.com/posts/42563.html</id>
-    <published>2021-04-27T06:00:28.000Z</published>
-    <updated>2021-11-10T06:33:59.078Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="交易流程"><a href="#交易流程" class="headerlink" title="交易流程"></a>交易流程</h2><p>BTC 的一笔交易，需要执行哪些流程，生命周期又是怎么样的？这个很重要，首先需要了解整体大流程，再看细节。<br>比特币是一个网络，网络中所有的数据，在各个节点之前的数据是全量的。<br>当 A 给 B 转账时，通过客户端会广播这笔交易后，这笔交易的广播数据将会被全网的节点收到。最后打包进区块，再广播到所有节点进行验证。</p><h3 id="完整流程"><a href="#完整流程" class="headerlink" title="完整流程"></a>完整流程</h3><ol><li>产生新交易</li><li>签名加密</li><li>交易在比特币网络中传播</li><li>整合交易&amp;构建新区块</li><li>所有节点确认区块</li><li>新区块连接到区块链</li></ol><h2 id="交易创建"><a href="#交易创建" class="headerlink" title="交易创建"></a>交易创建</h2><p>A 要给 B 发起一笔交易，首先要创建这笔交易。<br>创建是通过比特币节点的钱包应用来负责的，如<code>BitCore</code>钱包。</p><p>构建一笔交易，需要理解创建交易的细节，先理解4个概念：</p><ol><li>UTXO</li><li>交易输出</li><li>交易输入</li><li>交易费</li></ol><h3 id="UTXO-Unspent-Transaction-output"><a href="#UTXO-Unspent-Transaction-output" class="headerlink" title="UTXO  Unspent Transaction output"></a>UTXO  Unspent Transaction output</h3><p>UTXO: 未被使用的交易输出。大白话：账户余额。<br>UTXO 是一个重要的核心概念之一，本质就是交易记录。因为比的交易并不是基本<code>账户模型</code>，即没有我们传统理解的类似于银行账户的概念。</p><h4 id="为什么叫-未被使用的交易输出"><a href="#为什么叫-未被使用的交易输出" class="headerlink" title="为什么叫 未被使用的交易输出"></a>为什么叫 未被使用的交易输出</h4><p>因为没有传统的账户模型，所以账户余额并不是传统上的账户余额，但是又必须定义当前余额的来源，所以称之为未使用的余额。<br>比如：Alice 当前账户有 10 BTC，称不能称之为10个余额，而是称之为10个未被使用的交易输出。</p><p>有输出，那必须有输入。<br>输出：你给别人转钱<br>输出：别人给你转账</p><p>另外，需要注意的一点是，比特币节点在创建交易的时候，可以在离线状态下进行。这个时候创建的交易暂时不会被传播到网络上，无法被网所感知，所以这笔交易会被存储在节点中的一个叫做孤立交易池的地方。而如果比特币节点在联网状态下创建的交易，交易创建完成后，就会被传播到比特币网络上，这样的话，交易就会被网络感知到，存储到每个节点的交易池中。</p><h2 id="交易广播"><a href="#交易广播" class="headerlink" title="交易广播"></a>交易广播</h2><h2 id="交易打包"><a href="#交易打包" class="headerlink" title="交易打包"></a>交易打包</h2><p>交易如何打包</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;交易流程&quot;&gt;&lt;a href=&quot;#交易流程&quot; class=&quot;headerlink&quot; title=&quot;交易流程&quot;&gt;&lt;/a&gt;交易流程&lt;/h2&gt;&lt;p&gt;BTC 的一笔交易，需要执行哪些流程，生命周期又是怎么样的？这个很重要，首先需要了解整体大流程，再看细节。&lt;br&gt;比特币是一
-      
-    
-    </summary>
-    
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
-    
-      <category term="BTC" scheme="https://liukay.com/categories/blockchain/BTC/"/>
-    
-    
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
-    
-      <category term="交易" scheme="https://liukay.com/tags/%E4%BA%A4%E6%98%93/"/>
     
   </entry>
   

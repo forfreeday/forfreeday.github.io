@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>idea-2021tomcat启动时间超长</title>
+      <link href="posts/719ff018.html"/>
+      <url>posts/719ff018.html</url>
+      
+        <content type="html"><![CDATA[<p>最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。</p><p>新电脑问题多。</p><p>直接说怎么解决的。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><blockquote><p>scutil –set HostName “localhost”</p></blockquote><h2 id="无效的偿试-修改生成随机数"><a href="#无效的偿试-修改生成随机数" class="headerlink" title="无效的偿试-修改生成随机数"></a>无效的偿试-修改生成随机数</h2><p>IDEA2021 添加tomcat启动参数，JRE默认使用 /dev/random作为随机数来源，当熵池大小不够的时候，random会很慢，造成随机数生成调用阻塞。</p><blockquote><p>JAVA_OPTS=”-Djava.security.egd=file:/dev/urandom”<br>无效，依然该怎么慢还怎么慢。</p></blockquote><h2 id="真正原因-Jvm需要很长时间解析localhost的IP地址"><a href="#真正原因-Jvm需要很长时间解析localhost的IP地址" class="headerlink" title="真正原因 Jvm需要很长时间解析localhost的IP地址"></a>真正原因 Jvm需要很长时间解析localhost的IP地址</h2><p>原因分析<br><a href="https://www.codenong.com/39636792/">https://www.codenong.com/39636792/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> idea </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> idea </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo 分类或标签单词开头大写出现404</title>
+      <link href="posts/4631c4c2.html"/>
+      <url>posts/4631c4c2.html</url>
+      
+        <content type="html"><![CDATA[<p>最近搬运笔记到博客，编辑的文章多了，今天突然发现，有一个分类点进去404，本地运行正常没有问题。查了一圈发现是git的大小写区分问题。</p><p>将大写字母改成小写，hexo 部署正确，但是博客上还是不正确出现404</p><p>网上查了许多资料，才发现，git中设置了大小写不敏感。</p><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改 git 设置不忽略大小写</p><p>进入博客文件夹，进入 git 目录：<code>.deploy_git</code>，修改 .git 文件中的配置文件 config，将ignorecase=true 改为 ignorecase=false</p><blockquote><p>vim . deploy_git/.git/config<br>ignorecase = false</p></blockquote><p>重写清空部署项目</p><p>如果还没有解决，清空部署到 github 上的文件，重新发布：</p><blockquote><p>cd .deploy_git<br>git rm -rf *<br>git commit -m ‘clean all file’<br>git push</p></blockquote><p>进入博客文件夹，用 hexo 重新生成部署</p><blockquote><p>hexo clean &amp;&amp; hexo g -d</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> 404 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IDEA 2021 CPU 超100% 问题解决</title>
       <link href="posts/f271493a.html"/>
       <url>posts/f271493a.html</url>
@@ -159,9 +215,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -423,9 +479,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -797,13 +853,13 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
             
-            <tag> oh-my-zsh </tag>
+            <tag> vim </tag>
             
             <tag> 插件 </tag>
+            
+            <tag> oh-my-zsh </tag>
             
         </tags>
       
@@ -861,9 +917,9 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
+            
+            <tag> vim </tag>
             
             <tag> 插件 </tag>
             
@@ -892,19 +948,19 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> linux </tag>
             
-            <tag> mac </tag>
+            <tag> vim </tag>
             
-            <tag> nvim </tag>
+            <tag> mac </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
             
             <tag> 配置 </tag>
+            
+            <tag> nvim </tag>
             
         </tags>
       
