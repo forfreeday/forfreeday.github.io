@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>idea 2021 Debug卡住一直提示Collecting data</title>
+      <link href="posts/ff7fe1c0.html"/>
+      <url>posts/ff7fe1c0.html</url>
+      
+        <content type="html"><![CDATA[<p>还是IDEA 的问题 mac M1 加 IDEA2021的问题还真不少，debug时发现会一直卡住，在调用底层jar包时，创建一个对象就一直提示 Collecting data，并没有断点。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p><img src="/posts/ff7fe1c0/解决.png" alt="解决"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> idea </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> idea </tag>
+            
+            <tag> ide </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>spring 源码阅读环境</title>
       <link href="posts/992b6df6.html"/>
       <url>posts/992b6df6.html</url>
