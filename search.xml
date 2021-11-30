@@ -4,6 +4,41 @@
   
     
     <entry>
+      <title>matic checkpoint作用</title>
+      <link href="posts/8ca79094.html"/>
+      <url>posts/8ca79094.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="检查点-Checkpoint"><a href="#检查点-Checkpoint" class="headerlink" title="检查点 Checkpoint"></a>检查点 Checkpoint</h2><blockquote><p>RootHash is the Merkle hash of Bor block hashes from StartBlock to EndBlock<br>checkpoint 就是一开始区块到结束区块构建成的Merkle根hash。</p></blockquote><p>其实就是一组block区块的keccak256，再组装起来，生成一个Merkle的Hash。<br>然后提交到主链给合约验证合法性，以更新侧链状态。</p><h2 id="两个作用"><a href="#两个作用" class="headerlink" title="两个作用"></a>两个作用</h2><p>先说两个概念：</p><ol><li>铸币</li><li>燃烧</li></ol><p>用户从 ETH-&gt;MATIC 即，在ETH链上质押ETH到Matic链上，是存款操作，matic链上会进行相关的铸币操作。<br>用户从 MATIC-&gt;ETH 即，从Matic链上提现到ETH链上，是取款操作，Matic链上就会先燃烧Matic代币，再从ETH中释放对应ETH，就是燃烧。</p><p>1.通过提交到以太坊主链上的 checkpoint来决定，侧链上block的最终性(finality)。<br>2.在用户提现资产到主链上时，可以提供燃烧证明。</p><p>检查点很重要，因为它们在以太坊链上提供了最终性。<br>Heimdall 层允许将 Bor 生成的区块聚合到单个 Merkle 根中，并定期将其发布到以太坊主链。此已发布状态也称为检查点，因此整个过程称为检查点。</p><p>除了在主链上提供最终性之外，检查点（checkpoint）在取款中还可以发挥非常重要的作用，因为它们包含在用户取款时代币燃烧证明（取款）。<br>它允许用户使用 Patricia Merkle 证明和头块证明在根和约上证明其剩余代币。<br>注意，要证明剩余代币，必须通过PoS（权益持有人，就是 validtor）将头块提交到根链。<br>提款过程将照常收取以太坊gas费。<br>这些信息包含了用来验证用户在侧链上真实燃烧了一定数量代币的所需要的所有信息。</p><h2 id="燃烧证明"><a href="#燃烧证明" class="headerlink" title="燃烧证明"></a>燃烧证明</h2><p>取款，核心 Merkle 根<br>燃烧证明是什么：<br>简单说就是证明用户在侧链上确实发生了一笔资产提现的交易，验证这个燃烧证明有效的话，会将资产打到用户的地址，反之，如果验证不通过，则用户的这笔提现将失败。</p><p>用户等待checkpoint提交到主链上后，在侧链通过bttc sdk可以获取燃烧证明（the proof of burn trx）。</p><p>这里燃烧证明解决的是上面的第三个问题，即目标链上的信息传递到主链上的有效性问题。</p><h2 id="形成一个-checkpoint（工作原理）"><a href="#形成一个-checkpoint（工作原理）" class="headerlink" title="形成一个 checkpoint（工作原理）"></a>形成一个 checkpoint（工作原理）</h2><p>RootHash is the Merkle hash of Bor block hashes from StartBlock to EndBlock</p><p>一个区块内的多笔交易计算出blockhash</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blockHash = keccak256([number, time, tx hash, receipt hash]) </span><br></pre></td></tr></table></figure><p>所有block hash参于生成 Merkle Hash</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Pseudocode <span class="keyword">for</span> the root hash <span class="keyword">for</span> <span class="number">1</span> to n Bor blocks:</span><br><span class="line"></span><br><span class="line">B(<span class="number">1</span>) := keccak256([number, time, tx hash, receipt hash])</span><br><span class="line">B(<span class="number">2</span>) := keccak256([number, time, tx hash, receipt hash])</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">B(n) := keccak256([number, time, tx hash, receipt hash])</span><br><span class="line"></span><br><span class="line"><span class="comment">// checkpoint is Merkle root of all block hash</span></span><br><span class="line">checkpoint<span class="string">&#x27;s root hash = Merkel[B(1), B(2), ....., B(n)]</span></span><br></pre></td></tr></table></figure><p>而上面提到的这笔用来申请提现的燃烧交易，就被包含在这个区块当中，并且被用来计算出这个块的blockhash.当累计了一定数量的块之后(从startblock到endblock，参见上面checkpoint结构)，这些块被计算出各自的blockhash，然后用这些blockhash来计算出root hash,如下面共识所示:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Checkpoint block header struct</span></span><br><span class="line"><span class="keyword">type</span> Checkpoint <span class="keyword">struct</span> &#123;</span><br><span class="line">        Proposer   HeimdallAddress <span class="string">`json:&quot;proposer&quot;`</span></span><br><span class="line">        StartBlock <span class="keyword">uint64</span>          <span class="string">`json:&quot;start_block&quot;`</span></span><br><span class="line">        EndBlock   <span class="keyword">uint64</span>          <span class="string">`json:&quot;end_block&quot;`</span></span><br><span class="line">        RootHash   HeimdallHash    <span class="string">`json:&quot;root_hash&quot;`</span></span><br><span class="line">        BorChainID <span class="keyword">string</span>          <span class="string">`json:&quot;bor_chain_id&quot;`</span></span><br><span class="line">        TimeStamp  <span class="keyword">uint64</span>          <span class="string">`json:&quot;timestamp&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>从代码上看默认是5分钟提一次checkpoint。<br>目前 侧链(BOR) 是2s 一个块，checkpoint最低提交256个快，checkpoint_poll_interval 最低合理值为8m32s，<br>最大值为1024<code>*</code>2s ，34m8s，可设置[9,30]分钟，如果有多条主链的的情况下，可根据各主链手续费不同，可以拆分此checkpoint_poll_interval分别设置。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DefaultCheckpointerPollInterval = <span class="number">5</span> * time.Minute</span><br><span class="line">DefaultSyncerPollInterval       = <span class="number">1</span> * time.Minute</span><br><span class="line">DefaultNoACKPollInterval        = <span class="number">1010</span> * time.Second</span><br><span class="line">DefaultClerkPollInterval        = <span class="number">10</span> * time.Second</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> polygon </category>
+          
+          <category> polygon </category>
+          
+          <category> matic </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> matic </tag>
+            
+            <tag> blockchain </tag>
+            
+            <tag> polygon </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mysql 5.8 安装</title>
       <link href="posts/3d0988b0.html"/>
       <url>posts/3d0988b0.html</url>
