@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2021-12-16T02:37:32.508Z</updated>
+  <updated>2022-01-03T08:10:38.388Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>随笔---十步学习法</title>
+    <link href="https://liukay.com/posts/997e4410.html"/>
+    <id>https://liukay.com/posts/997e4410.html</id>
+    <published>2022-01-03T07:59:49.000Z</published>
+    <updated>2022-01-03T08:10:38.388Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>在IT行业，学习能力是一种必须的素养</p></blockquote><p>在开发行业中，技术的迭代是非常之快，如何保证自身的技术随之迭代更新，就需在强大的学习能力，我在多年的摸索中总结出自己的一套学习方法，中间参考过各种不同的学习方法，其中的十步学习法是最接近我自身总结的方法。分享出来让更多小伙伴能够从中吸收优秀的方法应用到实际学习中。</p><h2 id="第一步到第六步：概览全局，设定目标，搜寻资源，创建计划"><a href="#第一步到第六步：概览全局，设定目标，搜寻资源，创建计划" class="headerlink" title="第一步到第六步：概览全局，设定目标，搜寻资源，创建计划"></a>第一步到第六步：概览全局，设定目标，搜寻资源，创建计划</h2><p>集中精力完成足够的前期调研，确保自己明确知道学习的内容，以及如何确定自己达成目标，挑选最好的资源来帮助自己实现目标，制定学习计划。</p><h3 id="第一步：了解全局"><a href="#第一步：了解全局" class="headerlink" title="第一步：了解全局"></a>第一步：了解全局</h3><p>首先对需要学习的课题进行一些基础性研究，对该主题有一个全局性的了解。</p><h3 id="第二步：确定范围"><a href="#第二步：确定范围" class="headerlink" title="第二步：确定范围"></a>第二步：确定范围</h3><p>根据自身的需求，决定学习的重点和学习的范围，在此阶段容易犯的一个错误就是：试图解决太大的问题而让自己陷入困境中。结合从第一步中获得的信息，明确自己的学习范围，尽可能的保持专注；同时也需要阐述自己的学习理由来帮助自己界定学习的范围。学习的范围务必大小适当，既能符合学习理由，有能符合自己的时间限制。</p><h3 id="第三步：定义目标"><a href="#第三步：定义目标" class="headerlink" title="第三步：定义目标"></a>第三步：定义目标</h3><p>确定自己的学习目标，明确学习完成后应该达成的效果，根据简明清晰的目标，勾勒出勤奋学习后成功的图景。成功的标准应该是具体的，无二义性的。</p><h3 id="第四步：寻找资源"><a href="#第四步：寻找资源" class="headerlink" title="第四步：寻找资源"></a>第四步：寻找资源</h3><p>尽可能的尝试多种渠道和方式获取尽可能多的和主题相关资源，该阶段无需考虑这些资源的质量。</p><h3 id="第五步：创建学习计划"><a href="#第五步：创建学习计划" class="headerlink" title="第五步：创建学习计划"></a>第五步：创建学习计划</h3><p>需要在最短的时间内找到正确的学习路径，并找到和到达路径中重要的地标。打造自己的学习计划，一个好的方法是观察别人是如何教授你感兴趣的主题的。通览收到到的全部资源，就可以对自己需要那些内容以及如何组织这些内容有更清晰的认识。</p><h3 id="第六步：筛选资源"><a href="#第六步：筛选资源" class="headerlink" title="第六步：筛选资源"></a>第六步：筛选资源</h3><p>对找到的资源进行筛选，挑选出最有价值的几项来帮助你实现自己的目标。</p><hr><h2 id="第七步到第十步：循环往复"><a href="#第七步到第十步：循环往复" class="headerlink" title="第七步到第十步：循环往复"></a>第七步到第十步：循环往复</h2><p>通过 “学习——实践——掌握——教授”(LDLT)的方式来真正领悟知识。通过掌握恰到好处的基础知识开始，通过动手实践来学习，同时通过自我探索收集问题。之后，掌握了足够多的有用知识。最后，将自己所学教给他人，以此来弥补自己在学习过程中的不足，同时通过深入思考巩固知识。</p><h3 id="第七步：开始学习，浅尝辄止"><a href="#第七步：开始学习，浅尝辄止" class="headerlink" title="第七步：开始学习，浅尝辄止"></a>第七步：开始学习，浅尝辄止</h3><p>专注与掌握自己所需，能在下一步动手操作的最小量的知识。</p><h3 id="第八步：动手操作，边玩边学"><a href="#第八步：动手操作，边玩边学" class="headerlink" title="第八步：动手操作，边玩边学"></a>第八步：动手操作，边玩边学</h3><p>在掌握操作动手最小量的知识的情况下亲自操作和亲身体验。通过在探索和实践过程中，会产生的各种问题。这些问题会引导着你走向真正重要的方向。当回头寻找问题的答案时，不只是这些问题迎刃而解，而且你记得的东西比你学习的东西要多得多，因为你所学到的都是对你很重要的东西。</p><p>把那些暂时还没有答案的问题记录下来，在下一步中就会有机会找出这些问题的答案。</p><h3 id="第九步：全面掌握，学以致用"><a href="#第九步：全面掌握，学以致用" class="headerlink" title="第九步：全面掌握，学以致用"></a>第九步：全面掌握，学以致用</h3><p>好奇心是学习特别是自学的重要组成部分。为了有效利用自己选择的资料，为了上一步生产的问题寻求答案（带着问题学习）。不用担心回头再去操作，付出更多，因为这不仅能够让你找到问题的答案，也能让你学习新东西。给自己足够多的时间去深入理解自己的主题，你可以阅读，可以实验，可以观察，也可以操作。试着把自己正在学习的内容与最终目标关联起来。</p><h3 id="第十步：乐为人师，融会贯通"><a href="#第十步：乐为人师，融会贯通" class="headerlink" title="第十步：乐为人师，融会贯通"></a>第十步：乐为人师，融会贯通</h3><p>要想深入掌握一门学问，并且融会贯通，那么必须要做到能够教授给别人，在这一过程中，你要切实刨析并理解自己所学的知识，将其内化到自己的思想；同时，也要用能够让他人理解的方式精心组织这些信息。在这个过程中，你会发现很多自以为明白的知识点，其实并没有你想象的那么透彻。这一过程会将那些以前自己没太明白的东西联系起来，并简化到自己的大脑中已有的信息，将它们浓缩并经常复习。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;在IT行业，学习能力是一种必须的素养&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在开发行业中，技术的迭代是非常之快，如何保证自身的技术随之迭代更新，就需在强大的学习能力，我在多年的摸索中总结出自己的一套学习方法，中间参考过各种不同的学习方法，其中的
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://liukay.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="学习方法" scheme="https://liukay.com/categories/%E9%9A%8F%E7%AC%94/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/"/>
+    
+    
+      <category term="随笔" scheme="https://liukay.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="学习方法" scheme="https://liukay.com/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>shutdownHook 死锁解决</title>
@@ -110,9 +142,9 @@
     
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="mysql" scheme="https://liukay.com/tags/mysql/"/>
+    
+      <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -212,13 +244,13 @@
       <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
     
     
-      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
-    
       <category term="java" scheme="https://liukay.com/tags/java/"/>
     
-      <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
+    
+      <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
     
   </entry>
   
@@ -451,9 +483,9 @@
       <category term="go" scheme="https://liukay.com/categories/go/"/>
     
     
-      <category term="go" scheme="https://liukay.com/tags/go/"/>
-    
       <category term="golang" scheme="https://liukay.com/tags/golang/"/>
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
     
       <category term="defer" scheme="https://liukay.com/tags/defer/"/>
     
@@ -639,40 +671,6 @@
       <category term="数组" scheme="https://liukay.com/tags/%E6%95%B0%E7%BB%84/"/>
     
       <category term="go" scheme="https://liukay.com/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Tendermint概述</title>
-    <link href="https://liukay.com/posts/51570.html"/>
-    <id>https://liukay.com/posts/51570.html</id>
-    <published>2021-11-01T09:19:26.000Z</published>
-    <updated>2021-11-01T09:19:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>简单理解为一个分布式状态机</p></blockquote><h1 id="什么是Tendermint"><a href="#什么是Tendermint" class="headerlink" title="什么是Tendermint?"></a>什么是Tendermint?</h1><p>Tenermint是个能够在多机器上安全一致地复制应用的软件。 安全是指无论多达1/3的机器出现何种类型的故障，Tendermint都可以正常工作。<br>一致是指每个正确运行的机器都可以获取完全相同的交易日志并计算相同的状态。 在分布式系统中，安全一致地复制至关重要；从货币到选举再到基础设施管理等广泛应用容错方面，它都有着着重要作用。</p><p>拜占庭容错（BFT）指的是系统能够容忍机器以任意方式出现故障，包括机器故意危害系统的方式。<br>拜占庭容错理论已有几十年的历史，但最近由于比特币和以太坊等“区块链技术”的成功，其软件实现才逐渐流行。<br>区块链技术是在更现代的环境下对BFT的一种改造，重点引入了点对点网络和密码认证等技术。 区块链的名称来源于交易的处理方式，交易被打包在每一个区块中，每一个区块存储前一个区块的哈希值，形成了一个链的结构。 实际上，区块链数据结构优化了BFT设计。</p><p>Tendermint包括两个主要技术组件：<code>区块链共识引擎</code>和<code>通用应用程序接口</code>。<br>共识引擎，被称作Tendermint Core，保证所有的机器按照相同的顺序记录相同的交易。<br>应用程序接口，被称为应用程序区块链接口ABCI，实现任意编程语言处理交易的功能。<br>其他区块链和共识解决方案通常预置内部状态机，比如使用键值存储不常见的脚本语言来完成功能，而Tendermint支持开发者用任意编程语言实现拜占庭容错的状态机复制功能，并且开发环境也非常友好。</p><p>Tendermint的目标是易使用、便理解、高性能并适用各种分布式应用场景。</p><h1 id="Tendermint-和其他技术对比"><a href="#Tendermint-和其他技术对比" class="headerlink" title="Tendermint 和其他技术对比"></a>Tendermint 和其他技术对比</h1><p>Tendermint大体上类似于两类软件。<br>第一类是非BFT一致性的分布式键值存储系统，包括Zookeeper、etcd和consul。<br>第二类是“区块链技术”，包括比特币和以太坊等加密货币和Hyperledger Burrow等分布式账本。</p><h2 id="Zookeeper、etcd和consul"><a href="#Zookeeper、etcd和consul" class="headerlink" title="Zookeeper、etcd和consul"></a>Zookeeper、etcd和consul</h2><p>Zookeeper、etcd和consul都基于经典非拜占庭容错一致性算法，实现了分布式键值存储。<br>Zookeeper使用了Zookeeper Atomic Broadcast版本的的Paxos共识算法，而etcd和consul使用了更新更简单的Raft共识算法。 一个典型的集群包含3-5台机器，并且可以容忍多达1/2台机器的故障，但是只要出现一个拜占庭错误机器，系统就会崩溃。</p><p>虽然这些软件都提供了各有特色的键值存储功能，但都关注为分布式系统提供基础服务，如动态配置、服务发现、锁定、领导人选举等。</p><p>Tendermint虽然在本质上和以上软件类似，但是具有两点关键不同：</p><ul><li><p>它实现了拜占庭容错。虽然只能够容忍系统1/3节点的故障，但是可以容忍任意类型的，包括黑客和恶意攻击的错误。</p></li><li><p>它不像键值存储那样只指定一种特定的应用，而是侧重于任意状态机复制。因此从键值存储到加密货币，再到电子投票平台，开发人员可以构建适合他们的任意应用程序逻辑。</p></li></ul><h2 id="Bitcoin-Ethereum-etc"><a href="#Bitcoin-Ethereum-etc" class="headerlink" title="Bitcoin, Ethereum, etc."></a>Bitcoin, Ethereum, etc.</h2><p>Tendermint诞生于比特币、以太坊等传统加密货币，目标是提供比比特币的PoW算法更高效、更安全的共识算法。 在早期，Tendermint内置了一种简单的货币，为了参与共识，用户必须将货币“绑定”到一个保证金中， 如果他们行为不当，保证金可能会被撤销——这就是Tendermint成为PoS算法的原因。</p><p>从那时起，Tendermint已经发展成为一个通用的区块链共识引擎，可以承载任意的应用程序状态。 这表示它可以成为其他区块链软件的共识引擎的即插即用替代品。 因此，当前的以太坊代码库，无论是Rust、Go还是Haskell，都可以作为一个ABCI应用程序运行在Tendermint共识引擎之上。<br>Tendermint 已经实现了以太坊。Tendermint 接下来准备对比特币、ZCash和其他各种确定性应用完成类似的开发实现。</p><p>目前，另外一个已实现的基于Tendermint的虚拟货币应用程序是Cosmos 网络。</p><p><a href="https://github.com/cosmos/ethermint">Tendermint 实现 Ethermint</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;简单理解为一个分布式状态机&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;什么是Tendermint&quot;&gt;&lt;a href=&quot;#什么是Tendermint&quot; class=&quot;headerlink&quot; title=&quot;什么是Tendermint?&quot;&gt;&lt;/
-      
-    
-    </summary>
-    
-      <category term="tendermint" scheme="https://liukay.com/categories/tendermint/"/>
-    
-    
-      <category term="概念" scheme="https://liukay.com/tags/%E6%A6%82%E5%BF%B5/"/>
-    
-      <category term="Tendermint" scheme="https://liukay.com/tags/Tendermint/"/>
-    
-      <category term="概述" scheme="https://liukay.com/tags/%E6%A6%82%E8%BF%B0/"/>
-    
-      <category term="快速入门" scheme="https://liukay.com/tags/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
     
   </entry>
   
