@@ -4,6 +4,144 @@
   
     
     <entry>
+      <title>vim IDE进化 05 vim-startify</title>
+      <link href="posts/a6430b8b.html"/>
+      <url>posts/a6430b8b.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>今天介绍一下vim的别一个非常好用的插件，启动界面插件 vim-startify。<br>这个插件有什么用呢，看效果：</p><p><img src="/posts/a6430b8b/启动界面.png" alt="启动界面"></p><p>中间是最近打开的文件，可能通过数字快数打开文件，界面可以设置找开和关闭。</p><h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h3 id="1-vim插件安装"><a href="#1-vim插件安装" class="headerlink" title="1.vim插件安装"></a>1.vim插件安装</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plug <span class="string">&#x27;mhinz/vim-startify&#x27;</span></span><br></pre></td></tr></table></figure><h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>配置不是必须项目，当然一般情况下，都会习惯自己一的快捷键。</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; Startify 设置</span></span><br><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; 修改其中的内容去获得更好的体验。</span></span><br><span class="line"><span class="comment">&quot;设置书签</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_bookmarks</span>= [</span><br><span class="line">            \ <span class="string">&#x27;~//Workspace/&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="comment">&quot;起始页显示的列表长度</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_files_number</span> = <span class="number">10</span></span><br><span class="line"><span class="comment">&quot;自动加载session</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_session_autoload</span> = <span class="number">1</span></span><br><span class="line"><span class="comment">&quot;过滤列表，支持正则表达式</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_skiplist</span> = [</span><br><span class="line">       \ <span class="string">&#x27;^/tmp&#x27;</span>,</span><br><span class="line">       \ ]</span><br><span class="line"><span class="comment">&quot;自定义Header和Footer</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_header</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|    Still waters run deep!    |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_footer</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|     Keep an open mind!       |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"></span><br><span class="line"><span class="comment">&quot; 自己完成的脚本，判断打开文件是否存在。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">SomeCheck</span><span class="params">()</span></span></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">filereadable</span>(<span class="built_in">expand</span>(<span class="string">&quot;%&quot;</span>))</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;SpecificFile exists&quot;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     <span class="keyword">autocmd</span> VimEnter * Startify</span><br><span class="line">  <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> SomeCheck()</span><br></pre></td></tr></table></figure><p>脚本中的代码部分是解决，在不同位置启动后，找不到文件时会报错<br>function!<br>endfunction 固定一对</p><p>内置函数，% 表示当前路径，也表示当前文件路径<br>expand(“%”)<br>call 执行函数</p><p>可以自行偿试注释掉脚本部份复现问题。</p><p>到这一步vim的IDE进行启动界面就完成了，通过这些插件提高平时写文档的效率是够用的。</p><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><h3 id="github"><a href="#github" class="headerlink" title="github"></a>github</h3><p><a href="https://github.com/mhinz/vim-startify">https://github.com/mhinz/vim-startify</a></p><h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><blockquote><p>:h startify<br>:h startify-faq</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+          <category> vim </category>
+          
+          <category> vim </category>
+          
+          <category> 插件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vim </tag>
+            
+            <tag> 插件 </tag>
+            
+            <tag> IDE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>jvm 使用CMS时FGC每次会跳2次</title>
+      <link href="posts/1f5573a8.html"/>
+      <url>posts/1f5573a8.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>使用jstat -gc 观察CMS FullGC的时候，发现每次到阈值回收的时候，FGC每次会跳2次：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">68096.0 68096.0  0.0   16853.2 545344.0 371165.3 8755648.0  5890791.6  62312.0 59746.5 7076.0 6608.5  43879 1312.752  60      5.206 1317.958</span><br><span class="line">68096.0 68096.0 19377.9  0.0   545344.0 420827.3 8755648.0  5891528.9  62312.0 59746.5 7076.0 6608.5  43880 1312.785  60      5.206 1317.991</span><br><span class="line">68096.0 68096.0  0.0   22147.2 545344.0 295435.0 8755648.0  5891577.4  62312.0 59746.5 7076.0 6608.5  43881 1312.816  60      5.206 1318.022</span><br><span class="line">68096.0 68096.0 21257.5  0.0   545344.0 461020.2 8755648.0  5898299.9  62312.0 59746.5 7076.0 6608.5  43882 1312.850  60      5.206 1318.056</span><br><span class="line">68096.0 68096.0  0.0   13895.9 545344.0 419534.8 8755648.0  5901746.3  62312.0 59746.5 7076.0 6608.5  43885 1312.961  60      5.206 1318.167</span><br><span class="line">68096.0 68096.0  0.0   17542.7 545344.0 63902.2  8755648.0  5906856.1  62312.0 59746.5 7076.0 6608.5  43887 1313.028  60      5.206 1318.234</span><br><span class="line">68096.0 68096.0  0.0   17542.7 545344.0 444878.0 8755648.0  5906856.1  62312.0 59746.5 7076.0 6608.5  43887 1313.028  60      5.206 1318.234</span><br><span class="line">68096.0 68096.0 15241.8  0.0   545344.0 403475.0 8755648.0  5909706.0  62312.0 59746.5 7076.0 6608.5  43890 1313.108  60      5.206 1318.314</span><br><span class="line">68096.0 68096.0 24031.2  0.0   545344.0 52019.0  8755648.0  5916571.4  62312.0 59746.5 7076.0 6608.5  43892 1313.174  60      5.206 1318.380</span><br><span class="line">68096.0 68096.0 17381.4  0.0   545344.0 349457.1 8755648.0  5919082.7  62312.0 59746.5 7076.0 6608.5  43894 1313.232  60      5.206 1318.438</span><br><span class="line">68096.0 68096.0  0.0   20887.7 545344.0 442091.1 8755648.0  5919151.3  62312.0 59746.5 7076.0 6608.5  43895 1313.261  60      5.206 1318.467</span><br></pre></td></tr></table></figure><p>看这个日志，无论多过多久，每次FullGC的次数，必然是两次一起出现，也就是说 FullGC 是连续执行两次？！<br>为什么会这样，其实跟CMS这个回收器的特殊工作机制有关。</p><h2 id="CMS的两次标记"><a href="#CMS的两次标记" class="headerlink" title="CMS的两次标记"></a>CMS的两次标记</h2><p>JVM 的FullGC通常需要先<code>stop-the-world</code>才进行回收。一次<code>stop-the-world</code>的时长就是整个GC回收的时长。<br>CMS的工作流程中，有两个阶段是会触发<code>STW</code>的：<code>initial mark</code>与<code>final remark</code>，这两个阶段都是”stop the world”，不过暂停时间较短</p><p>“GC次数”主要关心的其实是应用暂停次数。<br>要注意的是在CMS里”暂停次数”并不等同于”GC次数”，CMS并发GC的一个周期叫”一次GC”但暂停了两次。</p><p>如果CMS并发GC过程中出现了concurrent mode failure的话那么接下来就会做一次mark-sweep-compact的full GC，这个是完全stop-the-world的。</p><p>图右边是CMS的两次标记</p><p><img src="/posts/1f5573a8/cms回收流程.png" alt="cms回收流程"></p><h2 id="GMS的设计特点"><a href="#GMS的设计特点" class="headerlink" title="GMS的设计特点"></a>GMS的设计特点</h2><h3 id="1-低延迟"><a href="#1-低延迟" class="headerlink" title="1.低延迟"></a>1.低延迟</h3><p>为了能达到低延迟的效果，CMS实际是把本来一次FullGC应该消息的时间，能过多次短的GC时间分滩了。就跟吃自助参一样，肚子就那么大，一次性拿一堆吃的可能要吃1个小时。如果一次拿一点点，一次吃10分钟，看上去次数多了，其实吃的量是一样的。</p><h3 id="2-牺牲吞吐量"><a href="#2-牺牲吞吐量" class="headerlink" title="2.牺牲吞吐量"></a>2.牺牲吞吐量</h3><p>这样做的优点是勤拿少取，吃完10分钟可以干别的事，但是每次吃的少。缺点也之这出来了，吞吐量小。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+            <tag> cms </tag>
+            
+            <tag> gc </tag>
+            
+            <tag> java </tag>
+            
+            <tag> FullGC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CMS回收器执行流程</title>
+      <link href="posts/ad216ba6.html"/>
+      <url>posts/ad216ba6.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="CMS（Concurrent-Mark-Sweep）"><a href="#CMS（Concurrent-Mark-Sweep）" class="headerlink" title="CMS（Concurrent Mark Sweep）"></a>CMS（Concurrent Mark Sweep）</h2><p>目标：获取最短回收停顿时间为目标的收集器。<br>算法：”标记-清除”算法实现</p><p>CMS是老年代垃圾收集器，在收集过程中可以与用户线程并发操作。<br>它可以与 Serial 收集器 和 Parallel New收集器搭配使用。<br>CMS牺牲了系统的吞吐量来追求收集速度，适合追求垃圾收集速度的服务器上。<br>可以通过JVM启动参数，来开启CMS：</p><blockquote><p>-XX:+UseConcMarkSweepGC</p></blockquote><p>牺牲吞吐量，追求收集速度是什么意思</p><blockquote><p>其实实际使用过程中发现，CMS是将每次收集的时间减少，但是垃圾还是那么多，于是回收的工作方式就变成了跟吃自助餐常听到的一样”勤拿少取”，就是每次回收时间短，也并不完全回收全部的垃圾，通过多次回来处理。</p></blockquote><p><img src="/posts/ad216ba6/执行流程.png" alt="执行流程"></p><h3 id="1-初始标记（CMS-initial-mark）"><a href="#1-初始标记（CMS-initial-mark）" class="headerlink" title="1.初始标记（CMS initial mark）"></a>1.初始标记（CMS initial mark）</h3><p>单线程，标记新生代可达老年代的对象。<br>为了收集应用程序的对象引用需要暂停应用程序线程，该阶段完成后，应用程序线程再次启动。</p><h3 id="2-并发标记（CMS-concurrent-mark）"><a href="#2-并发标记（CMS-concurrent-mark）" class="headerlink" title="2.并发标记（CMS-concurrent-mark）"></a>2.并发标记（CMS-concurrent-mark）</h3><p>在第一个阶段（Initial Mark）被暂停的应用线程将恢复运行。<br>通过遍历第一个阶段（Initial Mark）标记出来的存活对象，继续递归遍历老年代，并标记可直接或间接到达的所有老年代存活对象。</p><p>这个过程可能存在的问题<br>应用线程和GC线程是并发执行的，因此可能产生新的对象或对象关系发生变化，例如：</p><ol><li>新生代的对象晋升到老年代；</li><li>直接在老年代分配对象；</li><li>老年代对象的引用关系发生变更；<br>对于这些对象，需要重新标记以防止被遗漏。<br>为了提高重新标记的效率，本阶段会把这些发生变化的对象所在的Card标识为Dirty，这样后续就只需要扫描这些Dirty Card的对象，从而避免扫描整个老年代。</li></ol><h3 id="3-并发预清理（CMS-concurrent-preclean）"><a href="#3-并发预清理（CMS-concurrent-preclean）" class="headerlink" title="3.并发预清理（CMS-concurrent-preclean）"></a>3.并发预清理（CMS-concurrent-preclean）</h3><p>这个阶段就是用来处理：前一个阶段因为引用关系改变导致没有标记到的存活对象的，它会扫描所有标记为Dirty的Card<br>将会重新扫描前一个阶段标记的 Dirty 对象，并标记被 Dirty 对象直接或间接引用的对象，然后清除Card标识。<br>也就是让这个标记过后的对象，重新标记为存活。</p><h3 id="3-1-可被终止的预清理（CMS-concurrent-abortable-preclean）"><a href="#3-1-可被终止的预清理（CMS-concurrent-abortable-preclean）" class="headerlink" title="3.1.可被终止的预清理（CMS-concurrent-abortable-preclean）"></a>3.1.可被终止的预清理（CMS-concurrent-abortable-preclean）</h3><p>本阶段尽可能承担更多的并发预处理工作，从而减轻在Final Remark阶段的stop-the-world。<br>主要循环的做两件事：</p><ol><li>处理 From 和 To 区的对象，标记可达的老年代对象；</li><li>和上一个阶段一样，扫描处理Dirty Card中的对象。<br>具体执行多久，取决于许多因素，满足其中一个条件将会中止运行：</li></ol><p>1.执行循环次数达到了阈值；<br>2.执行时间达到了阈值；</p><h3 id="4-重新标记（CMS-Final-Remark）"><a href="#4-重新标记（CMS-Final-Remark）" class="headerlink" title="4.重新标记（CMS Final Remark）"></a>4.重新标记（CMS Final Remark）</h3><p>由于第三阶段是并发的，对象引用可能会发生进一步改变。因此，应用程序线程会再一次<br>被暂停以更新这些变化，并且在进行实际的清理之前确保一个正确的对象引用视图。<br>这一阶段十分重要，因为必须避免收集到仍被引用的对象。</p><h3 id="5-并发清除（CMS-concurrent-sweep）"><a href="#5-并发清除（CMS-concurrent-sweep）" class="headerlink" title="5.并发清除（CMS concurrent sweep）"></a>5.并发清除（CMS concurrent sweep）</h3><p>所有不再被应用的对象将从堆里清除掉。</p><h3 id="6-并发重置-CMS-concurrent-reset"><a href="#6-并发重置-CMS-concurrent-reset" class="headerlink" title="6.并发重置 (CMS-concurrent-reset)"></a>6.并发重置 (CMS-concurrent-reset)</h3><p>状态等待下次CMS的触发<br>做一些收尾的工作，以便下一次GC周期能有一个干净的状态。这是与用户线程同时运行；</p><h2 id="运行状态"><a href="#运行状态" class="headerlink" title="运行状态"></a>运行状态</h2><p>了解了几个特点之后，可以实际的看看CMS的运行状态。<br>上面说到的CMS的几个状态，我们从gc运行日志中去查看CMS的运行状态。<br>日志中以 CMS 开头的都是CMS各个执行阶段。<br>这里最需要注意的是：</p><ol><li>CMS Initial Mark</li><li>CMS-remark<br>这两个阶段分别会暂停应用，也是会让应用程序短暂的暂停也就是<code>STW</code>。</li></ol><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">2022-01-11T05:48:34.975+0800: 1774622.038: [GC (Allocation Failure) 2022-01-11T05:48:34.975+0800: 1774622.038: [ParNew: 2570680K-&gt;58383K(2831168K), 0.0411295 secs] 8357286K-&gt;5848239K(9122624K), 0.0414169 secs] [Times: user=0.2</span><br><span class="line">      7 sys=0.04, real=0.04 secs]</span><br><span class="line">2022-01-11T05:48:35.030+0800: 1774622.093: [GC (CMS Initial Mark) [1 CMS-initial-mark: 5789855K(6291456K)] 5873624K(9122624K), 0.0093763 secs] [Times: user=0.05 sys=0.01, real=0.01 secs]</span><br><span class="line">2022-01-11T05:48:35.039+0800: 1774622.103: [CMS-concurrent-mark-start]</span><br><span class="line">2022-01-11T05:48:38.826+0800: 1774625.889: [CMS-concurrent-mark: 3.785/3.786 secs] [Times: user=8.65 sys=0.18, real=3.79 secs]</span><br><span class="line">2022-01-11T05:48:38.826+0800: 1774625.889: [CMS-concurrent-preclean-start]</span><br><span class="line">2022-01-11T05:48:39.400+0800: 1774626.463: [CMS-concurrent-preclean: 0.572/0.574 secs] [Times: user=0.64 sys=0.14, real=0.57 secs]</span><br><span class="line">2022-01-11T05:48:39.400+0800: 1774626.463: [CMS-concurrent-abortable-preclean-start]</span><br><span class="line">  CMS: abort preclean due to time 2022-01-11T05:48:44.575+0800: 1774631.638: [CMS-concurrent-abortable-preclean: 5.169/5.175 secs] [Times: user=8.49 sys=0.52, real=5.18 secs]</span><br><span class="line">2022-01-11T05:48:44.576+0800: 1774631.640: [GC (CMS Final Remark) [YG occupancy: 1078481 K (2831168 K)]2022-01-11T05:48:44.577+0800: 1774631.640: [Rescan (parallel) , 0.1331046 secs]2022-01-11T05:48:44.710+0800: 1774631.773: [</span><br><span class="line">      weak refs processing, 0.1347760 secs]2022-01-11T05:48:44.844+0800: 1774631.908: [class unloading, 0.0376418 secs]2022-01-11T05:48:44.882+0800: 1774631.945: [scrub symbol table, 0.0092684 secs]2022-01-11T05:48:44.891+0800: 1774</span><br><span class="line">      631.955: [scrub string table, 0.0012191 secs][1 CMS-remark: 5789855K(6291456K)] 6868337K(9122624K), 0.3817515 secs] [Times: user=1.12 sys=0.18, real=0.38 secs]</span><br><span class="line">2022-01-11T05:48:44.959+0800: 1774632.022: [CMS-concurrent-sweep-start]</span><br><span class="line">2022-01-11T05:48:50.297+0800: 1774637.361: [CMS-concurrent-sweep: 5.333/5.339 secs] [Times: user=10.01 sys=1.01, real=5.34 secs]</span><br><span class="line">2022-01-11T05:48:50.298+0800: 1774637.361: [CMS-concurrent-reset-start]</span><br><span class="line">2022-01-11T05:48:50.312+0800: 1774637.375: [CMS-concurrent-reset: 0.014/0.014 secs] [Times: user=0.03 sys=0.01, real=0.02 secs]</span><br><span class="line">2022-01-11T05:48:57.315+0800: 1774644.378: [GC (Allocation Failure) 2022-01-11T05:48:57.315+0800: 1774644.378: [ParNew: 2574991K-&gt;57569K(2831168K), 0.1454595 secs] 4314737K-&gt;1800606K(9122624K), 0.1457231 secs] [Times: user=0.9</span><br><span class="line">      6 sys=0.17, real=0.14 secs]</span><br></pre></td></tr></table></figure><h2 id="CMS缺点"><a href="#CMS缺点" class="headerlink" title="CMS缺点"></a>CMS缺点</h2><p>这个不得不吐槽一下，这几个问题，还全让我碰到了。</p><ol><li>CMS收集器对CPU资源非常敏感</li><li>CMS收集器无法处理浮动垃圾</li><li>浮动垃圾</li></ol><h3 id="CMS收集器对CPU资源非常敏感"><a href="#CMS收集器对CPU资源非常敏感" class="headerlink" title="CMS收集器对CPU资源非常敏感"></a>CMS收集器对CPU资源非常敏感</h3><p>在并发阶段，它虽然不会导致用户线程停顿，但是会因为占用了一部分线程而导致应用程序变慢，总吞吐量会降低。<br>这个的实际产生的问题就是，用户线程在处理业务时，由于停顿导致的停顿时间，刚好使业务线程处理时间超时，导致业务处理超时失败。</p><h3 id="CMS收集器无法处理浮动垃圾"><a href="#CMS收集器无法处理浮动垃圾" class="headerlink" title="CMS收集器无法处理浮动垃圾"></a>CMS收集器无法处理浮动垃圾</h3><p>可能会出现“Concurrent Mode Failure（并发模式故障）”失败而导致Full GC产生。<br>这个问题，是在检查服务性问题的时候发现的，频率一天几十次，最终调优解决。</p><h3 id="浮动垃圾"><a href="#浮动垃圾" class="headerlink" title="浮动垃圾"></a>浮动垃圾</h3><p>由于CMS并发清理阶段用户线程还在运行着，伴随着程序运行自然就会有新的垃圾不断产生，这部分垃圾出现的标记过程之后，CMS无法在当次收集中处理掉它们，只好留待下一次GC中再清理。这些垃圾就是“浮动垃圾”。<br>这个就是追求短的低停顿的代价，实际的问题是，内存空间会有大量的对象占用，如果是创建对象比较频繁的应用，就不太友好了，这样也会加大回收的频率。</p><p>CMS是一款“标记–清除”算法实现的收集器，容易出现大量空间碎片。当空间碎片过多，将会给大对象分配带来很大的麻烦，往往会出现老年代还有很大空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前触发一次Full GC。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>CMS 是一款低可以实现短停顿的回收器，在停顿时间上确实是比较优秀的，一般来说没有最好的应用，只有最合适的应用，在选择GC时，根据自身的需求进行选择并对细节做过调整，来达到最优的效果。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jvm </category>
+          
+          <category> cms </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+            <tag> cms </tag>
+            
+            <tag> gc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Tendermint-通过goland初始化和启动</title>
+      <link href="posts/c43a12b2.html"/>
+      <url>posts/c43a12b2.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对 Tendermint 有了一个的了解之后，我们需要对 Tendermint 进行开发和操作，该如何运行这个项目。<br>Tendermint 使用的是 colly 这个命令行框架，需要对 colly 有一定的了解。</p><h2 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h2><h3 id="配置IDEA"><a href="#配置IDEA" class="headerlink" title="配置IDEA"></a>配置IDEA</h3><p>我使用 goland开发调试，先将项目 clone 到本地，配置好go mod。</p><p><img src="/posts/c43a12b2/gomod.png" alt="goland配置gomod"></p><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>git clone 之后，找开项目，Tendermint 是go项目，内置的一些功能需要先进行编译。</p><blockquote><p>make install</p></blockquote><p>验证命令正确安装，执行一下：tendermint</p><p><img src="/posts/c43a12b2/tendermint命令.png" alt="tendermint命令"></p><p>这个图中展示了 tendermint 支持的各种命令，对地节点动行来说，需要关注的是</p><ol><li>init</li><li>start</li></ol><p>初始化 FullNode 节点</p><p>tendermint 可以初始化三种节点类型</p><ol><li>FullNode</li><li>seed</li><li>validator</li></ol><p>这三种类型是常见的三种节点类型，FullNode 用于区块广播、查询等；seed 是种子节点，用来做节点发现；validator 是验证人节点，也就是产块节点。节点类型初始化以后，可以通过配置文件进行修改节点类型。</p><blockquote><p>tendermint init [validator|full|seed]</p></blockquote><p>我们初始化为 FullNode 节点</p><p><img src="/posts/c43a12b2/init_full节点.png" alt="init_full节点"></p><p>生成了两个配置文件：</p><ol><li>node_key.json</li><li>genesis.json</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> tendermint </category>
+          
+          <category> tendermint </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> tendermint </tag>
+            
+            <tag> 初始化 </tag>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>随笔---十步学习法</title>
       <link href="posts/997e4410.html"/>
       <url>posts/997e4410.html</url>
@@ -86,9 +224,9 @@
       
         <tags>
             
-            <tag> matic </tag>
-            
             <tag> blockchain </tag>
+            
+            <tag> matic </tag>
             
             <tag> polygon </tag>
             
@@ -220,9 +358,9 @@
       
         <tags>
             
-            <tag> 安装 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 安装 </tag>
             
             <tag> gradle </tag>
             
@@ -512,9 +650,9 @@
       
         <tags>
             
-            <tag> Tendermint </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> Tendermint </tag>
             
             <tag> BlockChain </tag>
             
@@ -549,9 +687,9 @@
       
         <tags>
             
-            <tag> Tendermint </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> Tendermint </tag>
             
             <tag> BlockChain </tag>
             
@@ -584,6 +722,8 @@
       
         <tags>
             
+            <tag> 区块链 </tag>
+            
             <tag> 概念 </tag>
             
             <tag> Tendermint </tag>
@@ -593,8 +733,6 @@
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
-            
-            <tag> 区块链 </tag>
             
             <tag> BlockChain </tag>
             
@@ -807,13 +945,13 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> cms </tag>
             
             <tag> gc </tag>
             
-            <tag> cms </tag>
+            <tag> java </tag>
             
             <tag> 调优 </tag>
             
@@ -1003,11 +1141,11 @@
       
         <tags>
             
-            <tag> 架构 </tag>
-            
             <tag> 区块链 </tag>
             
             <tag> blockchain </tag>
+            
+            <tag> 架构 </tag>
             
             <tag> btc </tag>
             
@@ -1059,6 +1197,10 @@
           <category> linux </category>
           
           <category> vim </category>
+          
+          <category> vim </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -1128,6 +1270,10 @@
           
           <category> vim </category>
           
+          <category> vim </category>
+          
+          <category> 插件 </category>
+          
       </categories>
       
       
@@ -1159,6 +1305,10 @@
           
           <category> vim </category>
           
+          <category> vim </category>
+          
+          <category> 插件 </category>
+          
       </categories>
       
       
@@ -1189,6 +1339,10 @@
           <category> linux </category>
           
           <category> vim </category>
+          
+          <category> vim </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2806,9 +2960,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
@@ -2835,9 +2989,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> java </tag>
             
             <tag> 收集器 </tag>
             
@@ -3077,11 +3231,11 @@
       
         <tags>
             
+            <tag> jvm </tag>
+            
             <tag> java </tag>
             
             <tag> 对象 </tag>
-            
-            <tag> jvm </tag>
             
         </tags>
       
@@ -3137,9 +3291,9 @@
       
         <tags>
             
-            <tag> 内存 </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> 内存 </tag>
             
             <tag> 堆 </tag>
             
@@ -3199,9 +3353,9 @@
       
         <tags>
             
-            <tag> 内存 </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> 内存 </tag>
             
             <tag> 虚拟机 </tag>
             
@@ -3365,11 +3519,11 @@
     
     
     <entry>
-      <title>jvm--手动触发gc</title>
+      <title>jvm 手动触发gc</title>
       <link href="posts/733b48b5.html"/>
       <url>posts/733b48b5.html</url>
       
-        <content type="html"><![CDATA[<p>很多时候我们在学习JVM时，往往需要查看JVM的回收日志，查看JVM的相关运行参数，这时候我们可以通过手动触发的形式获取JVM的运行回收情况。</p><p>加上参数 -Xms1024m -Xmx1024m -Xmn512m -XX:+PrintGCDetails。<br><img src="/posts/733b48b5/手动触发gc.jpeg" alt="手动触发gc"></p><p>关键的一行在于 System.gc();</p><h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestGCRoots01</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> _10MB = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">byte</span>[] memory = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span> * _10MB];</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      method01();</span><br><span class="line">      System.out.println(<span class="string">&quot;返回main方法&quot;</span>);</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第二次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      TestGCRoots01 t = <span class="keyword">new</span> TestGCRoots01();</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第一次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[GC (System.gc()) [PSYoungGen: 97648K-&gt;624K(458752K)] 97648K-&gt;82552K(983040K), 0.0805172 secs] [Times: user&#x3D;0.06 sys&#x3D;0.04, real&#x3D;0.08 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 624K-&gt;0K(458752K)] [ParOldGen: 81928K-&gt;82426K(524288K)] 82552K-&gt;82426K(983040K), [Metaspace: 3305K-&gt;3305K(1056768K)], 0.0252976 secs] [Times: user&#x3D;0.02 sys&#x3D;0.00, real&#x3D;0.03 secs] </span><br><span class="line">第一次GC完成</span><br><span class="line">返回main方法</span><br><span class="line">[GC (System.gc()) [PSYoungGen: 7864K-&gt;64K(458752K)] 90291K-&gt;82490K(983040K), 0.0017362 secs] [Times: user&#x3D;0.01 sys&#x3D;0.00, real&#x3D;0.00 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 64K-&gt;0K(458752K)] [ParOldGen: 82426K-&gt;494K(524288K)] 82490K-&gt;494K(983040K), [Metaspace: 3306K-&gt;3306K(1056768K)], 0.0115159 secs] [Times: user&#x3D;0.01 sys&#x3D;0.00, real&#x3D;0.01 secs] </span><br><span class="line">第二次GC完成</span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total 458752K, used 23593K [0x00000007a0000000, 0x00000007c0000000, 0x00000007c0000000)</span><br><span class="line">  eden space 393216K, 6% used [0x00000007a0000000,0x00000007a170a568,0x00000007b8000000)</span><br><span class="line">  from space 65536K, 0% used [0x00000007bc000000,0x00000007bc000000,0x00000007c0000000)</span><br><span class="line">  to   space 65536K, 0% used [0x00000007b8000000,0x00000007b8000000,0x00000007bc000000)</span><br><span class="line"> ParOldGen       total 524288K, used 494K [0x0000000780000000, 0x00000007a0000000, 0x00000007a0000000)</span><br><span class="line">  object space 524288K, 0% used [0x0000000780000000,0x000000078007bb70,0x00000007a0000000)</span><br><span class="line"> Metaspace       used 3313K, capacity 4496K, committed 4864K, reserved 1056768K</span><br><span class="line">  class space    used 365K, capacity 388K, committed 512K, reserved 1048576K</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<p>很多时候我们在学习JVM时，往往需要查看JVM的回收日志，查看JVM的相关运行参数，这时候我们可以通过手动触发的形式获取JVM的运行回收情况。</p><h2 id="加上参数"><a href="#加上参数" class="headerlink" title="加上参数"></a>加上参数</h2><blockquote><p>-Xms1024m -Xmx1024m -Xmn512m -XX:+PrintGCDetails。</p></blockquote><p><img src="/posts/733b48b5/手动触发gc.jpeg" alt="手动触发gc"></p><h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestGCRoots01</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> _10MB = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">byte</span>[] memory = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span> * _10MB];</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      method01();</span><br><span class="line">      System.out.println(<span class="string">&quot;返回main方法&quot;</span>);</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第二次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      TestGCRoots01 t = <span class="keyword">new</span> TestGCRoots01();</span><br><span class="line">      System.gc();</span><br><span class="line">      System.out.println(<span class="string">&quot;第一次GC完成&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>关键的一行在于 System.gc();</p><h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[GC (System.gc()) [PSYoungGen: 97648K-&gt;624K(458752K)] 97648K-&gt;82552K(983040K), 0.0805172 secs] [Times: user=0.06 sys=0.04, real=0.08 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 624K-&gt;0K(458752K)] [ParOldGen: 81928K-&gt;82426K(524288K)] 82552K-&gt;82426K(983040K), [Metaspace: 3305K-&gt;3305K(1056768K)], 0.0252976 secs] [Times: user=0.02 sys=0.00, real=0.03 secs] </span><br><span class="line">第一次GC完成</span><br><span class="line">返回main方法</span><br><span class="line">[GC (System.gc()) [PSYoungGen: 7864K-&gt;64K(458752K)] 90291K-&gt;82490K(983040K), 0.0017362 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] </span><br><span class="line">[Full GC (System.gc()) [PSYoungGen: 64K-&gt;0K(458752K)] [ParOldGen: 82426K-&gt;494K(524288K)] 82490K-&gt;494K(983040K), [Metaspace: 3306K-&gt;3306K(1056768K)], 0.0115159 secs] [Times: user=0.01 sys=0.00, real=0.01 secs] </span><br><span class="line">第二次GC完成</span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total 458752K, used 23593K [0x00000007a0000000, 0x00000007c0000000, 0x00000007c0000000)</span><br><span class="line">  eden space 393216K, 6% used [0x00000007a0000000,0x00000007a170a568,0x00000007b8000000)</span><br><span class="line">  from space 65536K, 0% used [0x00000007bc000000,0x00000007bc000000,0x00000007c0000000)</span><br><span class="line">  to   space 65536K, 0% used [0x00000007b8000000,0x00000007b8000000,0x00000007bc000000)</span><br><span class="line"> ParOldGen       total 524288K, used 494K [0x0000000780000000, 0x00000007a0000000, 0x00000007a0000000)</span><br><span class="line">  object space 524288K, 0% used [0x0000000780000000,0x000000078007bb70,0x00000007a0000000)</span><br><span class="line"> Metaspace       used 3313K, capacity 4496K, committed 4864K, reserved 1056768K</span><br><span class="line">  class space    used 365K, capacity 388K, committed 512K, reserved 1048576K</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -3383,11 +3537,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> jvm </tag>
             
             <tag> gc </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
@@ -3729,9 +3883,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> java </tag>
             
             <tag> 分代 </tag>
             
@@ -3787,9 +3941,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> final </tag>
             
@@ -4726,9 +4880,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> 多线程 </tag>
             
