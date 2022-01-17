@@ -122,6 +122,8 @@
           
           <category> tendermint </category>
           
+          <category> Tendermint </category>
+          
       </categories>
       
       
@@ -637,6 +639,10 @@
       
       <categories>
           
+          <category> blockchain </category>
+          
+          <category> tendermint </category>
+          
           <category> tendermint </category>
           
           <category> 源码分析 </category>
@@ -676,6 +682,10 @@
       
       <categories>
           
+          <category> blockchain </category>
+          
+          <category> tendermint </category>
+          
           <category> tendermint </category>
           
           <category> Tendermint </category>
@@ -712,6 +722,10 @@
       
       
       <categories>
+          
+          <category> blockchain </category>
+          
+          <category> tendermint </category>
           
           <category> tendermint </category>
           
@@ -778,6 +792,10 @@
       
       
       <categories>
+          
+          <category> blockchain </category>
+          
+          <category> tendermint </category>
           
           <category> tendermint </category>
           
@@ -916,9 +934,9 @@
             
             <tag> matic </tag>
             
-            <tag> checkpoint </tag>
-            
             <tag> polygon </tag>
+            
+            <tag> checkpoint </tag>
             
         </tags>
       
