@@ -323,9 +323,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> 数据库 </tag>
-            
             <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
       
@@ -2296,9 +2296,9 @@
             
             <tag> java </tag>
             
-            <tag> 算法 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 算法 </tag>
             
             <tag> spring </tag>
             
@@ -2469,11 +2469,11 @@
             
             <tag> java </tag>
             
-            <tag> maven </tag>
-            
             <tag> 解决 </tag>
             
             <tag> 问题 </tag>
+            
+            <tag> maven </tag>
             
             <tag> idea </tag>
             
@@ -3135,9 +3135,9 @@
             
             <tag> java </tag>
             
-            <tag> 概述 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 概述 </tag>
             
         </tags>
       
@@ -4648,11 +4648,11 @@
       
         <tags>
             
+            <tag> broker </tag>
+            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
-            
-            <tag> broker </tag>
             
         </tags>
       
