@@ -323,9 +323,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mysql </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> mysql </tag>
             
         </tags>
       
@@ -1327,6 +1327,37 @@
     
     
     <entry>
+      <title>hexo-解决图片不显示问题</title>
+      <link href="posts/3748913f.html"/>
+      <url>posts/3748913f.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>由 <code>hexo-asset-image</code> 图片模块和 <code>hexo-abbrlink</code> 不兼容导致的。</p><p>hexo由于浏览器中，中文路径复制到文本中会被转成 unicode 编码，感观上特别不舒服，虽然粘回url后可以decode回来。</p><blockquote><p><a href="https://liukay.com/2020/11/12/linux-%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E6%9C%AC%E6%93%8D%E4%BD%9C/">https://liukay.com/2020/11/12/linux-%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E6%9C%AC%E6%93%8D%E4%BD%9C/</a></p></blockquote><p>决定把路径改成Hash编码，使用<code>abbrlink</code> 这个插件后发现问题，图片显示不正常，查看一下图片路径发现，多了一个<code>.html</code></p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><blockquote><p>修改图片输出插件</p></blockquote><p>插件路径：</p><blockquote><p>hexo_home/node_modules/hexo-asset-image/index.js</p></blockquote><p><img src="/posts/3748913f/%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81.png" alt="修改代码"></p><p>为什么要 -5，因为<code>.html</code> 刚好5个字符，-5 就是 link 减少5个字符刚好。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> 博客 </tag>
+            
+            <tag> 解决 </tag>
+            
+            <tag> 问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vim IDE 04 tagbar</title>
       <link href="posts/2be8ba26.html"/>
       <url>posts/2be8ba26.html</url>
@@ -2265,9 +2296,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> spring boot </tag>
             
             <tag> spring </tag>
             
@@ -2440,11 +2471,11 @@
             
             <tag> maven </tag>
             
-            <tag> idea </tag>
+            <tag> 解决 </tag>
             
             <tag> 问题 </tag>
             
-            <tag> 解决 </tag>
+            <tag> idea </tag>
             
             <tag> 编译 </tag>
             
@@ -3104,9 +3135,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> 概述 </tag>
+            
+            <tag> spring boot </tag>
             
         </tags>
       
@@ -4617,11 +4648,11 @@
       
         <tags>
             
-            <tag> broker </tag>
-            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
+            
+            <tag> broker </tag>
             
         </tags>
       
