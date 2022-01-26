@@ -338,7 +338,7 @@
       <link href="posts/632243fb.html"/>
       <url>posts/632243fb.html</url>
       
-        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>FullNode 节点负责广播区块，不进行产块，网络中的FullNode转发区块、广播区块。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><blockquote><p>JDK1.8<br>java-tron 源代码</p></blockquote><p>java项目的启动方式：1.官方脚本启动，2.手动指定参数启动</p><h2 id="启动节点"><a href="#启动节点" class="headerlink" title="启动节点"></a>启动节点</h2><h3 id="脚本方式"><a href="#脚本方式" class="headerlink" title="脚本方式"></a>脚本方式</h3><p>这种方式最简单，不过一般使用区块链的开发者都需要debug代码，所以一般在部署的时候使用脚本启动。</p><p>需要用到的文件，都可以从 java-tron 这个项目中获得。</p><ol><li>配置文件 config.conf</li><li>主程序 FullNode.jar</li><li>启动脚本 start.sh，在项目根目录</li></ol><p>config.conf</p><blockquote><p>framework/src/main/resources/config.conf</p></blockquote><p>FullNode.jar：通过编译获得在概目录下执行：</p><blockquote><p>./gradlew clean build -x test</p></blockquote><p>编译后在 build/libs 目录下获得该文件。</p><p>启动，查看日志</p><blockquote><p>sh start.sh</p></blockquote><p><img src="/posts/632243fb/FullNode%E5%90%AF%E5%8A%A8.png" alt="FullNode启动"></p><p>产块日志，到这个阶段大概卡了30秒左右</p><p><img src="/posts/632243fb/%E4%BA%A7%E5%9D%97%E6%97%A5%E5%BF%97.png" alt="产块日志"></p><h2 id="手动启动"><a href="#手动启动" class="headerlink" title="手动启动"></a>手动启动</h2><p>常用端口</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>FullNode 节点负责广播区块，不进行产块，网络中的FullNode转发区块、广播区块。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><blockquote><p>JDK1.8<br>java-tron 源代码</p></blockquote><p>java项目的启动方式：1.官方脚本启动，2.手动指定参数启动</p><h2 id="启动节点"><a href="#启动节点" class="headerlink" title="启动节点"></a>启动节点</h2><h3 id="脚本方式"><a href="#脚本方式" class="headerlink" title="脚本方式"></a>脚本方式</h3><p>这种方式最简单，不过一般使用区块链的开发者都需要debug代码，所以一般在部署的时候使用脚本启动。</p><p>需要用到的文件，都可以从 java-tron 这个项目中获得。</p><ol><li>配置文件 config.conf</li><li>主程序 FullNode.jar</li><li>启动脚本 start.sh，在项目根目录</li></ol><p>config.conf</p><blockquote><p>framework/src/main/resources/config.conf</p></blockquote><p>FullNode.jar：通过编译获得在概目录下执行：</p><blockquote><p>./gradlew clean build -x test</p></blockquote><p>编译后在 build/libs 目录下获得该文件。</p><p>启动，查看日志</p><blockquote><p>sh start.sh</p></blockquote><p><img src="/posts/632243fb/FullNode%E5%90%AF%E5%8A%A8.png" alt="FullNode启动"></p><p>产块日志，到这个阶段大概卡了30秒左右</p><p><img src="/posts/632243fb/%E4%BA%A7%E5%9D%97%E6%97%A5%E5%BF%97.png" alt="产块日志"></p><h2 id="手动启动"><a href="#手动启动" class="headerlink" title="手动启动"></a>手动启动</h2><p>手动启动服务，就是jar包启动，先排除JVM相关的优化参数，看看哪些是必须的参数。</p><p><strong>-c</strong>: config配置文件路径</p><blockquote><p>java -jar FullNode.jar -c config.conf</p></blockquote>]]></content>
       
       
       <categories>
@@ -2469,11 +2469,11 @@
             
             <tag> java </tag>
             
+            <tag> maven </tag>
+            
             <tag> 解决 </tag>
             
             <tag> 问题 </tag>
-            
-            <tag> maven </tag>
             
             <tag> idea </tag>
             
@@ -4648,11 +4648,11 @@
       
         <tags>
             
-            <tag> broker </tag>
-            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
+            
+            <tag> broker </tag>
             
         </tags>
       
