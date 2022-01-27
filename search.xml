@@ -235,6 +235,45 @@
     
     
     <entry>
+      <title>spring 源码01 开始阅读</title>
+      <link href="posts/8cad0e75.html"/>
+      <url>posts/8cad0e75.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>在开始源码阅读之前，一定要使用过这个产品，了解这个产品的功能、特点。</p></blockquote><p>在开始源码阅读之前，需要先明白几个事</p><ol><li>是否足够了解</li><li>要阅读到什么程序</li><li>如何开始、从哪里开始</li></ol><h2 id="开始前"><a href="#开始前" class="headerlink" title="开始前"></a>开始前</h2><p>最好是带着问题去阅读源码，不纠结于小细节。<br>我一般读源码就是碰到问题后，带着问题去看，效果更好，不要想着假大空，把源码当小说一样看。<br>单个问题解决后，再向外延伸，就可以把一些点串起来。<br>最后，需要反复看一些重点部份，消失对源码的陌生感之后就会能看进去。<br>熟悉之后就会一种想要了解更多的感觉就会一直往下看，这个就是自动驱动的动力。</p><p>如果看不下去，不要责怪自己懒，人对看不见短期收益的事提不起兴趣这才是正常的一个人，趋利避害是正常的。<br>看不下去，该干嘛干，强迫自己看效果很差。不要骗自己，假装努力是在浪费时间，干IT的都很忙，看不去就看改改bug。</p><h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><ol><li>对说某个功能，在看之前，可以有自己的推测，想像后续的流程是如何执行的。</li><li>切一个 read_code 分支用来作注释，写上自己的见解，也方便以后再回到这块代码时能快速理解。</li><li>找到真实阅读源码的动力，如：<ul><li>想了解原理</li><li>解决项目中的问题</li><li>装逼</li></ul></li><li>跑测试用例，好的开源软件有非常详细的测试用例，可以验证到每一个细节，跑测试用例就可以让人学到不东西。</li><li>阅读后的输出整理，这个不用多说，学习就是输入 + 输出。</li><li>尽量找机会跟同事、同行讨论你看过的源码。<ul><li>如果你看过了，就让你装到了。</li><li>如果你没看过不了解，别人帮你查缺补漏</li></ul></li></ol><h2 id="如何阅读"><a href="#如何阅读" class="headerlink" title="如何阅读"></a>如何阅读</h2><h3 id="从哪里开始"><a href="#从哪里开始" class="headerlink" title="从哪里开始"></a>从哪里开始</h3><p>Spring 模块之么多、项目这么大，到哪里开始合适？<br>如果你是想解决问题，直接定位需要阅读的部份；<br>如果你是想深入了解，那有两种方式：</p><ol><li>从关键最重要的几个概念开始，然后延伸</li><li>了解了整个框架的脉络后，从最基础的部分往上看</li></ol><p>另外，看代码不是看小说，不是要一字一句的陷入到细节，切记。当然如果你就是喜欢这样。</p><h3 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h3><p>这个是我比较荐的一个方法，看完一遍之后，通过测试用例可以跟着代码走一遍，调细节。</p><h2 id="阅读安排"><a href="#阅读安排" class="headerlink" title="阅读安排"></a>阅读安排</h2><p>打开 Spring 项目，先来罗列一下整个项目。这个可太多了，分一下</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">spring-aop</span><br><span class="line">spring-aspects</span><br><span class="line">spring-beans</span><br><span class="line">spring-context</span><br><span class="line">spring-context-indexer</span><br><span class="line">spring-context-support</span><br><span class="line">spring-core</span><br><span class="line">spring-expression</span><br><span class="line">spring-instrument</span><br><span class="line">spring-jcl</span><br><span class="line">spring-jdbc</span><br><span class="line">spring-jms</span><br><span class="line">spring-messaging</span><br><span class="line">spring-orm</span><br><span class="line">spring-oxm</span><br><span class="line">spring-r2dbc</span><br><span class="line">spring-test</span><br><span class="line">spring-tx</span><br><span class="line">spring-web</span><br><span class="line">spring-webflux</span><br><span class="line">spring-webmvc</span><br><span class="line">spring-websocket</span><br></pre></td></tr></table></figure><h3 id="核心容器"><a href="#核心容器" class="headerlink" title="核心容器"></a>核心容器</h3><blockquote><p>spring-core<br>spring-beans<br>spring-context<br>spring-context-support<br>spring-expression</p></blockquote><h3 id="切面编程"><a href="#切面编程" class="headerlink" title="切面编程"></a>切面编程</h3><blockquote><p>spring-aop<br>spring-aspects</p></blockquote><h3 id="代理模块"><a href="#代理模块" class="headerlink" title="代理模块"></a>代理模块</h3><blockquote><p>spring-instrument</p></blockquote><h3 id="web"><a href="#web" class="headerlink" title="web"></a>web</h3><blockquote><p>spring-web<br>spring-webflux<br>spring-webmvc<br>spring-websocket</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> spring </category>
+          
+          <category> 源码阅读 </category>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> spring </tag>
+            
+            <tag> 源码分析 </tag>
+            
+            <tag> 源码 </tag>
+            
+            <tag> 源码阅读 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>shutdownHook 死锁解决</title>
       <link href="posts/247689d4.html"/>
       <url>posts/247689d4.html</url>
@@ -2341,11 +2380,11 @@
             
             <tag> java </tag>
             
-            <tag> 算法 </tag>
-            
             <tag> spring boot </tag>
             
             <tag> spring </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -3180,9 +3219,9 @@
             
             <tag> java </tag>
             
-            <tag> 概述 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 概述 </tag>
             
         </tags>
       
