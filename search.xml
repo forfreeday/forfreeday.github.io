@@ -2012,6 +2012,47 @@
     
     
     <entry>
+      <title>java 解决父构造器中拿到对象</title>
+      <link href="posts/e115ab30.html"/>
+      <url>posts/e115ab30.html</url>
+      
+        <content type="html"><![CDATA[<p>这两天被问到一个有意思的问题，就是如果在构造器中拿到匿名对象。<br>这个问题有意思在，直觉上是可以通过外部放一个成员变量去接，然后后续就可以使用了，但实际不行。</p><h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>下面这个是构造器，当通过 supper 去调用父类构造器。由于问题出现在Spring项目当中，所以我复现的例子也基于Spring重新搭了一个项目来复现这个过程，代码放github上。</p><p>复现demo：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionCache</span> <span class="keyword">extends</span> <span class="title">RevokingDB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TransactionCache</span><span class="params">(String dbName)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 其他代码不能在 supper 之前，但是又要拿到 TxCacheDB，不能再new一次，否则会初始化两次TxCacheDB。</span></span><br><span class="line">    <span class="keyword">super</span>(<span class="keyword">new</span> TxCacheDB(dbName));</span><br><span class="line">    <span class="comment">// 需要是在这里调一下 txCacheDB.init();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TxCacheDB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TxCacheDB</span><span class="params">(String dbName)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;TxCacheDB: &quot;</span> + dbName);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;TxCacheDB: init&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里可以偿试几种解决方案：</p><ol><li>方案一<br> 直接成员变量中 new TxCacheDB(dbName); 构造器中再使用</li><li>方案二<br> super调用一个方法，而不直接new TxCacheDB();</li><li>方案三<br> 将对象保在ThreadLocal中，再拿出来</li></ol><h2 id="验证方案"><a href="#验证方案" class="headerlink" title="验证方案"></a>验证方案</h2><h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>这种在直觉上没有问题，但是实际有问题：</p><ol><li>成员变量不知道 dbName，传入的具体值是什么，如果写死就失去灵活性。</li><li>写死。如果写死，你不能确定会传入dbName将会是什么，实际中这个dbName有很多个，没有办法写死</li></ol><h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>这个方法看着就可行，来验证一下。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionCache2</span> <span class="keyword">extends</span> <span class="title">RevokingDB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> TxCacheDB txCacheDB = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TransactionCache2</span><span class="params">(String dbName)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 其他代码不能在 supper 之前</span></span><br><span class="line">    <span class="keyword">super</span>(getTxCache(dbName));</span><br><span class="line">    txCacheDB.init();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> TxCacheDB <span class="title">getTxCache</span><span class="params">(String dbName)</span> </span>&#123;</span><br><span class="line">    txCacheDB = <span class="keyword">new</span> TxCacheDB(dbName);</span><br><span class="line">    <span class="keyword">return</span> txCacheDB;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>输出结果：</p><blockquote><p>TxCacheDB: trans-cache<br>TxCacheDB: init</p></blockquote><p>结查证明可行。<br>但是有个问题，我就用一次，还有开辟一段元数据区态内存来放 这个 static TxCacheDB，不划算。<br>我就想用一次，不想还占用内存。</p><h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>将对象放入本地线程中，使用后就移除。<br>这样即可以使用对象，也不需要一直占用部分内存。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionCache3</span> <span class="keyword">extends</span> <span class="title">RevokingDB</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TransactionCache3</span><span class="params">(String dbName)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 其他代码不能在 supper 之前</span></span><br><span class="line">    <span class="keyword">super</span>(<span class="keyword">new</span> TxCacheDB(dbName));</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      TxCacheDB txCacheDB = ThreadLocalUtil.get();</span><br><span class="line">      txCacheDB.init();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      ThreadLocalUtil.remove();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>TxCacheDB: trans-cache3<br>TxCacheDB: init</p></blockquote><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>java 对象在初始化的时候构造器中 supper 是永远放在第一行不能变。这一特性决定了这个问题的解决只能曲线救国。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> spring </category>
+          
+          <category> spring </category>
+          
+          <category> threadlocal </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 问题 </tag>
+            
+            <tag> 对象 </tag>
+            
+            <tag> spring </tag>
+            
+            <tag> 解决方案 </tag>
+            
+            <tag> 构造器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Lambda Optional使用</title>
       <link href="posts/6d3c72a3.html"/>
       <url>posts/6d3c72a3.html</url>
@@ -2300,9 +2341,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> spring boot </tag>
             
             <tag> spring </tag>
             
@@ -3139,9 +3180,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> 概述 </tag>
+            
+            <tag> spring boot </tag>
             
         </tags>
       
