@@ -191,9 +191,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> tendermint </tag>
             
@@ -329,9 +329,9 @@
             
             <tag> matic </tag>
             
-            <tag> blockchain </tag>
-            
             <tag> polygon </tag>
+            
+            <tag> blockchain </tag>
             
         </tags>
       
@@ -362,9 +362,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mysql </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> mysql </tag>
             
         </tags>
       
@@ -496,9 +496,9 @@
       
         <tags>
             
-            <tag> 安装 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 安装 </tag>
             
             <tag> gradle </tag>
             
@@ -792,9 +792,9 @@
       
         <tags>
             
-            <tag> 区块链 </tag>
-            
             <tag> Tendermint </tag>
+            
+            <tag> 区块链 </tag>
             
             <tag> BlockChain </tag>
             
@@ -833,9 +833,9 @@
       
         <tags>
             
-            <tag> 区块链 </tag>
-            
             <tag> Tendermint </tag>
+            
+            <tag> 区块链 </tag>
             
             <tag> BlockChain </tag>
             
@@ -876,13 +876,13 @@
             
             <tag> 概述 </tag>
             
-            <tag> 区块链 </tag>
-            
             <tag> Tendermint </tag>
             
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
+            
+            <tag> 区块链 </tag>
             
             <tag> BlockChain </tag>
             
@@ -1198,9 +1198,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> btc </tag>
             
@@ -1231,9 +1231,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> 交易 </tag>
             
@@ -1328,9 +1328,9 @@
             
             <tag> 架构 </tag>
             
-            <tag> blockchain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> btc </tag>
             
@@ -1359,9 +1359,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> blockchain </tag>
             
         </tags>
       
@@ -1386,13 +1386,13 @@
       
         <tags>
             
+            <tag> 问题 </tag>
+            
             <tag> hexo </tag>
             
             <tag> 博客 </tag>
             
             <tag> 解决 </tag>
-            
-            <tag> 问题 </tag>
             
         </tags>
       
@@ -2051,6 +2051,47 @@
     
     
     <entry>
+      <title>springboot 发送邮件</title>
+      <link href="posts/606a5ad4.html"/>
+      <url>posts/606a5ad4.html</url>
+      
+        <content type="html"><![CDATA[<p>最近重写一个邮件服务来给告警业服务用，做成一个内置的应用。直接使用 spring 的 javamail 来实现。</p><h2 id="邮件配置"><a href="#邮件配置" class="headerlink" title="邮件配置"></a>邮件配置</h2><p>以下配置方式二选一</p><ol><li>代码方式</li><li>yml方式</li></ol><h3 id="代码方式"><a href="#代码方式" class="headerlink" title="代码方式"></a>代码方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liukai.springmail.send;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Configurable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.mail.MailProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.mail.javamail.JavaMailSenderImpl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018/08/27.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configurable</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(prefix = &quot;spring.mail&quot;, name = &quot;host&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailSenderConfig</span> </span>&#123;</span><br><span class="line">  <span class="comment">//这个 properties 可以通过 yml 初始化</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> MailProperties properties;</span><br><span class="line"></span><br><span class="line">  MailSenderConfig(MailProperties properties) &#123;</span><br><span class="line">    <span class="keyword">this</span>.properties = properties;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@ConditionalOnMissingBean</span> <span class="comment">//使用这个注解，yml中如果已经配置，这里不会生效！！</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> JavaMailSenderImpl <span class="title">mailSender</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JavaMailSenderImpl sender = <span class="keyword">new</span> JavaMailSenderImpl();</span><br><span class="line">    sender.setDefaultEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">    sender.setHost(<span class="string">&quot;smtp.qq.com&quot;</span>);</span><br><span class="line">    sender.setPassword(<span class="string">&quot;12345678&quot;</span>);</span><br><span class="line">    sender.setUsername(<span class="string">&quot;test@qq.com&quot;</span>);</span><br><span class="line">    sender.setPort(<span class="number">25</span>);</span><br><span class="line">    Properties javaMailProperties = sender.getJavaMailProperties();</span><br><span class="line"></span><br><span class="line">    Map&lt;String, String&gt; smtp = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    smtp.put(<span class="string">&quot;socketFactoryClass&quot;</span>, <span class="string">&quot;javax.net.ssl.SSLSocketFactory&quot;</span>);</span><br><span class="line">    Map&lt;String, Object&gt; mail = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    mail.put(<span class="string">&quot;smtp&quot;</span>, smtp);</span><br><span class="line">    javaMailProperties.put(<span class="string">&quot;mail&quot;</span>, mail);</span><br><span class="line">    <span class="keyword">return</span> sender;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="yml方式"><a href="#yml方式" class="headerlink" title="yml方式"></a>yml方式</h3><p>如果配置使用yml</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">mail:</span></span><br><span class="line">    <span class="comment"># 配置 SMTP 服务器地址</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">smtp.qq.com</span></span><br><span class="line">    <span class="comment"># 发送者邮箱</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">test@qq.com</span></span><br><span class="line">    <span class="comment"># 配置密码，注意不是真正的密码，而是刚刚申请到的授权码</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">12345678</span></span><br><span class="line">    <span class="comment"># 端口号</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">25</span></span><br><span class="line">    <span class="comment"># 默认的邮件编码为UTF-8</span></span><br><span class="line">    <span class="attr">default-encoding:</span> <span class="string">UTF-8</span></span><br><span class="line">    <span class="comment"># 配置SSL 加密工厂</span></span><br><span class="line">    <span class="attr">properties:</span></span><br><span class="line">      <span class="attr">mail:</span></span><br><span class="line">        <span class="attr">smtp:</span></span><br><span class="line">          <span class="attr">socketFactoryClass:</span> <span class="string">javax.net.ssl.SSLSocketFactory</span></span><br><span class="line">        <span class="comment">#表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误</span></span><br><span class="line">        <span class="comment">#de<span class="doctag">bug:</span> true</span></span><br></pre></td></tr></table></figure><h2 id="maven-依赖"><a href="#maven-依赖" class="headerlink" title="maven 依赖"></a>maven 依赖</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.liukai.spring.mail<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>com.liukai.springboot-mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://www.liukay.com<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="测试发送邮件"><a href="#测试发送邮件" class="headerlink" title="测试发送邮件"></a>测试发送邮件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liukai.springmail.send;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.mail.SimpleMailMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.mail.javamail.JavaMailSender;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018/08/27.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line">  <span class="keyword">private</span> JavaMailSender javaMailSender;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 普通邮件发送</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendSimpleMail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 构建一个邮件对象</span></span><br><span class="line">    SimpleMailMessage message = <span class="keyword">new</span> SimpleMailMessage();</span><br><span class="line">    <span class="comment">// 设置邮件主题</span></span><br><span class="line">    message.setSubject(<span class="string">&quot;这是一封测试邮件&quot;</span>);</span><br><span class="line">    <span class="comment">// 设置邮件发送者，这个跟application.yml中设置的要一致</span></span><br><span class="line">    message.setFrom(<span class="string">&quot;test@qq.com&quot;</span>);</span><br><span class="line">    <span class="comment">// 设置邮件接收者，可以有多个接收者，中间用逗号隔开，以下类似</span></span><br><span class="line">    <span class="comment">// message.setTo(&quot;12345678@qq.com&quot;,&quot;test@qq.com&quot;);</span></span><br><span class="line">    message.setTo(<span class="string">&quot;liukai@163.com&quot;</span>);</span><br><span class="line">    <span class="comment">// 设置邮件抄送人，可以有多个抄送人</span></span><br><span class="line"><span class="comment">//    message.setCc(&quot;12345678@qq.com&quot;);</span></span><br><span class="line">    <span class="comment">// 设置隐秘抄送人，可以有多个</span></span><br><span class="line"><span class="comment">//    message.setBcc(&quot;12345678@qq.com&quot;);</span></span><br><span class="line">    <span class="comment">// 设置邮件发送日期</span></span><br><span class="line">    message.setSentDate(<span class="keyword">new</span> Date());</span><br><span class="line">    <span class="comment">// 设置邮件的正文</span></span><br><span class="line">    message.setText(<span class="string">&quot;这是测试邮件的正文2&quot;</span>);</span><br><span class="line">    <span class="comment">// 发送邮件</span></span><br><span class="line">    javaMailSender.send(message);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> spring </category>
+          
+          <category> spring </category>
+          
+          <category> springboot </category>
+          
+          <category> springboot </category>
+          
+          <category> mail </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> spring </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> 邮件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>java 解决父构造器中拿到对象</title>
       <link href="posts/e115ab30.html"/>
       <url>posts/e115ab30.html</url>
@@ -2075,11 +2116,11 @@
             
             <tag> java </tag>
             
-            <tag> 问题 </tag>
-            
             <tag> 对象 </tag>
             
             <tag> spring </tag>
+            
+            <tag> 问题 </tag>
             
             <tag> 解决方案 </tag>
             
@@ -2553,11 +2594,11 @@
             
             <tag> java </tag>
             
-            <tag> 解决 </tag>
+            <tag> maven </tag>
             
             <tag> 问题 </tag>
             
-            <tag> maven </tag>
+            <tag> 解决 </tag>
             
             <tag> idea </tag>
             
@@ -4229,9 +4270,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> final </tag>
             
@@ -5234,9 +5275,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> 多线程 </tag>
             
