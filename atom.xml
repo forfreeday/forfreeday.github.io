@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2022-01-21T03:06:16.762Z</updated>
+  <updated>2022-01-29T08:02:11.652Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vim-插件08-ranger文件管理</title>
+    <link href="https://liukay.com/posts/1fd45dea.html"/>
+    <id>https://liukay.com/posts/1fd45dea.html</id>
+    <published>2022-01-29T07:44:18.000Z</published>
+    <updated>2022-01-29T08:02:11.652Z</updated>
+    
+    <content type="html"><![CDATA[<p>这又是一个非常好用的插件，可以快速的浏览本地文件打开本地文件。如果是不同类型的文件如pdf，会调用本地系统的应用打开，就是这么好用，在习惯了vim后有个毛病，就是想要什么都可能通过命令行去操作，如果你也是这样，那这个插件非常适合你。</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>需要先安装到系统中，首次安装不需要初始化也能使用，但是会比较丑，也没有预览功能，所以安装完成后，需要一些配置。</p><blockquote><p>brew install ranger</p></blockquote><h3 id="验证安装效果"><a href="#验证安装效果" class="headerlink" title="验证安装效果"></a>验证安装效果</h3><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><h3 id="生成配置"><a href="#生成配置" class="headerlink" title="生成配置"></a>生成配置</h3><blockquote><p>ranger --copy-config=all<br>~/.config/ranger目录输出以下文件<br>commands.py          # 与以下命令一起启动的命令 :<br>commands_full.py    # 全套命令<br>rc.conf                      # 配置和绑定<br>rifle.conf                  # 文件关联（用于打开文件的程序）<br>scope.sh                # 负责各种文件预览</p></blockquote><h3 id="图片预览"><a href="#图片预览" class="headerlink" title="图片预览"></a>图片预览</h3><p>修改 rc.conf，ranger 将可以直接在终端预览图片</p><blockquote><p>set preview_images true<br>set preview_images_method iterm2</p></blockquote><h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><blockquote><p>:help 里有所有快捷键</p><p>l 进入当前当标目录<br>h 后退<br>回车 打开应用<br>g 快速跳转<br>gh        home<br>gd<br>gu</p></blockquote><h2 id="vim-集成"><a href="#vim-集成" class="headerlink" title="vim 集成"></a>vim 集成</h2><h3 id="iterm2插件"><a href="#iterm2插件" class="headerlink" title="iterm2插件"></a>iterm2插件</h3><p>mac 我使用的是 iter2 来使用nvim，所以能不能预览需要iterm2的支持，iterm2官方可以支持。<br>添加图片插件</p><blockquote><p>curl <a href="https://iterm2.com/utilities/imgcat">https://iterm2.com/utilities/imgcat</a> &gt; imgcat<br>chmod +x imgcat<br>mv imgcat /usr/local/bin</p></blockquote><p>vim 对应插件官网</p><p><a href="https://github.com/francoiscabrol/ranger.vim">https://github.com/francoiscabrol/ranger.vim</a></p><h3 id="当前完整配置"><a href="#当前完整配置" class="headerlink" title="当前完整配置"></a>当前完整配置</h3><p><code>vim-IDE</code>已经进化到了这一阶段，完成了：</p><ol><li>系统基础环境安装</li><li>vim 安装、基本配置</li><li>左侧文列表</li><li>状态栏</li><li></li><li></li><li></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这又是一个非常好用的插件，可以快速的浏览本地文件打开本地文件。如果是不同类型的文件如pdf，会调用本地系统的应用打开，就是这么好用，在习惯了vim后有个毛病，就是想要什么都可能通过命令行去操作，如果你也是这样，那这个插件非常适合你。&lt;/p&gt;
+&lt;h2 id=&quot;安装&quot;&gt;&lt;a h
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="https://liukay.com/categories/linux/"/>
+    
+      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+    
+      <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+    
+      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+    
+      <category term="插件" scheme="https://liukay.com/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/tags/plugin/"/>
+    
+      <category term="ranger" scheme="https://liukay.com/tags/ranger/"/>
+    
+      <category term="文件管理" scheme="https://liukay.com/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vim-插件07-fzf搜索文件</title>
+    <link href="https://liukay.com/posts/baaaf58b.html"/>
+    <id>https://liukay.com/posts/baaaf58b.html</id>
+    <published>2022-01-29T07:25:19.000Z</published>
+    <updated>2022-01-29T07:47:58.362Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前已经介绍过了 ctrlp 这个工具为什么还需要 fzf 这个工具。<br>因为这两者在使用方式上有一些区别。<br>fzf 是可以直接在 mac 上调用出来，并且集成在 vim 当中使用。</p><h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><p><a href="https://github.com/junegunn/fzf">https://github.com/junegunn/fzf</a></p><p>FZF的Vim插件：</p><p><a href="https://github.com/junegunn/fzf.vim">https://github.com/junegunn/fzf.vim</a></p><h3 id="1-fzf本机安装"><a href="#1-fzf本机安装" class="headerlink" title="1.fzf本机安装"></a>1.fzf本机安装</h3><p>必须先安装，vim才能调用</p><blockquote><p>git clone --depth 1 <a href="https://github.com/junegunn/fzf.git">https://github.com/junegunn/fzf.git</a> ~/.fzf<br>~/.fzf/install</p></blockquote><h3 id="2-vim-安装"><a href="#2-vim-安装" class="headerlink" title="2.vim 安装"></a>2.vim 安装</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&quot; fzf#install() 确保你安装了最新的 fzf</span></span><br><span class="line">Plug <span class="string">&#x27;junegunn/fzf&#x27;</span>, &#123; <span class="string">&#x27;do&#x27;</span>: &#123; -&gt; fzf#install() &#125; &#125;</span><br><span class="line">Plug <span class="string">&#x27;junegunn/fzf.vim&#x27;</span></span><br></pre></td></tr></table></figure><p>3.命令</p><blockquote><p>:Files 搜索文件<br>:Gfile 查找git文件<br>:His   查看历史<br>space a 全局搜这个好用</p></blockquote><p>到这里，我们的<code>vim-IDE</code>进化在文本操作这块基本已经差不多了，接下来就是关于编程方面的配置。</p><h2 id="完整配置"><a href="#完整配置" class="headerlink" title="完整配置"></a>完整配置</h2><pre><code class="vim"></code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前已经介绍过了 ctrlp 这个工具为什么还需要 fzf 这个工具。&lt;br&gt;因为这两者在使用方式上有一些区别。&lt;br&gt;fzf 是可以直接在 mac 上调用出来，并且集成在 vim 当中使用。&lt;/p&gt;
+&lt;h2 id=&quot;官网&quot;&gt;&lt;a href=&quot;#官网&quot; class=&quot;hea
+      
+    
+    </summary>
+    
+      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+    
+      <category term="linux、vim" scheme="https://liukay.com/categories/linux%E3%80%81vim/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+    
+      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+    
+      <category term="插件" scheme="https://liukay.com/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="ide" scheme="https://liukay.com/tags/ide/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/tags/plugin/"/>
+    
+      <category term="fzf" scheme="https://liukay.com/tags/fzf/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo markdown 单眼号变成中文单眼号解决</title>
@@ -67,9 +149,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -85,9 +167,9 @@
     <link href="https://liukay.com/posts/a6430b8b.html"/>
     <id>https://liukay.com/posts/a6430b8b.html</id>
     <published>2022-01-15T05:55:20.000Z</published>
-    <updated>2022-01-15T07:04:09.703Z</updated>
+    <updated>2022-01-31T15:31:47.444Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>今天介绍一下vim的别一个非常好用的插件，启动界面插件 vim-startify。<br>这个插件有什么用呢，看效果：</p><p><img src="/posts/a6430b8b/%E5%90%AF%E5%8A%A8%E7%95%8C%E9%9D%A2.png" alt="启动界面"></p><p>中间是最近打开的文件，可能通过数字快数打开文件，界面可以设置找开和关闭。</p><h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h3 id="1-vim插件安装"><a href="#1-vim插件安装" class="headerlink" title="1.vim插件安装"></a>1.vim插件安装</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plug <span class="string">&#x27;mhinz/vim-startify&#x27;</span></span><br></pre></td></tr></table></figure><h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>配置不是必须项目，当然一般情况下，都会习惯自己一的快捷键。</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; Startify 设置</span></span><br><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; 修改其中的内容去获得更好的体验。</span></span><br><span class="line"><span class="comment">&quot;设置书签</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_bookmarks</span>= [</span><br><span class="line">            \ <span class="string">&#x27;~//Workspace/&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="comment">&quot;起始页显示的列表长度</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_files_number</span> = <span class="number">10</span></span><br><span class="line"><span class="comment">&quot;自动加载session</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_session_autoload</span> = <span class="number">1</span></span><br><span class="line"><span class="comment">&quot;过滤列表，支持正则表达式</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_skiplist</span> = [</span><br><span class="line">       \ <span class="string">&#x27;^/tmp&#x27;</span>,</span><br><span class="line">       \ ]</span><br><span class="line"><span class="comment">&quot;自定义Header和Footer</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_header</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|    Still waters run deep!    |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_footer</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|     Keep an open mind!       |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"></span><br><span class="line"><span class="comment">&quot; 自己完成的脚本，判断打开文件是否存在。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">SomeCheck</span><span class="params">()</span></span></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">filereadable</span>(<span class="built_in">expand</span>(<span class="string">&quot;%&quot;</span>))</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;SpecificFile exists&quot;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     <span class="keyword">autocmd</span> VimEnter * Startify</span><br><span class="line">  <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> SomeCheck()</span><br></pre></td></tr></table></figure><p>脚本中的代码部分是解决，在不同位置启动后，找不到文件时会报错<br>function!<br>endfunction 固定一对</p><p>内置函数，% 表示当前路径，也表示当前文件路径<br>expand(&quot;%&quot;)<br>call 执行函数</p><p>可以自行偿试注释掉脚本部份复现问题。</p><p>到这一步vim的IDE进行启动界面就完成了，通过这些插件提高平时写文档的效率是够用的。</p><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><h3 id="github"><a href="#github" class="headerlink" title="github"></a>github</h3><p><a href="https://github.com/mhinz/vim-startify">https://github.com/mhinz/vim-startify</a></p><h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><blockquote><p>:h startify<br>:h startify-faq</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>今天介绍一下vim的别一个非常好用的插件，启动界面插件 vim-startify。<br>这个插件有什么用呢，看效果：</p><p><img src="/posts/a6430b8b/%E5%90%AF%E5%8A%A8%E7%95%8C%E9%9D%A2.png" alt="启动界面"></p><p>中间是最近打开的文件，可能通过数字快数打开文件，界面可以设置找开和关闭。</p><h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h3 id="1-vim插件安装"><a href="#1-vim插件安装" class="headerlink" title="1.vim插件安装"></a>1.vim插件安装</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> plug#begin(<span class="string">&#x27;~/.vim/plugged&#x27;</span>)</span><br><span class="line">Plug <span class="string">&#x27;scrooloose/nerdtree&#x27;</span>, &#123; <span class="string">&#x27;on&#x27;</span>: <span class="string">&#x27;NERDTreeToggle&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">call</span> plug#end()</span><br></pre></td></tr></table></figure><h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>配置不是必须项目，当然一般情况下，都会习惯自己一的快捷键。<br>另外书签功能是个很好用的功能，把常用的文件直接加入书签，如果书签加入是个目录，也安装了ranger 插件，可以直接调用 ranger 这个插件。</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; Startify 设置</span></span><br><span class="line"><span class="comment">&quot;=========================================</span></span><br><span class="line"><span class="comment">&quot; 修改其中的内容去获得更好的体验。</span></span><br><span class="line"><span class="comment">&quot;设置书签</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_bookmarks</span>= [</span><br><span class="line">            \ <span class="string">&#x27;~/workspaces/&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;~/.config/nvim/init.vim&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="comment">&quot;起始页显示的列表长度</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_files_number</span> = <span class="number">10</span></span><br><span class="line"><span class="comment">&quot;自动加载session</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_session_autoload</span> = <span class="number">1</span></span><br><span class="line"><span class="comment">&quot;过滤列表，支持正则表达式</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_skiplist</span> = [</span><br><span class="line">       \ <span class="string">&#x27;^/tmp&#x27;</span>,</span><br><span class="line">       \ ]</span><br><span class="line"><span class="comment">&quot;自定义Header和Footer</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_header</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|    Still waters run deep!    |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|                              |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"><span class="keyword">let</span> <span class="variable">g:startify_custom_footer</span> = [</span><br><span class="line">            \ <span class="string">&#x27;+------------------------------+&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;|     Keep an open mind!       |&#x27;</span>,</span><br><span class="line">            \ <span class="string">&#x27;+----------------+-------------+&#x27;</span>,</span><br><span class="line">            \]</span><br><span class="line"></span><br><span class="line"><span class="comment">&quot; 自己完成的脚本，判断打开文件是否存在。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>! <span class="title">SomeCheck</span><span class="params">()</span></span></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">filereadable</span>(<span class="built_in">expand</span>(<span class="string">&quot;%&quot;</span>))</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;SpecificFile exists&quot;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     <span class="keyword">autocmd</span> VimEnter * Startify</span><br><span class="line">  <span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> SomeCheck()</span><br></pre></td></tr></table></figure><p>脚本中的代码部分是解决，在不同位置启动后，找不到文件时会报错<br>function!<br>endfunction 固定一对</p><p>内置函数，% 表示当前路径，也表示当前文件路径<br>expand(&quot;%&quot;)<br>call 执行函数</p><p>可以自行偿试注释掉脚本部份复现问题。</p><p>到这一步vim的IDE进行启动界面就完成了，通过这些插件提高平时写文档的效率是够用的。</p><h3 id="书签功能"><a href="#书签功能" class="headerlink" title="书签功能"></a>书签功能</h3><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><h3 id="github"><a href="#github" class="headerlink" title="github"></a>github</h3><p><a href="https://github.com/mhinz/vim-startify">https://github.com/mhinz/vim-startify</a></p><h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><blockquote><p>:h startify<br>:h startify-faq</p></blockquote>]]></content>
     
     <summary type="html">
     
@@ -212,9 +294,9 @@
       <category term="Tendermint" scheme="https://liukay.com/categories/Tendermint/"/>
     
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
       <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+    
+      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
       <category term="tendermint" scheme="https://liukay.com/tags/tendermint/"/>
     
@@ -361,9 +443,9 @@
     
       <category term="matic" scheme="https://liukay.com/tags/matic/"/>
     
-      <category term="polygon" scheme="https://liukay.com/tags/polygon/"/>
-    
       <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+    
+      <category term="polygon" scheme="https://liukay.com/tags/polygon/"/>
     
   </entry>
   
@@ -394,9 +476,9 @@
     
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
-      <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="mysql" scheme="https://liukay.com/tags/mysql/"/>
+    
+      <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -463,9 +545,9 @@
     
       <category term="java" scheme="https://liukay.com/tags/java/"/>
     
-      <category term="idea" scheme="https://liukay.com/tags/idea/"/>
-    
       <category term="ide" scheme="https://liukay.com/tags/ide/"/>
+    
+      <category term="idea" scheme="https://liukay.com/tags/idea/"/>
     
   </entry>
   
@@ -533,9 +615,9 @@
       <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
     
     
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
-    
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
+    
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
     
       <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
     
@@ -632,69 +714,6 @@
       <category term="java" scheme="https://liukay.com/tags/java/"/>
     
       <category term="idea" scheme="https://liukay.com/tags/idea/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>netty 构建一个简易服务</title>
-    <link href="https://liukay.com/posts/fab0cb81.html"/>
-    <id>https://liukay.com/posts/fab0cb81.html</id>
-    <published>2021-11-19T08:08:20.000Z</published>
-    <updated>2021-11-19T08:51:28.496Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用 IDEA + netty + gradle 构建一个简单的HTTP服务，用来学习netty。</p><h2 id="主要角色"><a href="#主要角色" class="headerlink" title="主要角色"></a>主要角色</h2><p>netty 构建一个服务，需要三个角色参与</p><ol><li>Server 运行服务</li><li>Initializer 组装组件</li><li>Handle 业秋处理</li></ol><h2 id="项目构建"><a href="#项目构建" class="headerlink" title="项目构建"></a>项目构建</h2><p>添加 build.gradle，复制内容</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插件管理</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//座标</span></span><br><span class="line"><span class="keyword">group</span> <span class="string">&#x27;com.liukai.netty&#x27;</span></span><br><span class="line">version <span class="string">&#x27;1.0-SNAPSHOT&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//源和目标编译版本</span></span><br><span class="line"><span class="keyword">sourceCompatibility</span> = <span class="number">1.8</span></span><br><span class="line"><span class="keyword">targetCompatibility</span> = <span class="number">1.8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//仓库，这里使用 maven 远程仓库，也就是说本没有，就去远程获取</span></span><br><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//依赖管理</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">//测试用名，不用打到生产包中</span></span><br><span class="line">    <span class="comment">//group是 maven 的 group, name 是 artifactId, version 相同</span></span><br><span class="line">    testCompile <span class="keyword">group</span>: <span class="string">&#x27;junit&#x27;</span>, name: <span class="string">&#x27;junit&#x27;</span>, version: <span class="string">&#x27;4.12&#x27;</span></span><br><span class="line">    <span class="comment">//等价写法，推荐 group:artifactId:version</span></span><br><span class="line">    testCompile(</span><br><span class="line">            <span class="string">&quot;junit:junit:4.12&quot;</span></span><br><span class="line">            <span class="comment">//多行逗号隔开</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment">//编译的包</span></span><br><span class="line">    <span class="keyword">compile</span>(</span><br><span class="line">            <span class="string">&quot;io.netty:netty-all:4.1.10.Final&quot;</span></span><br><span class="line">            <span class="comment">//多行逗号隔开</span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="服务器-NettyServer"><a href="#服务器-NettyServer" class="headerlink" title="服务器 NettyServer"></a>服务器 NettyServer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liukai.netty.test01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.netty.bootstrap.ServerBootstrap;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.ChannelFuture;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.EventLoopGroup;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.nio.NioEventLoopGroup;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.socket.nio.NioServerSocketChannel;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建 http 服务器</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liu kai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2019-12-29 22:03</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NettyServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"></span><br><span class="line">        ServerBootstrap bootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">        bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)</span><br><span class="line">                .childHandler(<span class="keyword">new</span> NettyChannelInitializer());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ChannelFuture channelFuture = bootstrap.bind(<span class="number">8889</span>).sync();</span><br><span class="line">            channelFuture.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            bossGroup.shutdownGracefully();</span><br><span class="line">            workerGroup.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="组装组件-NettyChannelInitializer"><a href="#组装组件-NettyChannelInitializer" class="headerlink" title="组装组件 NettyChannelInitializer"></a>组装组件 NettyChannelInitializer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liukai.netty.test01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.netty.channel.ChannelInitializer;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.ChannelPipeline;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.socket.SocketChannel;</span><br><span class="line"><span class="keyword">import</span> io.netty.handler.codec.http.HttpServerCodec;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 渠道构建</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liu kai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2019-12-29 22:03</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NettyChannelInitializer</span> <span class="keyword">extends</span> <span class="title">ChannelInitializer</span>&lt;<span class="title">SocketChannel</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这是一个回调的方法，在channel被注册时被调用</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ChannelPipeline pipeline = ch.pipeline();</span><br><span class="line">        <span class="comment">//这里看一下源码</span></span><br><span class="line">        pipeline.addLast(<span class="string">&quot;httpServerCodec&quot;</span>, <span class="keyword">new</span> HttpServerCodec());</span><br><span class="line">        <span class="comment">//增加一个自己定义的处理器handel</span></span><br><span class="line">        pipeline.addLast(<span class="string">&quot;testHttpServerHandler&quot;</span>, <span class="keyword">new</span> NettyServerHandle());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="Handle-业务处理器-NettyServerHandle"><a href="#Handle-业务处理器-NettyServerHandle" class="headerlink" title="Handle 业务处理器 NettyServerHandle"></a>Handle 业务处理器 NettyServerHandle</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liukai.netty.test01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.netty.buffer.ByteBuf;</span><br><span class="line"><span class="keyword">import</span> io.netty.buffer.Unpooled;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.ChannelHandlerContext;</span><br><span class="line"><span class="keyword">import</span> io.netty.channel.SimpleChannelInboundHandler;</span><br><span class="line"><span class="keyword">import</span> io.netty.handler.codec.http.*;</span><br><span class="line"><span class="keyword">import</span> io.netty.util.CharsetUtil;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务处理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liu kai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2019-12-29 22:02</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NettyServerHandle</span> <span class="keyword">extends</span> <span class="title">SimpleChannelInboundHandler</span>&lt;<span class="title">HttpObject</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 继承InboundHandler类，代表处理进入的请求，还有OutboundHandler,处理出去请求</span></span><br><span class="line"><span class="comment">     * 其中里面的泛型表示msg的类型，如果指定了HttpObject，表明这是个HTTP连接的对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">channelRead0</span><span class="params">(ChannelHandlerContext ctx, HttpObject msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//channelRead0读取客户端请求，并返回响应的方法</span></span><br><span class="line">        <span class="comment">//如果不加这个判断使用curl 测试会报错，使用curl测试命令curl &quot;http://localhost:8899&quot;</span></span><br><span class="line">        <span class="comment">//判断这个是不是httpRequest请求</span></span><br><span class="line">        <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> HttpRequest) &#123;</span><br><span class="line">            System.out.println(msg.getClass());</span><br><span class="line">            System.out.println(ctx.channel().remoteAddress());</span><br><span class="line">            HttpRequest httpRequest = (HttpRequest) msg;</span><br><span class="line">            URI uri = <span class="keyword">new</span> URI(httpRequest.getUri());</span><br><span class="line">            ctx.channel().closeFuture();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;/favicon.ico&quot;</span>.equals(uri.getPath())) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;chrome 请求 favicon&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;请求方法名: &quot;</span> + httpRequest.getMethod().name());</span><br><span class="line">            <span class="comment">//ByteBuf 是netty中的重要概念，代表响应返回的数据</span></span><br><span class="line">            ByteBuf content = Unpooled.copiedBuffer(<span class="string">&quot;Hello World&quot;</span>, CharsetUtil.UTF_8);</span><br><span class="line">            FullHttpResponse response = <span class="keyword">new</span> DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);</span><br><span class="line">            response.headers().set(HttpHeaderNames.CONTENT_TYPE, <span class="string">&quot;text/plain&quot;</span>);</span><br><span class="line">            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());</span><br><span class="line">            <span class="comment">//如果只是调用write方法，他仅仅是存在缓冲区里，并不会返回客户端</span></span><br><span class="line">            <span class="comment">//调用writeAndFlush可以</span></span><br><span class="line">            ctx.writeAndFlush(response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p><img src="/posts/fab0cb81/1.jpg" alt="验证"></p><p>控制台输出</p><p><img src="/posts/fab0cb81/2.jpg" alt="控制台输出"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;使用 IDEA + netty + gradle 构建一个简单的HTTP服务，用来学习netty。&lt;/p&gt;
-&lt;h2 id=&quot;主要角色&quot;&gt;&lt;a href=&quot;#主要角色&quot; class=&quot;headerlink&quot; title=&quot;主要角色&quot;&gt;&lt;/a&gt;主要角色&lt;/h2&gt;&lt;p&gt;netty
-      
-    
-    </summary>
-    
-      <category term="java" scheme="https://liukay.com/categories/java/"/>
-    
-      <category term="netty" scheme="https://liukay.com/categories/java/netty/"/>
-    
-    
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
-    
-      <category term="通信" scheme="https://liukay.com/tags/%E9%80%9A%E4%BF%A1/"/>
-    
-      <category term="netty" scheme="https://liukay.com/tags/netty/"/>
-    
-      <category term="服务" scheme="https://liukay.com/tags/%E6%9C%8D%E5%8A%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>netty 简述</title>
-    <link href="https://liukay.com/posts/9321f70b.html"/>
-    <id>https://liukay.com/posts/9321f70b.html</id>
-    <published>2021-11-16T07:07:38.000Z</published>
-    <updated>2021-11-20T13:04:36.763Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="什么是netty"><a href="#什么是netty" class="headerlink" title="什么是netty"></a>什么是netty</h2><p>Netty是一个异步的基于事件驱动(Reactor)的网络框架。<br>Netty是一个NIO客户服务器框架，它能够快速和容易地开发网络应用，如协议服务器和客户端。它大大简化了网络编程，如TCP和UDP套接字服务器。</p><h2 id="为什么选择netty"><a href="#为什么选择netty" class="headerlink" title="为什么选择netty"></a>为什么选择netty</h2><p>主要原因是 netty 简化了使用nio时对网络编程的复杂性，提供更多的抽象性和功能方便网络编程开发。</p><p>列举一个特点：<br>1.Netty支持三种IO模型同时支持三种Reactor模式。</p><p>2.Netty支持很多应用层的协议，提供了很多decoder和encoder。</p><p>3.Netty能够解决TCP长连接所带来的缺陷（粘包、半包等）</p><p>4.Netty支持应用层的KeepAlive。</p><p>5.Netty规避了JAVA NIO中的很多BUG，性能更好。</p><h2 id="使用-netty-能做什么"><a href="#使用-netty-能做什么" class="headerlink" title="使用 netty 能做什么"></a>使用 netty 能做什么</h2><p>1.实现节点间通信<br>2.实现自己的协议<br> dubbo、rocketmq 等底层都使用 netty 实现自己的协议</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;什么是netty&quot;&gt;&lt;a href=&quot;#什么是netty&quot; class=&quot;headerlink&quot; title=&quot;什么是netty&quot;&gt;&lt;/a&gt;什么是netty&lt;/h2&gt;&lt;p&gt;Netty是一个异步的基于事件驱动(Reactor)的网络框架。&lt;br&gt;Netty是一个NI
-      
-    
-    </summary>
-    
-      <category term="java" scheme="https://liukay.com/categories/java/"/>
-    
-      <category term="netty" scheme="https://liukay.com/categories/java/netty/"/>
-    
-    
-      <category term="netty" scheme="https://liukay.com/tags/netty/"/>
-    
-      <category term="简述" scheme="https://liukay.com/tags/%E7%AE%80%E8%BF%B0/"/>
     
   </entry>
   
