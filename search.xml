@@ -966,11 +966,11 @@
             
             <tag> Tendermint </tag>
             
-            <tag> BlockChain </tag>
-            
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
+            
+            <tag> BlockChain </tag>
             
         </tags>
       
@@ -2562,11 +2562,11 @@
             
             <tag> java </tag>
             
+            <tag> 算法 </tag>
+            
             <tag> spring boot </tag>
             
             <tag> spring </tag>
-            
-            <tag> 算法 </tag>
             
         </tags>
       
@@ -2671,9 +2671,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> hibernate </tag>
+            
+            <tag> spring boot </tag>
             
         </tags>
       
@@ -3401,9 +3401,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> 概述 </tag>
+            
+            <tag> spring boot </tag>
             
         </tags>
       
@@ -5030,14 +5030,12 @@
       <link href="posts/fcdeeeaa.html"/>
       <url>posts/fcdeeeaa.html</url>
       
-        <content type="html"><![CDATA[<p>很多目录是看着眼熟，但是不知道用来干什么的，了解清楚每个目录的作用在开发开发功能、定位问题都致关重要。<br>比如从网下安装了一个二进制的工具，这个工具安装在哪个目录下？<br>比如wget在哪个目录下可以找到？<br>挂载了USB设备，去个目录下读文件？<br>SSH-KEY 在哪个目录下？<br>等等，都需要对系统目录有一个基本了解。</p><h2 id="系统目录"><a href="#系统目录" class="headerlink" title="系统目录"></a>系统目录</h2><h3 id="根目录"><a href="#根目录" class="headerlink" title="/ 根目录"></a>/ 根目录</h3><p>每一个文件和目录都是从根目录开始的<br>root用户具有该目录下的写权限。</p><h3 id="root"><a href="#root" class="headerlink" title="/root"></a>/root</h3><p>是root 用户的主目录，这与/.不一样</p><h3 id="bin-用户二进制文件"><a href="#bin-用户二进制文件" class="headerlink" title="/bin 用户二进制文件"></a>/bin 用户二进制文件</h3><p>bin即，binary。<br>二进制文件，就是可执行文件，说白就是可执行的程序，一般以命令形式执行。<br>用户的可执行文件一般放在这里。<br>存储linux系统自有的所有命令，可以cd bin去查看，里面有比如cp、ls这样系统命令。<br>就连 cd　这个命令也是在bin下面的。</p><p>常用的可执行文件</p><blockquote><p>/bin      如：bash、cat、ls、cd、rm、touch<br>/usr/bin  主要放置应用程序工具的必备执行文件，如：c++、g++、gcc、ncftp</p></blockquote><h3 id="sbin-系统二进制文件"><a href="#sbin-系统二进制文件" class="headerlink" title="/sbin 系统二进制文件"></a>/sbin 系统二进制文件</h3><p>就像/bin一样，/sbin 同样包含二进制可执行文件。<br>sbin 全称：system bin<br>说白了就是一堆工具所需要的命令，bin里装的都是内核所需要命令。sbin里的命令在就像是用yum安装工具后的工具命令的存放处。</p><blockquote><p>/sbin          系统管理的必备程序，如：iptables、reboot、fdisk、ifconfig<br>/usr/sbin      主要放置网路管理的必备程序，例如: dhcpd、httpd、imap、inetd、lpd、named</p></blockquote><h3 id="etc-系统配置"><a href="#etc-系统配置" class="headerlink" title="/etc 系统配置"></a>/etc 系统配置</h3><p>包含: 系统配置、一些服务配置、帐号密码、应用配置。<br>我装了httpd配置也在这里。<br>也包含了用于启动/停止单个程序的启动和关闭shell脚本。<br>例如：</p><blockquote><p>/etc/profile    系统变量、环境变量<br>/etc/resolv.conf<br>/etc/logrotate.conf</p></blockquote><h3 id="dev"><a href="#dev" class="headerlink" title="/dev"></a>/dev</h3><p>装所有的硬件设备的目录</p><p>dev命名规则</p><blockquote><p>xx        磁盘类型<br>y        第几个接口<br>N        分区编号</p></blockquote><p>举例：</p><blockquote><p>/dev/xxyN                规则<br>/dev/hda                //hd 表示IDE硬盘    a表示第一个接口<br>/dev/hdb                //hd 表示IDE硬盘    b表示第一个接口<br>/dev/sdb                //sd 表示SCSI硬盘   b表示第二个接口<br>abcd         表示插在主板上的哪个接口<br>扩展分区不能直接使用，是用必拆分出更多的逻辑分区，扩展分没有个数限制。</p></blockquote><p>N表示分区<br>主分区、扩展分区 1-4编号<br>逻辑分区 从5开始算第一个编号<br>理解：以树型结构来理解：</p><blockquote><p>|-----hda1主分区                        //相当于C:<br>|----------hda2 扩展分区                    //相当于windows 中的扩展分区<br>|----------------hda5 逻辑分区         //相当于D:<br>|----------------hda6 逻辑分区<br>|----------------hdaN 逻辑分区</p></blockquote><p>例<br>/dev/hda6        主板的第一个接口的和一个逻辑分区</p>]]></content>
+        <content type="html"><![CDATA[<p>很多目录是看着眼熟，但是不知道用来干什么的，了解清楚每个目录的作用在开发开发功能、定位问题都致关重要。<br>比如从网下安装了一个二进制的工具，这个工具安装在哪个目录下？<br>比如wget在哪个目录下可以找到？<br>挂载了USB设备，去个目录下读文件？<br>SSH-KEY 在哪个目录下？<br>等等，都需要对系统目录有一个基本了解。</p><h2 id="系统目录"><a href="#系统目录" class="headerlink" title="系统目录"></a>系统目录</h2><h3 id="根目录"><a href="#根目录" class="headerlink" title="/ 根目录"></a>/ 根目录</h3><p>每一个文件和目录都是从根目录开始的<br>root用户具有该目录下的写权限。</p><h3 id="root"><a href="#root" class="headerlink" title="/root"></a>/root</h3><p>是root 用户的主目录，这与/.不一样</p><h3 id="bin-用户二进制文件"><a href="#bin-用户二进制文件" class="headerlink" title="/bin 用户二进制文件"></a>/bin 用户二进制文件</h3><p>bin即，binary。<br>二进制文件，就是可执行文件，说白就是可执行的程序，一般以命令形式执行。<br>用户的可执行文件一般放在这里。<br>存储linux系统自有的所有命令，可以cd bin去查看，里面有比如cp、ls这样系统命令。<br>就连 cd　这个命令也是在bin下面的。</p><p>常用的可执行文件</p><blockquote><p>/bin      如：bash、cat、ls、cd、rm、touch<br>/usr/bin  主要放置应用程序工具的必备执行文件，如：c++、g++、gcc、ncftp</p></blockquote><h3 id="sbin-系统二进制文件"><a href="#sbin-系统二进制文件" class="headerlink" title="/sbin 系统二进制文件"></a>/sbin 系统二进制文件</h3><p>就像/bin一样，/sbin 同样包含二进制可执行文件。<br>sbin 全称：system bin<br>说白了就是一堆工具所需要的命令，bin里装的都是内核所需要命令。sbin里的命令在就像是用yum安装工具后的工具命令的存放处。</p><blockquote><p>/sbin          系统管理的必备程序，如：iptables、reboot、fdisk、ifconfig<br>/usr/sbin      主要放置网路管理的必备程序，例如: dhcpd、httpd、imap、inetd、lpd、named</p></blockquote><h3 id="etc-系统配置"><a href="#etc-系统配置" class="headerlink" title="/etc 系统配置"></a>/etc 系统配置</h3><p>包含: 系统配置、一些服务配置、帐号密码、应用配置。<br>我装了httpd配置也在这里。<br>也包含了用于启动/停止单个程序的启动和关闭shell脚本。<br>例如：</p><blockquote><p>/etc/profile    系统变量、环境变量<br>/etc/resolv.conf<br>/etc/logrotate.conf</p></blockquote><h3 id="dev"><a href="#dev" class="headerlink" title="/dev"></a>/dev</h3><p>装所有的硬件设备的目录</p><p>dev命名规则</p><blockquote><p>xx        磁盘类型<br>y        第几个接口<br>N        分区编号</p></blockquote><p>举例：</p><blockquote><p>/dev/xxyN                规则<br>/dev/hda                //hd 表示IDE硬盘    a表示第一个接口<br>/dev/hdb                //hd 表示IDE硬盘    b表示第一个接口<br>/dev/sdb                //sd 表示SCSI硬盘   b表示第二个接口<br>abcd         表示插在主板上的哪个接口<br>扩展分区不能直接使用，是用必拆分出更多的逻辑分区，扩展分没有个数限制。</p></blockquote><p>N表示分区<br>主分区、扩展分区 1-4编号<br>逻辑分区 从5开始算第一个编号<br>理解：以树型结构来理解：</p><blockquote><p>|-----hda1主分区                        //相当于C:<br>|----------hda2 扩展分区                    //相当于windows 中的扩展分区<br>|----------------hda5 逻辑分区         //相当于D:<br>|----------------hda6 逻辑分区<br>|----------------hdaN 逻辑分区</p></blockquote><p>例<br>/dev/hda6        主板的第一个接口的和一个逻辑分区</p><h3 id="tmp"><a href="#tmp" class="headerlink" title="/tmp"></a>/tmp</h3><p>包含系统和用户创建的临时文件。<br>当系统重新启动时，这个目录下的文件都将被删除。</p><h3 id="var变量文件目录"><a href="#var变量文件目录" class="headerlink" title="/var变量文件目录"></a>/var变量文件目录</h3><p>这个目录下可以找到内容可能增长的文件<br>这包括：</p><ol><li>系统日志文件（/var/log）;</li><li>包和数据库文件（/var/lib）;</li><li>电子邮件（/var/mail）;</li><li>打印队列（/var/spool）;</li><li>锁文件（/var/lock）;</li><li>多次重新启动需要的临时文件（/var/tmp）;</li></ol><h3 id="proc-文件系统"><a href="#proc-文件系统" class="headerlink" title="/proc 文件系统"></a>/proc 文件系统</h3><p>Linux 内核提供的一种伪文件系统，可以在运行时访问内核内部数据结构、改变内核设置的机制<br>这个文件系统只能存在于内存当中，不占用外部空间。它以文件系统的方式为访问系统内核数据提供接口。</p><p>作用：<br>1.用户和程序可以通过proc得到系统信息，并可以改变内核的某些参数。</p><p>三个重要的子目录：<br>net、scsi、sys。</p><ol><li>sys目录是可写的，通过他可以攸 改内核的参数。</li><li>net、scsi、依赖于内核，如果内核不支持则sisc目录不存在</li><li>以数字命名的目录是系统的进程目录。是以pid号为目录名。它们是读取进程信息的接口。</li><li>self目录则是读取进程本身的信息接口，是一个link。</li></ol><p>测了一下，比如查看系时间:<br>cd /proc/uptime    //有个白色文件说明是文本文件<br>vi uptime          //查看到系统运行的时间，是以豪秒计算的。<br>几乎所有跟系统相关的东西都可以被查到。</p><h3 id="usr-存放应用程序的目录"><a href="#usr-存放应用程序的目录" class="headerlink" title="/usr 存放应用程序的目录"></a>/usr 存放应用程序的目录</h3><p>/usr/bin  应用程序的存放目录。<br>yum 就装在bin这个目录下。</p><p>说明：应用程序和命令是不同的概念。</p><p>子目录说明：</p><blockquote><p>/usr/bin      普通应用，包含用户的二进制文件如果在bin中找不到用户的二进制程序文件，可以到这里找。<br>/usr/sbin     服务器应用s表示server，包含系统的二进制文件，同要可以来这找sbin中没有的文件<br>/usr/bin      包含了/usr/bin 和 /usr/sbin用到的库<br>/usr/etc      配置</p></blockquote><p>用了一段时间后，发现一般开发都把应有装在 /usr/local 这个目录下。</p><p>/usr目录的由来，看了网上的分析很有意思。<br>大部分观点认为：<br>usr 是 unix system resources 的缩写；<br>usr 是 user 的缩写；<br>usr 是 unix software resources 的缩写。<br>但是这错的，user目录的真身是/home。<br>现代的/usr 只是纯粹的存放用户的各种应用程序。</p><h3 id="boot-引导加载程序文件"><a href="#boot-引导加载程序文件" class="headerlink" title="/boot 引导加载程序文件"></a>/boot 引导加载程序文件</h3><p>内核的initrd、vmlinux、grub文件位于/boot下。<br>系统内核、引导文件、GRUB或LILO</p><h3 id="opt-可选的附加应用"><a href="#opt-可选的附加应用" class="headerlink" title="/opt  可选的附加应用"></a>/opt  可选的附加应用</h3><p>应该是 options 的缩写<br>opt代表可选的。<br>包含从个别厂商的附加应用程序。<br>附加应用程序应该安装在/opt/或者/opt/的子目录下。</p><h3 id="mnt-挂载目录"><a href="#mnt-挂载目录" class="headerlink" title="/mnt 挂载目录"></a>/mnt 挂载目录</h3><p>临时安装目录，系统管理员可以挂载文件系统。<br>什么叫临时安装?<br>我自己的理解是，不是随系统启时加载的硬件，比如，移动硬盘，U盘，投影仪等。这windows下添加设备的过程是自动化的，在linux下需要手动添加。<br>mmt = mount 的缩写</p><p>挂载的设备会在/mnt下多也一个设备目录，里面包含了设备文件。</p><h3 id="media-多媒体"><a href="#media-多媒体" class="headerlink" title="/media 多媒体"></a>/media 多媒体</h3><p>可移动媒体设备<br>用于挂载可移动设备的临时目录。<br>举例来说，挂载CD-ROM的/media/cdrom，挂载软盘驱动器的/media/floppy;</p>]]></content>
       
       
       <categories>
           
           <category> linux </category>
-          
-          <category> console </category>
           
       </categories>
       
