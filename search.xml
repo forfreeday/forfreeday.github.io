@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title>linux-系统默认目录说明</title>
-      <link href="posts/fcdeeeaa.html"/>
-      <url>posts/fcdeeeaa.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>vim-插件08-ranger文件管理</title>
       <link href="posts/1fd45dea.html"/>
       <url>posts/1fd45dea.html</url>
@@ -979,11 +966,11 @@
             
             <tag> Tendermint </tag>
             
+            <tag> BlockChain </tag>
+            
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
-            
-            <tag> BlockChain </tag>
             
         </tags>
       
@@ -4829,8 +4816,8 @@
     
     <entry>
       <title>console 的一些常用命令</title>
-      <link href="posts/48985.html"/>
-      <url>posts/48985.html</url>
+      <link href="posts/c6686eb3.html"/>
+      <url>posts/c6686eb3.html</url>
       
         <content type="html"><![CDATA[<p>linux 的命令行用了这么久的 linux 才开始整理这部分的内容，该罚站</p><h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ctrl + w    #往回删除一个单词，光标放在最末尾</span><br><span class="line"></span><br><span class="line">ctl + u     #删除光标以前的字符，其实这个是剪切</span><br><span class="line">ctl + k     #删除光标以后的字符</span><br><span class="line"></span><br><span class="line">ctrl + y    #粘贴由 ctrl+u 和 ctrl+w 剪走的单词</span><br><span class="line">ctrl + d    #从当前位置开始，向右边删除字符</span><br></pre></td></tr></table></figure><h3 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + l    #清屏</span><br><span class="line">ctrl + c    #另起一行</span><br></pre></td></tr></table></figure><h3 id="光标位置"><a href="#光标位置" class="headerlink" title="光标位置"></a>光标位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ctl + a     #移动光标至的字符头</span><br><span class="line">ctl + e     #移动光标至的字符尾</span><br><span class="line">ctrl + ?    #撤消前一次输入</span><br><span class="line"></span><br><span class="line">ctrl + s 锁住终端    #实际上只是不显示字符而已，命令照样执行。</span><br><span class="line">ctrl + q 解锁终端</span><br></pre></td></tr></table></figure><h3 id="历史和命令"><a href="#历史和命令" class="headerlink" title="历史和命令"></a>历史和命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl + r    #输入单词搜索历史命令，超好用</span><br><span class="line">ctrl + o    #重复执行命令</span><br></pre></td></tr></table></figure><h3 id="屏幕输出"><a href="#屏幕输出" class="headerlink" title="屏幕输出"></a>屏幕输出</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+S      #暂停屏幕输出</span><br><span class="line">Ctrl+Q      #继续屏幕输出</span><br></pre></td></tr></table></figure><h3 id="上下翻屏"><a href="#上下翻屏" class="headerlink" title="上下翻屏"></a>上下翻屏</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这个是找了N久才查到的命令</span><br><span class="line">shift + pageUp/pageDown        #纯linux console 下测试有效，但不能一翻到顶，网上说只能翻最近15页</span><br><span class="line">shift + home/end               #只有 xshell 下可用</span><br><span class="line">shift + 上/下                  #xshell 下可用</span><br></pre></td></tr></table></figure><h3 id="连续执行命令"><a href="#连续执行命令" class="headerlink" title="连续执行命令"></a>连续执行命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo commond 1 ; echo commond 1   #用 ; 分隔,不论前面成功失败，每条都会执行</span><br><span class="line">commond 1 &amp;&amp; commond 1        #第一条成功则后面执行</span><br><span class="line">commond 1 || commond 1        #第一条失败，才执行</span><br></pre></td></tr></table></figure>]]></content>
       
@@ -4849,6 +4836,8 @@
             <tag> linux </tag>
             
             <tag> console </tag>
+            
+            <tag> 命令行 </tag>
             
         </tags>
       
@@ -5029,6 +5018,37 @@
             <tag> 存储设计 </tag>
             
             <tag> 设计 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>linux-系统默认目录说明</title>
+      <link href="posts/fcdeeeaa.html"/>
+      <url>posts/fcdeeeaa.html</url>
+      
+        <content type="html"><![CDATA[<p>很多目录是看着眼熟，但是不知道用来干什么的，了解清楚每个目录的作用在开发开发功能、定位问题都致关重要。<br>比如从网下安装了一个二进制的工具，这个工具安装在哪个目录下？<br>比如wget在哪个目录下可以找到？<br>挂载了USB设备，去个目录下读文件？<br>SSH-KEY 在哪个目录下？<br>等等，都需要对系统目录有一个基本了解。</p><h2 id="系统目录"><a href="#系统目录" class="headerlink" title="系统目录"></a>系统目录</h2><h3 id="根目录"><a href="#根目录" class="headerlink" title="/ 根目录"></a>/ 根目录</h3><p>每一个文件和目录都是从根目录开始的<br>root用户具有该目录下的写权限。</p><h3 id="root"><a href="#root" class="headerlink" title="/root"></a>/root</h3><p>是root 用户的主目录，这与/.不一样</p><h3 id="bin-用户二进制文件"><a href="#bin-用户二进制文件" class="headerlink" title="/bin 用户二进制文件"></a>/bin 用户二进制文件</h3><p>bin即，binary。<br>二进制文件，就是可执行文件，说白就是可执行的程序，一般以命令形式执行。<br>用户的可执行文件一般放在这里。<br>存储linux系统自有的所有命令，可以cd bin去查看，里面有比如cp、ls这样系统命令。<br>就连 cd　这个命令也是在bin下面的。</p><p>常用的可执行文件</p><blockquote><p>/bin      如：bash、cat、ls、cd、rm、touch<br>/usr/bin  主要放置应用程序工具的必备执行文件，如：c++、g++、gcc、ncftp</p></blockquote><h3 id="sbin-系统二进制文件"><a href="#sbin-系统二进制文件" class="headerlink" title="/sbin 系统二进制文件"></a>/sbin 系统二进制文件</h3><p>就像/bin一样，/sbin 同样包含二进制可执行文件。<br>sbin 全称：system bin<br>说白了就是一堆工具所需要的命令，bin里装的都是内核所需要命令。sbin里的命令在就像是用yum安装工具后的工具命令的存放处。</p><blockquote><p>/sbin          系统管理的必备程序，如：iptables、reboot、fdisk、ifconfig<br>/usr/sbin      主要放置网路管理的必备程序，例如: dhcpd、httpd、imap、inetd、lpd、named</p></blockquote><h3 id="etc-系统配置"><a href="#etc-系统配置" class="headerlink" title="/etc 系统配置"></a>/etc 系统配置</h3><p>包含: 系统配置、一些服务配置、帐号密码、应用配置。<br>我装了httpd配置也在这里。<br>也包含了用于启动/停止单个程序的启动和关闭shell脚本。<br>例如：</p><blockquote><p>/etc/profile    系统变量、环境变量<br>/etc/resolv.conf<br>/etc/logrotate.conf</p></blockquote><h3 id="dev"><a href="#dev" class="headerlink" title="/dev"></a>/dev</h3><p>装所有的硬件设备的目录</p><p>dev命名规则</p><blockquote><p>xx        磁盘类型<br>y        第几个接口<br>N        分区编号</p></blockquote><p>举例：</p><blockquote><p>/dev/xxyN                规则<br>/dev/hda                //hd 表示IDE硬盘    a表示第一个接口<br>/dev/hdb                //hd 表示IDE硬盘    b表示第一个接口<br>/dev/sdb                //sd 表示SCSI硬盘   b表示第二个接口<br>abcd         表示插在主板上的哪个接口<br>扩展分区不能直接使用，是用必拆分出更多的逻辑分区，扩展分没有个数限制。</p></blockquote><p>N表示分区<br>主分区、扩展分区 1-4编号<br>逻辑分区 从5开始算第一个编号<br>理解：以树型结构来理解：</p><blockquote><p>|-----hda1主分区                        //相当于C:<br>|----------hda2 扩展分区                    //相当于windows 中的扩展分区<br>|----------------hda5 逻辑分区         //相当于D:<br>|----------------hda6 逻辑分区<br>|----------------hdaN 逻辑分区</p></blockquote><p>例<br>/dev/hda6        主板的第一个接口的和一个逻辑分区</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+          <category> console </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> console </tag>
+            
+            <tag> 命令行 </tag>
             
         </tags>
       
