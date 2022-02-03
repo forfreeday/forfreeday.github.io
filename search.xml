@@ -84,18 +84,18 @@
     
     
     <entry>
-      <title>tron-SR节点</title>
+      <title>tron-SR节点搭建</title>
       <link href="posts/fca30821.html"/>
       <url>posts/fca30821.html</url>
       
-        <content type="html"><![CDATA[<blockquote><p>波场的产块节点称为 Supper Node，官方文档称之为SR。</p></blockquote><p>波场使用DPOS共识算法，这个算法的特点是并不基于算力，而是基于股权证明来实现共识和产块。<br>DPOS共识算法后面会专门讲到一期。</p><h2 id="Supper-Node-SR"><a href="#Supper-Node-SR" class="headerlink" title="Supper Node(SR)"></a>Supper Node(SR)</h2><p>以下称Supper Node 为SR，官方SR节点为产块节点，共有27个SR节点。<br>这27个SR节点每隔3秒轮流负责产块，注意是<code>轮流</code>产块，即：节点A产块--&gt;节点B产块...依次类推。<br>这种产块方式相较于POW的共识，更加的节能省电，但是缺点也很明显，就是节点理论是更容易被控制作恶，只要半数节点被控制或者半数节点掌握在某个团队中，对于社区来说，并不为是一件好事，缺乏透明度。</p><p>成为 SR 的好处是，SR负责产块，产块后会获得产块奖励，这块奖励非常可观，SR可以产块后，可以分发获得的奖励给投票者。</p><h2 id="产块"><a href="#产块" class="headerlink" title="产块"></a>产块</h2><h3 id="超级代表"><a href="#超级代表" class="headerlink" title="超级代表"></a>超级代表</h3><p>产块者由所有用户投票，得票最多的<code>128个超级代表</code>成员中选出27个进行产块，实际官方的27个产块SR是在配置文件中写死的。<br>这27个SR节点即为产块者，如果其中一个节点挂掉后，会从超级代表中的成员节点顶上，继续进行产块。</p><h3 id="如何产块"><a href="#如何产块" class="headerlink" title="如何产块"></a>如何产块</h3><p>27个SR节点，分别进行产块。<br>27个节点分属于不同的机器上，如何确定严格的产块顺序。<br>这个是DPOS的灵魂，如果节点无法按照严格的顺序进行产块，那整个DPOS将无法成立。</p><p>通过确认创世块的时间点，并在启动时，通过Hash算法，算出自己的Slot来排序。</p><h3 id="时间周期"><a href="#时间周期" class="headerlink" title="时间周期"></a>时间周期</h3><h3 id="维护期"><a href="#维护期" class="headerlink" title="维护期"></a>维护期</h3><p><a href="https://tronscan.org/#/sr/representatives">查看超级代表</a></p><h2 id="搭建SR"><a href="#搭建SR" class="headerlink" title="搭建SR"></a>搭建SR</h2><p>搭建私有网络，可以验证SR节点的产块相关的原理和流程，甚至可以通过源码自己塔建一条自己的链。</p><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol><li>具备至少两个钱包账户的私钥与地址；</li><li>至少部署一个SuperNode用于出块；</li><li>至少部署一个FullNode节点用于同步区块、广播交易；</li><li>SuperNode与FullNode组成了私有网络，可以进行网络发现、区块同步、广播交易；</li></ol><p>波场的 SupperNode 是不对外暴露，最少需要一个FullNode成为一个对外的入口，将交易和区块转发到SupperNode节点当中。</p><h3 id="生成钱包账户"><a href="#生成钱包账户" class="headerlink" title="生成钱包账户"></a>生成钱包账户</h3><p>钱包账户通过TRON提供的钱包进行生成，有移动端和浏览器插件。<br>为了截图文件，直接通过浏览器插件进行生成账户和私钥。</p><img src="/posts/fca30821/创建钱包.png" width="50%" height="50%"><p>导出私钥</p><img src="/posts/fca30821/导出私钥.png" width="50%" height="50%"><h3 id="准备文件和程序"><a href="#准备文件和程序" class="headerlink" title="准备文件和程序"></a>准备文件和程序</h3><p>以下程序和配置文件放在同一个目录下，推荐直接下载官方源码进行编译，这样可以直接从项目中获得所有需要的文件、配置文件等，主要需要包含:</p><ol><li>配置文件 private_net_config.conf</li><li>主程序 FullNode.jar</li><li>启动脚本 start.sh(可选)</li></ol><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>获取官方提供的配置文件，可以单击这条链接查看配置文件</p><blockquote><p>wget <a href="https://raw.githubusercontent.com/tronprotocol/tron-deployment/master/private_net_config.conf">https://raw.githubusercontent.com/tronprotocol/tron-deployment/master/private_net_config.conf</a></p></blockquote><p>需要改几处配置</p><ol><li>在localwitness中添加自己的私钥</li><li>设置genesis.block.witnesses为私钥对应的地址</li><li>设置p2p.version为除了11111之外的任意正整数，如33333</li><li>第1个SR设置needSyncCheck为false，其他可以设置为true</li><li>设置node.discovery.enable为true</li></ol><p>解释一下上面的配置，官方没有说明，从源码中去分析出来的：</p><ol><li>如果自己是SR时，需要配置localwitness，开启本地模式，将自己初始化为witness</li></ol><img src="/posts/fca30821/localwitness.png" width="70%"><ol start="2"><li>配置自己成为默认的 witnesses，源码中分析，当轮到节点产块时，程序会从SR列表中获得默认SR，所以需要先进行配置</li><li>p2p.version，TRON官方主链中使用的是11111，为了不跟主链冲突<img src="/posts/fca30821/p2p_version.png" width="80%"></li><li>needSyncCheck 用来控制是否需要同步区块，当前只有一个节点，不会需要同步区块的</li></ol><img src="/posts/fca30821/needSyncCheck.png" width="70%"><ol start="5"><li>node.discovery.enable 这项是开启节点发现:</li></ol><img src="/posts/fca30821/node.discovery.enable配置.png" width="70%"><p>对源码有兴趣的朋友自行查看官方源码。</p><h4 id="获取最新的程序"><a href="#获取最新的程序" class="headerlink" title="获取最新的程序"></a>获取最新的程序</h4><p>从官方github上选择最新的release版本，选择<code>FullNode.jar</code>。</p><p>官方github: <a href="https://github.com/tronprotocol/java-tron">https://github.com/tronprotocol/java-tron</a></p><p>release: <a href="https://github.com/tronprotocol/java-tron/releases">https://github.com/tronprotocol/java-tron/releases</a></p><img src="/posts/fca30821/tron-release.png"><h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><p>获取官方启动脚本，这个脚本里对内存做了限制，最少不能低于8G内存，否则脚本限制不让启动。<br>如果内存低于这个配置的话，建议直接使用命令启动。</p><blockquote><p>wget <a href="https://raw.githubusercontent.com/tronprotocol/java-tron/develop/start.sh">https://raw.githubusercontent.com/tronprotocol/java-tron/develop/start.sh</a></p></blockquote><p>准备工作就完成了，然后就可以启动程序了。</p><h2 id="启动私链"><a href="#启动私链" class="headerlink" title="启动私链"></a>启动私链</h2><p>配置好之后，就可以进行本地私链部署并生产区块了。</p><blockquote><p>sh start.sh -w</p></blockquote><p>如果不想使用脚本，直接手动启动，直接使用命令</p><blockquote><p>nohup java -Xmx6g -jar FullNode.jar  --witness  -c private_net_config.conf &amp;&gt;/dev/null &amp;</p></blockquote><p>启动后会生成 logs/tron.log，查看日志，关键日志</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ hash&#x3D;0000000000000055cf5362a54801104d9d261b652e9db7b099c99247527b833d</span><br><span class="line">number&#x3D;85</span><br><span class="line">parentId&#x3D;000000000000005413ae634329790c4b944b18591a1a1b1705d65a3b6819f2a7</span><br><span class="line">witness address&#x3D;41763087eab1c1387954698d451ff9c6215b189430</span><br><span class="line">generated by myself&#x3D;true</span><br><span class="line">generate time&#x3D;2022-02-04 01:19:57.0</span><br><span class="line">account root&#x3D;0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">txs are empty</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>查看SR完整产块日志</p><p><img src="/posts/fca30821/SR%E4%BA%A7%E5%9D%97%E6%97%A5%E5%BF%97.png" alt="SR产块日志"></p><p>如果看到 <code>generate time</code> 这个日志，说明已经成功产块了，但是FullNode还没有部署，怎么就产块了，没有问题吗。<br>FullNode 的<code>主要</code>做用是转发，如果没有FullNode，SR接收不到交易和区块，产的块都是空块，在实际使用中需要测试SR的产块相关的功能，最好是部署上FullNode，搭建成一个完整的链。<br>节点个数的话，FullNode不限个数，SR最多27个，当然可以改源码调整个数，只要保证最终有2/3个节点来保证能完成共识就OK。有兴趣的话，可以一直探讨这个问题。</p><p>参考文档：</p><p><a href="https://tronprotocol.github.io/documentation-zh/architecture/network/">https://tronprotocol.github.io/documentation-zh/architecture/network/</a><br>官方文档中的 private_net_config.conf 地址有误，可以参考我文章中的配置。</p>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>波场的产块节点称为 Supper Node，官方文档称之为SR。</p></blockquote><p>波场使用DPOS共识算法，这个算法的特点是并不基于算力，而是基于股权证明来实现共识和产块。<br>DPOS共识算法后面会专门讲到一期。</p><h2 id="Supper-Node-SR"><a href="#Supper-Node-SR" class="headerlink" title="Supper Node(SR)"></a>Supper Node(SR)</h2><p>以下称Supper Node 为SR，官方SR节点为产块节点，共有27个SR节点。<br>这27个SR节点每隔3秒轮流负责产块，注意是<code>轮流</code>产块，即：节点A产块--&gt;节点B产块...依次类推。<br>这种产块方式相较于POW的共识，更加的节能省电，但是缺点也很明显，就是节点理论是更容易被控制作恶，只要半数节点被控制或者半数节点掌握在某个团队中，对于社区来说，并不为是一件好事，缺乏透明度。</p><p>成为 SR 的好处是，SR负责产块，产块后会获得产块奖励，这块奖励非常可观，SR可以产块后，可以分发获得的奖励给投票者。</p><h2 id="产块"><a href="#产块" class="headerlink" title="产块"></a>产块</h2><h3 id="超级代表"><a href="#超级代表" class="headerlink" title="超级代表"></a>超级代表</h3><p>产块者由所有用户投票，得票最多的<code>128个超级代表</code>成员中选出27个进行产块，实际官方的27个产块SR是在配置文件中写死的。<br>这27个SR节点即为产块者，如果其中一个节点挂掉后，会从超级代表中的成员节点顶上，继续进行产块。</p><h3 id="如何产块"><a href="#如何产块" class="headerlink" title="如何产块"></a>如何产块</h3><p>27个SR节点，分别进行产块。<br>27个节点分属于不同的机器上，如何确定严格的产块顺序。<br>这个是DPOS的灵魂，如果节点无法按照严格的顺序进行产块，那整个DPOS将无法成立。</p><p>通过确认创世块的时间点，并在启动时，通过Hash算法，算出自己的Slot来排序。</p><h3 id="维护期"><a href="#维护期" class="headerlink" title="维护期"></a>维护期</h3><p>出块轮：波场设定每6个小时作为一个出块轮，称为一个Epoch。每个出块轮最后的2个出块时间是一个维护期。每个出块轮的维护期决定下一个出块轮的出块顺序。</p><p>维护期：波场设定是2个区块时间，即6秒钟。这段时间用于统计候选人得票数。因为24个小时有4个出块轮，自然就有4个维护期，维护期中不进行区块生产，主要用来确定下个出块轮的出块顺序。</p><p><a href="https://tronscan.org/#/sr/representatives">查看超级代表</a></p><h2 id="搭建SR"><a href="#搭建SR" class="headerlink" title="搭建SR"></a>搭建SR</h2><p>搭建私有网络，可以验证SR节点的产块相关的原理和流程，甚至可以通过源码自己塔建一条自己的链。</p><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol><li>具备至少两个钱包账户的私钥与地址；</li><li>至少部署一个SuperNode用于出块；</li><li>至少部署一个FullNode节点用于同步区块、广播交易；</li><li>SuperNode与FullNode组成了私有网络，可以进行网络发现、区块同步、广播交易；</li></ol><p>波场的 SupperNode 是不对外暴露，最少需要一个FullNode成为一个对外的入口，将交易和区块转发到SupperNode节点当中。</p><h3 id="生成钱包账户"><a href="#生成钱包账户" class="headerlink" title="生成钱包账户"></a>生成钱包账户</h3><p>钱包账户通过TRON提供的钱包进行生成，有移动端和浏览器插件。<br>为了截图文件，直接通过浏览器插件进行生成账户和私钥。</p><img src="/posts/fca30821/创建钱包.png" width="50%" height="50%"><p>导出私钥</p><img src="/posts/fca30821/导出私钥.png" width="50%" height="50%"><h3 id="准备文件和程序"><a href="#准备文件和程序" class="headerlink" title="准备文件和程序"></a>准备文件和程序</h3><p>以下程序和配置文件放在同一个目录下，推荐直接下载官方源码进行编译，这样可以直接从项目中获得所有需要的文件、配置文件等，主要需要包含:</p><ol><li>配置文件 private_net_config.conf</li><li>主程序 FullNode.jar</li><li>启动脚本 start.sh(可选)</li></ol><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>获取官方提供的配置文件，可以单击这条链接查看配置文件</p><blockquote><p>wget <a href="https://raw.githubusercontent.com/tronprotocol/tron-deployment/master/private_net_config.conf">https://raw.githubusercontent.com/tronprotocol/tron-deployment/master/private_net_config.conf</a></p></blockquote><p>需要改几处配置</p><ol><li>在localwitness中添加自己的私钥</li><li>设置genesis.block.witnesses为私钥对应的地址</li><li>设置p2p.version为除了11111之外的任意正整数，如33333</li><li>第1个SR设置needSyncCheck为false，其他可以设置为true</li><li>设置node.discovery.enable为true</li></ol><p>解释一下上面的配置，官方没有说明，从源码中去分析出来的：</p><ol><li>如果自己是SR时，需要配置localwitness，开启本地模式，将自己初始化为witness</li></ol><img src="/posts/fca30821/localwitness.png" width="70%"><ol start="2"><li>配置自己成为默认的 witnesses，源码中分析，当轮到节点产块时，程序会从SR列表中获得默认SR，所以需要先进行配置</li><li>p2p.version，TRON官方主链中使用的是11111，为了不跟主链冲突<img src="/posts/fca30821/p2p_version.png" width="80%"></li><li>needSyncCheck 用来控制是否需要同步区块，当前只有一个节点，不会需要同步区块的</li></ol><img src="/posts/fca30821/needSyncCheck.png" width="70%"><ol start="5"><li>node.discovery.enable 这项是开启节点发现:</li></ol><img src="/posts/fca30821/node.discovery.enable配置.png" width="70%"><p>对源码有兴趣的朋友自行查看官方源码。</p><h4 id="获取最新的程序"><a href="#获取最新的程序" class="headerlink" title="获取最新的程序"></a>获取最新的程序</h4><p>从官方github上选择最新的release版本，选择<code>FullNode.jar</code>。</p><p>官方github: <a href="https://github.com/tronprotocol/java-tron">https://github.com/tronprotocol/java-tron</a></p><p>release: <a href="https://github.com/tronprotocol/java-tron/releases">https://github.com/tronprotocol/java-tron/releases</a></p><img src="/posts/fca30821/tron-release.png"><h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><p>获取官方启动脚本，这个脚本里对内存做了限制，最少不能低于8G内存，否则脚本限制不让启动。<br>如果内存低于这个配置的话，建议直接使用命令启动。</p><blockquote><p>wget <a href="https://raw.githubusercontent.com/tronprotocol/java-tron/develop/start.sh">https://raw.githubusercontent.com/tronprotocol/java-tron/develop/start.sh</a></p></blockquote><p>准备工作就完成了，然后就可以启动程序了。</p><h2 id="启动私链"><a href="#启动私链" class="headerlink" title="启动私链"></a>启动私链</h2><p>配置好之后，就可以进行本地私链部署并生产区块了。</p><blockquote><p>sh start.sh -w</p></blockquote><p>如果不想使用脚本，直接手动启动，直接使用命令</p><blockquote><p>nohup java -Xmx6g -jar FullNode.jar  --witness  -c private_net_config.conf &amp;&gt;/dev/null &amp;</p></blockquote><p>启动后会生成 logs/tron.log，查看日志，关键日志</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ hash&#x3D;0000000000000055cf5362a54801104d9d261b652e9db7b099c99247527b833d</span><br><span class="line">number&#x3D;85</span><br><span class="line">parentId&#x3D;000000000000005413ae634329790c4b944b18591a1a1b1705d65a3b6819f2a7</span><br><span class="line">witness address&#x3D;41763087eab1c1387954698d451ff9c6215b189430</span><br><span class="line">generated by myself&#x3D;true</span><br><span class="line">generate time&#x3D;2022-02-04 01:19:57.0</span><br><span class="line">account root&#x3D;0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">txs are empty</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>查看SR完整产块日志</p><p><img src="/posts/fca30821/SR%E4%BA%A7%E5%9D%97%E6%97%A5%E5%BF%97.png" alt="SR产块日志"></p><p>如果看到 <code>generate time</code> 这个日志，说明已经成功产块了，但是FullNode还没有部署，怎么就产块了，没有问题吗。<br>FullNode 的<code>主要</code>做用是转发，如果没有FullNode，SR接收不到交易和区块，产的块都是空块，在实际使用中需要测试SR的产块相关的功能，最好是部署上FullNode，搭建成一个完整的链。<br>节点个数的话，FullNode不限个数，SR最多27个，当然可以改源码调整个数，只要保证最终有2/3个节点来保证能完成共识就OK。有兴趣的话，可以一直探讨这个问题。</p><p>参考文档：</p><p><a href="https://tronprotocol.github.io/documentation-zh/architecture/network/">https://tronprotocol.github.io/documentation-zh/architecture/network/</a><br>官方文档中的 private_net_config.conf 地址有误，可以参考我文章中的配置。</p>]]></content>
       
       
       <categories>
           
-          <category> tron </category>
-          
           <category> block </category>
+          
+          <category> tron </category>
           
           <category> tron </category>
           
@@ -2607,11 +2607,11 @@
             
             <tag> java </tag>
             
-            <tag> 算法 </tag>
-            
             <tag> spring boot </tag>
             
             <tag> spring </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -2716,9 +2716,9 @@
             
             <tag> java </tag>
             
-            <tag> hibernate </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> hibernate </tag>
             
         </tags>
       
@@ -3446,9 +3446,9 @@
             
             <tag> java </tag>
             
-            <tag> 概述 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 概述 </tag>
             
         </tags>
       
@@ -4961,11 +4961,11 @@
       
         <tags>
             
+            <tag> broker </tag>
+            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
-            
-            <tag> broker </tag>
             
         </tags>
       
