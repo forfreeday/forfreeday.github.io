@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2022-02-09T15:57:03.837Z</updated>
+  <updated>2022-02-09T16:19:21.887Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo-自动发布脚本</title>
+    <link href="https://liukay.com/posts/7aeb1e41.html"/>
+    <id>https://liukay.com/posts/7aeb1e41.html</id>
+    <published>2022-02-09T15:58:54.000Z</published>
+    <updated>2022-02-09T16:19:21.887Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="这个脚本有什么用"><a href="#这个脚本有什么用" class="headerlink" title="这个脚本有什么用"></a>这个脚本有什么用</h2><p>先说说我的场景，最近写博客勤快了，偶尔会在公司写文档。<br>发现在公司和家里两台电脑是写东西的时候总是会发现忘记提交写的markdown文档，这样如果在公司写了一半没有提交，在家里就写不了了，所以想了一个办法，写一个脚本，每次自动提交文档，然后自动发布。<br>我是在 github 上创建了一个私有仓库，将未生成的原始文档添加到仓库中，这样可以方便在不同设备之间进行同步，哪怕在网吧当中，想写文章了，git clone 一下就可以开始写文章。</p><h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><ol><li>自动提交markdown到github</li><li>自动发布到 github.io</li><li>自动替换 source/ 文件到 public/</li></ol><p>在 hexo/ 目录下创建脚本文件</p><blockquote><p>touch deploy.sh</p></blockquote><p>复制以下内容：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> commit 内容就是日期</span></span><br><span class="line">DATA=`date +%Y-%m-%d_%H:%M:%S`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有修改，就不需要提交到 github。</span></span><br><span class="line">if [ -n &quot;$(git status -s)&quot; ];then</span><br><span class="line">    git add .</span><br><span class="line">    git commit -m $DATA</span><br><span class="line">    git push origin master</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> SEO 相关key，如果直接放 <span class="built_in">source</span>，会生成对应样式的页面，而非空白页面，所需要在</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hexo clean 之后、hexo deploy 之前，复制到 public/ 目录下</span></span><br><span class="line">touch public/xxxxxxxxxxxxxxxxxxxxxx.html</span><br><span class="line">echo &#x27;google-site-verification: xxxxxxxxxxxxxxxxxxxxxx.html&#x27; &gt; public/xxxxxxxxxxxxxxxxxxxxxx.html</span><br><span class="line"></span><br><span class="line">touch public/bbbbbbbbbbbbbbbbbbbbbbbbbbbb.html</span><br><span class="line">echo &#x27;abcdefgafsefaasdfasdfasdfasdfasdf&#x27; &gt; public/bbbbbbbbbbbbbbbbbbbbbbbbbbbb.html</span><br><span class="line"></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure><p>在根目录下使用：</p><p>sh deploy.sh</p><p>效果就不演示了，下次回家写作之前，先<code>git pull</code>，保证数据的同步。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当一个码农，总是习惯的掌控自己的数据，数据同步的问题就比较突出，自己的数据自掌握。通过代码适配自己的需求。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;这个脚本有什么用&quot;&gt;&lt;a href=&quot;#这个脚本有什么用&quot; class=&quot;headerlink&quot; title=&quot;这个脚本有什么用&quot;&gt;&lt;/a&gt;这个脚本有什么用&lt;/h2&gt;&lt;p&gt;先说说我的场景，最近写博客勤快了，偶尔会在公司写文档。&lt;br&gt;发现在公司和家里两台电脑是写东
+      
+    
+    </summary>
+    
+      <category term="hexo" scheme="https://liukay.com/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="https://liukay.com/tags/hexo/"/>
+    
+      <category term="shell" scheme="https://liukay.com/tags/shell/"/>
+    
+      <category term="脚本" scheme="https://liukay.com/tags/%E8%84%9A%E6%9C%AC/"/>
+    
+      <category term="git" scheme="https://liukay.com/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>java 服务大量外部连接导至异常</title>
@@ -72,9 +103,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -112,9 +143,9 @@
     
       <category term="linux、vim" scheme="https://liukay.com/categories/linux%E3%80%81vim/"/>
     
-      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -224,9 +255,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -262,9 +293,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
+    
+      <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -555,11 +586,11 @@
       <category term="mysql" scheme="https://liukay.com/categories/database/mysql/"/>
     
     
-      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
-    
       <category term="mysql" scheme="https://liukay.com/tags/mysql/"/>
     
       <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
   </entry>
   
@@ -703,38 +734,6 @@
       <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
     
       <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA2021使用tomcat启动时间超长</title>
-    <link href="https://liukay.com/posts/719ff018.html"/>
-    <id>https://liukay.com/posts/719ff018.html</id>
-    <published>2021-11-22T08:40:22.000Z</published>
-    <updated>2021-11-23T02:11:07.292Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。</p><p>新电脑问题多。</p><p>直接说怎么解决的。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><blockquote><p>scutil --set HostName &quot;localhost&quot;</p></blockquote><h2 id="无效的偿试-修改生成随机数"><a href="#无效的偿试-修改生成随机数" class="headerlink" title="无效的偿试-修改生成随机数"></a>无效的偿试-修改生成随机数</h2><p>IDEA2021 添加tomcat启动参数，JRE默认使用 /dev/random作为随机数来源，当熵池大小不够的时候，random会很慢，造成随机数生成调用阻塞。</p><blockquote><p>JAVA_OPTS=&quot;-Djava.security.egd=file:/dev/urandom&quot;<br>无效，依然该怎么慢还怎么慢。</p></blockquote><h2 id="真正原因-Jvm需要很长时间解析localhost的IP地址"><a href="#真正原因-Jvm需要很长时间解析localhost的IP地址" class="headerlink" title="真正原因 Jvm需要很长时间解析localhost的IP地址"></a>真正原因 Jvm需要很长时间解析localhost的IP地址</h2><p>原因分析<br><a href="https://www.codenong.com/39636792/">https://www.codenong.com/39636792/</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近换了 mac M1 加 IDEA2021 后，发现问题还真不少，先是解决了卡顿问题后，tomcat 启动时间从原来的十几秒，变成20分钟！！！超不正常。&lt;/p&gt;
-&lt;p&gt;新电脑问题多。&lt;/p&gt;
-&lt;p&gt;直接说怎么解决的。&lt;/p&gt;
-&lt;h2 id=&quot;解决&quot;&gt;&lt;a href=&quot;#
-      
-    
-    </summary>
-    
-      <category term="java" scheme="https://liukay.com/categories/java/"/>
-    
-      <category term="idea" scheme="https://liukay.com/categories/java/idea/"/>
-    
-    
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
-    
-      <category term="idea" scheme="https://liukay.com/tags/idea/"/>
     
   </entry>
   
