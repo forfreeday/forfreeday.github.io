@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2022-02-02T17:34:10.266Z</updated>
+  <updated>2022-02-09T15:57:03.837Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java 服务大量外部连接导至异常</title>
+    <link href="https://liukay.com/posts/8b6db28c.html"/>
+    <id>https://liukay.com/posts/8b6db28c.html</id>
+    <published>2022-02-09T15:37:42.000Z</published>
+    <updated>2022-02-09T15:57:03.837Z</updated>
+    
+    <content type="html"><![CDATA[<p>相信很多小伙伴都碰到过一个问题，服务运行过程中，产生大量的未关闭的TCP链接，导至服务不可用直至服务异常。<br>该如何定位、排查这些未关闭的链接?<br>之前碰到过这个问题，解决了，今天有小伙伴又聊到这个问题，就将这个问题复现出来，如果有人看到这个问题，可以帮助解决这个问题。</p><h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>通过 jmeter 复制问题，由于问题已经被解决，但是可以通过 jmeter 100%复现该问题。</p><p>复现流程：</p><ol><li>通过 jmeter 发起 http 请求，并且不释放请求。</li><li>停止 jmeter 后查看状态</li></ol><blockquote><p>java.net.NoRouteToHostException: Can&#39;t assign requested address (Address not available)<br>  at java.net.PlainSocketImpl.socketConnect(Native Method)<br>  at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)</p></blockquote><p>报的错是<code>Can&#39;t assign requested address</code>，推测是调用IP地址问题。</p><h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>如果是IP地址的问题那么验证一下是不是IP地址的连接是不是有问题。<br>排查网络问题，第一个想到<code>netstat</code>。</p><h3 id="jmeter发起大量请求"><a href="#jmeter发起大量请求" class="headerlink" title="jmeter发起大量请求"></a>jmeter发起大量请求</h3><p>命令：</p><blockquote><p>netstat -nt | awk &#39;/^tcp/ {++state[$NF]} END {for(key in state) print key,&quot;t&quot;,state[key]}&#39;</p></blockquote><p>结果如下：</p><blockquote><p>CLOSE_WAIT t 1<br>ESTABLISHED t 50<br>TIME_WAIT t 13006</p></blockquote><p>TIME_WAIT t 是 13006 这么多的连接。<br>TIME_WAIT表示处理完毕，等待超时结束的请求数。<br>这个时候外部再调接口就会报错。</p><h3 id="停止jmeter请求"><a href="#停止jmeter请求" class="headerlink" title="停止jmeter请求"></a>停止jmeter请求</h3><blockquote><p>netstat -nt | awk &#39;/^tcp/ {++state[$NF]} END {for(key in state) print key,&quot;t&quot;,state[key]}&#39;</p></blockquote><p>结果如下：</p><blockquote><p>CLOSE_WAIT t 1<br>ESTABLISHED t 48<br>FIN_WAIT1 t 1<br>TIME_WAIT t 40</p></blockquote><p>这个时候 TIME_WAIT 只有 40，外部调用接口，不报错。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>这种问题原因是因为有大量的外部请求进来后不释放，正常业务调用没有问题，但是如果遇到恶意的请求就会有问题。<br>解决：设置 http 请求超时时间，不让请求无限的等待下去，就可以避免这个问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;相信很多小伙伴都碰到过一个问题，服务运行过程中，产生大量的未关闭的TCP链接，导至服务不可用直至服务异常。&lt;br&gt;该如何定位、排查这些未关闭的链接?&lt;br&gt;之前碰到过这个问题，解决了，今天有小伙伴又聊到这个问题，就将这个问题复现出来，如果有人看到这个问题，可以帮助解决这个问
+      
+    
+    </summary>
+    
+      <category term="java" scheme="https://liukay.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
+    
+      <category term="服务" scheme="https://liukay.com/tags/%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="异常" scheme="https://liukay.com/tags/%E5%BC%82%E5%B8%B8/"/>
+    
+      <category term="TCP" scheme="https://liukay.com/tags/TCP/"/>
+    
+  </entry>
   
   <entry>
     <title>vim-插件08-ranger文件管理</title>
@@ -41,9 +72,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
-    
       <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -81,9 +112,9 @@
     
       <category term="linux、vim" scheme="https://liukay.com/categories/linux%E3%80%81vim/"/>
     
-      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
-    
       <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -193,9 +224,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
-    
       <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -231,9 +262,9 @@
     
       <category term="vim" scheme="https://liukay.com/categories/linux/vim/"/>
     
-      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
-    
       <category term="插件" scheme="https://liukay.com/categories/vim/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="plugin" scheme="https://liukay.com/categories/vim/plugin/"/>
     
     
       <category term="vim" scheme="https://liukay.com/tags/vim/"/>
@@ -493,9 +524,9 @@
     
       <category term="matic" scheme="https://liukay.com/tags/matic/"/>
     
-      <category term="polygon" scheme="https://liukay.com/tags/polygon/"/>
-    
       <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+    
+      <category term="polygon" scheme="https://liukay.com/tags/polygon/"/>
     
   </entry>
   
@@ -665,9 +696,9 @@
       <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
     
     
-      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
-    
       <category term="java" scheme="https://liukay.com/tags/java/"/>
+    
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
     
@@ -704,35 +735,6 @@
       <category term="java" scheme="https://liukay.com/tags/java/"/>
     
       <category term="idea" scheme="https://liukay.com/tags/idea/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo 分类或标签单词开头大写出现404</title>
-    <link href="https://liukay.com/posts/4631c4c2.html"/>
-    <id>https://liukay.com/posts/4631c4c2.html</id>
-    <published>2021-11-21T06:21:06.000Z</published>
-    <updated>2021-11-21T06:27:51.841Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近搬运笔记到博客，编辑的文章多了，今天突然发现，有一个分类点进去404，本地运行正常没有问题。查了一圈发现是git的大小写区分问题。</p><p>将大写字母改成小写，hexo 部署正确，但是博客上还是不正确出现404</p><p>网上查了许多资料，才发现，git中设置了大小写不敏感。</p><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改 git 设置不忽略大小写</p><p>进入博客文件夹，进入 git 目录：<code>.deploy_git</code>，修改 .git 文件中的配置文件 config，将ignorecase=true 改为 ignorecase=false</p><blockquote><p>vim . deploy_git/.git/config<br>ignorecase = false</p></blockquote><p>重写清空部署项目</p><p>如果还没有解决，清空部署到 github 上的文件，重新发布：</p><blockquote><p>cd .deploy_git<br>git rm -rf *<br>git commit -m &#39;clean all file&#39;<br>git push</p></blockquote><p>进入博客文件夹，用 hexo 重新生成部署</p><blockquote><p>hexo clean &amp;&amp; hexo g -d</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近搬运笔记到博客，编辑的文章多了，今天突然发现，有一个分类点进去404，本地运行正常没有问题。查了一圈发现是git的大小写区分问题。&lt;/p&gt;
-&lt;p&gt;将大写字母改成小写，hexo 部署正确，但是博客上还是不正确出现404&lt;/p&gt;
-&lt;p&gt;网上查了许多资料，才发现，git中设置
-      
-    
-    </summary>
-    
-      <category term="hexo" scheme="https://liukay.com/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://liukay.com/tags/hexo/"/>
-    
-      <category term="404" scheme="https://liukay.com/tags/404/"/>
     
   </entry>
   

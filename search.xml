@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>java 服务大量外部连接导至异常</title>
+      <link href="posts/8b6db28c.html"/>
+      <url>posts/8b6db28c.html</url>
+      
+        <content type="html"><![CDATA[<p>相信很多小伙伴都碰到过一个问题，服务运行过程中，产生大量的未关闭的TCP链接，导至服务不可用直至服务异常。<br>该如何定位、排查这些未关闭的链接?<br>之前碰到过这个问题，解决了，今天有小伙伴又聊到这个问题，就将这个问题复现出来，如果有人看到这个问题，可以帮助解决这个问题。</p><h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>通过 jmeter 复制问题，由于问题已经被解决，但是可以通过 jmeter 100%复现该问题。</p><p>复现流程：</p><ol><li>通过 jmeter 发起 http 请求，并且不释放请求。</li><li>停止 jmeter 后查看状态</li></ol><blockquote><p>java.net.NoRouteToHostException: Can&#39;t assign requested address (Address not available)<br>  at java.net.PlainSocketImpl.socketConnect(Native Method)<br>  at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)</p></blockquote><p>报的错是<code>Can&#39;t assign requested address</code>，推测是调用IP地址问题。</p><h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>如果是IP地址的问题那么验证一下是不是IP地址的连接是不是有问题。<br>排查网络问题，第一个想到<code>netstat</code>。</p><h3 id="jmeter发起大量请求"><a href="#jmeter发起大量请求" class="headerlink" title="jmeter发起大量请求"></a>jmeter发起大量请求</h3><p>命令：</p><blockquote><p>netstat -nt | awk &#39;/^tcp/ {++state[$NF]} END {for(key in state) print key,&quot;t&quot;,state[key]}&#39;</p></blockquote><p>结果如下：</p><blockquote><p>CLOSE_WAIT t 1<br>ESTABLISHED t 50<br>TIME_WAIT t 13006</p></blockquote><p>TIME_WAIT t 是 13006 这么多的连接。<br>TIME_WAIT表示处理完毕，等待超时结束的请求数。<br>这个时候外部再调接口就会报错。</p><h3 id="停止jmeter请求"><a href="#停止jmeter请求" class="headerlink" title="停止jmeter请求"></a>停止jmeter请求</h3><blockquote><p>netstat -nt | awk &#39;/^tcp/ {++state[$NF]} END {for(key in state) print key,&quot;t&quot;,state[key]}&#39;</p></blockquote><p>结果如下：</p><blockquote><p>CLOSE_WAIT t 1<br>ESTABLISHED t 48<br>FIN_WAIT1 t 1<br>TIME_WAIT t 40</p></blockquote><p>这个时候 TIME_WAIT 只有 40，外部调用接口，不报错。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>这种问题原因是因为有大量的外部请求进来后不释放，正常业务调用没有问题，但是如果遇到恶意的请求就会有问题。<br>解决：设置 http 请求超时时间，不让请求无限的等待下去，就可以避免这个问题。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 服务 </tag>
+            
+            <tag> 异常 </tag>
+            
+            <tag> TCP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vim-插件08-ranger文件管理</title>
       <link href="posts/1fd45dea.html"/>
       <url>posts/1fd45dea.html</url>
@@ -19,9 +50,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -58,9 +89,9 @@
           
           <category> linux、vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -165,9 +196,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -202,9 +233,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -456,9 +487,9 @@
             
             <tag> matic </tag>
             
-            <tag> polygon </tag>
-            
             <tag> blockchain </tag>
+            
+            <tag> polygon </tag>
             
         </tags>
       
@@ -623,9 +654,9 @@
       
         <tags>
             
-            <tag> 安装 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 安装 </tag>
             
             <tag> gradle </tag>
             
@@ -743,11 +774,11 @@
             
             <tag> java </tag>
             
+            <tag> 服务 </tag>
+            
             <tag> 通信 </tag>
             
             <tag> netty </tag>
-            
-            <tag> 服务 </tag>
             
         </tags>
       
@@ -1619,9 +1650,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -1658,9 +1689,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -1699,9 +1730,9 @@
           
           <category> vim </category>
           
-          <category> plugin </category>
-          
           <category> 插件 </category>
+          
+          <category> plugin </category>
           
       </categories>
       
@@ -1714,9 +1745,9 @@
             
             <tag> nvim </tag>
             
-            <tag> ide </tag>
-            
             <tag> 配置 </tag>
+            
+            <tag> ide </tag>
             
             <tag> plugin </tag>
             
@@ -1753,17 +1784,17 @@
             
             <tag> vim </tag>
             
-            <tag> nvim </tag>
-            
-            <tag> ide </tag>
-            
-            <tag> 配置 </tag>
-            
             <tag> mac </tag>
+            
+            <tag> nvim </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
+            
+            <tag> 配置 </tag>
+            
+            <tag> ide </tag>
             
         </tags>
       
@@ -2570,11 +2601,11 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
@@ -2607,11 +2638,11 @@
             
             <tag> java </tag>
             
-            <tag> 算法 </tag>
-            
             <tag> spring boot </tag>
             
             <tag> spring </tag>
+            
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -2819,11 +2850,11 @@
             
             <tag> java </tag>
             
+            <tag> 异常 </tag>
+            
             <tag> spring boot </tag>
             
             <tag> 报错 </tag>
-            
-            <tag> 异常 </tag>
             
         </tags>
       
@@ -3446,9 +3477,9 @@
             
             <tag> java </tag>
             
-            <tag> 概述 </tag>
-            
             <tag> spring boot </tag>
+            
+            <tag> 概述 </tag>
             
         </tags>
       
@@ -3873,6 +3904,35 @@
             <tag> jvm </tag>
             
             <tag> 虚拟机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>telnet工具使用</title>
+      <link href="posts/47cc4a4b.html"/>
+      <url>posts/47cc4a4b.html</url>
+      
+        <content type="html"><![CDATA[<p>最近刚装的机器，发现没有telnet，手动搞了一把，顺便做下记录。</p><h3 id="查看telnet-server是否安装"><a href="#查看telnet-server是否安装" class="headerlink" title="查看telnet server是否安装"></a>查看telnet server是否安装</h3><blockquote><p>rpm -qa | grep telnet-server</p></blockquote><p>如果没有，则安装</p><blockquote><p>yum install telnet-server -y</p></blockquote><h3 id="开启telnet服务"><a href="#开启telnet服务" class="headerlink" title="开启telnet服务"></a>开启telnet服务</h3><blockquote><p>chkconfig telnet on</p></blockquote><h3 id="启动telnet服务"><a href="#启动telnet服务" class="headerlink" title="启动telnet服务"></a>启动telnet服务</h3><blockquote><p>service xinetd reload</p></blockquote><h3 id="手动方式启动服务"><a href="#手动方式启动服务" class="headerlink" title="手动方式启动服务"></a>手动方式启动服务</h3><p>编辑telent的配置文件/etc/xinetd.d/telnet 如下：<br>（设置disable = no，也就是开启telnet服务）</p><h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><blockquote><p>service xinetd restart</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> telnet </tag>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
@@ -4456,9 +4516,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> final </tag>
             
@@ -4961,11 +5021,11 @@
       
         <tags>
             
+            <tag> broker </tag>
+            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
-            
-            <tag> broker </tag>
             
         </tags>
       
@@ -5492,9 +5552,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> 多线程 </tag>
             
