@@ -53,9 +53,9 @@
             
             <tag> java </tag>
             
-            <tag> 服务 </tag>
-            
             <tag> 异常 </tag>
+            
+            <tag> 服务 </tag>
             
             <tag> TCP </tag>
             
@@ -549,11 +549,11 @@
       
         <tags>
             
-            <tag> mysql </tag>
+            <tag> 安装 </tag>
             
             <tag> 数据库 </tag>
             
-            <tag> 安装 </tag>
+            <tag> mysql </tag>
             
         </tags>
       
@@ -685,9 +685,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 安装 </tag>
+            
+            <tag> java </tag>
             
             <tag> gradle </tag>
             
@@ -805,9 +805,9 @@
             
             <tag> java </tag>
             
-            <tag> 服务 </tag>
-            
             <tag> 通信 </tag>
+            
+            <tag> 服务 </tag>
             
             <tag> netty </tag>
             
@@ -987,9 +987,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 共识 </tag>
-            
             <tag> 源码分析 </tag>
+            
+            <tag> 共识 </tag>
             
         </tags>
       
@@ -1776,9 +1776,9 @@
             
             <tag> nvim </tag>
             
-            <tag> 配置 </tag>
-            
             <tag> ide </tag>
+            
+            <tag> 配置 </tag>
             
             <tag> plugin </tag>
             
@@ -1815,17 +1815,17 @@
             
             <tag> vim </tag>
             
-            <tag> mac </tag>
-            
             <tag> nvim </tag>
+            
+            <tag> ide </tag>
+            
+            <tag> 配置 </tag>
+            
+            <tag> mac </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
-            
-            <tag> 配置 </tag>
-            
-            <tag> ide </tag>
             
         </tags>
       
@@ -1898,7 +1898,7 @@
       <link href="posts/63618.html"/>
       <url>posts/63618.html</url>
       
-        <content type="html"><![CDATA[<h2 id="用栈实现队列"><a href="#用栈实现队列" class="headerlink" title="用栈实现队列"></a>用栈实现队列</h2><p>这个是 Leetcode 232 题，用两个栈来实现一个先进先出的队列，实现了一个版本。</p><p>请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（<code>push</code>、<code>pop</code>、<code>peek</code>、<code>empty</code>）：</p><p>实现 <code>MyQueue</code> 类：</p><ul><li><code>void push(int x)</code> 将元素 x 推到队列的末尾</li><li><code>int pop()</code> 从队列的开头移除并返回元素</li><li><code>int peek()</code> 返回队列开头的元素</li><li><code>boolean empty()</code> 如果队列为空，返回 <code>true</code> ；否则，返回 <code>false</code></li></ul><h3 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h3><ul><li>你只能使用标准的栈操作 —— 也就是只有 <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, 和 <code>is empty</code> 操作是合法的。</li><li>你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。</li></ul><h3 id="进阶："><a href="#进阶：" class="headerlink" title="进阶："></a>进阶：</h3><ul><li>你能否实现每个操作均摊时间复杂度为 <code>O(1)</code> 的队列？换句话说，执行 n 个操作的总时间复杂度为 <code>O(n)</code> ，即使其中一个操作可能花费较长时间。</li></ul><p>示例：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[&quot;MyQueue&quot;, &quot;push&quot;, &quot;push&quot;, &quot;peek&quot;, &quot;pop&quot;, &quot;empty&quot;]</span><br><span class="line">[[], [1], [2], [], [], []]</span><br><span class="line">输出：</span><br><span class="line">[null, null, null, 1, 1, false]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">MyQueue myQueue &#x3D; new MyQueue();</span><br><span class="line">myQueue.push(1); &#x2F;&#x2F; queue is: [1]</span><br><span class="line">myQueue.push(2); &#x2F;&#x2F; queue is: [1, 2] (leftmost is front of the queue)</span><br><span class="line">myQueue.peek(); &#x2F;&#x2F; return 1</span><br><span class="line">myQueue.pop(); &#x2F;&#x2F; return 1, queue is [2]</span><br><span class="line">myQueue.empty(); &#x2F;&#x2F; return false</span><br></pre></td></tr></table></figure><p>提示：</p><ul><li><code>1 &lt;= x &lt;= 9</code></li><li>最多调用 <code>100</code> 次 <code>push</code>、<code>pop</code>、<code>peek</code> 和 <code>empty</code></li><li>假设所有操作都是有效的 （例如，一个空的队列不会调用 <code>pop</code> 或者 <code>peek</code> 操作）</li></ul><a id="more"></a><h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Push element x to the back of queue.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        stack1.push(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Removes the element from in front of queue and returns that element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get the front element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.peek();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns whether the queue is empty.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack1.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="原题出处"><a href="#原题出处" class="headerlink" title="原题出处"></a>原题出处</h3><p><a href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">https://leetcode-cn.com/problems/implement-queue-using-stacks/</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="用栈实现队列"><a href="#用栈实现队列" class="headerlink" title="用栈实现队列"></a>用栈实现队列</h2><p>这个是 Leetcode 232 题，用两个栈来实现一个先进先出的队列，实现了一个版本。</p><p>请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（<code>push</code>、<code>pop</code>、<code>peek</code>、<code>empty</code>）：</p><p>实现 <code>MyQueue</code> 类：</p><ul><li><code>void push(int x)</code> 将元素 x 推到队列的末尾</li><li><code>int pop()</code> 从队列的开头移除并返回元素</li><li><code>int peek()</code> 返回队列开头的元素</li><li><code>boolean empty()</code> 如果队列为空，返回 <code>true</code> ；否则，返回 <code>false</code></li></ul><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul><li>你只能使用标准的栈操作 —— 也就是只有 <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, 和 <code>is empty</code> 操作是合法的。</li><li>你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。</li></ul><h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><ul><li>你能否实现每个操作均摊时间复杂度为 <code>O(1)</code> 的队列？换句话说，执行 n 个操作的总时间复杂度为 <code>O(n)</code> ，即使其中一个操作可能花费较长时间。</li></ul><p>示例：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[&quot;MyQueue&quot;, &quot;push&quot;, &quot;push&quot;, &quot;peek&quot;, &quot;pop&quot;, &quot;empty&quot;]</span><br><span class="line">[[], [1], [2], [], [], []]</span><br><span class="line">输出：</span><br><span class="line">[null, null, null, 1, 1, false]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">MyQueue myQueue &#x3D; new MyQueue();</span><br><span class="line">myQueue.push(1); &#x2F;&#x2F; queue is: [1]</span><br><span class="line">myQueue.push(2); &#x2F;&#x2F; queue is: [1, 2] (leftmost is front of the queue)</span><br><span class="line">myQueue.peek(); &#x2F;&#x2F; return 1</span><br><span class="line">myQueue.pop(); &#x2F;&#x2F; return 1, queue is [2]</span><br><span class="line">myQueue.empty(); &#x2F;&#x2F; return false</span><br></pre></td></tr></table></figure><p>提示：</p><ul><li><code>1 &lt;= x &lt;= 9</code></li><li>最多调用 <code>100</code> 次 <code>push</code>、<code>pop</code>、<code>peek</code> 和 <code>empty</code></li><li>假设所有操作都是有效的 （例如，一个空的队列不会调用 <code>pop</code> 或者 <code>peek</code> 操作）</li></ul><a id="more"></a><h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Push element x to the back of queue.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        stack1.push(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Removes the element from in front of queue and returns that element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get the front element.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) &#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = stack2.peek();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns whether the queue is empty.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack1.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="原题出处"><a href="#原题出处" class="headerlink" title="原题出处"></a>原题出处</h3><p><a href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">https://leetcode-cn.com/problems/implement-queue-using-stacks/</a></p>]]></content>
       
       
       <categories>
@@ -1916,9 +1916,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> LeetCode </tag>
-            
             <tag> 栈 </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> algorithm </tag>
             
@@ -2199,9 +2199,9 @@
       
         <tags>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> 死锁 </tag>
             
@@ -2778,9 +2778,9 @@
             
             <tag> java </tag>
             
-            <tag> spring boot </tag>
-            
             <tag> hibernate </tag>
+            
+            <tag> spring boot </tag>
             
         </tags>
       
@@ -2846,13 +2846,13 @@
             
             <tag> 问题 </tag>
             
-            <tag> maven </tag>
-            
             <tag> idea </tag>
             
             <tag> 编译 </tag>
             
             <tag> 设置 </tag>
+            
+            <tag> maven </tag>
             
         </tags>
       
@@ -2881,11 +2881,11 @@
             
             <tag> java </tag>
             
-            <tag> 异常 </tag>
-            
             <tag> spring boot </tag>
             
             <tag> 报错 </tag>
+            
+            <tag> 异常 </tag>
             
         </tags>
       
@@ -3943,6 +3943,45 @@
     
     
     <entry>
+      <title>多线程 生产者消费者模式</title>
+      <link href="posts/3113903e.html"/>
+      <url>posts/3113903e.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="多生产消费者模式"><a href="#多生产消费者模式" class="headerlink" title="多生产消费者模式"></a>多生产消费者模式</h2><p>真正的开发环境下，不可能只有两条线程在跑，但是也有特殊情况，就是只需要两条线程来处理。<br>比如一个线程生产，一个线程消费。<br>这是一种线程协作，这种情场景下，<code>生产者</code> 和 <code>消费者</code>会操作同一个共享变量。<br>看到这里的小伙伴应该是对线程的基本用法有一定了解，这里就直接开始明确几个概念</p><p><strong>生产者</strong></p><blockquote><p>生产数据的线程，比如产生订单</p></blockquote><p><strong>消费者</strong></p><blockquote><p>处理生产者产生的订单</p></blockquote><p>实际环境中，生产数据的速度要大于消费的速度，这个现象在很多场景中都存在。</p><p><strong>共享变量</strong></p><blockquote><p>会被多个线程共同访问的变量</p></blockquote><p>生产者、消费者模式本质是，通过严格控制两个线程的交替执行，来实现一个生产、一个消费的模式，数据存储在共享变量中。</p><p>可以再扩展一下，比如常用的MQ，也是一种生产者消费者模式，Producer 生产消费，Consumer消费消息。</p><h2 id="主要资源"><a href="#主要资源" class="headerlink" title="主要资源"></a>主要资源</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2017/2/18.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> flag;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (flag) &#123;        <span class="comment">//注意，这里同样是判断标识位，但是这里和之前笔记不是的地方是，这里用的是while，而不是if。</span></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.wait();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot;--&gt;生产&quot;</span> + count++);</span><br><span class="line">    <span class="keyword">this</span>.flag = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.notifyAll();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">out</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (!flag) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.wait();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot;--&gt;消费&quot;</span> + count++);</span><br><span class="line">    <span class="keyword">this</span>.flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.notifyAll();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="生产者类"><a href="#生产者类" class="headerlink" title="生产者类"></a>生产者类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Resource res;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Resource res)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.res = res;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">      res.set();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="消费者类"><a href="#消费者类" class="headerlink" title="消费者类"></a>消费者类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">  Resource res;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Resource res)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.res = res;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">      res.out();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Resource r = <span class="keyword">new</span> Resource();</span><br><span class="line">    Producer in = <span class="keyword">new</span> Producer(r);</span><br><span class="line">    Consumer out = <span class="keyword">new</span> Consumer(r);</span><br><span class="line"></span><br><span class="line">    Thread t1 = <span class="keyword">new</span> Thread(in);</span><br><span class="line">    Thread t2 = <span class="keyword">new</span> Thread(out);</span><br><span class="line"></span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>打印结果</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Thread-0--&gt;生产470</span><br><span class="line">Thread-1--&gt;消费471</span><br><span class="line">Thread-0--&gt;生产472</span><br><span class="line">Thread-1--&gt;消费473</span><br><span class="line">Thread-0--&gt;生产474</span><br><span class="line">Thread-1--&gt;消费475</span><br><span class="line">Thread-0--&gt;生产476</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> algorithm </category>
+          
+          <category> current </category>
+          
+          <category> current </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 设计模式 </tag>
+            
+            <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> 生产者消费者模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>telnet工具使用</title>
       <link href="posts/47cc4a4b.html"/>
       <url>posts/47cc4a4b.html</url>
@@ -4067,7 +4106,7 @@
     
     
     <entry>
-      <title>两个原素交换位置</title>
+      <title>算法技巧--两个原素交换位置</title>
       <link href="posts/36443.html"/>
       <url>posts/36443.html</url>
       
@@ -4077,6 +4116,8 @@
       <categories>
           
           <category> algorithm </category>
+          
+          <category> 技巧 </category>
           
       </categories>
       
@@ -4096,7 +4137,7 @@
     
     
     <entry>
-      <title>一维数组去重</title>
+      <title>算法技巧--一维数组去重</title>
       <link href="posts/48481.html"/>
       <url>posts/48481.html</url>
       
@@ -4106,6 +4147,8 @@
       <categories>
           
           <category> algorithm </category>
+          
+          <category> 技巧 </category>
           
       </categories>
       
@@ -4402,9 +4445,9 @@
             
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> 进程 </tag>
             
@@ -4547,9 +4590,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 概念 </tag>
+            
+            <tag> java </tag>
             
             <tag> final </tag>
             
@@ -5395,9 +5438,9 @@
       
         <tags>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> BLOCKED </tag>
             
@@ -5459,9 +5502,9 @@
             
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
-            
             <tag> 通信 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> 线程通信 </tag>
             
@@ -5583,9 +5626,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> 概念 </tag>
+            
+            <tag> java </tag>
             
             <tag> 多线程 </tag>
             

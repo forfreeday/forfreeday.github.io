@@ -70,9 +70,9 @@
     
       <category term="java" scheme="https://liukay.com/tags/java/"/>
     
-      <category term="服务" scheme="https://liukay.com/tags/%E6%9C%8D%E5%8A%A1/"/>
-    
       <category term="异常" scheme="https://liukay.com/tags/%E5%BC%82%E5%B8%B8/"/>
+    
+      <category term="服务" scheme="https://liukay.com/tags/%E6%9C%8D%E5%8A%A1/"/>
     
       <category term="TCP" scheme="https://liukay.com/tags/TCP/"/>
     
@@ -586,11 +586,11 @@
       <category term="mysql" scheme="https://liukay.com/categories/database/mysql/"/>
     
     
-      <category term="mysql" scheme="https://liukay.com/tags/mysql/"/>
+      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="数据库" scheme="https://liukay.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
+      <category term="mysql" scheme="https://liukay.com/tags/mysql/"/>
     
   </entry>
   
@@ -727,9 +727,9 @@
       <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
     
     
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
-    
       <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
+    
+      <category term="java" scheme="https://liukay.com/tags/java/"/>
     
       <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
     
