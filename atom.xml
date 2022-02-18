@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukay.com/"/>
-  <updated>2022-02-09T16:19:21.887Z</updated>
+  <updated>2022-02-18T17:21:03.919Z</updated>
   <id>https://liukay.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go import导包关键字</title>
+    <link href="https://liukay.com/posts/7cd82d54.html"/>
+    <id>https://liukay.com/posts/7cd82d54.html</id>
+    <published>2022-02-18T16:47:59.000Z</published>
+    <updated>2022-02-18T17:21:03.919Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="import-导包"><a href="#import-导包" class="headerlink" title="import 导包"></a>import 导包</h2><p>有相对路径 和 绝对路径，推荐使用绝对路径。<br>GoLand 中导包如果不用，会报错。</p><h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><p>导入单个路径</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;./model&quot;</span>  <span class="comment">//不建议这种方式import</span></span><br></pre></td></tr></table></figure><p>导入多个路径</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;./model&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/forfreeday/go-learning&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3><p>相对路径:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;./model&quot;</span>  <span class="comment">//不建议这种方式import</span></span><br></pre></td></tr></table></figure><p>绝对路径:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;shorturl/model&quot;</span>  <span class="comment">//加载GOPATH/src/shorturl/model模块</span></span><br></pre></td></tr></table></figure><h3 id="点操作"><a href="#点操作" class="headerlink" title="点操作"></a>点操作</h3><p>这个点操作的含义就是这个包导入之后在你调用这个包的函数时，你可以省略前缀的包名，</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>( . <span class="string">&quot;fmt&quot;</span> )</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">  <span class="comment">//可以省略的写成 </span></span><br><span class="line">  Println(<span class="string">&quot;hello world&quot;</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(test <span class="string">&quot;fmt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">   <span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">10</span>;</span><br><span class="line">   test.Print(<span class="string">&quot;a address is % :&quot;</span>, &amp;a)</span><br><span class="line">   pointer.Add(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="执行init"><a href="#执行init" class="headerlink" title="_ 执行init"></a>_ 执行init</h3><p>作用：当导入一个包时，该包下的文件里所有init()函数都会被执行，<br>使用下划线<code>_</code>导的包，不使用也不报错</p><p>如：import _ hello/imp</p><p>场景：<br>有些时候我们并不需要把整个包都导入进来，仅仅是是希望它执行init()函数而已。<br>这个时候就可以使用 <code>import _</code>引用该包，即使用<code>import _ 包路径</code>只是引用该包，仅仅是为了调用init()函数，所以无法通过包名来调用包中的其他函数。</p><p>目录结构</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;--src</span><br><span class="line">&gt;  |</span><br><span class="line">&gt;  |--main.<span class="keyword">go</span></span><br><span class="line">&gt;  \--hello</span><br><span class="line">&gt;      \--imp</span><br><span class="line">&gt;         |--init.<span class="keyword">go</span></span><br></pre></td></tr></table></figure><h3 id="验证初始化"><a href="#验证初始化" class="headerlink" title="验证初始化"></a>验证初始化</h3><p>这里可以执行 init()，但是不能调用这个包内的函数。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> _ <span class="string">&quot;hello/imp&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// imp.Print() 编译报错，说：undefined: imp</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> imp</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;imp-init() come here.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Print</span><span class="params">()</span></span> &#123;</span><br><span class="line">     fmt.Println(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>输出结果：imp-init() come here.</p></blockquote><p>如果需要即要初始化 init() 函数，又要调用其他函数，就必须再导入一次不带下划线的包就可以。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>go 的 import，还是比较中规中规矩，实际使用当中 import() 使用的比较多，毕竟不会只导入一两个包。<br><code>_</code> 的用法在很多框架低层中很常用，要注意。</p><p>项目练习代码: <a href="https://github.com/forfreeday/go-learning">https://github.com/forfreeday/go-learning</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;import-导包&quot;&gt;&lt;a href=&quot;#import-导包&quot; class=&quot;headerlink&quot; title=&quot;import 导包&quot;&gt;&lt;/a&gt;import 导包&lt;/h2&gt;&lt;p&gt;有相对路径 和 绝对路径，推荐使用绝对路径。&lt;br&gt;GoLand 中导包如果不用，会
+      
+    
+    </summary>
+    
+      <category term="go" scheme="https://liukay.com/categories/go/"/>
+    
+    
+      <category term="go" scheme="https://liukay.com/tags/go/"/>
+    
+      <category term="import" scheme="https://liukay.com/tags/import/"/>
+    
+      <category term="关键字" scheme="https://liukay.com/tags/%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo-自动发布脚本</title>
@@ -699,41 +728,6 @@
       <category term="spring" scheme="https://liukay.com/tags/spring/"/>
     
       <category term="源码" scheme="https://liukay.com/tags/%E6%BA%90%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gradle 安装</title>
-    <link href="https://liukay.com/posts/d723a7c4.html"/>
-    <id>https://liukay.com/posts/d723a7c4.html</id>
-    <published>2021-11-23T02:13:46.000Z</published>
-    <updated>2022-01-22T04:03:45.620Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官网</p><p><a href="https://gradle.org/">https://gradle.org/</a></p><p>下载页面<br><a href="https://gradle.org/releases/">https://gradle.org/releases/</a></p><p>选择自己需要的版本，下载已经编译好的二进制文件<br>Download: binary-only</p><p><img src="/posts/d723a7c4/%E5%AE%89%E8%A3%85.jpg" alt="安装"></p><h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><p>设置 <code>.bash_profile</code> 文件添加</p><blockquote><p>export PATH=$PATH:/Users/liukai/workspaces/application/gradle-6.6.1/bin</p></blockquote><p>验证一下</p><p><img src="/posts/d723a7c4/%E9%AA%8C%E8%AF%81.jpg" alt="验证"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;官网&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://gradle.org/&quot;&gt;https://gradle.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p
-      
-    
-    </summary>
-    
-      <category term="java" scheme="https://liukay.com/categories/java/"/>
-    
-      <category term="gradle" scheme="https://liukay.com/categories/java/gradle/"/>
-    
-    
-      <category term="安装" scheme="https://liukay.com/tags/%E5%AE%89%E8%A3%85/"/>
-    
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
-    
-      <category term="gradle" scheme="https://liukay.com/tags/gradle/"/>
-    
-      <category term="项目构建" scheme="https://liukay.com/tags/%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA/"/>
     
   </entry>
   
