@@ -20,13 +20,13 @@
       
         <tags>
             
+            <tag> git </tag>
+            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
-            
-            <tag> git </tag>
             
         </tags>
       
@@ -551,9 +551,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> 数据库 </tag>
-            
             <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
       
@@ -987,9 +987,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 源码分析 </tag>
-            
             <tag> 共识 </tag>
+            
+            <tag> 源码分析 </tag>
             
         </tags>
       
@@ -1776,9 +1776,9 @@
             
             <tag> nvim </tag>
             
-            <tag> ide </tag>
-            
             <tag> 配置 </tag>
+            
+            <tag> ide </tag>
             
             <tag> plugin </tag>
             
@@ -1815,17 +1815,17 @@
             
             <tag> vim </tag>
             
-            <tag> nvim </tag>
-            
-            <tag> ide </tag>
-            
-            <tag> 配置 </tag>
-            
             <tag> mac </tag>
+            
+            <tag> nvim </tag>
             
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
+            
+            <tag> 配置 </tag>
+            
+            <tag> ide </tag>
             
         </tags>
       
@@ -1916,9 +1916,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> 栈 </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> 栈 </tag>
             
             <tag> algorithm </tag>
             
@@ -2632,11 +2632,11 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -4663,6 +4663,43 @@
     
     
     <entry>
+      <title>算法--树的定义</title>
+      <link href="posts/eadc91e.html"/>
+      <url>posts/eadc91e.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>树是一种逻辑上的概念，切记，这会帮助你理解。</p></blockquote><p>学习算法过程中你不得立即获得正向反馈，这就是学习无奈的地方，学习更像是一种投资。<br>不要觉得学习带有功利性不好，努力考上一个好大学，找到好工作也是一种功利性，只是平时不愿意承认。<br>学习算法也是，你可以找到好工作，这是一种长期投资。<br>坚持下去。</p><h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><blockquote><p>树是一种逻辑上的概念，切记，这会帮助你理解。</p></blockquote><p>树是一种数据结构<br>它是由n（n&gt;=1）个有限结点组成一个具有层次关系的集合。<br>即最少一个节点。</p><h3 id="树具有的特点有"><a href="#树具有的特点有" class="headerlink" title="树具有的特点有"></a>树具有的特点有</h3><ol><li>每个结点有零个或多个子结点</li><li>没有父节点的结点称为根节点</li><li>每一个非根结点有且只有一个父节点</li><li>除了根结点外，每个子结点可以分为多个不相交的子树。</li></ol><img src="/posts/eadc91e/树.jpg" height="70%" width="70%"><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><ol><li>结点的度(Degree)：结点拥有的子树的数目，root，有 0-2个结点</li><li>叶子结点：度为0的结点        //就是最后一个节点</li><li>分支结点：度不为0的结点</li><li>树的度：树内各结点的度的最大的值。（即所有子节点加起来有多少度）</li><li>树的层次序号：每个节点，从上往下，从左往右都有一个编号，根是1，第二层最左是2依次递进</li><li>层次：根结点的层次为1，其余结点的层次等于该结点的双亲结点的层次加1</li><li>树的高度：树中结点的最大层次</li><li>森林：0个或多个不相交的树组成。<br>对森林加上一个根，森林即成为树；删去根，树即成为森林</li></ol><img src="/posts/eadc91e/术语解释.jpg" height="70%" width="70%"><p>二叉树的度是指树中所以结点的度数的最大值。二叉树的度小于等于2，因为二叉树的定义要求二叉树中任意结点的度数（结点的分支数）小于等于2 。</p><h3 id="节点关系"><a href="#节点关系" class="headerlink" title="节点关系"></a>节点关系</h3><p>若一个结点有子树，那么该结点称为子树根的&quot;双亲&quot;，子树的根称为该结点的&quot;孩子&quot;。<br>有相同双亲的结点互为&quot;兄弟&quot;。<br>一个结点的所有子树上的任何结点都是该结点的后裔。<br>从根结点到某个结点的路径上的所有结点都是该结点的祖先。</p><img src="/posts/eadc91e/节点关系.jpg" height="70%" width="70%"><h3 id="节点的层次"><a href="#节点的层次" class="headerlink" title="节点的层次"></a>节点的层次</h3><p>结点的层次（Level）从根开始定义起，根为第一层，根的孩子为第二层。<br>树中结点的最大层次称为树的深度（Depth）或高度。</p><img src="/posts/eadc91e/树的层次.jpg" height="70%" width="70%"><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>树是概念的结构，如果树只有一侧，也可以理解为一个链表，在逻辑上规定了树的结构。<br>概念性的东西，不容易记住，当可以记住时，可以当作字典来查询。<br>关键点在于，概念是用来帮助理解的，当你理解了之后，自然就可以记住概念。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> algorithm </category>
+          
+          <category> tree </category>
+          
+          <category> 算法 </category>
+          
+          <category> 树 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> algorithm </tag>
+            
+            <tag> 树 </tag>
+            
+            <tag> tree </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>maven 项目依赖</title>
       <link href="posts/10e755c7.html"/>
       <url>posts/10e755c7.html</url>
@@ -5095,11 +5132,11 @@
       
         <tags>
             
+            <tag> broker </tag>
+            
             <tag> rocketmq </tag>
             
             <tag> mq </tag>
-            
-            <tag> broker </tag>
             
         </tags>
       
