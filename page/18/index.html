@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>原理翻译家 - 有限的时间，编写先限的可能</title><meta name="author" content="潇洒"><meta name="copyright" content="潇洒"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="原理翻译家">
+<meta property="og:url" content="https://liukay.com/page/18/index.html">
+<meta property="og:site_name" content="原理翻译家">
+<meta property="og:description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/touxiang.jpeg">
+<meta property="article:author" content="潇洒">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/touxiang.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/page/18/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?350bd4cbe41151f1b8e0f63df2321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '原理翻译家',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-03-05 11:37:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/bg.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">原理翻译家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">原理翻译家</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/4050.html" title="竞态条件 racing condition"><img class="post_bg" src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="竞态条件 racing condition"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/4050.html" title="竞态条件 racing condition">竞态条件 racing condition</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-09-30T03:28:49.000Z" title="发表于 2017-09-30 11:28:49">2017-09-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/concurrent/">concurrent</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/juc/">juc</a></span></div><div class="content">前言多个线程读时，线程是安全的。当两个线程竞争同一资源时，如果对资源的访问顺序敏感，就称存在竞态条件。我的理解，竞态条件就是一种情况。
+代码实现假设有 A、B 两个线程，调用 add 方法分别传入 1 和 2，理想条件下结果应该是 3。现在出现了不安全的情况，有可能结果不对。add方法就是临界区count 就是同一资源。
+12345678public class Counter &#123;      protected long count = 0;      // 临界区    public void add(long value) &#123;          // 被竞争的资源        this.count = this.count + value;      &#125;  &#125;  
+
+其实这样一看，说白了，就是要严格控制线程的执行顺序，假设是按A、B的顺序执行来讲，B依赖于A先执行完成，B再执行结果才是正确的，中间不能出现问题，否则如果，中间交叉执行，就有可能发生了竞态条件。
+总结如果某个资源会被多个线程竞争，要保证安全性的情况下，可以加上一些必要的同步措施 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/49159421.html" title="springboot01 概述"><img class="post_bg" src="/images/cover/cover-springboot.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="springboot01 概述"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/49159421.html" title="springboot01 概述">springboot01 概述</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-09-28T02:59:55.000Z" title="发表于 2017-09-28 10:59:55">2017-09-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">概述Spring Boot 是 Spring 社区发布的一个开源项目，旨在帮助开发者快速并且更简单的构建项目。大多数Spring Boot项目只需要很少的配置文件。
+Spring Boot特性
+创建独立的Spring项目
+直接嵌入Tomcat、Jetty或Undertow（不需要部署WAR文件）
+提供有自动的 &quot;启动器 &quot;依赖，以简化你的构建配置
+提供了一系列大型项目中常见的非功能性特性，如安全、指标，健康检测、外部配置等
+完全没有代码生成和xml配置文件
+
+Spring Boot运行环境最低 Java6 官方推荐 Java8
+内置 Servlet 容器Tomcat 7 8Jetty 8 9
+Spring Boot 支持哪些应用普通 Java 项目和 web 项目
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/b072a0c.html" title="vim-调用awk对列求和"><img class="post_bg" src="/images/cover/cover-vim.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vim-调用awk对列求和"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/b072a0c.html" title="vim-调用awk对列求和">vim-调用awk对列求和</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-08-25T03:51:26.000Z" title="发表于 2017-08-25 11:51:26">2017-08-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/vim/">vim</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/vim/">vim</a></span></div><div class="content">单列求和调用awk进行求和，下面这段可以看做是：
+
+%: 表示全文
+!: 感叹号是执行命令
+awk: 最简单的awk操作
+
+平时用awk也要注意，可以不写BEGIN，但是要写END。
+1:%!awk &#x27;&#123;print; sum+=$1&#125;END&#123;print sum&#125;&#x27;
+
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/b8477805.html" title="jstat统计JVM信息"><img class="post_bg" src="/images/cover/cover-jvm.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jstat统计JVM信息"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/b8477805.html" title="jstat统计JVM信息">jstat统计JVM信息</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-08-20T16:22:39.000Z" title="发表于 2017-08-21 00:22:39">2017-08-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/jvm/">jvm</a></span></div><div class="content">
+重要参数是要看 FGC 执行了多少次。
+
+JVM Statistics Monitoring Tool用于监控虚拟机各种运行状态信息的命令行工具，查看虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。
+统计垃圾回收堆的行为
+jstat -gc pid
+
+显示格式：
+
+列说明
+123456789101112131415S0C: survivor0区的总容量S1C: survivor1区的总容量S0U: survivor0区已使用的容量S1U: survivor1区已使用的容量EC: Eden区的总容量EU: Eden区已使用的容量OC: Old区的总容量OU: Old区已使用的容量PC: 当前perm的容量 (KB)PU: perm的使用 (KB)YGC: 新生代垃圾回收次数YGCT: 新生代垃圾回收时间FGC: 老年代垃圾回收次数FGCT: 老年代垃圾回收时间GCT: 垃圾回收总消耗时间
+
+单位时间内显示次数
+jstat -gc pid 秒 次数这个命令意思就是每隔2000ms输出gc情况，一共输出20次。
+
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/11bbfe3.html" title="vim-quickfix窗口"><img class="post_bg" src="/images/cover/cover-vim.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vim-quickfix窗口"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/11bbfe3.html" title="vim-quickfix窗口">vim-quickfix窗口</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-07-18T06:30:30.000Z" title="发表于 2017-07-18 14:30:30">2017-07-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/vim/">vim</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/vim/">vim</a></span></div><div class="content">vim quickfixvim 自带quickfix功能，很多插件也会利用这个窗口，把错误信息在这个窗口上显示。命令：
+123456:help quickfix# 打开 quickfix:copen# 关闭 quickfix:cclose
+效果：
+
+vim-go quickfixvim-go 也是使用的 quickfix 输出，命令：
+1GoLint
+
+
+coc 调用需要依赖fzf，在普通模式下执行：
+按住 空格不放 + a，调用
+
+总结quickfix窗口，是个很实用的vim内置工具，开发过程中很常用，自带的quickfix窗口其实功能还是有点欠缺，最好是加上一些相关插件，用起来更舒服。
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/3b661838.html" title="shell 删除目录下备份目录数量"><img class="post_bg" src="/images/cover/cover-linux.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="shell 删除目录下备份目录数量"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/3b661838.html" title="shell 删除目录下备份目录数量">shell 删除目录下备份目录数量</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-07-13T10:46:47.000Z" title="发表于 2017-07-13 18:46:47">2017-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/shell/">shell</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/shell/">shell</a></span></div><div class="content">前言经常需要通过脚本来控制系统目录的里备份文件数量。不可能手动来经常查看，总是忘记。通过脚本定期自己查看目录里的文件数据，删除时间较早的目录。
+实现那么就要设置几个条件：
+
+允许存在几个目录
+超过了怎么删除
+
+怎么判断目录下有多少个目录？用ls就可以。
+那多出来的怎么删除？遍历删，直到没有为止
+完整代码如下：
+1234567891011#!/bin/bashdirCount=5# 查看当前目录数currentDirCount=`ls -l | grep &quot;^d&quot; | wc -l`# 遍历删，直到没有为止while [ $currentDirCount -gt $dirCount ]do  rm -rf `ls -1|head -n 1`  currentDirCount=`ls -l | grep &quot;^d&quot; | wc -l`done
+
+过滤目录，d 表示目录
+
+grep &quot;^d&quot;
+
+制造一些测试数据，然后执行上面的脚本验证。
+1mkdir test1 test2 test3
+
+最后一个问题，什么时候来执行呢？这个就看具体的策略 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/31744.html" title="新生代收集器 Parallel Scavenge"><img class="post_bg" src="/images/cover/cover-jvm.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="新生代收集器 Parallel Scavenge"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/31744.html" title="新生代收集器 Parallel Scavenge">新生代收集器 Parallel Scavenge</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-26T02:20:58.000Z" title="发表于 2017-06-26 10:20:58">2017-06-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/jvm/">jvm</a></span></div><div class="content">新生代，多线程，使用复制算法，是多线程的并行的收集器。目标：达到一个可控的**吞吐量(Throughput)**。吞吐量：CPU用于运行代码时间 与 CPU总消耗时间的 比公式： 吞吐量 = 运行代码时间 / ( 运行代码时间 + GC时间）虚拟机运行 100 分钟，GC用掉1分钟，则吞吐量为99%。  100 /(100 + 1) = 0.99
+停顿时间越短越好-XX:MaxGCPauseMillis： 最大GC停顿时间，最小可为0-XX:GCTimeRatio:   吞吐量大小,1-100
+
+停顿时间与空间成反比停顿时间越短，则新生代的空间就越小。通过减小新生代的空间，让里面的垃圾变少，从而加快了集速度。原来：500MB 垃圾，10秒收集一次，每次停顿100毫秒为了缩短时间，修改** -XX:MaxGCPauseMillis** 参数，使新生代空间变小，产生的垃圾就少了，停顿时间短了：现在：300MB 垃圾，5秒收集一次， 每次停顿70毫秒。
+那时问题来了，停顿时间下降了，但是频率高了，则吞吐量也跟着降下来了。
+GC 时间占总时间的比例GCTimeRatio 进行这个设置1-100 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/14823.html" title="git 取消跟踪"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git 取消跟踪"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/14823.html" title="git 取消跟踪">git 取消跟踪</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-25T10:19:05.000Z" title="发表于 2017-06-25 18:19:05">2017-06-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">取消跟踪未提交文件忽略
+
+git rm --cached FILENAME
+
+这样就可以了，如果后面跟的是目录就加上个 -r  就行了（这个操作不会删除这个文件）
+
+git rm -r --cached DIR
+
+已提交文件忽略已经维护起来的文件即已经 commit 后的文件，即使加上了.gitignore也无济于事。用下面这个命令：
+
+git update-index --assume-unchanged logs/*.log
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/13736.html" title="git制造冲突"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git制造冲突"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/13736.html" title="git制造冲突">git制造冲突</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-24T09:57:27.000Z" title="发表于 2017-06-24 17:57:27">2017-06-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">冲突来源于合并不同分支的 commit 是不会产生冲突的，因为 commit 提交到的是当前分支的 本地库。只有将分不同分支的本地库进行合并才会产生冲突。所以：
+
+合并本地库会产生冲突
+拉远程分支的代码也会产生冲突
+
+通常产生的情况：
+两个人写同一个文件就可以先提交的不会有冲突，后拉取的会有冲突
+同一个机器，不同分支，写同一个文件，也可以产生冲突
+
+制造方法：A 、B 两分支操作同一个文件的同一行代码。A 分支 commitB 分支 commit
+B 合并 A，就会产生冲突
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/21670.html" title="什么是线程安全?举例说明，区别。"><img class="post_bg" src="/images/messageboard.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是线程安全?举例说明，区别。"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/21670.html" title="什么是线程安全?举例说明，区别。">什么是线程安全?举例说明，区别。</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-01T17:02:31.000Z" title="发表于 2017-06-02 01:02:31">2017-06-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/interview/">interview</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a></span></div><div class="content">线程安全:当多个线程访问某个方法时，不管你通过怎样的调用方式或者说这些线程如何交替的执行，我们在主程序中不需要去做任何的同步，这个类的结果行为都是我们设想的正确行为，那么我们就可以说这个类时线程安全的。
+线程不安全:在多核CPU的环境下，当多个线程访问同一个共享变量时，这个变量没有使用任务同步机制，会出现CPU 缓存同步内存不及时，导致出现数据不同步的情况，这就是所谓的线程不安全。单核CPU没有这个问题。
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/17/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/#content-inner">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/#content-inner">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/#content-inner">28</a><a class="extend next" rel="next" href="/page/19/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">潇洒</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">重回赛道，开始追赶</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-vim 整合基于vimspector的debug调试环境"/></a><div class="content"><a class="title" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境">rust-vim 整合基于vimspector的debug调试环境</a><time datetime="2023-02-27T15:17:08.000Z" title="发表于 2023-02-27 23:17:08">2023-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决"><img src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="coc-java无法启动和lombok报错解决"/></a><div class="content"><a class="title" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决">coc-java无法启动和lombok报错解决</a><time datetime="2023-02-21T17:33:35.000Z" title="发表于 2023-02-22 01:33:35">2023-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4fcae1e5.html" title="rust-泛型generics"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-泛型generics"/></a><div class="content"><a class="title" href="/posts/4fcae1e5.html" title="rust-泛型generics">rust-泛型generics</a><time datetime="2023-02-12T06:49:53.000Z" title="发表于 2023-02-12 14:49:53">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fe400015.html" title="tron-节点-witness加载过程"><img src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-节点-witness加载过程"/></a><div class="content"><a class="title" href="/posts/fe400015.html" title="tron-节点-witness加载过程">tron-节点-witness加载过程</a><time datetime="2023-02-04T01:43:01.000Z" title="发表于 2023-02-04 09:43:01">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图"><img src="/images/cover/cover-eth.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ethereum-2.0升级相关及路线图"/></a><div class="content"><a class="title" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图">ethereum-2.0升级相关及路线图</a><time datetime="2023-01-17T10:01:31.000Z" title="发表于 2023-01-17 18:01:31">2023-01-17</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/"><span class="card-category-list-name">Tendermint</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/"><span class="card-category-list-name">algorithm</span><span class="card-category-list-count">17</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/array/"><span class="card-category-list-name">array</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/concurrent/"><span class="card-category-list-name">concurrent</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/leetcode/"><span class="card-category-list-name">leetcode</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/slot/"><span class="card-category-list-name">slot</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/struct/"><span class="card-category-list-name">struct</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/ethereum/" style="font-size: 1.3em; color: rgb(91, 93, 48)">ethereum</a><a href="/tags/blockchain/" style="font-size: 1.42em; color: rgb(74, 16, 3)">blockchain</a><a href="/tags/2/" style="font-size: 1.15em; color: rgb(164, 178, 42)">2</a><a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 1.18em; color: rgb(147, 120, 73)">以太坊</a><a href="/tags/tron/" style="font-size: 1.39em; color: rgb(151, 35, 2)">tron</a><a href="/tags/%E5%B9%BF%E6%92%AD/" style="font-size: 1.18em; color: rgb(132, 107, 197)">广播</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 1.39em; color: rgb(185, 8, 198)">区块链</a><a href="/tags/%E8%83%BD%E9%87%8F/" style="font-size: 1.15em; color: rgb(48, 20, 6)">能量</a><a href="/tags/%E5%B8%A6%E5%AE%BD/" style="font-size: 1.15em; color: rgb(105, 190, 153)">带宽</a><a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 1.15em; color: rgb(42, 136, 0)">资源</a><a href="/tags/%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(58, 106, 31)">模型</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.27em; color: rgb(96, 66, 110)">架构</a><a href="/tags/%E6%A6%82%E5%BF%B5/" style="font-size: 1.33em; color: rgb(84, 88, 139)">概念</a><a href="/tags/Reactor%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(193, 58, 42)">Reactor模型</a><a href="/tags/%E5%B9%82%E7%AD%89/" style="font-size: 1.15em; color: rgb(44, 195, 20)">幂等</a><a href="/tags/%E5%AE%B9%E9%94%99/" style="font-size: 1.15em; color: rgb(197, 132, 1)">容错</a><a href="/tags/docker/" style="font-size: 1.36em; color: rgb(8, 118, 90)">docker</a><a href="/tags/arm/" style="font-size: 1.18em; color: rgb(181, 128, 8)">arm</a><a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 1.18em; color: rgb(128, 69, 171)">微服务</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.18em; color: rgb(6, 159, 14)">虚拟化</a><a href="/tags/run/" style="font-size: 1.15em; color: rgb(57, 48, 187)">run</a><a href="/tags/start/" style="font-size: 1.15em; color: rgb(85, 167, 159)">start</a><a href="/tags/wget/" style="font-size: 1.15em; color: rgb(78, 97, 86)">wget</a><a href="/tags/%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/" style="font-size: 1.15em; color: rgb(114, 78, 24)">问题处理</a><a href="/tags/linux/" style="font-size: 1.39em; color: rgb(39, 133, 65)">linux</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.15em; color: rgb(166, 46, 91)">容器</a><a href="/tags/map-%E4%BB%BB%E5%8A%A1/" style="font-size: 1.15em; color: rgb(166, 195, 100)">map 任务</a><a href="/tags/hadoop/" style="font-size: 1.15em; color: rgb(103, 143, 91)">hadoop</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.21em; color: rgb(4, 146, 73)">大数据</a><a href="/tags/%E4%B8%9A%E5%8A%A1/" style="font-size: 1.15em; color: rgb(170, 57, 112)">业务</a><a href="/tags/hadoop1-0/" style="font-size: 1.15em; color: rgb(50, 186, 7)">hadoop1.0</a><a href="/tags/NameNode/" style="font-size: 1.15em; color: rgb(101, 110, 67)">NameNode</a><a href="/tags/java/" style="font-size: 1.45em; color: rgb(36, 94, 124)">java</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.24em; color: rgb(158, 34, 156)">设计模式</a><a href="/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(7, 7, 67)">代理模式</a><a href="/tags/%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/" style="font-size: 1.15em; color: rgb(180, 109, 126)">静态代理</a><a href="/tags/design/" style="font-size: 1.18em; color: rgb(188, 96, 129)">design</a><a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(98, 193, 144)">单例模式</a><a href="/tags/singleton/" style="font-size: 1.15em; color: rgb(101, 24, 35)">singleton</a><a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(192, 46, 64)">策略模式</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">275</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-03-05T03:37:14.651Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 潇洒</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">京ICP备2023002120号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    window.typed = new Typed("#subtitle", {
+      strings: ["本世纪，大白话翻译家","有限的时间，无限的可能","整体框架，局部细节","刻意训练，持续输出"],
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '本世纪，大白话翻译家'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/forfreeday/forfreeday.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script></div></body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>分类: spring | 原理翻译家</title><meta name="author" content="潇洒"><meta name="copyright" content="潇洒"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="原理翻译家">
+<meta property="og:url" content="https://liukay.com/categories/spring/index.html">
+<meta property="og:site_name" content="原理翻译家">
+<meta property="og:description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/touxiang.jpeg">
+<meta property="article:author" content="潇洒">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/touxiang.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/categories/spring/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?350bd4cbe41151f1b8e0f63df2321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类: spring',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-03-05 11:37:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('/images/top_img/top_img-spring.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">原理翻译家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">spring</h1></div></header><main class="layout" id="content-inner"><div class="recent-posts category_ui" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/8cad0e75.html" title="spring 源码01 开始阅读"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring 源码01 开始阅读"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8cad0e75.html" title="spring 源码01 开始阅读">spring 源码01 开始阅读</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-12T10:05:57.000Z" title="发表于 2021-12-12 18:05:57">2021-12-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">源码阅读</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/code/">code</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/code/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/code/">code</a></span></div><div class="content">
+在开始源码阅读之前，一定要使用过这个产品，了解这个产品的功能、特点。
+
+在开始源码阅读之前，需要先明白几个事
+
+是否足够了解
+要阅读到什么程序
+如何开始、从哪里开始
+
+开始前最好是带着问题去阅读源码，不纠结于小细节。我一般读源码就是碰到问题后，带着问题去看，效果更好，不要想着假大空，把源码当小说一样看。单个问题解决后，再向外延伸，就可以把一些点串起来。最后，需要反复看一些重点部份，消失对源码的陌生感之后就会能看进去。熟悉之后就会一种想要了解更多的感觉就会一直往下看，这个就是自动驱动的动力。
+如果看不下去，不要责怪自己懒，人对看不见短期收益的事提不起兴趣这才是正常的一个人，趋利避害是正常的。看不下去，该干嘛干，强迫自己看效果很差。不要骗自己，假装努力是在浪费时间，干IT的都很忙，看不去就看改改bug。
+技巧
+对说某个功能，在看之前，可以有自己的推测，想像后续的流程是如何执行的。
+切一个 read_code 分支用来作注释，写上自己的见解，也方便以后再回到这块代码时能快速理解。
+找到真实阅读源码的动力，如：
+准备跳槽、面试
+想了解原理
+解决项目中的问题
+装逼
+
+
+跑测试用例，好的开源软件 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/992b6df6.html" title="spring 源码阅读环境"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring 源码阅读环境"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/992b6df6.html" title="spring 源码阅读环境">spring 源码阅读环境</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-23T02:46:45.000Z" title="发表于 2021-11-23 10:46:45">2021-11-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/code/">code</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/code/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/code/">code</a></span></div><div class="content">要进行源码阅读之前，强调需要先对一个产品有熟悉的使用，就好像你想要造车，要先会开车，再去学习如何造车，否则一切都是停在理轮上，完全不了解这个车是如何运行的，没有概念。推荐对需要阅读的源码先保存在自己仓库中，并创建一个源码分支，可以在阅读分析的过程中对重要点进行注释帮助加深理解。
+fork源码Spring 官方github源码仓库
+https://github.com/spring-projects/spring-framework
+
+构建源码阅读环境将代码 clone 到本地，克隆完成后，IDEA自动打开项目。
+
+报错处理，首次打开会报个错，别慌这是因为IDEA缺少必要插件，点右侧 gradle 的构建按钮构建一次。
+首次构建需要下载的包比较多，
+
+直接使用 git clone 方式直接使用命令行git clone 项目的话，拉完代码后，IDEA 通过导入的方式导入项目。
+
+file---&gt;new---&gt;Project from Exisitings Sources
+
+后续步骤相同。
+gradle 问题spring 是基于gradle进行构建的，如果没有安装gradle也没 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/22827.html" title="spring cloud eureka 注册服务显示IP端口号"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring cloud eureka 注册服务显示IP端口号"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/22827.html" title="spring cloud eureka 注册服务显示IP端口号">spring cloud eureka 注册服务显示IP端口号</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-06T06:21:29.000Z" title="发表于 2019-05-06 14:21:29">2019-05-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">Spring cloud 显示 INSTANCE-ID 如果以IP + 端口号的形式显示，会更清析的定位每个服务所在的机器节点的状态。
+依赖的 pom12345&lt;dependency&gt;	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;	&lt;artifactId&gt;spring-cloud-commons&lt;/artifactId&gt;	&lt;version&gt;2.1.0.RELEASE&lt;/version&gt;&lt;/dependency&gt;
+
+yml 相关配置1234567eureka:  client:    service-url:      defaultZone: http://10.168.16.101:8761/eureka/  instance:    instance-id: $&#123;spring.cloud.client.ip-address&#125;:$&#123;spring.application.instance_id:$&#123;serve ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/39872.html" title="spring cloud 四种服务下线方式"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring cloud 四种服务下线方式"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/39872.html" title="spring cloud 四种服务下线方式">spring cloud 四种服务下线方式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T12:06:54.000Z" title="发表于 2019-05-05 20:06:54">2019-05-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">这里指已经在 Eureka 注册中心注册的服务，如果需要停用，有四种方式进行停用。
+1.直接关闭最粗暴。写这个是因为，直接关闭，如果 Eureka 开了保护模式，会导至服务已关闭，但是未下线，还是会重试调用。如果不需强稳定性的话可以这么干。
+2.客户端主动通知注册中心下线安全。Eureka注册中心在收到某个客户端下线后不会马上通知所有的注册的客户端，而是等到客户端进行心跳的时候(心跳(续约)频率，默认30秒 )再将下的数据返回。通过这种方式下线的话，可以在某个服务下线后防止其他服务调用此服务失败。
+白话就是，服务状态下线了，但是不通知其他服务。等到续约时间到了，再通知所有注册服务。
+
+猜测，服务下线后，在没有心跳前，其他服务还是可以进行调用。等到心跳后，通知所有服务已下线，其他服务认为已下线，就不会再调该下线服务。
+12345678   @Autowired   private DiscoveryClient client;   @ResponseBody   @GetMapping(&quot;/eurekaUnRegister&quot;)   public String shut ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/606a5ad4.html" title="springboot 发送邮件"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="springboot 发送邮件"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/606a5ad4.html" title="springboot 发送邮件">springboot 发送邮件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-01-28T09:39:28.000Z" title="发表于 2019-01-28 17:39:28">2019-01-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/springboot/">springboot</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/springboot/mail/">mail</a></span></div><div class="content">最近重写一个邮件服务来给告警业服务用，做成一个内置的应用。直接使用 spring 的 javamail 来实现。公司使用腾讯企业邮箱。这个例子正常使用，可以直接套上使用。
+邮件配置以下配置方式二选一
+
+代码方式
+yml方式
+
+代码方式1234567891011121314151617181920212223242526272829303132333435363738394041424344454647package com.liukai.springmail.send;import org.springframework.beans.factory.annotation.Configurable;import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;import org.springframework.boot.autocon ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/e115ab30.html" title="java 解决父构造器中拿到对象"><img class="post_bg" src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java 解决父构造器中拿到对象"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/e115ab30.html" title="java 解决父构造器中拿到对象">java 解决父构造器中拿到对象</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-01-25T12:48:49.000Z" title="发表于 2019-01-25 20:48:49">2019-01-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/threadlocal/">threadlocal</a></span></div><div class="content">这两天被问到一个有意思的问题，就是如果在构造器中拿到匿名对象。这个问题有意思在，直觉上是可以通过外部放一个成员变量去接，然后后续就可以使用了，但实际不行。
+问题复现下面这个是构造器，当通过 supper 去调用父类构造器。由于问题出现在Spring项目当中，所以我复现的例子也基于Spring重新搭了一个项目来复现这个过程，代码放github上。
+复现demo：
+12345678910111213package com.test;import org.springframework.beans.factory.annotation.Autowired;public class TransactionCache extends RevokingDB &#123;  @Autowired  public TransactionCache(String dbName) &#123;    // 其他代码不能在 supper 之前，但是又要拿到 TxCacheDB，不能再new一次，否则会初始化两次TxCacheDB。    super(new TxCacheDB(dbName));    // ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/650.html" title="静态资源配置的问题"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="静态资源配置的问题"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/650.html" title="静态资源配置的问题">静态资源配置的问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-01-10T06:42:09.000Z" title="发表于 2019-01-10 14:42:09">2019-01-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">spring boot 的项目是将静态资源打包到.jar 的文件包中， 项目中有碰到需要使用外部静态资源的情况，使用外部资源的一直老出问题，查了google 后发现是指定的方式不对。
+静态资源配置将 resource/static 进行映射，springboot 默认优先级:
+
+/META-INF/resources//resources//static//public/
+
+
+spring 属性合配 resources 配置1.本项目包含路径：
+12345spring:mvc:   static-path-pattern: /lateresources:  static-locations: classpath:/templates/dist/
+
+这两天遇到的坑
+2.指定项目外的磁盘路径如果要映射本地磁盘路径，可以使用，注意必须得有 file:, 注意必须得有file:,注意必须得有file:  否则 404, 重要事情说三遍。
+12345spring:mvc:   static-path-pattern: /lateresources:   static-locations: fil ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/57334.html" title="springboot 注解实现日志切面"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="springboot 注解实现日志切面"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/57334.html" title="springboot 注解实现日志切面">springboot 注解实现日志切面</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-11-27T10:46:27.000Z" title="发表于 2018-11-27 18:46:27">2018-11-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">项目中很多时候需要去打印方法入参和出参的日志，有助于排查错误。注解需要操作简单。常用的方式之一就是使用切面来切日志。
+步骤：
+定义自定义注解
+编写自定义注解的切面方法
+使用注解在需要输出日志的方法上
+
+
+1.自定义注解1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253/** * * controller 注解切面 * @author liukai * @data 2018/8/7 15:26. */@Target(&#123;ElementType.PARAMETER, ElementType.METHOD&#125;)//目标是方法@Retention(RetentionPolicy.RUNTIME)//注解会在class中存在，运行时可通过反射获取@Documented//文档生成时，该注解将被包含在javadoc中，可去掉@Inheritedpublic @interface ControllerLog &#123;    /**     ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/62323.html" title="什么是上下文context"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是上下文context"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/62323.html" title="什么是上下文context">什么是上下文context</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-09-17T02:56:00.000Z" title="发表于 2018-09-17 10:56:00">2018-09-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">上下文(背景/语境) context是当前运行程序的环境。网上各种不可说，模糊不清，但是一个概念的提出肯定有最初的含义。
+总结上下文可以理解成：
+上下文指由代码已运行的程序环境，不是指代码。
+一组状态，这个好理解，取 spring cloud 的官方文档的例子：
+一个Spring Cloud应用程序通过创建一个&quot;引导&quot;上下文来进行操作，这个上下文是主应用程序的父上下文。引导上下文使用与主应用程序上下文不同的外部配置约定，因此使用bootstrap.yml application.yml（或.properties）代替引导和主上下文的外部配置。这里所谓的 引导上下文 就是一组状态，实际就是一个保存配置的大对象，换个角度理就是环境。
+
+
+环境背景每一段程序都有很多外部变量。只有像Add这种简单的函数才是没有外部变量的。一旦你的一段程序有了外部变量，这段程序就不完整，不能独立运行。你为了使他们运行，就要给所有的外部变量一个一个写一些值进去。这些值的集合就叫上下文。
+
+摘自知乎
+和其他传入对象参数没什么区别。但是通常使用Context来描述有几个特点：被传入Context的 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/6ee0b94a.html" title="spring boot 使用maven打jar包配置"><img class="post_bg" src="/images/cover/cover-spring.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring boot 使用maven打jar包配置"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/6ee0b94a.html" title="spring boot 使用maven打jar包配置">spring boot 使用maven打jar包配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-09-02T04:18:05.000Z" title="发表于 2018-09-02 12:18:05">2018-09-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/java/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/">spring</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/spring/springboot/">springboot</a></span></div><div class="content">使用 ide 进行开发时，直接在ide上启动即可，如果要放到服务器上进行使用，就必须打成jar包，这里使用 maven 的打包插件进行打包。注意 &lt;mainClass&gt;com.devops.WebApplication&lt;/mainClass&gt; 这行要改成你的启动类。
+1234567891011121314151617181920212223242526272829303132&lt;build&gt;    &lt;finalName&gt;devops-web&lt;/finalName&gt;    &lt;plugins&gt;        &lt;plugin&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;        &lt;/plugin&gt;        &lt;plugin&gt;            ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/categories/spring/page/2/">2</a><a class="page-number" href="/categories/spring/page/3/">3</a><a class="extend next" rel="next" href="/categories/spring/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">潇洒</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">重回赛道，开始追赶</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-vim 整合基于vimspector的debug调试环境"/></a><div class="content"><a class="title" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境">rust-vim 整合基于vimspector的debug调试环境</a><time datetime="2023-02-27T15:17:08.000Z" title="发表于 2023-02-27 23:17:08">2023-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决"><img src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="coc-java无法启动和lombok报错解决"/></a><div class="content"><a class="title" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决">coc-java无法启动和lombok报错解决</a><time datetime="2023-02-21T17:33:35.000Z" title="发表于 2023-02-22 01:33:35">2023-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4fcae1e5.html" title="rust-泛型generics"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-泛型generics"/></a><div class="content"><a class="title" href="/posts/4fcae1e5.html" title="rust-泛型generics">rust-泛型generics</a><time datetime="2023-02-12T06:49:53.000Z" title="发表于 2023-02-12 14:49:53">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fe400015.html" title="tron-节点-witness加载过程"><img src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-节点-witness加载过程"/></a><div class="content"><a class="title" href="/posts/fe400015.html" title="tron-节点-witness加载过程">tron-节点-witness加载过程</a><time datetime="2023-02-04T01:43:01.000Z" title="发表于 2023-02-04 09:43:01">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图"><img src="/images/cover/cover-eth.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ethereum-2.0升级相关及路线图"/></a><div class="content"><a class="title" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图">ethereum-2.0升级相关及路线图</a><time datetime="2023-01-17T10:01:31.000Z" title="发表于 2023-01-17 18:01:31">2023-01-17</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/"><span class="card-category-list-name">Tendermint</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/"><span class="card-category-list-name">algorithm</span><span class="card-category-list-count">17</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/array/"><span class="card-category-list-name">array</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/concurrent/"><span class="card-category-list-name">concurrent</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/leetcode/"><span class="card-category-list-name">leetcode</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/slot/"><span class="card-category-list-name">slot</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/struct/"><span class="card-category-list-name">struct</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/ethereum/" style="font-size: 1.3em; color: rgb(91, 93, 48)">ethereum</a><a href="/tags/blockchain/" style="font-size: 1.42em; color: rgb(74, 16, 3)">blockchain</a><a href="/tags/2/" style="font-size: 1.15em; color: rgb(164, 178, 42)">2</a><a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 1.18em; color: rgb(147, 120, 73)">以太坊</a><a href="/tags/tron/" style="font-size: 1.39em; color: rgb(151, 35, 2)">tron</a><a href="/tags/%E5%B9%BF%E6%92%AD/" style="font-size: 1.18em; color: rgb(132, 107, 197)">广播</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 1.39em; color: rgb(185, 8, 198)">区块链</a><a href="/tags/%E8%83%BD%E9%87%8F/" style="font-size: 1.15em; color: rgb(48, 20, 6)">能量</a><a href="/tags/%E5%B8%A6%E5%AE%BD/" style="font-size: 1.15em; color: rgb(105, 190, 153)">带宽</a><a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 1.15em; color: rgb(42, 136, 0)">资源</a><a href="/tags/%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(58, 106, 31)">模型</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.27em; color: rgb(96, 66, 110)">架构</a><a href="/tags/%E6%A6%82%E5%BF%B5/" style="font-size: 1.33em; color: rgb(84, 88, 139)">概念</a><a href="/tags/Reactor%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(193, 58, 42)">Reactor模型</a><a href="/tags/%E5%B9%82%E7%AD%89/" style="font-size: 1.15em; color: rgb(44, 195, 20)">幂等</a><a href="/tags/%E5%AE%B9%E9%94%99/" style="font-size: 1.15em; color: rgb(197, 132, 1)">容错</a><a href="/tags/docker/" style="font-size: 1.36em; color: rgb(8, 118, 90)">docker</a><a href="/tags/arm/" style="font-size: 1.18em; color: rgb(181, 128, 8)">arm</a><a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 1.18em; color: rgb(128, 69, 171)">微服务</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.18em; color: rgb(6, 159, 14)">虚拟化</a><a href="/tags/run/" style="font-size: 1.15em; color: rgb(57, 48, 187)">run</a><a href="/tags/start/" style="font-size: 1.15em; color: rgb(85, 167, 159)">start</a><a href="/tags/wget/" style="font-size: 1.15em; color: rgb(78, 97, 86)">wget</a><a href="/tags/%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/" style="font-size: 1.15em; color: rgb(114, 78, 24)">问题处理</a><a href="/tags/linux/" style="font-size: 1.39em; color: rgb(39, 133, 65)">linux</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.15em; color: rgb(166, 46, 91)">容器</a><a href="/tags/map-%E4%BB%BB%E5%8A%A1/" style="font-size: 1.15em; color: rgb(166, 195, 100)">map 任务</a><a href="/tags/hadoop/" style="font-size: 1.15em; color: rgb(103, 143, 91)">hadoop</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.21em; color: rgb(4, 146, 73)">大数据</a><a href="/tags/%E4%B8%9A%E5%8A%A1/" style="font-size: 1.15em; color: rgb(170, 57, 112)">业务</a><a href="/tags/hadoop1-0/" style="font-size: 1.15em; color: rgb(50, 186, 7)">hadoop1.0</a><a href="/tags/NameNode/" style="font-size: 1.15em; color: rgb(101, 110, 67)">NameNode</a><a href="/tags/java/" style="font-size: 1.45em; color: rgb(36, 94, 124)">java</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.24em; color: rgb(158, 34, 156)">设计模式</a><a href="/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(7, 7, 67)">代理模式</a><a href="/tags/%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/" style="font-size: 1.15em; color: rgb(180, 109, 126)">静态代理</a><a href="/tags/design/" style="font-size: 1.18em; color: rgb(188, 96, 129)">design</a><a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(98, 193, 144)">单例模式</a><a href="/tags/singleton/" style="font-size: 1.15em; color: rgb(101, 24, 35)">singleton</a><a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(192, 46, 64)">策略模式</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">275</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-03-05T03:37:14.651Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 潇洒</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">京ICP备2023002120号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/forfreeday/forfreeday.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script></div></body></html>

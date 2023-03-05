@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>原理翻译家 - 有限的时间，编写先限的可能</title><meta name="author" content="潇洒"><meta name="copyright" content="潇洒"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="原理翻译家">
+<meta property="og:url" content="https://liukay.com/page/4/index.html">
+<meta property="og:site_name" content="原理翻译家">
+<meta property="og:description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/touxiang.jpeg">
+<meta property="article:author" content="潇洒">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/touxiang.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/page/4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?350bd4cbe41151f1b8e0f63df2321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '原理翻译家',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-03-05 11:37:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/bg.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">原理翻译家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">原理翻译家</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/c66b841e.html" title="java-tron 区块处理"><img class="post_bg" src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java-tron 区块处理"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/c66b841e.html" title="java-tron 区块处理">java-tron 区块处理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-28T09:49:48.000Z" title="发表于 2022-03-28 17:49:48">2022-03-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/tron/">tron</a></span></div><div class="content">前言区块链当中，所有的交易都包含在区块中，如何验证每一次接收到的区块的合法性就至关重要。区块链是分布式的、对外公开的，所有人都可以参与，有些恶意节点通过修改代码的形式加入到区块链中，把一些对自己有利的交易、区块广播到节点当中，使这些交易对自己有利。所以判断合法交易、区块就尤为重要。这些操作都是交易区块链当中的各个节点进行验证。
+区块区块是用来包含tron网中的交易的数据结构，是由27个超级节点(SR)，每隔3秒，依次轮流将交易打包后的数据结构。
+处理区块处理入口区块处理主要有两个入口，也对应两种场景：
+
+同步处理区块
+追块处理区块
+
+同步处理区块，是节点之前本节点和网络中的节点区块之前高度没有差异，同步接收最新的区块。追块处理区块，本节点区块高度落后网络中的节点太远，需要追到最新高度后，转换为同步处理区块。
+同步处理区块入口类：TronNetHandlerTronNetHandler 是一个 Netty 的 Handler，接收其他节点的消息，基本和其它节点交互的入口类都是这个类。整个流程调用栈：
+12345TronNetHandler.channelRead0    |---tron ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/66788eb9.html" title="tron 交易处理--交易执行逻辑"><img class="post_bg" src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron 交易处理--交易执行逻辑"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/66788eb9.html" title="tron 交易处理--交易执行逻辑">tron 交易处理--交易执行逻辑</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-27T08:03:41.000Z" title="发表于 2022-03-27 16:03:41">2022-03-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/tron/">tron</a></span></div><div class="content">前言分布式区块链环境下，所有的钱包要发起交易，都可以通过网络中的FullNode节点发起交易。TRON 网络中，交易是从客户端发起，再通过 FullNode 进行广播，并将交易广播到网络的SR节点，并由SR节点进行打包。
+主要角色TRON网络中，站在发起交易的角度去看，需要了解的三个角色：
+
+钱包客户端，代表用户
+FullNode全节点，用来转广播交易
+SR超级节点，用来使交易上链
+
+
+使用TRON网络，主要就是各种钱包客户端。构建交易，需要通过钱包应用发起，可以是手机钱包或者浏览器钱包插件，都可以发起一笔交易，也可以使用HTTP接口或者RPC接口都可以发起交易。
+比如用用浏览器插件发起：
+
+当然如果需要深入了解，可以使用官方的wallet-cli工具，通过代码的方式，了解其实现原理。官方钱包项目: https://github.com/tronprotocol/wallet-cli
+交易图形界面操作，就不需要多说了，这里来了解一下使用wallet-cli工具发起的转账流程，wallet-cli就是一个客户端，图形界面当中使用客户端也是相同原理。
+TRON 中有三种代币，是三种不同类型 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/7ecfc8d7.html" title="时间轮 slot 机制实现"><img class="post_bg" src="/images/cover/cover-algorithm.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="时间轮 slot 机制实现"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/7ecfc8d7.html" title="时间轮 slot 机制实现">时间轮 slot 机制实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-24T06:27:45.000Z" title="发表于 2022-03-24 14:27:45">2022-03-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/algorithm/">algorithm</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/consensus/">consensus</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/algorithm/slot/">slot</a></span></div><div class="content">slot机制Slot 机制，大白话，就是分片机制。可以把时间或空间分成一个个槽，通过一定算法使用这些槽的机制。
+有什么用？作用是可以把数据平均分存放到某个槽空间内，比如Hash环中使用的Hash Slot。再比如数组，可以再解为是一种槽机制。这是空间是的槽机制，在时间维度，可以把时间分片，每隔一段时间，就是一个时间槽位。比如：一分钟有60秒，每2秒划分一个槽位就有30个槽，那就可以执行30次；比如：一天有86400秒，每3秒划分一个槽位就有28800个槽。
+这里实现一个简单的时间槽机制，分布式场景下，通过这个机制在，去中心化的场景下，让不同的机制按照一定时间槽机制进行运作。
+
+实现要求必须保证是精准的3秒间隔，中间代码处理业务逻辑的时间必须也要计算在内。比如，执行业务逻辑使用100毫秒，那么到下一个3秒的间隔就是2900毫秒；如果，执行业务逻辑使用500毫秒，那么到下一个3秒的间隔就是2500毫秒；如果，执行业务逻辑使用2900毫秒，那么到下一个3秒的间隔就是100毫秒；保证完整的3秒，不多不少。
+思路这样的话，就要记录计算所有时间：
+
+标记当前开始时间
+记录业务逻辑处理的时间
+计算出 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/1b47d3c9.html" title="tron TaPos理解和应用"><img class="post_bg" src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron TaPos理解和应用"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/1b47d3c9.html" title="tron TaPos理解和应用">tron TaPos理解和应用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-21T23:34:22.000Z" title="发表于 2022-03-22 07:34:22">2022-03-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/tron/">tron</a></span></div><div class="content">什么是TaPos全称：Transaction as Proof of Stake，基于交易的权益证明机制。大白话：这笔交易所基于的证明。啥意思？就是说，在区块链的场景当中，每一过往的笔交易都基于一个区块。因为区块链当中所有的交易都是被打包到一个个区块当中的，如果这是一笔成功的交易，那它一定是存在于某一个特定的区块当中。另外，每一笔交易都有一个唯一的Hash，保证这笔交易的唯一性。那就破案了，这里的证明就是指：区块。
+有什么实际作用
+防止有不包含区块引用的交易被重放到某个分叉上，这样能避免不是该分叉的区块被添加到该分叉。
+告诉用户该块是在哪个分支上面。
+
+这个需要事先了解切链场景，才能说明这个问题。
+先说分叉：
+在区块链网络当中，如果同时收到相同高度的区块就，链就会分叉，你可以理解为git提交记录，从master分支中切出一个新的分叉，会有人基于这个分叉不断的提交代码。在区块链的角度也是一样的，如果区块高度都是 1000 和 1000&#39;，那这个时候链就会出现分叉。
+在哪里用一般在验证广播交易阶段使用。
+构建交易构建一笔交易时，会将这笔交易所需要引用的区块高度带上。交易构建之后会被 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/19f10ba3.html" title="shell 错误日志告警脚本"><img class="post_bg" src="/images/cover/cover-linux.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="shell 错误日志告警脚本"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/19f10ba3.html" title="shell 错误日志告警脚本">shell 错误日志告警脚本</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-21T04:02:46.000Z" title="发表于 2022-03-21 12:02:46">2022-03-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/shell/">shell</a></span></div><div class="content">背景服务器有敏感数据，不允许直接登陆服务器查看日志文件，也不允许使用如ELK等日志功能收集日志，所以只能使用最简单的办法，只将错误日志进行收集，然后通过应用的webhook进行收集。
+思路两种思路：
+
+周期轮询
+实时抓取
+
+周期轮询每隔一分钟去抓取一次，错误日志的内容上送webhook。这样的好处是不会抓到过多的错误日志，但是也有个问题，有可能会错过关键的错误日志。假如每一分钟一轮询，这一次查询刚好没有错误日志产生，而这一个轮询时刻的一分钟内产生了错误日志，就会错过。
+如果到到轮询时刻去统计这一分钟到上一分钟之间的错误日志，是可以，但是如果错误在轮询完成后的这一刻发生，需要等到一分钟之后才会告警出来，缺乏实时性，如果对实时性要求不高可以使用这种方式。
+实时抓取这个思路很简单，就是实时抓取ERROR日志，有ERROR就推送webhook。实现思路：
+
+使用 tail 查询日志
+倒序获取第一条
+关键字可指定
+过滤关键字
+
+下面这个脚本实现以上的几个思路，算是一种简单的实现，我一直觉得脚本这东西不要写的太复杂，需要考虑后面的人维护的成本。另外脚本尽量使用python而不是shell，pyth ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/b91ef7ed.html" title="docker 使用wget后文件消失"><img class="post_bg" src="/images/cover/cover-docker.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker 使用wget后文件消失"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/b91ef7ed.html" title="docker 使用wget后文件消失">docker 使用wget后文件消失</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-15T11:06:36.000Z" title="发表于 2022-03-15 19:06:36">2022-03-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/docker/">docker</a></span></div><div class="content">发现一个挺有意思的问题，之前一直没发现docker的这个问题，今天在改 Dockerfile 的时候发现，构建后运行容器，进行容器内部发现一个配置文件丢失了。检查命令没有问题，查看日志也没有问题。
+build日志如下：
+12345678910--2022-03-15 10:02:31--  https://raw.githubusercontent.com/protocol/deployment/master/main_net_config.confResolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.109.133, ...Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.HTTP request sent, awaiting response... 200 OKLeng ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/a81a51e8.html" title="tron-产块-SR产块机制"><img class="post_bg" src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-产块-SR产块机制"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/a81a51e8.html" title="tron-产块-SR产块机制">tron-产块-SR产块机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-12T09:49:37.000Z" title="发表于 2022-03-12 17:49:37">2022-03-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/blockchain/tron/">tron</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/tron/sr/">sr</a></span></div><div class="content">
+SR 基于DPOS共识，所有节点按照时间顺序轮流产块。
+
+DPOS 共识简述DPOS 共识即为，Delegated Proof of Stake 股份授权证明，在 POS 机制上进行改进。相较于DPOS更为中心化，大白话主要就是两个角色：
+
+持股人(持币用户)投票选举出委托人(Delegates)
+被委托人进行出块，将奖励分给投票人
+
+在DPOS机制下，算法要求系统做三件事：
+
+随机指定生产者出场顺序；
+必须按顺序产块，不按顺序生产的区块无效；
+每过一个周期洗牌一次，打乱原有顺序；
+
+受托人的职责主要有：
+
+保证节点的正常运行；
+收集网络里的交易；
+节点验证交易，把交易打包到区块；
+节点广播区块，其他节点验证后把区块添加到自己的数据库；
+带领并促进区块链项目的发展；
+
+大至概念就是这些，下面对SR产块原理进行分析。
+产块机制注意，TRON对DPOS的产块机制是做了调整的，不完全是按照这个的机制来实现。这个嘛。。。懂的都懂。
+产块大流程
+
+产块节点通过定时任务制每隔最多不超过3秒执行一次，判断是否轮到自己产块
+如果是自己产块，回滚当前节点交易状态，并将交易池中的交易打包
+打包成功后广播 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/8ab317a.html" title="rocksdb arm 架构下编译全过程记录"><img class="post_bg" src="/images/cover/cover-rocksdb.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rocksdb arm 架构下编译全过程记录"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8ab317a.html" title="rocksdb arm 架构下编译全过程记录">rocksdb arm 架构下编译全过程记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-10T11:06:00.000Z" title="发表于 2022-03-10 19:06:00">2022-03-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/rocksdb/">rocksdb</a></span></div><div class="content">背景最近公司项目需要适配arm64架构机器，特意整了两台arm64架构的CentOS7/8的机器来构建。x86、x64架构下的应用在arm64下面需要解决各种环境和依赖问题。
+环境
+Linux internal 4.18.0-147.8.1.el7.aarch64 #1 SMP Wed Apr 15 18:13:44 UTC 2020 aarch64 aarch64 aarch64 GNU/Linux
+
+
+CentOS Linux release 7.8.2003 (AltArch)
+
+编译在 Linux - CentOS / RHEL 环境下编译，可以选择安装官方完整的依赖或者只安装自己需要的部分。有什么区别？
+环境准备：
+
+gcc升级到至少7的版本，以获得C++17的支持
+
+获取 RocksDB
+1get clone https://github.com/facebook/rocksdb.git
+
+安装插件这些插件可以选择性安装，你需要哪个，在使用时自行安装，也可以一次性装好。
+Install gflags:
+1234git clone https://github.com/gfl ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/dbc3a7fe.html" title="docker arm架构下安装docker"><img class="post_bg" src="/images/cover/cover-docker.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker arm架构下安装docker"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/dbc3a7fe.html" title="docker arm架构下安装docker">docker arm架构下安装docker</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-10T08:20:20.000Z" title="发表于 2022-03-10 16:20:20">2022-03-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/docker/">docker</a></span></div><div class="content">arm 架构下安装做arm下的应用迁移，包括应用在docker环境下的表现。所以在 centos arm环境安装docker。
+更新源
+curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
+
+安装 docker
+yum install -y docker-ce docker-ce-cli containerd.io
+
+开启docker服务
+systemctl enable dockersystemctl start docker
+
+验证
+docker ps
+
+如果报错，说明当前用户没有权限，给当前用户授权
+
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+几种修改方式，思路是一样的，就是给权限：
+1.加 sudo 执行2.把当前用户修改用户组3.直接改文件归属
+
+sudo chown $USER /va ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/bd92445f.html" title="linux-CentOS8 arm64架构 使用Centos8打包报错 No URLs in mirrorlis"><img class="post_bg" src="/images/cover/cover-linux.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux-CentOS8 arm64架构 使用Centos8打包报错 No URLs in mirrorlis"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/bd92445f.html" title="linux-CentOS8 arm64架构 使用Centos8打包报错 No URLs in mirrorlis">linux-CentOS8 arm64架构 使用Centos8打包报错 No URLs in mirrorlis</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-09T04:04:42.000Z" title="发表于 2022-03-09 12:04:42">2022-03-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/docker/">docker</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/">linux</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/linux/centos8/">centos8</a></span></div><div class="content">起因最近在为应用打包 arm64架构应用环境的docker包。基于:
+
+Linux aarch64 aarch64 aarch64 GNU/Linux
+
+基础镜象使用 CentOS8，过包过程中报错。
+报错虽说 CentOS8 已经不维护了，但是很多项目还是基于CentoOS8构建。使用阿里云基于CentOS8构建 CentOS8 镜像构建过程中报错：
+
+#5 5.239 CentOS Linux 8 - AppStream                      8.9  B/s |  38  B     00:04#5 5.241 Error: Failed to download metadata for repo &#39;appstream&#39;: Cannot prepare internal mirrorlist: No URLs in mirrorlist
+
+原因在 Dockerfile 中使用到了yum 进行安装。阿里云官方给出解释：
+
+CentOS 8操作系统版本结束了生命周期（EOL），Linux社区已不再维护该操作系统版本。建议您切换到Anolis或Ali ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/#content-inner">28</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">潇洒</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">重回赛道，开始追赶</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-vim 整合基于vimspector的debug调试环境"/></a><div class="content"><a class="title" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境">rust-vim 整合基于vimspector的debug调试环境</a><time datetime="2023-02-27T15:17:08.000Z" title="发表于 2023-02-27 23:17:08">2023-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决"><img src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="coc-java无法启动和lombok报错解决"/></a><div class="content"><a class="title" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决">coc-java无法启动和lombok报错解决</a><time datetime="2023-02-21T17:33:35.000Z" title="发表于 2023-02-22 01:33:35">2023-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4fcae1e5.html" title="rust-泛型generics"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-泛型generics"/></a><div class="content"><a class="title" href="/posts/4fcae1e5.html" title="rust-泛型generics">rust-泛型generics</a><time datetime="2023-02-12T06:49:53.000Z" title="发表于 2023-02-12 14:49:53">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fe400015.html" title="tron-节点-witness加载过程"><img src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-节点-witness加载过程"/></a><div class="content"><a class="title" href="/posts/fe400015.html" title="tron-节点-witness加载过程">tron-节点-witness加载过程</a><time datetime="2023-02-04T01:43:01.000Z" title="发表于 2023-02-04 09:43:01">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图"><img src="/images/cover/cover-eth.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ethereum-2.0升级相关及路线图"/></a><div class="content"><a class="title" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图">ethereum-2.0升级相关及路线图</a><time datetime="2023-01-17T10:01:31.000Z" title="发表于 2023-01-17 18:01:31">2023-01-17</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/"><span class="card-category-list-name">Tendermint</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/"><span class="card-category-list-name">algorithm</span><span class="card-category-list-count">17</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/array/"><span class="card-category-list-name">array</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/concurrent/"><span class="card-category-list-name">concurrent</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/leetcode/"><span class="card-category-list-name">leetcode</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/slot/"><span class="card-category-list-name">slot</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/struct/"><span class="card-category-list-name">struct</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/ethereum/" style="font-size: 1.3em; color: rgb(91, 93, 48)">ethereum</a><a href="/tags/blockchain/" style="font-size: 1.42em; color: rgb(74, 16, 3)">blockchain</a><a href="/tags/2/" style="font-size: 1.15em; color: rgb(164, 178, 42)">2</a><a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 1.18em; color: rgb(147, 120, 73)">以太坊</a><a href="/tags/tron/" style="font-size: 1.39em; color: rgb(151, 35, 2)">tron</a><a href="/tags/%E5%B9%BF%E6%92%AD/" style="font-size: 1.18em; color: rgb(132, 107, 197)">广播</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 1.39em; color: rgb(185, 8, 198)">区块链</a><a href="/tags/%E8%83%BD%E9%87%8F/" style="font-size: 1.15em; color: rgb(48, 20, 6)">能量</a><a href="/tags/%E5%B8%A6%E5%AE%BD/" style="font-size: 1.15em; color: rgb(105, 190, 153)">带宽</a><a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 1.15em; color: rgb(42, 136, 0)">资源</a><a href="/tags/%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(58, 106, 31)">模型</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.27em; color: rgb(96, 66, 110)">架构</a><a href="/tags/%E6%A6%82%E5%BF%B5/" style="font-size: 1.33em; color: rgb(84, 88, 139)">概念</a><a href="/tags/Reactor%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(193, 58, 42)">Reactor模型</a><a href="/tags/%E5%B9%82%E7%AD%89/" style="font-size: 1.15em; color: rgb(44, 195, 20)">幂等</a><a href="/tags/%E5%AE%B9%E9%94%99/" style="font-size: 1.15em; color: rgb(197, 132, 1)">容错</a><a href="/tags/docker/" style="font-size: 1.36em; color: rgb(8, 118, 90)">docker</a><a href="/tags/arm/" style="font-size: 1.18em; color: rgb(181, 128, 8)">arm</a><a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 1.18em; color: rgb(128, 69, 171)">微服务</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.18em; color: rgb(6, 159, 14)">虚拟化</a><a href="/tags/run/" style="font-size: 1.15em; color: rgb(57, 48, 187)">run</a><a href="/tags/start/" style="font-size: 1.15em; color: rgb(85, 167, 159)">start</a><a href="/tags/wget/" style="font-size: 1.15em; color: rgb(78, 97, 86)">wget</a><a href="/tags/%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/" style="font-size: 1.15em; color: rgb(114, 78, 24)">问题处理</a><a href="/tags/linux/" style="font-size: 1.39em; color: rgb(39, 133, 65)">linux</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.15em; color: rgb(166, 46, 91)">容器</a><a href="/tags/map-%E4%BB%BB%E5%8A%A1/" style="font-size: 1.15em; color: rgb(166, 195, 100)">map 任务</a><a href="/tags/hadoop/" style="font-size: 1.15em; color: rgb(103, 143, 91)">hadoop</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.21em; color: rgb(4, 146, 73)">大数据</a><a href="/tags/%E4%B8%9A%E5%8A%A1/" style="font-size: 1.15em; color: rgb(170, 57, 112)">业务</a><a href="/tags/hadoop1-0/" style="font-size: 1.15em; color: rgb(50, 186, 7)">hadoop1.0</a><a href="/tags/NameNode/" style="font-size: 1.15em; color: rgb(101, 110, 67)">NameNode</a><a href="/tags/java/" style="font-size: 1.45em; color: rgb(36, 94, 124)">java</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.24em; color: rgb(158, 34, 156)">设计模式</a><a href="/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(7, 7, 67)">代理模式</a><a href="/tags/%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/" style="font-size: 1.15em; color: rgb(180, 109, 126)">静态代理</a><a href="/tags/design/" style="font-size: 1.18em; color: rgb(188, 96, 129)">design</a><a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(98, 193, 144)">单例模式</a><a href="/tags/singleton/" style="font-size: 1.15em; color: rgb(101, 24, 35)">singleton</a><a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(192, 46, 64)">策略模式</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">275</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-03-05T03:37:14.651Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 潇洒</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">京ICP备2023002120号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    window.typed = new Typed("#subtitle", {
+      strings: ["本世纪，大白话翻译家","有限的时间，无限的可能","整体框架，局部细节","刻意训练，持续输出"],
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '本世纪，大白话翻译家'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/forfreeday/forfreeday.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script></div></body></html>

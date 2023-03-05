@@ -1,0 +1,1 @@
+butterfly 是生成到 img 目发，不同的风格生成不同，保留两个 image 目录。

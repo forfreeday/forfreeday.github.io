@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>分类: git | 原理翻译家</title><meta name="author" content="潇洒"><meta name="copyright" content="潇洒"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="原理翻译家">
+<meta property="og:url" content="https://liukay.com/categories/git/index.html">
+<meta property="og:site_name" content="原理翻译家">
+<meta property="og:description" content="时间顺流而下，生活逆水行舟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/touxiang.jpeg">
+<meta property="article:author" content="潇洒">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/touxiang.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/categories/git/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?350bd4cbe41151f1b8e0f63df2321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类: git',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-03-05 11:37:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('/images/cover/cover-git.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">原理翻译家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">git</h1></div></header><main class="layout" id="content-inner"><div class="recent-posts category_ui" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/69c41eb0.html" title="Github Action 自动构建并推送 DockerHub"><img class="post_bg" src="/images/cover/cover-github.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Action 自动构建并推送 DockerHub"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/69c41eb0.html" title="Github Action 自动构建并推送 DockerHub">Github Action 自动构建并推送 DockerHub</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-02-23T09:31:46.000Z" title="发表于 2022-02-23 17:31:46">2022-02-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/github/">github</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/git/github/">github</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/github/actoin/">actoin</a></span></div><div class="content">写在前面Github Action 这个东西，是小成本和自动化持续集成的福音，如果想要小成本的使用持续集成，省去自己搭建服务器做自动构建，Git Action 就是个好东西。没有这个的时候，你可以自己加 hook 触发，服务可以自己搭，也可以用第三方的。Github Action 最好的优执我个人觉得是在白嫖，什么东西不要钱的都是最好的，除了玩游戏。
+需求我的需求很简单，当代码正式发版后，发布tag后，自动触发通过我的指定的Dockerfile构建镜像后，推送我们指定的 DockerHub。Github Action 提供的操作，可以理解为你在 jenkins 的服务器上写的 Pipline 脚本，一个作用，说到这发现Github Action又把 jenkins的饭碗抢了。
+使用 Github Action照例，先告诉你怎么用，能搜到我博客的都是来解决问题的，如果还还有耐心，在解决完问题后，接着往下看。
+我使用是官方推荐配置，看了一下，没有什么可以改的地方。你点开 Action 一看，它能搞的实在太多了，基本上能满足你的所有日常构建。
+
+找到publish Docker Contai ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/e6470787.html" title="shell--检查github最新release"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="shell--检查github最新release"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/e6470787.html" title="shell--检查github最新release">shell--检查github最新release</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-07-13T15:28:33.000Z" title="发表于 2018-07-13 23:28:33">2018-07-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/shell/">shell</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/shell/git/">git</a></span></div><div class="content">前言经常在需要使用脚本监控仓库是不是有最新的release版本的发布，然后进行自动构建。如何知道远程的github是发布新的release版本，可以能过脚本来获得。
+git ls-remote作用：查看远程分支。能够列出远程分中的内容。
+查看远程所有tag1git ls-remote --tags ./.
+
+结果如下：
+
+d6602ec5194c87b0fc87103ca4d67251c76f233a        refs/tags/v0.99f25a265a342aed6041ab0cc484224d9ca54b6f41        refs/tags/v0.99.17ceca275d047c90c0c7d5afb13ab97efdf51bd6e        refs/tags/v0.99.3c5db5456ae3b0873fc659c19fafdde22313cc441        refs/tags/v0.99.2
+
+查看指定仓库分支1git ls-remote http://www.kernel.org/pub/scm/git/git.git master seen r ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/14823.html" title="git 取消跟踪"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git 取消跟踪"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/14823.html" title="git 取消跟踪">git 取消跟踪</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-25T10:19:05.000Z" title="发表于 2017-06-25 18:19:05">2017-06-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">取消跟踪未提交文件忽略
+
+git rm --cached FILENAME
+
+这样就可以了，如果后面跟的是目录就加上个 -r  就行了（这个操作不会删除这个文件）
+
+git rm -r --cached DIR
+
+已提交文件忽略已经维护起来的文件即已经 commit 后的文件，即使加上了.gitignore也无济于事。用下面这个命令：
+
+git update-index --assume-unchanged logs/*.log
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/13736.html" title="git制造冲突"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git制造冲突"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/13736.html" title="git制造冲突">git制造冲突</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-06-24T09:57:27.000Z" title="发表于 2017-06-24 17:57:27">2017-06-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">冲突来源于合并不同分支的 commit 是不会产生冲突的，因为 commit 提交到的是当前分支的 本地库。只有将分不同分支的本地库进行合并才会产生冲突。所以：
+
+合并本地库会产生冲突
+拉远程分支的代码也会产生冲突
+
+通常产生的情况：
+两个人写同一个文件就可以先提交的不会有冲突，后拉取的会有冲突
+同一个机器，不同分支，写同一个文件，也可以产生冲突
+
+制造方法：A 、B 两分支操作同一个文件的同一行代码。A 分支 commitB 分支 commit
+B 合并 A，就会产生冲突
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/ddc7c25.html" title="git-工作区、暂存区、版本库"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git-工作区、暂存区、版本库"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/ddc7c25.html" title="git-工作区、暂存区、版本库">git-工作区、暂存区、版本库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2016-11-12T06:18:20.000Z" title="发表于 2016-11-12 14:18:20">2016-11-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">工作区就是 git init 的目录，就是工程目录。工作区下包含着版本库 .git 文件夹。
+暂存区暂存区就存在于 .git 版本库文件夹内。称为 stage，这并不是指某个目录的名称，而是一个逻辑概念。一般存放在 .git 目录下的 index 文件（.git/index）中。
+创建版本库的同时，会创建一个唯一的 master 分支。git add    是往暂存区提交git commit 是往 master分支提交
+在实际开发中，这个作用很大，比如在编写一段时间的代码后，想要拉一下远程分支的代码，或者想回到之前的修改，但是又不想删掉这些修改，就可以用 stage 来暂存修改，暂存后，代码恢复未修改前的样子。
+版本库工作区有一个隐藏目录 .git，虽然这个目录在工作区的工程目录下，但是目录是管理git的。这个不算工作区，而是 Git 的版本库。工作区中的文件的修改和 stage 暂存区中的修改都会被 git 监控到。不同的区之前的修改是独立互不影响的。工作区中的修改是不会被 commit 的。只有暂存区的才会被 commit。
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/25206.html" title="checkout 检出和切换"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="checkout 检出和切换"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/25206.html" title="checkout 检出和切换">checkout 检出和切换</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2016-09-06T06:00:02.000Z" title="发表于 2016-09-06 14:00:02">2016-09-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">这个命令是个多功能的命令用法很灵活。切换分支、撤消修改下面文中是 -- 两个杠框是连在一起，中间没有空格，因为字体太小，所说中间给个空格看着明显一些。
+1.切换分支
+git checkout &lt;name&gt;
+
+2.创建并切换分支
+git checkout -b &lt;name&gt;这其实可以拆解成两步操作 -b 应该就是branch
+
+3.撤销工作区修改实际就是“以旧换新”的操作有两种情况：1.如果未添加到暂存区，则把版本库中的最新版本覆盖2.如果已添加到暂存区，则把暂存区中的修改拿出覆盖
+撤销工作区修改:
+
+git checkout -- &lt;file&gt;
+
+
+git checkout -- .
+
+4.连招假如有一个文件，做了修改，但是不确定后面的修改是不是想要的。先添加到暂存区中，过了一会这个修改是不想要的，想要把工作区的文件从暂存区撤回覆盖。
+
+git add                   //放一份当前写到一半觉得没问题的放到暂存区中
+
+
+git checkout - - file     //将 版本库 中的修改替换到 工作区中没有 add 的情况 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/2763.html" title="git push的一些总结"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git push的一些总结"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/2763.html" title="git push的一些总结">git push的一些总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2016-08-06T16:28:05.000Z" title="发表于 2016-08-07 00:28:05">2016-08-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">git pull拉取并合并远程代码
+
+git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;
+
+1.拉取next 分支 拉到 本 master。
+
+git pull origin fast:master把远程的  
+
+2.拉取到当前分支省略定法，表示拉取并合并自当前分支
+
+git pull origin fast  
+
+3.等价上面的操作
+git fetch origingit merge origin/fast
+
+4.手动建立跟踪跟踪不是只能跟踪 master，可以指定本地和远程不同的分支。意义在于可以使用简化命令 git push/pull，而不需要显示指定的版本库。  
+
+git branch --set-upstream master origin/fastgit branch --set-upstream develop origin/develop
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/d6698368.html" title="git rebase使用"><img class="post_bg" src="/images/cover/cover-git.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git rebase使用"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/d6698368.html" title="git rebase使用">git rebase使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2015-12-06T10:16:34.000Z" title="发表于 2015-12-06 18:16:34">2015-12-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/git/">git</a></span></div><div class="content">rebase 重置作用: 是重置提效记录。本质是，当合并其它分支的提交记录后，重整提交记录。不论是自己开发，还是参加开源项目，有很多时间，需要重整提交记录。美化一下，这时候就很有用了。
+需要强调一点：一定是在你自己的分支上rebase，别把master之类的分支rebase掉了。
+git rebase假设你在test_rebase分支进行开发，现在master分支已经有新的提交，test有多次提交，现在你想合并master分支，并提交推送到远程仓库中看起来只有一次提交。
+提交记录分别是：
+test_rebase分支:
+
+rebase: test commit2rebase: test commit1
+
+master分支:
+
+master: test commit2master: test commit1
+
+在 test_rebase分支下执行：
+1git rebase -i master
+
+-i: --interactive，即交互式的界面
+进入交互模式，用vim来编辑，下面这个内容是：
+pick: 要保留的掉交commit 和 message，如果要重写commit message用 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">潇洒</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">重回赛道，开始追赶</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-vim 整合基于vimspector的debug调试环境"/></a><div class="content"><a class="title" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境">rust-vim 整合基于vimspector的debug调试环境</a><time datetime="2023-02-27T15:17:08.000Z" title="发表于 2023-02-27 23:17:08">2023-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决"><img src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="coc-java无法启动和lombok报错解决"/></a><div class="content"><a class="title" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决">coc-java无法启动和lombok报错解决</a><time datetime="2023-02-21T17:33:35.000Z" title="发表于 2023-02-22 01:33:35">2023-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4fcae1e5.html" title="rust-泛型generics"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-泛型generics"/></a><div class="content"><a class="title" href="/posts/4fcae1e5.html" title="rust-泛型generics">rust-泛型generics</a><time datetime="2023-02-12T06:49:53.000Z" title="发表于 2023-02-12 14:49:53">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fe400015.html" title="tron-节点-witness加载过程"><img src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-节点-witness加载过程"/></a><div class="content"><a class="title" href="/posts/fe400015.html" title="tron-节点-witness加载过程">tron-节点-witness加载过程</a><time datetime="2023-02-04T01:43:01.000Z" title="发表于 2023-02-04 09:43:01">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图"><img src="/images/cover/cover-eth.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ethereum-2.0升级相关及路线图"/></a><div class="content"><a class="title" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图">ethereum-2.0升级相关及路线图</a><time datetime="2023-01-17T10:01:31.000Z" title="发表于 2023-01-17 18:01:31">2023-01-17</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/"><span class="card-category-list-name">Tendermint</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tendermint/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/"><span class="card-category-list-name">algorithm</span><span class="card-category-list-count">17</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/array/"><span class="card-category-list-name">array</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/concurrent/"><span class="card-category-list-name">concurrent</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/leetcode/"><span class="card-category-list-name">leetcode</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/slot/"><span class="card-category-list-name">slot</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/algorithm/struct/"><span class="card-category-list-name">struct</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/ethereum/" style="font-size: 1.3em; color: rgb(91, 93, 48)">ethereum</a><a href="/tags/blockchain/" style="font-size: 1.42em; color: rgb(74, 16, 3)">blockchain</a><a href="/tags/2/" style="font-size: 1.15em; color: rgb(164, 178, 42)">2</a><a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 1.18em; color: rgb(147, 120, 73)">以太坊</a><a href="/tags/tron/" style="font-size: 1.39em; color: rgb(151, 35, 2)">tron</a><a href="/tags/%E5%B9%BF%E6%92%AD/" style="font-size: 1.18em; color: rgb(132, 107, 197)">广播</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 1.39em; color: rgb(185, 8, 198)">区块链</a><a href="/tags/%E8%83%BD%E9%87%8F/" style="font-size: 1.15em; color: rgb(48, 20, 6)">能量</a><a href="/tags/%E5%B8%A6%E5%AE%BD/" style="font-size: 1.15em; color: rgb(105, 190, 153)">带宽</a><a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 1.15em; color: rgb(42, 136, 0)">资源</a><a href="/tags/%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(58, 106, 31)">模型</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.27em; color: rgb(96, 66, 110)">架构</a><a href="/tags/%E6%A6%82%E5%BF%B5/" style="font-size: 1.33em; color: rgb(84, 88, 139)">概念</a><a href="/tags/Reactor%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(193, 58, 42)">Reactor模型</a><a href="/tags/%E5%B9%82%E7%AD%89/" style="font-size: 1.15em; color: rgb(44, 195, 20)">幂等</a><a href="/tags/%E5%AE%B9%E9%94%99/" style="font-size: 1.15em; color: rgb(197, 132, 1)">容错</a><a href="/tags/docker/" style="font-size: 1.36em; color: rgb(8, 118, 90)">docker</a><a href="/tags/arm/" style="font-size: 1.18em; color: rgb(181, 128, 8)">arm</a><a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 1.18em; color: rgb(128, 69, 171)">微服务</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.18em; color: rgb(6, 159, 14)">虚拟化</a><a href="/tags/run/" style="font-size: 1.15em; color: rgb(57, 48, 187)">run</a><a href="/tags/start/" style="font-size: 1.15em; color: rgb(85, 167, 159)">start</a><a href="/tags/wget/" style="font-size: 1.15em; color: rgb(78, 97, 86)">wget</a><a href="/tags/%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86/" style="font-size: 1.15em; color: rgb(114, 78, 24)">问题处理</a><a href="/tags/linux/" style="font-size: 1.39em; color: rgb(39, 133, 65)">linux</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.15em; color: rgb(166, 46, 91)">容器</a><a href="/tags/map-%E4%BB%BB%E5%8A%A1/" style="font-size: 1.15em; color: rgb(166, 195, 100)">map 任务</a><a href="/tags/hadoop/" style="font-size: 1.15em; color: rgb(103, 143, 91)">hadoop</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.21em; color: rgb(4, 146, 73)">大数据</a><a href="/tags/%E4%B8%9A%E5%8A%A1/" style="font-size: 1.15em; color: rgb(170, 57, 112)">业务</a><a href="/tags/hadoop1-0/" style="font-size: 1.15em; color: rgb(50, 186, 7)">hadoop1.0</a><a href="/tags/NameNode/" style="font-size: 1.15em; color: rgb(101, 110, 67)">NameNode</a><a href="/tags/java/" style="font-size: 1.45em; color: rgb(36, 94, 124)">java</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.24em; color: rgb(158, 34, 156)">设计模式</a><a href="/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(7, 7, 67)">代理模式</a><a href="/tags/%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/" style="font-size: 1.15em; color: rgb(180, 109, 126)">静态代理</a><a href="/tags/design/" style="font-size: 1.18em; color: rgb(188, 96, 129)">design</a><a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(98, 193, 144)">单例模式</a><a href="/tags/singleton/" style="font-size: 1.15em; color: rgb(101, 24, 35)">singleton</a><a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(192, 46, 64)">策略模式</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">十二月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">275</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-03-05T03:37:14.651Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 潇洒</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">京ICP备2023002120号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/forfreeday/forfreeday.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script></div></body></html>

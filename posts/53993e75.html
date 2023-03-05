@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>tron 编码 二进制、base58check、Hex | 原理翻译家</title><meta name="keywords" content="tron 编码 格式 应用场景,tron byte base58check hex 应用场景 转换"><meta name="author" content="潇洒"><meta name="copyright" content="潇洒"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="编码在TRON中使用到的其中二种编码：  base58check hex byte  为什么说这三种编码，主要是这三种比较常用。首先用到最多的就是地方就是基于byte[]衍生的各种编码场景如：  私钥 protobuf leveldb存储  都是先基于byte数据来的，其它区块链当中也有大量使用byte。 byte使用场景：  数据存储 网络传输  这个比较在常用，在tron链中，越是底层的数据存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tron 编码 二进制、base58check、Hex">
+<meta property="og:url" content="https://liukay.com/posts/53993e75.html">
+<meta property="og:site_name" content="原理翻译家">
+<meta property="og:description" content="编码在TRON中使用到的其中二种编码：  base58check hex byte  为什么说这三种编码，主要是这三种比较常用。首先用到最多的就是地方就是基于byte[]衍生的各种编码场景如：  私钥 protobuf leveldb存储  都是先基于byte数据来的，其它区块链当中也有大量使用byte。 byte使用场景：  数据存储 网络传输  这个比较在常用，在tron链中，越是底层的数据存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liukay.com/images/cover/cover-tron.jpeg">
+<meta property="article:published_time" content="2022-05-11T09:59:31.000Z">
+<meta property="article:modified_time" content="2023-03-04T06:43:49.594Z">
+<meta property="article:author" content="潇洒">
+<meta property="article:tag" content="blockchain">
+<meta property="article:tag" content="tron">
+<meta property="article:tag" content="二进制">
+<meta property="article:tag" content="编码">
+<meta property="article:tag" content="base58check">
+<meta property="article:tag" content="hex">
+<meta property="article:tag" content="byte">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liukay.com/images/cover/cover-tron.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liukay.com/posts/53993e75"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?350bd4cbe41151f1b8e0f63df2321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tron 编码 二进制、base58check、Hex',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-04 14:43:49'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/top_img/top_img-tron.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">原理翻译家</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Java</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java"><i class="fa-fw fas fa-folder-open"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/java/reflect"><i class="fa-fw fas fa-folder-open"></i><span> 反射</span></a></li><li><a class="site-page child" href="/categories/java/annotation"><i class="fa-fw fas fa-folder-open"></i><span> 注解</span></a></li><li><a class="site-page child" href="/categories/java/jvm"><i class="fa-fw fas fa-folder-open"></i><span> JVM</span></a></li><li><a class="site-page child" href="/categories/java/concurrent"><i class="fa-fw fas fa-folder-open"></i><span> 并发</span></a></li><li><a class="site-page child" href="/categories/java/lambda"><i class="fa-fw fas fa-folder-open"></i><span> functional</span></a></li><li><a class="site-page child" href="/categories/java/nio"><i class="fa-fw fas fa-folder-open"></i><span> nio</span></a></li><li><a class="site-page child" href="/categories/java/netty"><i class="fa-fw fas fa-folder-open"></i><span> netty</span></a></li><li><a class="site-page child" href="/categories/java/spring"><i class="fa-fw fas fa-folder-open"></i><span> Spring</span></a></li><li><a class="site-page child" href="/categories/spring/springboot"><i class="fa-fw fas fa-folder-open"></i><span> Spring Boot</span></a></li><li><a class="site-page child" href="/categories/spring/springcloud"><i class="fa-fw fas fa-folder-open"></i><span> Spring Cloud</span></a></li><li><a class="site-page child" href="/categories/java/maven"><i class="fa-fw fas fa-folder-open"></i><span> maven</span></a></li><li><a class="site-page child" href="/categories/java/gradle"><i class="fa-fw fas fa-folder-open"></i><span> gradle</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> go</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/go"><i class="fa-fw fas fa-folder-open"></i><span> go</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 工程化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/git"><i class="fa-fw fas fa-folder-open"></i><span> git</span></a></li><li><a class="site-page child" href="/categories/devops"><i class="fa-fw fas fa-folder-open"></i><span> devops</span></a></li><li><a class="site-page child" href="/categories/design"><i class="fa-fw fas fa-folder-open"></i><span> design</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 算法</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/algorithm"><i class="fa-fw fas fa-folder-open"></i><span> algorithm</span></a></li><li><a class="site-page child" href="/categories/leetcode"><i class="fa-fw fas fa-folder-open"></i><span> LeetCode</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> blockchain</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/blockchain/"><i class="fa-fw fas fa-folder-open"></i><span> Blockchain</span></a></li><li><a class="site-page child" href="/categories/blockchain/bitcoin"><i class="fa-fw fas fa-folder-open"></i><span> Bitcoin</span></a></li><li><a class="site-page child" href="/categories/blockchain/ethereum"><i class="fa-fw fas fa-folder-open"></i><span> Ethereum</span></a></li><li><a class="site-page child" href="/categories/tron"><i class="fa-fw fas fa-folder-open"></i><span> Tron</span></a></li><li><a class="site-page child" href="/categories/tendermint"><i class="fa-fw fas fa-folder-open"></i><span> Cosmos</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Linux</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/linux"><i class="fa-fw fas fa-folder-open"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/linux/shell"><i class="fa-fw fas fa-folder-open"></i><span> shell</span></a></li><li><a class="site-page child" href="/categories/linux/vim"><i class="fa-fw fas fa-folder-open"></i><span> vim</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 存储</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/mysql"><i class="fa-fw fas fa-folder-open"></i><span> mysql</span></a></li><li><a class="site-page child" href="/categories/redis"><i class="fa-fw fas fa-folder-open"></i><span> redis</span></a></li><li><a class="site-page child" href="/categories/leveldb"><i class="fa-fw fas fa-folder-open"></i><span> leveldb</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 容器化</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/docker"><i class="fa-fw fas fa-folder-open"></i><span> docker</span></a></li><li><a class="site-page child" href="/categories/k8s"><i class="fa-fw fas fa-folder-open"></i><span> k8s</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 分类归档</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-link"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">tron 编码 二进制、base58check、Hex</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-11T09:59:31.000Z" title="发表于 2022-05-11 17:59:31">2022-05-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-04T06:43:49.594Z" title="更新于 2023-03-04 14:43:49">2023-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/">blockchain</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tron/">tron</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/blockchain/tron/">tron</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>在<code>TRON</code>中使用到的其中二种编码：</p>
+<ol>
+<li>base58check</li>
+<li>hex</li>
+<li>byte</li>
+</ol>
+<p>为什么说这三种编码，主要是这三种比较常用。<br>首先用到最多的就是地方就是基于<code>byte[]</code>衍生的各种编码场景如：</p>
+<ol>
+<li>私钥</li>
+<li>protobuf</li>
+<li>leveldb存储</li>
+</ol>
+<p>都是先基于<code>byte</code>数据来的，其它区块链当中也有大量使用<code>byte</code>。</p>
+<h2 id="byte"><a href="#byte" class="headerlink" title="byte"></a>byte</h2><p>使用场景：</p>
+<ol>
+<li>数据存储</li>
+<li>网络传输</li>
+</ol>
+<p>这个比较在常用，在tron链中，越是底层的数据存储越是需要二进制，如私钥、数据存储等，就是<code>byte[]</code>这种格式。<br>使用<strong>protobuf</strong>序列化也是byte[]，leveldb 的存储也是基于byte[]。<br>可以理解为，最重要和核心的数据形式。但是byte也有一个问题，就是表现形式上，太长了，不利于人类的阅读体验。<br>数据之间需要进行转换才能使用，首先，数据存储到leveldb中，是只能存储二进制数据，也就是在源头上，数据就必须是二进制形式存在的，如果要使用转换数据是必然的行为。<br>当然你说我就要二进制，就不嫌麻烦，整套系统都用二进制操作，也不是不可以，效率是少了一步转换肯定是可以，但是内存上有没有那么大的空间。二是我调试时，看二进制没问题，完全不在话下，就要看二进制，那随意。</p>
+<p><img src="/posts/53993e75/%E5%AD%98%E5%82%A8%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.jpg" alt="存储相关接口"></p>
+<p>看看在内存中的表现形式，这种的表现形式，更长，更难以理解，但是leveldb在存储二进制时，还会使用到一种叫varint的压缩算法，protobuf中也有使用，这种编码后面有机会专门说一下。<br>IDEA将<code>二进制</code>自动转成了<code>十进制</code>的表现形式，这个就不赘述了。</p>
+<p><img src="/posts/53993e75/%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F.jpg" alt="内存中的表现形式"></p>
+<p>所以一句话，这是在tron中最基础的数据形式，为啥这么点事，我要写这么多字，因为有很多社区开发者在这一块有很多问题，总是搞混应用场景，总结来说可以简单的理解两个应用场景：</p>
+<ol>
+<li>数据存储是二进制</li>
+<li>网络传输是二进制</li>
+</ol>
+<h2 id="base58check"><a href="#base58check" class="headerlink" title="base58check"></a>base58check</h2><p>base58check是基于base58的基础上加了一个校验码。<br>在二进制数据的传输过程中，为了防止数据传输的错误，保护数据安全，通常会加一个校验码。通过校验码的配合可以发现数据是否被破坏或者是否在发送时输入错误了。Base58Check就是Base58加上校验码，或者可以说是Base58的一种编码形式，在比特币系统中生成钱包地址的时候就使用到了这种编码形式，TRON中的地址也是使用到了这种编码。</p>
+<p>使用场景：</p>
+<ol>
+<li>钱包地址</li>
+<li>转账</li>
+<li>配置文件</li>
+</ol>
+<p><strong>为什么w使用base58编码？</strong><br>因为是给人类看的。</p>
+<p><strong>什么是base58check？</strong><br>就是在 base64的基础上去掉了6个容易混淆的字母、字符，只剩58个了，所以叫：base58。</p>
+<p><strong>哪几个符号？</strong><br>不含Base64中的0（数字0）、O（大写字母o）、l（小写字母 L）、I（大写字母i），以及“+”和“/”两个字符。<br>简而言之，Base58就是由不包括（0，O，l，I，+，/）的大小写字母和数字组成。</p>
+<p><strong>check是指什么意思？</strong><br>为了增加防止打印和转录错误的安全性，比特币常用的是Base58Check，它是一种内置错误校验代码的Base58编码格式。检验和是额外4个字节，被添加到正在编码的数据末端。校验和是从编码的数据的哈希值中得到的，所以可以用来检测并避免转录和输入中产生的错误。</p>
+<p>使用Base58check编码时，解码软件会计算数据的校验和并和编码中自带的校验和进行对比。二者不匹配则表明有错误产生，这个Base58Check的数据就是无效的。这就防止输错的比特币地址被钱包软件认为是有效的地址，造成资金的丢失。</p>
+<p>到底长啥样?长这样：</p>
+<blockquote>
+<p>TNNqZuYhMfQvooC4kJwTsMJEQVU3vWGa5u</p>
+</blockquote>
+<p><strong>怎么用？</strong></p>
+<p>使用上，需要把base58check字符串，转成二进制byte[]，毕竟人看完了，机器也得看。</p>
+<p><img src="/posts/53993e75/base58check%E4%BD%BF%E7%94%A8.jpg" alt="base58check使用"></p>
+<h2 id="hex-十六进制"><a href="#hex-十六进制" class="headerlink" title="hex 十六进制"></a>hex 十六进制</h2><p>应用场景：</p>
+<ol>
+<li>程序内部表示地址，不是给人看的</li>
+<li>表示hash字符串</li>
+</ol>
+<p>地址有两种表示形式，一是base58check，二是hex形式，第一种是给人看的，第二种程序内部使用。这两种编码形式可以互相转换。本质是代表的是一个数种，多种表现形多。仅仅是使用的对象不同而已。</p>
+<p><strong>长什么样子？</strong><br>最多的场景是使用Hash表示的地方，都可以用十六进制表示，比二进制要表示要简短不止一点点。</p>
+<p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6hash.jpg" alt="十六进制hash"></p>
+<p>代码中的应用</p>
+<p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E4%BB%A3%E7%A0%81.jpg" alt="十六进制代码"></p>
+<p>地址有两种编码格式，下面的hexAddress就是十六进制。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;address&quot;</span>: <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;hexAddress&quot;</span>: <span class="string">&quot;415f5dc2006f98936ca054ea49b4d38d292c9429c8&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bash58Check-测试"><a href="#Bash58Check-测试" class="headerlink" title="Bash58Check 测试"></a>Bash58Check 测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.tron.walletserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.tron.common.crypto.Sha256Sm3Hash;</span><br><span class="line"><span class="keyword">import</span> org.tron.common.utils.Base58;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022/03/02.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base58CheckTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decode58Check(String input) &#123;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeCheck = Base58.decode(input);</span><br><span class="line">    <span class="keyword">if</span> (decodeCheck.length &lt;= <span class="number">4</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeData = <span class="keyword">new</span> <span class="keyword">byte</span>[decodeCheck.length - <span class="number">4</span>];</span><br><span class="line">    System.arraycopy(decodeCheck, <span class="number">0</span>, decodeData, <span class="number">0</span>, decodeData.length);</span><br><span class="line">    <span class="keyword">byte</span>[] hash0 = Sha256Sm3Hash.hash(decodeData);</span><br><span class="line">    <span class="keyword">byte</span>[] hash1 = Sha256Sm3Hash.hash(hash0);</span><br><span class="line">    <span class="keyword">if</span> (hash1[<span class="number">0</span>] == decodeCheck[decodeData.length]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">1</span>] == decodeCheck[decodeData.length + <span class="number">1</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">2</span>] == decodeCheck[decodeData.length + <span class="number">2</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">3</span>] == decodeCheck[decodeData.length + <span class="number">3</span>]) &#123;</span><br><span class="line">      <span class="keyword">return</span> decodeData;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String bash58CheckStr = <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = decode58Check(bash58CheckStr);</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line">    System.out.println(Arrays.toString(bytes));</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<p>---------<br>[65, 95, 93, -62, 0, 111, -104, -109, 108, -96, 84, -22, 73, -76, -45, -115, 41, 44, -108, 41, -56]<br>---------</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>二进制、十六进制、base58check 这几种数据格式和编码都是在区块链在很常用的一套数据结构和编码，其实很多都是互相借鉴，谁也别说抄谁。<br>总的来说，了解了一个套路，再看其他的链就大同小异了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://liukay.com">潇洒</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://liukay.com/posts/53993e75.html">https://liukay.com/posts/53993e75.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://liukay.com" target="_blank">原理翻译家</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/blockchain/">blockchain</a><a class="post-meta__tags" href="/tags/tron/">tron</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a><a class="post-meta__tags" href="/tags/base58check/">base58check</a><a class="post-meta__tags" href="/tags/hex/">hex</a><a class="post-meta__tags" href="/tags/byte/">byte</a></div><div class="post_share"><div class="social-share" data-image="/images/cover/cover-tron.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/d82e7b9b.html"><img class="prev-cover" src="/images/cover/cover-eth.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">以太坊 chainlist</div></div></a></div><div class="next-post pull-right"><a href="/posts/7470b6b7.html"><img class="next-cover" src="/images/cover/cover-eth.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ethereum原理-gas说明</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/7a9eccd0.html" title="tron-网络模型-AdvService广播服务"><img class="cover" src="/images/cover/cover-tron.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">tron-网络模型-AdvService广播服务</div></div></a></div><div><a href="/posts/e17f4065.html" title="tron-资源模型-能量Bandwidth"><img class="cover" src="/images/cover/cover-tron.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-01</div><div class="title">tron-资源模型-能量Bandwidth</div></div></a></div><div><a href="/posts/12a13330.html" title="ethereum原理-RLP编码"><img class="cover" src="/images/cover/cover-eth.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">ethereum原理-RLP编码</div></div></a></div><div><a href="/posts/4f0b4758.html" title="tron 公开节点和对外接口"><img class="cover" src="/images/cover/cover-tron.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-15</div><div class="title">tron 公开节点和对外接口</div></div></a></div><div><a href="/posts/1b47d3c9.html" title="tron TaPos理解和应用"><img class="cover" src="/images/cover/cover-tron.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-22</div><div class="title">tron TaPos理解和应用</div></div></a></div><div><a href="/posts/7ecfc8d7.html" title="时间轮 slot 机制实现"><img class="cover" src="/images/cover/cover-algorithm.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-24</div><div class="title">时间轮 slot 机制实现</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">潇洒</div><div class="author-info__description">时间顺流而下，生活逆水行舟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">275</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">398</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forfreeday"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forfreeday" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">重回赛道，开始追赶</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#byte"><span class="toc-number">2.</span> <span class="toc-text">byte</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base58check"><span class="toc-number">3.</span> <span class="toc-text">base58check</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hex-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">hex 十六进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash58Check-%E6%B5%8B%E8%AF%95"><span class="toc-number">5.</span> <span class="toc-text">Bash58Check 测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-vim 整合基于vimspector的debug调试环境"/></a><div class="content"><a class="title" href="/posts/3e7235c0.html" title="rust-vim 整合基于vimspector的debug调试环境">rust-vim 整合基于vimspector的debug调试环境</a><time datetime="2023-02-27T15:17:08.000Z" title="发表于 2023-02-27 23:17:08">2023-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决"><img src="/images/cover/cover-java.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="coc-java无法启动和lombok报错解决"/></a><div class="content"><a class="title" href="/posts/2fd8d4c0.html" title="coc-java无法启动和lombok报错解决">coc-java无法启动和lombok报错解决</a><time datetime="2023-02-21T17:33:35.000Z" title="发表于 2023-02-22 01:33:35">2023-02-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4fcae1e5.html" title="rust-泛型generics"><img src="/images/cover/cover-rust.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rust-泛型generics"/></a><div class="content"><a class="title" href="/posts/4fcae1e5.html" title="rust-泛型generics">rust-泛型generics</a><time datetime="2023-02-12T06:49:53.000Z" title="发表于 2023-02-12 14:49:53">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fe400015.html" title="tron-节点-witness加载过程"><img src="/images/cover/cover-tron.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="tron-节点-witness加载过程"/></a><div class="content"><a class="title" href="/posts/fe400015.html" title="tron-节点-witness加载过程">tron-节点-witness加载过程</a><time datetime="2023-02-04T01:43:01.000Z" title="发表于 2023-02-04 09:43:01">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图"><img src="/images/cover/cover-eth.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ethereum-2.0升级相关及路线图"/></a><div class="content"><a class="title" href="/posts/bfaa50ec.html" title="ethereum-2.0升级相关及路线图">ethereum-2.0升级相关及路线图</a><time datetime="2023-01-17T10:01:31.000Z" title="发表于 2023-01-17 18:01:31">2023-01-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 潇洒</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><a href="http://beian.miit.gov.cn/"  style="color:#f72b07" target="_blank">京ICP备2023002120号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'a07a71eb5860a45bcde7',
+      clientSecret: '3bcb41581dad800b346c4f8197da39f4777c0916',
+      repo: 'forfreeday.github.io',
+      owner: 'forfreeday',
+      admin: ['forfreeday'],
+      id: 'b2a9303d57b6284963ad723e658224df',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div></div></body></html>
