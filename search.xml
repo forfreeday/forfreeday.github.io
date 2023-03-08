@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>rust-生命周期</title>
+      <link href="posts/49b9d1d2.html"/>
+      <url>posts/49b9d1d2.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rust当中，的两个重要概念：<strong>借用</strong>和<strong>生命周期</strong>分别代是在:</p><ol><li>栈变量，需要关注【所有权】</li><li>引用(指针)，需要关注【生命周期】</li></ol><p>Rust 的每个引用都有自己的生命周期，生命周期指的是引用保持有效的作用域。<br>大多数情况下，引用是隐式的、可以被推断出来的，但当引用可能以不同的方式互相关联时，则需要手动标注生命周期。<br>这里重点就是<strong>以不同的方式互相关联时</strong>。</p><p>大多数情况下，rust 可以自己推断出引用的生拿周期，也就是只有在一些rust无法自行推断的情况下，才需要手动<strong>标注</strong>生命周期。</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Rust 中的每一个引用都有其<strong>生命周期（lifetime）</strong>，也就是引用保持有效的作用域。<br>大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。<br>类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p><p>这里还有一个需要关注的点就是<strong>关系</strong>，也就多个引用之前的关系，才是导致rust无法明确推断出引用生命周期的最根本原因。</p><h2 id="反例"><a href="#反例" class="headerlink" title="反例"></a>反例</h2><p>这段代码看着很正常，但是实际上，编译会报错，类为这里调用<code>longest</code>时，<code>longest</code>无法确认<code>x</code>、<code>y</code>的生命周期。<br>为什么无法确认？<br>因为<code>longest</code>是被调用的方法，它肯定没法知道，这两个传入在<code>main</code>方法的中的生命周期。<br>好比，你写一个接口给外部调用，你也无法知道调你的服务，传入的两个变量，在那个服务中的生命周期。<br>但是在rust中，又非常强调安全性，它必须清楚每个引用的明确的生命周期。<br>所以这个活，就落在了开发者身上，必须明确告诉rust，每个引用的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// longest函数 无法确认 x、y  在 mian 函数中的生命周期</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>报错如下：missing lifetime specifier</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">error[E0106]: missing lifetime specifier</span><br><span class="line"><span class="meta"> --&gt;</span><span class="bash"> src/main.rs:9:33</span></span><br><span class="line">  |</span><br><span class="line">9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str &#123;</span><br><span class="line">  |               ----     ----     ^ expected named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">  = help: this function&#x27;s return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`</span><br><span class="line">help: consider introducing a named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">9 | fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str &#123;</span><br><span class="line">  |           ++++     ++          ++          ++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0106`.</span><br><span class="line">error: could not compile `playground` due to previous error</span><br></pre></td></tr></table></figure><p>上面看着很正常呀，哪里有问题？</p><h2 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h2><p>即然<code>rust</code>不智能，那只能开发者辛苦一点，手动来标注了。<br><code>rust</code>的生命周期标注语法，只能表示引用的生命周期，而不能、不会改会引用的生命周期。</p><p>命名规则:</p><ol><li>&#39;a 以 &#39; 开头</li><li>全小写</li></ol><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>     <span class="comment">// 带有显式生命周期的引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 带有显式生命周期的可变引用</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> rust </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> rust </tag>
+            
+            <tag> 生命周期 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>rust-vim 整合基于vimspector的debug调试环境</title>
       <link href="posts/3e7235c0.html"/>
       <url>posts/3e7235c0.html</url>
@@ -156,41 +183,6 @@
     
     
     <entry>
-      <title>ethereum-2.0升级相关及路线图</title>
-      <link href="posts/bfaa50ec.html"/>
-      <url>posts/bfaa50ec.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>以太坊2.0升级泛及的内容比较多，2.0想做的事也非常多，一点一点通过官方提供的资料及网上大佬的文章学习提练出重要的部分，以学习为目的输出。<br>尽量做到简单，说清楚这件事。</p><h2 id="什么是以太坊2-0、为什么要做2-0"><a href="#什么是以太坊2-0、为什么要做2-0" class="headerlink" title="什么是以太坊2.0、为什么要做2.0"></a>什么是以太坊2.0、为什么要做2.0</h2><p>做个标记，慢慢搬运笔记。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> blockchain </category>
-          
-          <category> ethereum </category>
-          
-          <category> ethereum </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> ethereum </tag>
-            
-            <tag> blockchain </tag>
-            
-            <tag> 2 </tag>
-            
-            <tag> 以太坊 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>go结合Slash Commands使用</title>
       <link href="posts/3c62c672.html"/>
       <url>posts/3c62c672.html</url>
@@ -230,7 +222,7 @@
       <link href="posts/e28f62f.html"/>
       <url>posts/e28f62f.html</url>
       
-        <content type="html"><![CDATA[<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（系统）是 Rust 最为与众不同的特性。<br>它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。<br>所有权以及相关功能：借用（borrowing）、slice 以及 Rust 如何在内存中布局数据。</p><p>所有程序都必须管理其运行时使用计算机内存的方式。<br>一些语言中具有垃圾回收机制，如: java、python;<br>在另一些语言中，程序员必须亲自分配和释放内存，如：C/C++;</p><p>Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。</p><h2 id="内存与分配"><a href="#内存与分配" class="headerlink" title="内存与分配"></a>内存与分配</h2><p>Rust 的所有权围绕着内存分配进行，Rust 对内存管理通过其所有权展开。</p><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>它是一种 <strong>后进先出</strong> 的机制，类似我们日常的落盘子，只能一个一个向上方，然后从最上面拿一个盘子。<br>一个变量要放到栈上，那么它的大小在编译时就要明确。<code>i32</code> 类型的变量，它就占用 <code>4</code> 个字节。Rust 中可以放到栈上的数据类型，他们的大小都是固定的。<br>如果是字符串，在运行时才会赋值的变量，在编译期的时候大小是未知或不确定的。所以字符串类型存储在<strong>堆上</strong>。</p><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>用于编译时大小未知或不确定的，只有运行时才能确定的数据。在堆上存储一些动态类型的数据。堆是不受系统管理的，是用户自己管理的，也增加了内存溢出的风险。</p><h2 id="1-所有权规则"><a href="#1-所有权规则" class="headerlink" title="1.所有权规则"></a>1.所有权规则</h2><p>记住这三句话，整个所有权就是围绕这三句话，这三句话也直接概括了所有权。</p><ol><li>Rust 中的<strong>每一个值</strong>都有一个<strong>所有者（owner）</strong>。</li><li>值在<strong>任一时刻</strong>有且只有<strong>一个</strong>所有者。</li><li>当所有者（变量）离开作用域，这个值将被丢弃。</li></ol><h2 id="2-变量作用域"><a href="#2-变量作用域" class="headerlink" title="2.变量作用域"></a>2.变量作用域</h2><p>大部份编程语言都有 <strong>作用域(scope)</strong> 的概念，但是在rust中，这个概念被提到一个很重要的高度。<br>先看看rust一些变量的 <strong>作用域（scope）</strong>。<br>作用域是一个项（item）在程序中有效的范围。<br>下面这个例子，重点关注变量：<code>let s = &quot;hello&quot;</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    &#123;                      <span class="comment">// s 在这里无效, 它尚未声明</span></span><br><span class="line">        <span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;   <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 s</span></span><br><span class="line">    &#125;                      <span class="comment">// 此作用域已结束，s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当 <code>s</code> 进入作用域时，它就是有效的。<br>这一直持续到它 <strong>离开作用域</strong> 为止。</p><p>当 <code>s</code> 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 <code>drop</code>，在这里 String 的作者可以放置释放内存的代码。<br>Rust 在结尾的 <code>&#125;</code> 处<strong>自动调用</strong> <code>drop</code>。</p><p><strong>Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域后就被自动释放</strong>。<br>核心就一句话，变量出了<strong>作用域</strong>，rust帮你释放了！！</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（系统）是 Rust 最为与众不同的特性。<br>它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。<br>所有权以及相关功能：借用（borrowing）、slice 以及 Rust 如何在内存中布局数据。</p><p>所有程序都必须管理其运行时使用计算机内存的方式。<br>一些语言中具有垃圾回收机制，如: java、python;<br>在另一些语言中，程序员必须亲自分配和释放内存，如：C/C++;</p><p>Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。</p><h2 id="内存与分配"><a href="#内存与分配" class="headerlink" title="内存与分配"></a>内存与分配</h2><p>Rust 的所有权围绕着内存分配进行，Rust 对内存管理通过其所有权展开。</p><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>它是一种 <strong>后进先出</strong> 的机制，类似我们日常的落盘子，只能一个一个向上方，然后从最上面拿一个盘子。<br>一个变量要放到栈上，那么它的大小在编译时就要明确。<code>i32</code> 类型的变量，它就占用 <code>4</code> 个字节。Rust 中可以放到栈上的数据类型，他们的大小都是固定的。<br>如果是字符串，在运行时才会赋值的变量，在编译期的时候大小是未知或不确定的。所以字符串类型存储在<strong>堆上</strong>。</p><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>用于编译时大小未知或不确定的，只有运行时才能确定的数据。在堆上存储一些动态类型的数据。堆是不受系统管理的，是用户自己管理的，也增加了内存溢出的风险。</p><h2 id="1-所有权规则"><a href="#1-所有权规则" class="headerlink" title="1.所有权规则"></a>1.所有权规则</h2><p>记住这三句话，整个所有权就是围绕这三句话，这三句话也直接概括了所有权。</p><ol><li>Rust 中的<strong>每一个值</strong>都有一个<strong>所有者（owner）</strong>。</li><li>值在<strong>任一时刻</strong>有且只有<strong>一个</strong>所有者。</li><li>当所有者（变量）离开作用域，这个值将被丢弃。</li></ol><h2 id="2-变量作用域"><a href="#2-变量作用域" class="headerlink" title="2.变量作用域"></a>2.变量作用域</h2><p>大部份编程语言都有 <strong>作用域(scope)</strong> 的概念，但是在rust中，这个概念被提到一个很重要的高度。<br>先看看rust一些变量的 <strong>作用域（scope）</strong>。<br>作用域是一个项（item）在程序中有效的范围。<br>下面这个例子，重点关注变量：<code>let s = &quot;hello&quot;</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    &#123;                      <span class="comment">// s 在这里无效, 它尚未声明</span></span><br><span class="line">        <span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;   <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 s</span></span><br><span class="line">    &#125;                      <span class="comment">// 此作用域已结束，s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当 <code>s</code> 进入作用域时，它就是有效的。<br>这一直持续到它 <strong>离开作用域</strong> 为止。</p><p>当 <code>s</code> 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 <code>drop</code>，在这里 String 的作者可以放置释放内存的代码。<br>Rust 在结尾的 <code>&#125;</code> 处<strong>自动调用</strong> <code>drop</code>。</p><p><strong>Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域后就被自动释放</strong>。<br>核心就一句话，变量出了<strong>作用域</strong>，rust帮你释放了！！</p><h2 id="3-移动"><a href="#3-移动" class="headerlink" title="3.移动"></a>3.移动</h2><p>在 rust 当中一个变量指向另一个变量，并不是地址或引用的copy，而是称之为：<strong>移动</strong>。<br>当 s2=s1 时，引用s1被移动到s2上，这和其它编程语言完全不同！！<br>下面这段代码，在其它编程语言上指针<code>s1</code>指向了指针<code>s1</code>，<code>s1</code>仍然有效，在rust当中，<code>s1</code>无效已经无效。<br>在rust中，这个操作被称为 <strong>移动（move）</strong>，而不是叫做浅拷贝。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> s2 = s1;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>运行结果:</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">error[E0382]: borrow of moved value: `s1`</span><br><span class="line"> --&gt; src/main.rs:<span class="number">5</span>:<span class="number">28</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |     <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |     <span class="keyword">let</span> s2 = s1;</span><br><span class="line">  |              -- value moved here</span><br><span class="line"><span class="number">4</span> |</span><br><span class="line"><span class="number">5</span> |     <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);   </span><br><span class="line">  |                            ^^ value borrowed here after <span class="keyword">move</span></span><br><span class="line">  |</span><br></pre></td></tr></table></figure><p>为什么要这么设计？<br>为了防止<strong>二次释放</strong>。<br>当 <code>s2</code> 和 <code>s1</code> 离开作用域，他们都会尝试释放相同的内存。<br>这是一个叫做 <strong>二次释放（double free）</strong>的错误，也是之前提到过的内存安全性 bug 之一。<br>两次释放（相同）内存会导致内存污染，它可能会导致潜在的安全漏洞。</p><h3 id="如何保证，即要、也要"><a href="#如何保证，即要、也要" class="headerlink" title="如何保证，即要、也要"></a>如何保证，即要、也要</h3><p>即要把<code>s2=s1</code>，也可保持<code>s1</code>可用，那就显示拷贝。</p><h2 id="4-引用和借用"><a href="#4-引用和借用" class="headerlink" title="4.引用和借用"></a>4.引用和借用</h2>]]></content>
       
       
       <categories>
@@ -315,7 +307,7 @@
       <link href="posts/9c4b5c1b.html"/>
       <url>posts/9c4b5c1b.html</url>
       
-        <content type="html"><![CDATA[<h2 id="起点"><a href="#起点" class="headerlink" title="起点"></a>起点</h2><p>说是总结，其实是吐槽。<br>写了这么些博客，很少说跟技术无关的博客。<br>2022已经完结，这一篇过去了，2023年是一个新的起点，一切都会从新开始，我也一样。<br>在2022之前的不完整，都留在过去，在这一个新的起点，告别过往，重新开始，回归自己应有的状态。</p><h2 id="谷底"><a href="#谷底" class="headerlink" title="谷底"></a>谷底</h2><p><code>2023</code>之前的感想。<br><code>2020</code>年之前，是最好生活状态。每天能够边工作边学习边生活，即便是996也是一种很好的状态，每天都在进步，不论是工作、还是生活。<br>就像跟代码热恋，走到哪满脑子都是代码，就差跟代码生猴子。<br>每天处在一种打鸡血的状态，没事也要找点问题出来，大嗓门就怕大厦楼下保安不知道楼上有我这号人物。<br>在公司能搞定一切和不要脸。</p><p>直到这个过程被打破。</p><p>之后两年感觉像是，在一个泥潭中，越用力陷的越深，一点一点往下拖。</p><p><code>2020</code>年，人生中的一个大低谷，并不是因为疫情，而是人和事，我发现除了代码之外，很多事我控制不了。<br>疫情对我来说，除了担心身边的人之外，需要戴口罩这件麻烦事，其他的没有什么影响。<br>前半年的人与人之间折腾，让我身心俱疲，从生活漫延到工作，工作实在进行不下去，也没法工作，干脆给自己放个长假，在家躺了一段时间。<br>逃避虽然不能解决问题，但是有用，休息了一段时间后，算是放空身心，但总是要面对生活。<br>过完十一开始新的征程。</p><p><code>2020</code>下半年的开始</p><p>半推半就入职新公司，最大的想法是找回状态，好好去做。不管什么都留在前半年。</p><p>事实证明烦心事，如果不能彻底解决的话，工作还是没有办法好好进行。整个人都在暴发的边缘反复来回。新的征程怕是要中道崩殂了。</p><p>经历着一个让自己都感觉厌恶自己的阶段。<br>工作也迎来入行以来最大的低谷与被动，很多事情变得不再可控，处处被动。<br>事事都搞成我以往最看不起的样子，原来生活真的非常影响工作，整个人被巨大的负面情绪包围。</p><p>最难受的倒不是专业能力受到质疑，而是让对我有期望的人失望，这个让我更难受。人的精力有限，是个消耗品，如果在情绪中被消耗，那工作中就没有的消耗，就是没有油的车一样。</p><h2 id="山间"><a href="#山间" class="headerlink" title="山间"></a>山间</h2><p><code>2020</code>年，的另一个拐点，对生活有了另一种的思考，明确需要改变重心，考虑工作以外的事。在此之前的日子是除了工作很多事情与我无关。<br><code>2020</code>年，疫情让节凑换了一种调调，开始有时间考虑理想、生活、工作之间平衡。</p><p>做编程一直是我的理想，一直都是，甚至有时候会掐灭做其他工作的想法。这其实是一种逃避心态，坚定的信念是不惧挑战的。</p><p>为什么会去挑战自己的理想，才是重点。</p><p>不逃避，直面所有问题</p><p>是否忽视了对人的关心？<br>工作真是全部？<br>打工可以为荣？<br>工作的意义是人生价值，还是为老板奉献？<br>做喜欢的事是伟大还是自私？<br>时间有限，着眼当下，还是着眼不确定的未来？<br>那，是否该放弃理想，追求世俗意义的成功，还是理想的成功？</p><p>很多事不能追问，一追问就会发现以前觉得不错的是，很可能是过于主观。</p><p>而理想是是个自私的执念，</p><h2 id="捷径"><a href="#捷径" class="headerlink" title="捷径"></a>捷径</h2><p>这个理想其实相比较起来，其实并不怎么赚钱，当你有一条别人眼里的光明大道时，这个理想，显得没什么说服力。年纪小的时候有理由追求理想，但是，没有但是。</p><p>如果想让自己能够继续维持理想，那就需要有维持理想的资本。<br>然后开始各种偿试。</p><p>然后在不断的偿试中，自以为发现一条如同印钞机捷径，忽然感觉自己又行了，可以把控一切。再然后就翻车了。<br><code>2020</code>下半年接触币圈，以为看到维持理想的捷径，靠币圈赚到钱，可以边赚很多钱，可以边做自己想做的事，然后头脑发热两眼发光没日没夜的搞，真是没日没夜，觉都不睡。</p><p>事实证明这并不是一条捷径。<br>当一个人把时间花在自己事上，工作的时间事必须会被占用。我只想赚钱，又不想离开工作，于是就把自己慢慢边缘化。</p><p>我听过一句，只有自己才能把自己边缘化，我做到了，但是在这个阶段，我确并不在意。<br>我最应该感谢的是<code>lvs007</code>对我的包容，<code>lvs007</code>对我的期待很高。<br>我确因为自己做的事，没有精力照顾到工作上的事，忽略了很多工作上的事，有的时候刻意回避一些事，就怕别人知道我能干。<br><code>lvs007</code>的对由很高的期望变成失望。<br>这种让别人失望的感受，同时也让我很难受，我其实很怕让别人失望。<br>我说话从来避免出现找借口的字句和话语，很多私事又没法解释，只能自己叹气。</p><h2 id="山坡"><a href="#山坡" class="headerlink" title="山坡"></a>山坡</h2><p>这个时候的自己，就像在两条路的中间拔河，越努力越痛苦，无论哪一边用力，都会很痛苦。其实在把时间更多的占用工作时间时，就已经说明心态从理想和现实之间出现了拉扯，理想与现实难平衡。</p><p>理想是做自己一直想做的事，现实是必须认清现状，做可以让生活更好的事。<br>做开发是我的理想。赚更多的钱是现实。</p><p>理想和现实本来不冲突，在我刻意忽略现实问题，假装看不见的时候，都不是问题。但是经历事多了，成了一个大问题，已经到了不得不面对的时候。</p><p>当自己沉浸在自己世界里，不断的学习更新技术，不用去面对现实的时候，一切都是好的。投资自己，再通过技术获得更多的报酬。<br>但是直接这个问题，没有任何躲闪空间的时候，这个问题就打破了平衡。<br>一旦思想起来冲突，就像有两个小人天天在大脑里做辩论，都想说服对方：</p><ul><li>现实：明明可以赚到更多的钱，却耗在自己的理想上，真是很不负责</li><li>理想：这不是耗，是投资，理想也很重要，这是一直在追求的东西</li><li>现实：追求没错，然后呢，放弃更好的生活，只为你自己，那对其他人呢？</li><li>理想：你说没错，但是理想也可以让生活变的更好，虽然没有现实来的多</li><li>现实：那你做饭了吗，只要放弃理想，就可以赚钱到很多，满足所有人的期待，你在做无意义的坚持，你也明白这一点。</li><li>理想: ...</li><li>现实：...</li></ul><p>都明白更好的发展，才是最好的选择，光一句为了理想就可以放弃给身边的人未来的生活，就无法反驳。<br>然后，越努力越痛苦，陷处无限的自我内耗。<br>内耗最可怕的是磨灭状态，无论之前多好的状态，甚至换了一个人性格和个性。</p><p>这两年发生的事情，只能对自己讲，没法对别人讲，甚至我自己对现在的自己都感觉很陌生。</p><p>忽然有一天想明白了一件事，<br>马化腾、雷军、谢吉·布林、拉里·佩奇、比尔·盖茨 也都是很牛X的程序员，不都不写代码了。<br>这么一想就不纠结了。<br>虽然我跟这些人比，啥也不是，但是本质是对职业生涯选择是一样的，那就是都在想办法搞更多钱。<br>这样一想就舒服多了。<br>如果想写代码，还跟以前一样，参与开源项目，一样可以过把瘾。还欠风轮一个天池比赛，也可以还了。<br>这个问题算是有解了。</p><h2 id="山脚"><a href="#山脚" class="headerlink" title="山脚"></a>山脚</h2><p>一个人需要走很多路，多个方向的路不应该是拔河，人生应该有很多偿试，不应该越走越窄，每一条路不过是前方的分叉路，最终都是朝着一个方向前进。多走几条路，才会体会到到达终点前，还有一不样的风景。</p><p>内耗了很久，还是妥协了。<br>理想和现实可以并行，只是存在的方式不同。</p><p>理想是一条路，现实也是一条路，把每一条走过的路，当成经验，认真对待每一次旅程，收获到经验后，走出一条更适合自己的路。带着每一段路的经验和收获继续一路向前。</p><p>停止逼迫自己，好好去做想做的事</p><p>为了逼自己离开编程行业，故意让自己把事情搞砸，一旦有努力的心态，就会被负面的逻辑打压。<br>这种逼着自离开工作和想要努力工作的心态，反复的折磨自己，很痛苦。<br>本想着在币圈赚到钱的话，还可以一边写代码一边把生活安排好，结果自己成了韭菜。这个破功了。</p><p>在低谷想明白很多事，生活上的事，已经朝着好的方向前进。<br>工用上的事，尽量去做，然后做好才能说服自己没有遗憾。<br>这二者已经能做到平衡。</p><h2 id="原点"><a href="#原点" class="headerlink" title="原点"></a>原点</h2><p>坚定、明确和有序合理的安排才能消除内耗。<br>理想不需要放弃，在路上就一路前行。<br>现实需要直面，说再多不如大步迈向前方。</p><p>给自己设定一个时间，走完理想需要的路程。<br>走完了，也就去做该做的事。<br>有时候真希望自己是个自私的人，只想自己过的好就行了。<br>这把年纪了，想要自私也来不及了感觉。<br>人总是需要面对各种现实情况，做想做的事和该做什么事，有时候真的很难选。</p><p><code>2023</code>年开始给自己一个倒计时：<br>把暴脾气调整好，做一个谦和、平和的人，每一个人都值得尊重，不要再伤害到任何人。<br>解决掉所有事情，集中精力，认真工作。<br>明确生活和工作的边界，不再被某一方面事情主导，不内耗，好好去做每一件事，不要故意搞砸来逼自己，给自己的理想做一个美好的收尾，给所有人一个满意的答案。</p><p>找回之前的自己，恢复状态和境界。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="起点"><a href="#起点" class="headerlink" title="起点"></a>起点</h2><p>说是总结，其实是吐槽。<br>写了这么些博客，很少说跟技术无关的博客。<br>2022已经完结，这一篇过去了，2023年是一个新的起点，一切都会从新开始，我也一样。<br>在2022之前的不完整，都留在过去，在这一个新的起点，告别过往，重新开始，回归自己应有的状态。</p><h2 id="谷底"><a href="#谷底" class="headerlink" title="谷底"></a>谷底</h2><p><code>2023</code>之前的感想。<br><code>2020</code>年之前，是最好生活状态。每天能够边工作边学习边生活，即便是996也是一种很好的状态，每天都在进步，不论是工作、还是生活。<br>就像跟代码热恋，走到哪满脑子都是代码，就差跟代码生猴子。<br>每天处在一种打鸡血的状态，没事也要找点问题出来，大嗓门就怕大厦楼下保安不知道楼上有我这号人物。<br>在公司能搞定一切和不要脸。</p><p>直到这个过程被打破。</p><p>之后两年感觉像是，在一个泥潭中，越用力陷的越深，一点一点往下拖。</p><p><code>2020</code>年，人生中的一个大低谷，并不是因为疫情，而是人和事，我发现除了代码之外，很多事我控制不了。<br>疫情对我来说，除了担心身边的人之外，需要戴口罩这件麻烦事，其他的没有什么影响。<br>前半年的人与人之间折腾，让我身心俱疲，从生活漫延到工作，工作实在进行不下去，也没法工作，干脆给自己放个长假，在家躺了一段时间。<br>逃避虽然不能解决问题，但是有用，休息了一段时间后，算是放空身心，但总是要面对生活。<br>过完十一开始新的征程。</p><p><code>2020</code>下半年的开始</p><p>半推半就入职新公司，最大的想法是找回状态，好好去做。不管什么都留在前半年。</p><p>事实证明烦心事，如果不能彻底解决的话，工作还是没有办法好好进行。整个人都在暴发的边缘反复来回。新的征程怕是要中道崩殂了。</p><p>经历着一个让自己都感觉厌恶自己的阶段。<br>工作也迎来入行以来最大的低谷与被动，很多事情变得不再可控，处处被动。<br>事事都搞成我以往最看不起的样子，原来生活真的非常影响工作，整个人被巨大的负面情绪包围。</p><p>最难受的倒不是专业能力受到质疑，而是让对我有期望的人失望，这个让我更难受。人的精力有限，是个消耗品，如果在情绪中被消耗，那工作中就没有的消耗，就是没有油的车一样。</p><h2 id="山间"><a href="#山间" class="headerlink" title="山间"></a>山间</h2><p><code>2020</code>年，的另一个拐点，对生活有了另一种的思考，明确需要改变重心，考虑工作以外的事。在此之前的日子是除了工作很多事情与我无关。<br><code>2020</code>年，疫情让节凑换了一种调调，开始有时间考虑理想、生活、工作之间平衡。</p><p>做编程一直是我的理想，一直都是，甚至有时候会掐灭做其他工作的想法。这其实是一种逃避心态，坚定的信念是不惧挑战的。</p><p>为什么会去挑战自己的理想，才是重点。</p><p>不逃避，直面所有问题</p><p>是否忽视了对人的关心？<br>工作真是全部？<br>打工可以为荣？<br>工作的意义是人生价值，还是为老板奉献？<br>做喜欢的事是伟大还是自私？<br>时间有限，着眼当下，还是着眼不确定的未来？<br>那，是否该放弃理想，追求世俗意义的成功，还是理想的成功？</p><p>很多事不能追问，一追问就会发现以前觉得不错的是，很可能是过于主观。</p><p>而理想是是个自私的执念，</p><h2 id="捷径"><a href="#捷径" class="headerlink" title="捷径"></a>捷径</h2><p>这个理想其实相比较起来，其实并不怎么赚钱，当你有一条别人眼里的光明大道时，这个理想，显得没什么说服力。年纪小的时候有理由追求理想，但是，没有但是。</p><p>如果想让自己能够继续维持理想，那就需要有维持理想的资本。<br>然后开始各种偿试。</p><p>然后在不断的偿试中，自以为发现一条如同印钞机捷径，忽然感觉自己又行了，可以把控一切。再然后就翻车了。<br><code>2020</code>下半年接触币圈，以为看到维持理想的捷径，靠币圈赚到钱，可以边赚很多钱，可以边做自己想做的事，然后头脑发热两眼发光没日没夜的搞，真是没日没夜，觉都不睡。</p><p>事实证明这并不是一条捷径。<br>当一个人把时间花在自己事上，工作的时间事必须会被占用。我只想赚钱，又不想离开工作，于是就把自己慢慢边缘化。</p><p>我听过一句，只有自己才能把自己边缘化，我做到了，但是在这个阶段，我确并不在意。<br>我最应该感谢的是<code>lvs007</code>对我的包容，<code>lvs007</code>对我的期待很高。<br>我确因为自己做的事，没有精力照顾到工作上的事，忽略了很多工作上的事，有的时候刻意回避一些事，就怕别人知道我能干。<br><code>lvs007</code>的对由很高的期望变成失望。<br>这种让别人失望的感受，同时也让我很难受，我其实很怕让别人失望。<br>我说话从来避免出现找借口的字句和话语，很多私事又没法解释，只能自己叹气。</p><h2 id="山坡"><a href="#山坡" class="headerlink" title="山坡"></a>山坡</h2><p>这个时候的自己，就像在两条路的中间拔河，越努力越痛苦，无论哪一边用力，都会很痛苦。其实在把时间更多的占用工作时间时，就已经说明心态从理想和现实之间出现了拉扯，理想与现实难平衡。</p><p>理想是做自己一直想做的事，现实是必须认清现状，做可以让生活更好的事。<br>做开发是我的理想。赚更多的钱是现实。</p><p>理想和现实本来不冲突，在我刻意忽略现实问题，假装看不见的时候，都不是问题。但是经历事多了，成了一个大问题，已经到了不得不面对的时候。</p><p>当自己沉浸在自己世界里，不断的学习更新技术，不用去面对现实的时候，一切都是好的。投资自己，再通过技术获得更多的报酬。<br>但是直接这个问题，没有任何躲闪空间的时候，这个问题就打破了平衡。<br>一旦思想起来冲突，就像有两个小人天天在大脑里做辩论，都想说服对方：</p><ul><li>现实：明明可以赚到更多的钱，却耗在自己的理想上，真是很不负责</li><li>理想：这不是耗，是投资，理想也很重要，这是一直在追求的东西</li><li>现实：追求没错，然后呢，放弃更好的生活，只为你自己，那对其他人呢？</li><li>理想：你说没错，但是理想也可以让生活变的更好，虽然没有现实来的多</li><li>现实：那你做饭了吗，只要放弃理想，就可以赚钱到很多，满足所有人的期待，你在做无意义的坚持，你也明白这一点。</li><li>理想: ...</li><li>现实：...</li></ul><p>都明白更好的发展，才是最好的选择，光一句为了理想就可以放弃给身边的人未来的生活，就无法反驳。<br>然后，越努力越痛苦，陷处无限的自我内耗。<br>内耗最可怕的是磨灭状态，无论之前多好的状态，甚至换了一个人的性格和个性。</p><p>这两年发生的事情，只能对自己讲，没法对别人讲，甚至我自己对现在的自己都感觉很陌生。</p><p>忽然有一天想明白了一件事，<br>马化腾、雷军、谢吉·布林、拉里·佩奇、比尔·盖茨 也都是很牛X的程序员，不都不写代码了。<br>这么一想就不纠结了。<br>虽然我跟这些人比，啥也不是，但是本质是对职业生涯选择是一样的，那就是都在想办法搞更多钱。<br>这样一想就舒服多了。<br>如果想写代码，还跟以前一样，参与开源项目，一样可以过把瘾。还欠风轮一个天池比赛，也可以还了。<br>这个问题算是有解了。</p><h2 id="山脚"><a href="#山脚" class="headerlink" title="山脚"></a>山脚</h2><p>一个人需要走很多路，多个方向的路不应该是拔河，人生应该有很多偿试，不应该越走越窄，每一条路不过是前方的分叉路，最终都是朝着一个方向前进。多走几条路，才会体会到到达终点前，还有一不样的风景。</p><p>内耗了很久，还是妥协了。<br>理想和现实可以并行，只是存在的方式不同。</p><p>理想是一条路，现实也是一条路，把每一条走过的路，当成经验，认真对待每一次旅程，收获到经验后，走出一条更适合自己的路。带着每一段路的经验和收获继续一路向前。</p><p>停止逼迫自己，好好去做想做的事。</p><p>为了逼自己离开编程行业，故意让自己把事情搞砸，一旦有努力的心态，就会被负面的逻辑打压。<br>这种逼着自离开工作和想要努力工作的心态，反复的折磨自己，很痛苦。<br>本想着在币圈赚到钱的话，还可以一边写代码一边把生活安排好，结果自己成了韭菜。这个破功了。</p><p>在低谷想明白很多事，生活上的事，已经朝着好的方向前进。<br>工用上的事，尽量去做，然后做好才能说服自己没有遗憾。<br>这二者已经能做到平衡。</p><h2 id="原点"><a href="#原点" class="headerlink" title="原点"></a>原点</h2><p>坚定、明确和有序合理的安排才能消除内耗。<br>理想不需要放弃，在路上就一路前行。<br>现实需要直面，说再多不如大步迈向前方。</p><p>给自己设定一个时间，走完理想需要的路程。<br>走完了，也就去做该做的事。<br>有时候真希望自己是个自私的人，只想自己过的好就行了。<br>这把年纪了，想要自私也来不及了感觉。<br>人总是需要面对各种现实情况，做想做的事和该做什么事，有时候真的很难选。</p><p><code>2023</code>年开始给自己一个倒计时：<br>把暴脾气调整好，做一个谦和、平和的人，每一个人都值得尊重，不要再伤害到任何人。<br>解决掉所有事情，集中精力，认真工作。<br>明确生活和工作的边界，不再被某一方面事情主导，不内耗，好好去做每一件事，不要故意搞砸来逼自己，给自己的理想做一个美好的收尾，给所有人一个满意的答案。</p><p>找回之前的自己，恢复状态和境界。</p>]]></content>
       
       
       <categories>
@@ -375,6 +367,43 @@
     
     
     <entry>
+      <title>Merkle Tree、Merkle Patricia Tree</title>
+      <link href="posts/504d00cf.html"/>
+      <url>posts/504d00cf.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如果是接触区块链开发相关的话题，Merkle Tree 是一个必需要了解的话题。<br>BTC和ETH都使用这项技术，但是数据结构不同。<br>应用侧重点也不同。</p><h2 id="用意"><a href="#用意" class="headerlink" title="用意"></a>用意</h2><h2 id="Merkle-tree"><a href="#Merkle-tree" class="headerlink" title="Merkle tree"></a>Merkle tree</h2><p><img src="/posts/504d00cf/Hash_Tree.svg" alt="Hash_Tree.svg"></p><h2 id="Merkle-Patricia-Tree"><a href="#Merkle-Patricia-Tree" class="headerlink" title="Merkle Patricia Tree"></a>Merkle Patricia Tree</h2><h2 id="以太坊-Merkle-Patricia-Tree-应用"><a href="#以太坊-Merkle-Patricia-Tree-应用" class="headerlink" title="以太坊 Merkle Patricia Tree 应用"></a>以太坊 Merkle Patricia Tree 应用</h2><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://en.wikipedia.org/wiki/Merkle_tree">https://en.wikipedia.org/wiki/Merkle_tree</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> blockchain </tag>
+            
+            <tag> merkle </tag>
+            
+            <tag> 树 </tag>
+            
+            <tag> 原理 </tag>
+            
+            <tag> trie </tag>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ethereum-geth常用操作</title>
       <link href="posts/687e1894.html"/>
       <url>posts/687e1894.html</url>
@@ -397,9 +426,9 @@
       
         <tags>
             
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
+            
+            <tag> ethereum </tag>
             
             <tag> eth </tag>
             
@@ -467,11 +496,11 @@
             
             <tag> blockchain </tag>
             
+            <tag> 区块链 </tag>
+            
             <tag> tron </tag>
             
             <tag> 广播 </tag>
-            
-            <tag> 区块链 </tag>
             
             <tag> 交易 </tag>
             
@@ -480,6 +509,59 @@
             <tag> netty </tag>
             
             <tag> handler </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ethereum-账户模型</title>
+      <link href="posts/ff367d3d.html"/>
+      <url>posts/ff367d3d.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="以太坊帐户"><a href="#以太坊帐户" class="headerlink" title="以太坊帐户"></a>以太坊帐户</h2><p>一个以太坊帐户是一个具有以太币 (ETH) 余额的实体，可以在以太坊上发送交易。 帐户可以由用户控制，也可以作为智能合约部署。</p><h2 id="帐户类型"><a href="#帐户类型" class="headerlink" title="帐户类型"></a>帐户类型</h2><p>以太坊有两种帐户类型：</p><ol><li>普通(外部)账户、external owned accouts: 私钥的所有者控制<ul><li>接收、持有和发送 ETH 和 token</li></ul></li><li>合约账户: 一种由代码控制，部署在网络上的智能合约。<ul><li>与已部署的智能合约进行交互</li></ul></li></ol><h2 id="普通-外部-账户"><a href="#普通-外部-账户" class="headerlink" title="普通(外部)账户"></a>普通(外部)账户</h2><h3 id="关键字段"><a href="#关键字段" class="headerlink" title="关键字段"></a>关键字段</h3><ul><li><code>nonce</code> – 显示从帐户发送的交易数量的计数器。 这将确保交易只处理一次。 在合约帐户中，这个数字代表该帐户创建的合约数量</li><li><code>balance</code> – 这个地址拥有的 Wei 数量。 Wei 是以太币的计数单位，每个 ETH 有 1e+18 Wei。</li><li><code>codeHash</code> - 该哈希表示以太坊虚拟机 (EVM) 上的帐户代码。 合约帐户具有编程的代码片段，可以执行不同的操作。 如果帐户收到消息调用，则执行此 EVM 代码。 与其他帐户字段不同，不能更改。 所有代码片段都被保存在状态数据库的相应哈希下，供后续检索。 此哈希值称为 codeHash。 对于外部所有的帐户，codeHash 字段是空字符串的哈希。</li><li><code>storageRoot</code> – 有时被称为存储哈希。 Merkle Patricia trie 根节点的 256 位哈希已编码了帐户的存储内容（256 位整数值映射），并编码为 Trie，作为来自 256 的 Keccak 256 位哈希的映射位整数键，用于 RLP 编码的 256 位整数值。 此 Trie 对此帐户存储内容的哈希进行编码，默认情况下为空。</li></ul><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> account <span class="keyword">struct</span> &#123;</span><br><span class="line">  Balance *big.Int                    <span class="string">`json:&quot;balance&quot;`</span></span><br><span class="line">  Nonce   <span class="keyword">uint64</span>                      <span class="string">`json:&quot;nonce&quot;`</span></span><br><span class="line">  Code    []<span class="keyword">byte</span>                      <span class="string">`json:&quot;code&quot;`</span></span><br><span class="line">  Storage <span class="keyword">map</span>[common.Hash]common.Hash <span class="string">`json:&quot;storage&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="合约账户"><a href="#合约账户" class="headerlink" title="合约账户"></a>合约账户</h2><p>存储<strong>智能合约</strong>的账户，合约代码可供调用，执行合约逻辑。</p><h3 id="关键字段-1"><a href="#关键字段-1" class="headerlink" title="关键字段"></a>关键字段</h3><h3 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h3><p>TODO</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://learnblockchain.cn/books/geth/part1/account.html">https://learnblockchain.cn/books/geth/part1/account.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> ethereum </category>
+          
+          <category> account </category>
+          
+          <category> ethereum </category>
+          
+          <category> eth </category>
+          
+          <category> account </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> eth </tag>
+            
+            <tag> account </tag>
+            
+            <tag> 账户模型 </tag>
+            
+            <tag> 账户 </tag>
+            
+            <tag> 模型 </tag>
+            
+            <tag> 以太坊 </tag>
+            
+            <tag> 外部账户 </tag>
+            
+            <tag> 合约账户 </tag>
             
         </tags>
       
@@ -508,15 +590,15 @@
       
         <tags>
             
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
             
-            <tag> 编码 </tag>
+            <tag> ethereum </tag>
             
             <tag> eth </tag>
+            
+            <tag> 编码 </tag>
             
             <tag> 白皮书 </tag>
             
@@ -551,11 +633,11 @@
             
             <tag> blockchain </tag>
             
+            <tag> 区块链 </tag>
+            
             <tag> tron </tag>
             
             <tag> 广播 </tag>
-            
-            <tag> 区块链 </tag>
             
         </tags>
       
@@ -654,17 +736,17 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> 模型 </tag>
+            
+            <tag> tron </tag>
             
             <tag> 能量 </tag>
             
             <tag> 带宽 </tag>
             
             <tag> 资源 </tag>
-            
-            <tag> 模型 </tag>
             
         </tags>
       
@@ -724,11 +806,11 @@
       
         <tags>
             
+            <tag> 算法 </tag>
+            
             <tag> tron </tag>
             
             <tag> 加密 </tag>
-            
-            <tag> 算法 </tag>
             
             <tag> ecc </tag>
             
@@ -868,13 +950,13 @@
       
         <tags>
             
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
-            <tag> 以太坊 </tag>
+            <tag> ethereum </tag>
             
             <tag> eth </tag>
+            
+            <tag> 以太坊 </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -952,11 +1034,11 @@
       
         <tags>
             
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
             
             <tag> eth </tag>
             
@@ -978,9 +1060,9 @@
       
       <categories>
           
-          <category> algorithm </category>
-          
           <category> blockchain </category>
+          
+          <category> algorithm </category>
           
           <category> algorithm </category>
           
@@ -993,9 +1075,9 @@
             
             <tag> 区块链 </tag>
             
-            <tag> algorithm </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> algorithm </tag>
             
             <tag> 参与度 </tag>
             
@@ -1028,9 +1110,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
             
         </tags>
       
@@ -1143,9 +1225,9 @@
       
       <categories>
           
-          <category> algorithm </category>
-          
           <category> blockchain </category>
+          
+          <category> algorithm </category>
           
           <category> tron </category>
           
@@ -1162,11 +1244,11 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
             
             <tag> 算法 </tag>
+            
+            <tag> tron </tag>
             
             <tag> 源码 </tag>
             
@@ -1203,9 +1285,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
             
             <tag> Tapos </tag>
             
@@ -1238,11 +1320,11 @@
       
         <tags>
             
+            <tag> slack </tag>
+            
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
-            
-            <tag> slack </tag>
             
             <tag> 日志 </tag>
             
@@ -1308,9 +1390,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
             
             <tag> 共识 </tag>
             
@@ -1775,9 +1857,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
             
             <tag> witness </tag>
             
@@ -1814,9 +1896,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
             
         </tags>
       
@@ -1975,11 +2057,11 @@
       
         <tags>
             
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
             
             <tag> eth </tag>
             
@@ -3500,13 +3582,13 @@
       
         <tags>
             
-            <tag> algorithm </tag>
-            
             <tag> 算法 </tag>
             
             <tag> LeetCode </tag>
             
             <tag> 栈 </tag>
+            
+            <tag> algorithm </tag>
             
         </tags>
       
@@ -3550,7 +3632,7 @@
       <link href="posts/1ca1b354.html"/>
       <url>posts/1ca1b354.html</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如果常用<code>vim</code>的程序员的话，<code>coc</code> 这个插件即使没用过也听说过，这真是个强到没边的插件。<br>之所以写这个文件是因为用了一段<code>coc</code>发现真是个强大的插件，可以对每次项功能做到非常精细的配置。<br>自己在用的过程中每一项都一点一点验证，把这个过程记录下来，可能会有很多朋友能用的上。</p><h2 id="CocConfig"><a href="#CocConfig" class="headerlink" title="CocConfig"></a>CocConfig</h2><p>编辑CocConfig的方式有两种：</p><p>1.在vim输入: <code>:CocConfig</code>，保存后生成文件<br>2.编辑文件，默认不存在该文件:</p><blockquote><p>~/.config/nvim/coc-settings.json</p></blockquote><p>完整配置，下面标逐渐分析每个配置的说明，每个配置都是在使用中，一点一点验证。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;coc.preferences.semanticTokensHighlights&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.enableFloatHighlight&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.snippetStatusText&quot;</span>: <span class="string">&quot;Ⓢ &quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.extensionUpdateCheck&quot;</span>: <span class="string">&quot;daily&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.messageLevel&quot;</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.around.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.buffer.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.syntax.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.detailMaxLength&quot;</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.noselect&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.enablePreselect&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.triggerAfterInsertEnter&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.autoTrigger&quot;</span>: <span class="string">&quot;always&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.timeout&quot;</span>: <span class="number">5000</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.enablePreview&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.floatEnable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.detailField&quot;</span>: <span class="string">&quot;preview&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.snippetIndicator&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.triggerCompletionWait&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.echodocSupport&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.completionItemKindLabels&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;class&quot;</span>: <span class="string">&quot;\uf0e8&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;color&quot;</span>: <span class="string">&quot;\ue22b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;constant&quot;</span>: <span class="string">&quot;\uf8fe&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;default&quot;</span>: <span class="string">&quot;\uf29c&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;enum&quot;</span>: <span class="string">&quot;\uf435&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;enumMember&quot;</span>: <span class="string">&quot;\uf02b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;event&quot;</span>: <span class="string">&quot;\ufacd&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;\uf93d&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;file&quot;</span>: <span class="string">&quot;\uf723&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;folder&quot;</span>: <span class="string">&quot;\uf115&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;function&quot;</span>: <span class="string">&quot;\u0192&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;interface&quot;</span>: <span class="string">&quot;\uf417&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;keyword&quot;</span>: <span class="string">&quot;\uf1de&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;method&quot;</span>: <span class="string">&quot;\uf6a6&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;module&quot;</span>: <span class="string">&quot;\uf40d&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;\uf915&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;property&quot;</span>: <span class="string">&quot;\ue624&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;reference&quot;</span>: <span class="string">&quot;\ufa46&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;snippet&quot;</span>: <span class="string">&quot;\ue60b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;struct&quot;</span>: <span class="string">&quot;\ufb44&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;\ue612&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;typeParameter&quot;</span>: <span class="string">&quot;\uf728&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;unit&quot;</span>: <span class="string">&quot;\uf475&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;\uf89f&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;variable&quot;</span>: <span class="string">&quot;\ue71b&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;diagnostic.signOffset&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.errorSign&quot;</span>: <span class="string">&quot;\uf467&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.warningSign&quot;</span>: <span class="string">&quot;\uf071&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.infoSign&quot;</span>: <span class="string">&quot;\uf129&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.hintSign&quot;</span>: <span class="string">&quot;\uf864&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.displayByAle&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.refreshOnInsertMode&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.checkCurrentLine&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.virtualTextPrefix&quot;</span>: <span class="string">&quot; ❯❯❯ &quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.virtualText&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;codeLens.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;list.previewHighlightGroup&quot;</span>: <span class="string">&quot;Statement&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;list.nextKeymap&quot;</span>: <span class="string">&quot;&lt;C-e&gt;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;list.previousKeymap&quot;</span>: <span class="string">&quot;&lt;C-u&gt;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.bundleSizeDecoration&quot;</span>: <span class="string">&quot;both&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.typescriptExtensions&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;\\.tsx?$&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;importCost.javascriptExtensions&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;\\.jsx?$&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;importCost.showCalculatingDecoration&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.debug&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;snippets.ultisnips.directories&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;$HOME/.config/nvim/Ultisnips/&quot;</span>,</span><br><span class="line">        <span class="string">&quot;$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;coc.preferences.formatOnSaveFiletypes&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;typescript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;html&quot;</span>,</span><br><span class="line">        <span class="string">&quot;css&quot;</span>,</span><br><span class="line">        <span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="string">&quot;java&quot;</span>,</span><br><span class="line">        <span class="string">&quot;python&quot;</span>,</span><br><span class="line">        <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">        <span class="string">&quot;svelte&quot;</span>,</span><br><span class="line">        <span class="string">&quot;c&quot;</span>,</span><br><span class="line">        <span class="string">&quot;cs&quot;</span>,</span><br><span class="line">        <span class="string">&quot;prisma&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;yaml.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;signature.target&quot;</span>: <span class="string">&quot;float&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;yank.enableCompletion&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;typescript.suggestionActions.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;typescript.format.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;jest.watch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.width&quot;</span>: <span class="number">38</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.quitOnOpen&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.sources&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;buffer&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;expand&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;file&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;expand&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;explorer.file.column.indent.indentLine&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.file.showHiddenFiles&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.icon.enableNerdfont&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.file.column.git.showIgnored&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.keyMappingMode&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.buffer.showHiddenBuffers&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.keyMappings.global&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;u&quot;</span>: <span class="string">&quot;nodePrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;e&quot;</span>: <span class="string">&quot;nodeNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;h&quot;</span>: <span class="string">&quot;toggleSelection&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&lt;tab&gt;&quot;</span>: <span class="string">&quot;actionMenu&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gl&quot;</span>: <span class="string">&quot;expandRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gh&quot;</span>: <span class="string">&quot;collapseRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;i&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expandable?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expand&quot;</span>,</span><br><span class="line">            <span class="string">&quot;open&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;&lt;cr&gt;&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expandable?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cd&quot;</span>,</span><br><span class="line">            <span class="string">&quot;open&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;I&quot;</span>: <span class="string">&quot;open:vsplit&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;o&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expanded?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;collapse&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expand&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;O&quot;</span>: <span class="string">&quot;open:tab&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;n&quot;</span>: <span class="string">&quot;collapse&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;l&quot;</span>: <span class="string">&quot;gotoParent&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yp&quot;</span>: <span class="string">&quot;copyFilepath&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yn&quot;</span>: <span class="string">&quot;copyFilename&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yy&quot;</span>: <span class="string">&quot;copyFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;dd&quot;</span>: <span class="string">&quot;cutFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;pp&quot;</span>: <span class="string">&quot;pasteFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;dD&quot;</span>: <span class="string">&quot;deleteForever&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;a&quot;</span>: <span class="string">&quot;addFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;k&quot;</span>: <span class="string">&quot;addFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;M&quot;</span>: <span class="string">&quot;addDirectory&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;cw&quot;</span>: <span class="string">&quot;rename&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;.&quot;</span>: <span class="string">&quot;toggleHidden&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;zh&quot;</span>: <span class="string">&quot;toggleHidden&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;R&quot;</span>: <span class="string">&quot;refresh&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;?&quot;</span>: <span class="string">&quot;help&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;q&quot;</span>: <span class="string">&quot;quit&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;X&quot;</span>: <span class="string">&quot;systemExecute&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gd&quot;</span>: <span class="string">&quot;listDrive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;f&quot;</span>: <span class="string">&quot;search&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;F&quot;</span>: <span class="string">&quot;searchRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;B&quot;</span>: <span class="string">&quot;gotoSource:file&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;b&quot;</span>: <span class="string">&quot;gotoSource:buffer&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[[&quot;</span>: <span class="string">&quot;sourcePrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]]&quot;</span>: <span class="string">&quot;sourceNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[d&quot;</span>: <span class="string">&quot;diagnosticPrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]d&quot;</span>: <span class="string">&quot;diagnosticNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[c&quot;</span>: <span class="string">&quot;gitPrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]c&quot;</span>: <span class="string">&quot;gitNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&lt;&lt;&quot;</span>: <span class="string">&quot;gitStage&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&gt;&gt;&quot;</span>: <span class="string">&quot;gitUnstage&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;flutter.outlineWidth&quot;</span>: <span class="number">40</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.outlineIconPadding&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.UIPath&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.openDevLogSplitCommand&quot;</span>: <span class="string">&quot;botright 12split&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.trace.server&quot;</span>: <span class="string">&quot;off&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;tslint.autoFixOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;python.autoComplete.addBrackets&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;python.jediEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;python.formatting.provider&quot;</span>: <span class="string">&quot;yapf&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;python.formatting.yapfArgs&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;--style&quot;</span>,</span><br><span class="line">        <span class="string">&quot;&#123;SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1&#125;&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;html.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.referencesCodeLens.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.showUnused&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.suggest.names&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.suggestionActions.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;json.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.printWidth&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.disableLanguages&quot;</span>: [],</span><br><span class="line">    <span class="attr">&quot;prettier.formatterPriority&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.trailingComma&quot;</span>: <span class="string">&quot;all&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.singleQuote&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;todolist.autoUpload&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;todolist.promptForReminder&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc-actions.hideCursor&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc-actions.showActionKind&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic-languageserver.filetypes&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;vim&quot;</span>: <span class="string">&quot;vint&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;email&quot;</span>: <span class="string">&quot;languagetool&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;markdown&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;write-good&quot;</span>,</span><br><span class="line">            <span class="string">&quot;markdownlint&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;sh&quot;</span>: <span class="string">&quot;shellcheck&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;elixir&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;mix_credo&quot;</span>,</span><br><span class="line">            <span class="string">&quot;mix_credo_compile&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;eelixir&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;mix_credo&quot;</span>,</span><br><span class="line">            <span class="string">&quot;mix_credo_compile&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;php&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;phpstan&quot;</span>,</span><br><span class="line">            <span class="string">&quot;psalm&quot;</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;diagnostic-languageserver.formatFiletypes&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;elixir&quot;</span>: <span class="string">&quot;mix_format&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;eelixir&quot;</span>: <span class="string">&quot;mix_format&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;languageserver&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;lua&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;lua-lsp&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;lua&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;swift&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;args&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;swift&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">&quot;settings&quot;</span>: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;golang&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;gopls&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;rootPatterns&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;go.mod&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;go&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;gocodeCompletionEnabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">&quot;diagnosticsEnabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">&quot;lintTool&quot;</span>: <span class="string">&quot;golint&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;bash&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;bash-language-server&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;start&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;sh&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;ignoredRootPaths&quot;</span>: []</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;ccls&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;ccls&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;c&quot;</span>,</span><br><span class="line">                <span class="string">&quot;cpp&quot;</span>,</span><br><span class="line">                <span class="string">&quot;cuda&quot;</span>,</span><br><span class="line">                <span class="string">&quot;objc&quot;</span>,</span><br><span class="line">                <span class="string">&quot;objcpp&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;rootPatterns&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;.ccls&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.ccls-root&quot;</span>,</span><br><span class="line">                <span class="string">&quot;compile_commands.json&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.git/&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.hg/&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;cache&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;directory&quot;</span>: <span class="string">&quot;/tmp/ccls&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;java.home&quot;</span>: <span class="string">&quot;/Users/liukai/workspaces/application/jdk-17.0.2.jdk/Contents/Home&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;java.configuration.maven.userSettings&quot;</span>: <span class="string">&quot;/Users/liukai/.m2/settings.xml&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rust-analyzer.enable&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="coc-自身配置"><a href="#coc-自身配置" class="headerlink" title="coc 自身配置"></a>coc 自身配置</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;coc.preferences.semanticTokensHighlights&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.preferences.enableFloatHighlight&quot;</span>: true,</span><br><span class="line">    <span class="string">&quot;coc.preferences.snippetStatusText&quot;</span>: <span class="string">&quot;Ⓢ &quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.preferences.extensionUpdateCheck&quot;</span>: <span class="string">&quot;daily&quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.preferences.messageLevel&quot;</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.source.around.firstMatch&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.source.buffer.firstMatch&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.source.syntax.firstMatch&quot;</span>: false,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>coc官方文档: <a href="https://github.com/neoclide/coc.nvim/blob/master/doc/coc.txt">https://github.com/neoclide/coc.nvim/blob/master/doc/coc.txt</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如果常用<code>vim</code>的程序员的话，<code>coc</code> 这个插件即使没用过也听说过，这真是个强到没边的插件。<br>之所以写这个文件是因为用了一段<code>coc</code>发现真是个强大的插件，可以对每次项功能做到非常精细的配置。<br>自己在用的过程中每一项都一点一点验证，把这个过程记录下来，可能会有很多朋友能用的上。</p><h2 id="CocConfig"><a href="#CocConfig" class="headerlink" title="CocConfig"></a>CocConfig</h2><p>编辑CocConfig的方式有两种：</p><p>1.在vim输入: <code>:CocConfig</code>，保存后生成文件<br>2.编辑文件，默认不存在该文件:</p><blockquote><p>~/.config/nvim/coc-settings.json</p></blockquote><p>完整配置，下面标逐渐分析每个配置的说明，每个配置都是在使用中，一点一点验证。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;coc.preferences.semanticTokensHighlights&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.enableFloatHighlight&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.snippetStatusText&quot;</span>: <span class="string">&quot;Ⓢ &quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.extensionUpdateCheck&quot;</span>: <span class="string">&quot;daily&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.preferences.messageLevel&quot;</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.around.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.buffer.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc.source.syntax.firstMatch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.detailMaxLength&quot;</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.noselect&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.enablePreselect&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.triggerAfterInsertEnter&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.autoTrigger&quot;</span>: <span class="string">&quot;always&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.timeout&quot;</span>: <span class="number">5000</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.enablePreview&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.floatEnable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.detailField&quot;</span>: <span class="string">&quot;preview&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.snippetIndicator&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.triggerCompletionWait&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.echodocSupport&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;suggest.completionItemKindLabels&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;class&quot;</span>: <span class="string">&quot;\uf0e8&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;color&quot;</span>: <span class="string">&quot;\ue22b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;constant&quot;</span>: <span class="string">&quot;\uf8fe&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;default&quot;</span>: <span class="string">&quot;\uf29c&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;enum&quot;</span>: <span class="string">&quot;\uf435&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;enumMember&quot;</span>: <span class="string">&quot;\uf02b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;event&quot;</span>: <span class="string">&quot;\ufacd&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;\uf93d&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;file&quot;</span>: <span class="string">&quot;\uf723&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;folder&quot;</span>: <span class="string">&quot;\uf115&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;function&quot;</span>: <span class="string">&quot;\u0192&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;interface&quot;</span>: <span class="string">&quot;\uf417&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;keyword&quot;</span>: <span class="string">&quot;\uf1de&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;method&quot;</span>: <span class="string">&quot;\uf6a6&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;module&quot;</span>: <span class="string">&quot;\uf40d&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;\uf915&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;property&quot;</span>: <span class="string">&quot;\ue624&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;reference&quot;</span>: <span class="string">&quot;\ufa46&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;snippet&quot;</span>: <span class="string">&quot;\ue60b&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;struct&quot;</span>: <span class="string">&quot;\ufb44&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;text&quot;</span>: <span class="string">&quot;\ue612&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;typeParameter&quot;</span>: <span class="string">&quot;\uf728&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;unit&quot;</span>: <span class="string">&quot;\uf475&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;\uf89f&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;variable&quot;</span>: <span class="string">&quot;\ue71b&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;diagnostic.signOffset&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.errorSign&quot;</span>: <span class="string">&quot;\uf467&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.warningSign&quot;</span>: <span class="string">&quot;\uf071&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.infoSign&quot;</span>: <span class="string">&quot;\uf129&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.hintSign&quot;</span>: <span class="string">&quot;\uf864&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.displayByAle&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.refreshOnInsertMode&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.checkCurrentLine&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.virtualTextPrefix&quot;</span>: <span class="string">&quot; ❯❯❯ &quot;</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic.virtualText&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;codeLens.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;list.previewHighlightGroup&quot;</span>: <span class="string">&quot;Statement&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;list.nextKeymap&quot;</span>: <span class="string">&quot;&lt;C-e&gt;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;list.previousKeymap&quot;</span>: <span class="string">&quot;&lt;C-u&gt;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.bundleSizeDecoration&quot;</span>: <span class="string">&quot;both&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.typescriptExtensions&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;\\.tsx?$&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;importCost.javascriptExtensions&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;\\.jsx?$&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;importCost.showCalculatingDecoration&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;importCost.debug&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;snippets.ultisnips.directories&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;$HOME/.config/nvim/Ultisnips/&quot;</span>,</span><br><span class="line">        <span class="string">&quot;$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;coc.preferences.formatOnSaveFiletypes&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;typescript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;html&quot;</span>,</span><br><span class="line">        <span class="string">&quot;css&quot;</span>,</span><br><span class="line">        <span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="string">&quot;java&quot;</span>,</span><br><span class="line">        <span class="string">&quot;python&quot;</span>,</span><br><span class="line">        <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">        <span class="string">&quot;svelte&quot;</span>,</span><br><span class="line">        <span class="string">&quot;c&quot;</span>,</span><br><span class="line">        <span class="string">&quot;cs&quot;</span>,</span><br><span class="line">        <span class="string">&quot;prisma&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;yaml.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;signature.target&quot;</span>: <span class="string">&quot;float&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;yank.enableCompletion&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;typescript.suggestionActions.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;typescript.format.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;jest.watch&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.width&quot;</span>: <span class="number">38</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.quitOnOpen&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.sources&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;buffer&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;expand&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;file&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;expand&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;explorer.file.column.indent.indentLine&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.file.showHiddenFiles&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.icon.enableNerdfont&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.file.column.git.showIgnored&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.keyMappingMode&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.buffer.showHiddenBuffers&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.keyMappings.global&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;u&quot;</span>: <span class="string">&quot;nodePrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;e&quot;</span>: <span class="string">&quot;nodeNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;h&quot;</span>: <span class="string">&quot;toggleSelection&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&lt;tab&gt;&quot;</span>: <span class="string">&quot;actionMenu&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gl&quot;</span>: <span class="string">&quot;expandRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gh&quot;</span>: <span class="string">&quot;collapseRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;i&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expandable?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expand&quot;</span>,</span><br><span class="line">            <span class="string">&quot;open&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;&lt;cr&gt;&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expandable?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cd&quot;</span>,</span><br><span class="line">            <span class="string">&quot;open&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;I&quot;</span>: <span class="string">&quot;open:vsplit&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;o&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;wait&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expanded?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;collapse&quot;</span>,</span><br><span class="line">            <span class="string">&quot;expand&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;O&quot;</span>: <span class="string">&quot;open:tab&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;n&quot;</span>: <span class="string">&quot;collapse&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;l&quot;</span>: <span class="string">&quot;gotoParent&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yp&quot;</span>: <span class="string">&quot;copyFilepath&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yn&quot;</span>: <span class="string">&quot;copyFilename&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;yy&quot;</span>: <span class="string">&quot;copyFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;dd&quot;</span>: <span class="string">&quot;cutFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;pp&quot;</span>: <span class="string">&quot;pasteFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;dD&quot;</span>: <span class="string">&quot;deleteForever&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;a&quot;</span>: <span class="string">&quot;addFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;k&quot;</span>: <span class="string">&quot;addFile&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;M&quot;</span>: <span class="string">&quot;addDirectory&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;cw&quot;</span>: <span class="string">&quot;rename&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;.&quot;</span>: <span class="string">&quot;toggleHidden&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;zh&quot;</span>: <span class="string">&quot;toggleHidden&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;R&quot;</span>: <span class="string">&quot;refresh&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;?&quot;</span>: <span class="string">&quot;help&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;q&quot;</span>: <span class="string">&quot;quit&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;X&quot;</span>: <span class="string">&quot;systemExecute&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;gd&quot;</span>: <span class="string">&quot;listDrive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;f&quot;</span>: <span class="string">&quot;search&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;F&quot;</span>: <span class="string">&quot;searchRecursive&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;B&quot;</span>: <span class="string">&quot;gotoSource:file&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;b&quot;</span>: <span class="string">&quot;gotoSource:buffer&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[[&quot;</span>: <span class="string">&quot;sourcePrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]]&quot;</span>: <span class="string">&quot;sourceNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[d&quot;</span>: <span class="string">&quot;diagnosticPrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]d&quot;</span>: <span class="string">&quot;diagnosticNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;[c&quot;</span>: <span class="string">&quot;gitPrev&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;]c&quot;</span>: <span class="string">&quot;gitNext&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&lt;&lt;&quot;</span>: <span class="string">&quot;gitStage&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;&gt;&gt;&quot;</span>: <span class="string">&quot;gitUnstage&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;flutter.outlineWidth&quot;</span>: <span class="number">40</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.outlineIconPadding&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.UIPath&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.openDevLogSplitCommand&quot;</span>: <span class="string">&quot;botright 12split&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;flutter.trace.server&quot;</span>: <span class="string">&quot;off&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;tslint.autoFixOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;python.autoComplete.addBrackets&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;python.jediEnabled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;python.formatting.provider&quot;</span>: <span class="string">&quot;yapf&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;python.formatting.yapfArgs&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;--style&quot;</span>,</span><br><span class="line">        <span class="string">&quot;&#123;SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1&#125;&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;html.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.referencesCodeLens.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.showUnused&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.suggest.names&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.suggestionActions.enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;json.format.enable&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.printWidth&quot;</span>: <span class="number">100</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.disableLanguages&quot;</span>: [],</span><br><span class="line">    <span class="attr">&quot;prettier.formatterPriority&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.useTabs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.trailingComma&quot;</span>: <span class="string">&quot;all&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.singleQuote&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;todolist.autoUpload&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;todolist.promptForReminder&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc-actions.hideCursor&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;coc-actions.showActionKind&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;diagnostic-languageserver.filetypes&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;vim&quot;</span>: <span class="string">&quot;vint&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;email&quot;</span>: <span class="string">&quot;languagetool&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;markdown&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;write-good&quot;</span>,</span><br><span class="line">            <span class="string">&quot;markdownlint&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;sh&quot;</span>: <span class="string">&quot;shellcheck&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;elixir&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;mix_credo&quot;</span>,</span><br><span class="line">            <span class="string">&quot;mix_credo_compile&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;eelixir&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;mix_credo&quot;</span>,</span><br><span class="line">            <span class="string">&quot;mix_credo_compile&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;php&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;phpstan&quot;</span>,</span><br><span class="line">            <span class="string">&quot;psalm&quot;</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;diagnostic-languageserver.formatFiletypes&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;elixir&quot;</span>: <span class="string">&quot;mix_format&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;eelixir&quot;</span>: <span class="string">&quot;mix_format&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;languageserver&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;lua&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;lua-lsp&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;lua&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;swift&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;args&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;swift&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">&quot;settings&quot;</span>: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;golang&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;gopls&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;rootPatterns&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;go.mod&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;go&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;gocodeCompletionEnabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">&quot;diagnosticsEnabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">&quot;lintTool&quot;</span>: <span class="string">&quot;golint&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;bash&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;bash-language-server&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;start&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;sh&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;ignoredRootPaths&quot;</span>: []</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;ccls&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;command&quot;</span>: <span class="string">&quot;ccls&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;filetypes&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;c&quot;</span>,</span><br><span class="line">                <span class="string">&quot;cpp&quot;</span>,</span><br><span class="line">                <span class="string">&quot;cuda&quot;</span>,</span><br><span class="line">                <span class="string">&quot;objc&quot;</span>,</span><br><span class="line">                <span class="string">&quot;objcpp&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;rootPatterns&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;.ccls&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.ccls-root&quot;</span>,</span><br><span class="line">                <span class="string">&quot;compile_commands.json&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.git/&quot;</span>,</span><br><span class="line">                <span class="string">&quot;.hg/&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;initializationOptions&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;cache&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;directory&quot;</span>: <span class="string">&quot;/tmp/ccls&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;java.home&quot;</span>: <span class="string">&quot;/Users/liukai/workspaces/application/jdk-17.0.2.jdk/Contents/Home&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;java.configuration.maven.userSettings&quot;</span>: <span class="string">&quot;/Users/liukai/.m2/settings.xml&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rust-analyzer.enable&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="coc-自身配置"><a href="#coc-自身配置" class="headerlink" title="coc 自身配置"></a>coc 自身配置</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;coc.preferences.semanticTokensHighlights&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.preferences.enableFloatHighlight&quot;</span>: true,</span><br><span class="line">    <span class="string">&quot;coc.preferences.snippetStatusText&quot;</span>: <span class="string">&quot;Ⓢ &quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.preferences.extensionUpdateCheck&quot;</span>: <span class="string">&quot;daily&quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.preferences.messageLevel&quot;</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    <span class="string">&quot;coc.source.around.firstMatch&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.source.buffer.firstMatch&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;coc.source.syntax.firstMatch&quot;</span>: false,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>补全时，选中第一项：<br>suggest.noselect&quot;: true</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>coc官方文档: <a href="https://github.com/neoclide/coc.nvim/blob/master/doc/coc.txt">https://github.com/neoclide/coc.nvim/blob/master/doc/coc.txt</a></p>]]></content>
       
       
       <categories>
@@ -4137,7 +4219,7 @@
       <link href="posts/922827f1.html"/>
       <url>posts/922827f1.html</url>
       
-        <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在使用iterm2的时候，需要clone多个session，然后发现每次登陆都需要重新输入一个动态验证码，非常麻烦，又不想使用 SecureCRT，所以就研究了一下iterm2是怎么实现clone不需要重复输入的动态验证码的。<br>公司使用跳板机登陆，很从小伙伴应该也都是使用跳板机登陆，SecureCRT就可以每次Clone Session 不需要输入。</p><p><img src="/posts/922827f1/%E9%AA%8C%E8%AF%81%E7%A0%81.png" alt="验证码"></p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/config</span><br></pre></td></tr></table></figure><p>在文件中添加配置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">ServerAliveInterval 30</span><br><span class="line">ControlMaster auto</span><br><span class="line">ControlPath ~/.ssh/master-%r@%h:%p</span><br><span class="line">ControlPersist yes</span><br></pre></td></tr></table></figure><p>下次打开后，就可以复用session，不需要重复的输入动态验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在使用iterm2的时候，需要clone多个session，然后发现每次登陆都需要重新输入一个动态验证码，非常麻烦，又不想使用 SecureCRT，所以就研究了一下iterm2是怎么实现clone不需要重复输入的动态验证码的。<br>公司使用跳板机登陆，很从小伙伴应该也都是使用跳板机登陆，SecureCRT就可以每次Clone Session 不需要输入。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/config</span><br></pre></td></tr></table></figure><p>在文件中添加配置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">ServerAliveInterval 30</span><br><span class="line">ControlMaster auto</span><br><span class="line">ControlPath ~/.ssh/master-%r@%h:%p</span><br><span class="line">ControlPersist yes</span><br></pre></td></tr></table></figure><p>下次打开后，就可以复用session，不需要重复的输入动态验证码。</p>]]></content>
       
       
       <categories>
@@ -4586,11 +4668,11 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
@@ -4621,11 +4703,11 @@
       
         <tags>
             
+            <tag> 算法 </tag>
+            
             <tag> java </tag>
             
             <tag> spring boot </tag>
-            
-            <tag> 算法 </tag>
             
             <tag> spring </tag>
             
@@ -4936,9 +5018,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 交换字符串 </tag>
             
@@ -6578,9 +6660,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 交换 </tag>
             
@@ -6609,9 +6691,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 数组 </tag>
             
             <tag> 去重 </tag>
             
@@ -7295,9 +7377,9 @@
       
         <tags>
             
-            <tag> algorithm </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> algorithm </tag>
             
         </tags>
       
@@ -7518,13 +7600,13 @@
       
         <tags>
             
+            <tag> 算法 </tag>
+            
             <tag> java </tag>
             
             <tag> algorithm </tag>
             
             <tag> 二叉树 </tag>
-            
-            <tag> 算法 </tag>
             
         </tags>
       
@@ -7590,11 +7672,11 @@
       
         <tags>
             
+            <tag> 算法 </tag>
+            
             <tag> algorithm </tag>
             
             <tag> 二叉树 </tag>
-            
-            <tag> 算法 </tag>
             
             <tag> tree </tag>
             
@@ -7627,13 +7709,13 @@
       
         <tags>
             
-            <tag> algorithm </tag>
+            <tag> 树 </tag>
             
             <tag> 算法 </tag>
             
-            <tag> tree </tag>
+            <tag> algorithm </tag>
             
-            <tag> 树 </tag>
+            <tag> tree </tag>
             
         </tags>
       
@@ -8256,9 +8338,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> broker </tag>
             
@@ -8285,9 +8367,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> 中间件 </tag>
             
@@ -8349,9 +8431,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> architecture </tag>
             
@@ -8417,6 +8499,8 @@
       
         <tags>
             
+            <tag> 原理 </tag>
+            
             <tag> 原码 </tag>
             
             <tag> 补码 </tag>
@@ -8426,8 +8510,6 @@
             <tag> 二进制 </tag>
             
             <tag> 基础 </tag>
-            
-            <tag> 原理 </tag>
             
             <tag> 计算机原理 </tag>
             
@@ -8942,11 +9024,11 @@
       
         <tags>
             
+            <tag> 原理 </tag>
+            
             <tag> 概念 </tag>
             
             <tag> java </tag>
-            
-            <tag> 原理 </tag>
             
             <tag> 线程 </tag>
             
