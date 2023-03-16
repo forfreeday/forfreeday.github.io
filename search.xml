@@ -57,9 +57,9 @@
             
             <tag> rust </tag>
             
-            <tag> vim </tag>
-            
             <tag> ide </tag>
+            
+            <tag> vim </tag>
             
             <tag> debug </tag>
             
@@ -354,9 +354,9 @@
             
             <tag> rust </tag>
             
-            <tag> vim </tag>
-            
             <tag> ide </tag>
+            
+            <tag> vim </tag>
             
             <tag> rust-vim </tag>
             
@@ -371,7 +371,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#x75;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#x31;&#48;&#x2e;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;">&#x75;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#x31;&#48;&#x2e;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#x75;&#x73;&#x65;&#x72;&#110;&#x61;&#109;&#x65;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;&#x2e;&#49;&#48;">&#x75;&#x73;&#x65;&#x72;&#110;&#x61;&#109;&#x65;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;&#x2e;&#49;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -380,28 +380,28 @@
           
           <category> mac </category>
           
-          <category> shell </category>
-          
           <category> iterm2 </category>
+          
+          <category> shell </category>
           
       </categories>
       
       
         <tags>
             
+            <tag> linux </tag>
+            
+            <tag> shell </tag>
+            
             <tag> mac </tag>
+            
+            <tag> iterm2 </tag>
             
             <tag> m2 </tag>
             
             <tag> python3 </tag>
             
-            <tag> iterm2 </tag>
-            
             <tag> 跳板机 </tag>
-            
-            <tag> shell </tag>
-            
-            <tag> linux </tag>
             
         </tags>
       
@@ -1173,9 +1173,9 @@
       
       <categories>
           
-          <category> blockchain </category>
-          
           <category> algorithm </category>
+          
+          <category> blockchain </category>
           
           <category> algorithm </category>
           
@@ -1340,9 +1340,9 @@
           
           <category> tron </category>
           
-          <category> blockchain </category>
-          
           <category> algorithm </category>
+          
+          <category> blockchain </category>
           
           <category> tron </category>
           
@@ -1483,7 +1483,7 @@
       <link href="posts/99fe4621.html"/>
       <url>posts/99fe4621.html</url>
       
-        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p><code>Lido</code> 是一个以太坊 2.0 质押服务平台，用户可质押任意数量。<br>ETH2.0搞的风风火火，我没有32个ETH，不然我也去质押，赚点。</p><p>ETH的质押是 <code>1</code>:<code>1</code> 的获得质押代币 <code>stETH</code>，获得<code>stETH</code>后，可以参与 DeFi 市场其他服务。<br>未来可能与 AAVE、Maker 生态等进行合作，继续扩大赛道影响力。<br>stETH 具备较强的流通性，在 Curve stETH/ETH 池中锁定了超过 10 亿美元的流动性，价格稳定性较好，利于被其他 DeFi 平台引用。</p><h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>Lido 是一个以太坊 2.0 质押协议平台，用户可在 Lido 上以任意 ETH 参与质押，无需搭建节点也可以获得收益。<br>说白了就是因为转了<code>POS</code>之后，需要有人质押成为验证者，代替以前的挖矿节点。</p><h2 id="业务"><a href="#业务" class="headerlink" title="业务"></a>业务</h2><p>Lido 是一个非托管式的以太坊 2.0 质押服务平台，针对以太坊和 Terra 的流动性抵押解决方案，质押者<br>什么是非托管式？</p><h2 id="业务概述"><a href="#业务概述" class="headerlink" title="业务概述"></a>业务概述</h2><p>以太坊 2.0 的质押机制：<br>以太坊 2.0 是以太坊从 Pow 到 Pos 的转变，而迈向 PoS 机制的第一步是推出可以达成共识的独立网络，即信标链。作为对系统提供安全保障的质押者，可以从以太坊 2.0 中获得新的 ETH 奖励。<br>未来，信标链将与以太坊合并，并允许质押者赚取目前归于 PoW 矿工的交易费以及矿工可提取价值（MEV）。</p><h2 id="收益"><a href="#收益" class="headerlink" title="收益"></a>收益</h2><p>当前平台收益相关不大，基本来自:<br>1.用户在质押中所获得的奖励收益，收费范围在收益的 10%-15%（本文2021年）左右<br>2.手续费：是平台主要的收益来源<br>拥有质押池越大的平台，能从用户质押奖励中抽取的收益就越高</p><h2 id="质押规则"><a href="#质押规则" class="headerlink" title="质押规则"></a>质押规则</h2><p>1.至少需要 32 个 ETH，且只能以 32 的倍数进行质押；<br>2.无法将质押委托给其他验证者；<br>3.提款启用后，解锁期为 27 小时；<br>4.质押奖励取决于网络的 ETH 质押量，越多的 ETH 意味质押比例收益越少。</p><p>针对规则1：市场上出了中心化质押池和去中心化质押池。<br>原理大致相同，通过将 ETH 汇集在一起，以绕过 32 个 ETH 的最低要求，不需要每个用户操作自己的验证器，质押池会处理相应操作。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.业务范围需要拓展<br>stETH 本身是实时变化的底层资产，较难与现有的 DeFi 体制兼容，团队为此提出了包装版 wstETH 来改善该问题。<br>同时 stETH 的生态圈还未有较强的生态项目接入，可参与的生态圈仍需要继续扩展，目前已向 Aave 和 Maker 提交提案，以期两个 DeFi 龙头可以接受将 stETH 作为抵押资产。</p><p>2.Lido 的资金未完全去中心化管理<br>目前可以任意金额参与以太坊 2.0 质押的平台，都还需要中介机构来控制用户资金。<br>平台为了尽量确保密钥安全，会通过 MPC 将密钥行拆分，或多签形式进行分布式管理，但参与拆分和多签的数量，成员之间的关系等机制，都会影响到密钥的去中心化问题，是一种弱去中心化的方式。<br>Lido 所采取的多签形式，也会存在共同作恶风险，未来平台能否实现密钥的去中心化管理，对于用户资金安全至关重要。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>ETH2.0搞的风风火火，我没有32个ETH，不然我也去质押，多少赚点。我很好奇ETH怎么实现质押的，然后稍微看了一下。</p><p><code>Lido</code> 是一个以太坊 2.0 质押服务平台，用户可质押任意数量。<br><code>Lido</code> 是一个<strong>跨多个区块链</strong>的流动性质押协议，这个是重点，现在多链生态才是王道，自己玩只会越玩越窄。</p><p>ETH的质押是 <code>1</code>:<code>1</code> 的获得质押代币 <code>stETH</code>，获得<code>stETH</code>后，可以参与 DeFi 市场其他服务。</p><p>Lido 的 stTokens 在整个以太坊生态系统中被广泛采用：</p><ul><li>最重要的流动性场所包括Curve 上的 stETH/ETH 流动性池和Balancer v2 上的 wstETH/ETH MetaStable 池。</li><li><code>stETH</code>在以太坊主网上的<code>AAVE</code> v2 市场上被列为抵押资产。</li><li><code>wstETH</code>在 Maker 上被列为抵押资产。</li><li><code>steCRV</code>（the Curve stETH/ETH LP 代币）被列为 Maker 上的抵押资产。</li><li>在 Lido 的 stTokens 之上构建了多种流动性策略，包括yearn、Harvest Finance和Babylon Finance。</li></ul><p>Curve 是一个去中心化交易所。</p><h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>Lido 是一个以太坊 2.0 质押协议平台，用户可在 Lido 上以任意 ETH 参与质押，无需搭建节点也可以获得收益。<br>说白了就是因为转了<code>POS</code>之后，需要有人质押成为验证者，代替以前的挖矿节点。<br>但是很多人跟我一样没有32个ETH，也想参与挖矿的话，就可以从Lido中购买。<br>而且ETH2.0的质押收益有一个很有意思的点，你只要账户中持有stETH，就会有收益，即便是你参与了质押，但是手中没有stETH，也是分不到收益的。<br>每天会进行一次快照，对账户中拥有stETH的账户分发收益。</p><h2 id="什么是-stETH"><a href="#什么是-stETH" class="headerlink" title="什么是 stETH"></a>什么是 stETH</h2><p>stETH 是一种<code>ERC20</code>代币，代表与 Lido 抵押的以太币。与质押的以太币不同，它是流动的，可以转移、交易或在 DeFi 应用程序中使用。<br>stETH 的总供应量反映了存入协议的以太币数量加上质押奖励，减去潜在的验证者惩罚。<br>stETH 代币以 1:1 的比例在以太存款上铸造。<br>当从 Beacon 链中引入提款时，也可以通过以相同的 1:1 比例<strong>燃烧</strong> stETH 来<strong>赎回</strong>以太币。</p><p>注意，Lido 实施了质押率限制，旨在减少合并后质押激增对质押队列和 Lido 社会化奖励分配模型的影响。</p><p>stETH 是一种可重新定价的 ERC-20 代币。通常，当 Lido 预言机报告 Beacon 链以太币余额更新时，stETH 代币余额每天都会重新计算。stETH 余额更新会自动发生在所有持有 stETH 的地址上。变基机制已通过共享实现（请参阅共享）。</p><h2 id="业务"><a href="#业务" class="headerlink" title="业务"></a>业务</h2><p>Lido 是一个非托管式的以太坊 2.0 质押服务平台，针对以太坊和 ETH 和下面这些币的流动性抵押解决方案，之前还支持 Terra，然后Terra崩了。<br>什么是非托管式？<br>非托管型加密货币钱包是指只有持有者掌控私钥。此类钱包适合希望完全掌控资金的用户。没有中间机构的干预。</p><p><img src="/posts/99fe4621/%E6%94%AF%E6%8C%81%E4%B8%9A%E5%8A%A1.jpg" alt="支持业务.jpg"></p><p>以太坊 2.0 的质押机制：<br>以太坊 2.0 是以太坊从 <code>Pow</code> 转向 <code>Pos</code>，而 PoS 机制需要节点参与者可以达成共识的独立网络，即信标链。<br>作为对系统提供安全保障的质押者，以太坊 2.0 需要提供 ETH 奖励才会有人愿意参与。<br>未来，信标链将与以太坊合并，并允许质押者赚取目前归于 PoW 矿工的交易费以及矿工可提取价值（MEV）。</p><h2 id="LIDO-的收益"><a href="#LIDO-的收益" class="headerlink" title="LIDO 的收益"></a>LIDO 的收益</h2><p>当前平台收益相关不大，基本来自:<br>1.用户在质押中所获得的奖励收益，收费范围在收益的 10%-15%（本文2021年）左右<br>2.手续费：是平台主要的收益来源<br>拥有质押池越大的平台，能从用户质押奖励中抽取的收益就越高</p><h2 id="质押规则"><a href="#质押规则" class="headerlink" title="质押规则"></a>质押规则</h2><p>1.至少需要 32 个 ETH，且只能以 32 的倍数进行质押；<br>2.无法将质押委托给其他验证者；<br>3.提款启用后，解锁期为 27 小时；<br>4.质押奖励取决于网络的 ETH 质押量，越多的 ETH 意味质押比例收益越少。</p><p>针对规则1：市场上出了中心化质押池和去中心化质押池。<br>原理大致相同，通过将 ETH 汇集在一起，以绕过 32 个 ETH 的最低要求，不需要每个用户操作自己的验证器，质押池会处理相应操作。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.业务范围需要拓展<br>stETH 本身是实时变化的底层资产，较难与现有的 DeFi 体制兼容，团队为此提出了包装版 wstETH 来改善该问题。<br>同时 stETH 的生态圈还未有较强的生态项目接入，可参与的生态圈仍需要继续扩展，目前已向 Aave 和 Maker 提交提案，以期两个 DeFi 龙头可以接受将 stETH 作为抵押资产。</p><p>2.Lido 的资金未完全去中心化管理<br>目前可以任意金额参与以太坊 2.0 质押的平台，都还需要中介机构来控制用户资金。<br>平台为了尽量确保密钥安全，会通过 MPC 将密钥行拆分，或多签形式进行分布式管理，但参与拆分和多签的数量，成员之间的关系等机制，都会影响到密钥的去中心化问题，是一种弱去中心化的方式。<br>Lido 所采取的多签形式，也会存在共同作恶风险，未来平台能否实现密钥的去中心化管理，对于用户资金安全至关重要。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://lido.fi/">https://lido.fi/</a><br><a href="https://docs.lido.fi/">官方文档</a></p>]]></content>
       
       
       <categories>
@@ -1643,9 +1643,9 @@
       
         <tags>
             
-            <tag> linux </tag>
-            
             <tag> docker </tag>
+            
+            <tag> linux </tag>
             
             <tag> centos8 </tag>
             
@@ -1738,11 +1738,11 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> git </tag>
             
             <tag> hexo </tag>
+            
+            <tag> shell </tag>
             
             <tag> 脚本 </tag>
             
@@ -1888,11 +1888,11 @@
       
         <tags>
             
+            <tag> ide </tag>
+            
             <tag> vim </tag>
             
             <tag> 插件 </tag>
-            
-            <tag> ide </tag>
             
             <tag> plugin </tag>
             
@@ -1970,11 +1970,11 @@
       
         <tags>
             
+            <tag> ide </tag>
+            
             <tag> vim </tag>
             
             <tag> 插件 </tag>
-            
-            <tag> ide </tag>
             
             <tag> plugin </tag>
             
@@ -2250,11 +2250,11 @@
             
             <tag> java </tag>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
             <tag> FullGC </tag>
             
@@ -2285,11 +2285,11 @@
       
         <tags>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
         </tags>
       
@@ -3209,11 +3209,11 @@
             
             <tag> java </tag>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
             <tag> 调优 </tag>
             
@@ -3512,9 +3512,9 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> ide </tag>
+            
+            <tag> vim </tag>
             
             <tag> vim-IDE </tag>
             
@@ -3592,11 +3592,11 @@
       
         <tags>
             
+            <tag> ide </tag>
+            
             <tag> vim </tag>
             
             <tag> 插件 </tag>
-            
-            <tag> ide </tag>
             
             <tag> nvim </tag>
             
@@ -3633,13 +3633,13 @@
       
         <tags>
             
-            <tag> mac </tag>
-            
             <tag> linux </tag>
             
-            <tag> vim </tag>
-            
             <tag> ide </tag>
+            
+            <tag> mac </tag>
+            
+            <tag> vim </tag>
             
             <tag> nvim </tag>
             
@@ -3738,11 +3738,11 @@
             
             <tag> 算法 </tag>
             
+            <tag> algorithm </tag>
+            
             <tag> LeetCode </tag>
             
             <tag> 栈 </tag>
-            
-            <tag> algorithm </tag>
             
         </tags>
       
@@ -3915,9 +3915,9 @@
       
         <tags>
             
-            <tag> linux </tag>
-            
             <tag> docker </tag>
+            
+            <tag> linux </tag>
             
             <tag> 容器 </tag>
             
@@ -4401,11 +4401,11 @@
       
         <tags>
             
+            <tag> uniux </tag>
+            
             <tag> mac </tag>
             
             <tag> iterm2 </tag>
-            
-            <tag> uniux </tag>
             
         </tags>
       
@@ -4671,11 +4671,11 @@
             
             <tag> java </tag>
             
+            <tag> 日志 </tag>
+            
             <tag> srping boot </tag>
             
             <tag> aop </tag>
-            
-            <tag> 日志 </tag>
             
             <tag> 切面 </tag>
             
@@ -5050,11 +5050,11 @@
             
             <tag> 编译 </tag>
             
+            <tag> maven </tag>
+            
             <tag> idea </tag>
             
             <tag> 设置 </tag>
-            
-            <tag> maven </tag>
             
         </tags>
       
@@ -5085,9 +5085,9 @@
             
             <tag> spring boot </tag>
             
-            <tag> 报错 </tag>
-            
             <tag> 异常 </tag>
+            
+            <tag> 报错 </tag>
             
         </tags>
       
@@ -5275,9 +5275,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> git </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -5773,9 +5773,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> 数组 </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -5942,9 +5942,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> linux </tag>
+            
+            <tag> shell </tag>
             
             <tag> gc </tag>
             
@@ -6411,11 +6411,11 @@
             
             <tag> java </tag>
             
-            <tag> 异常 </tag>
-            
             <tag> exception </tag>
             
             <tag> error </tag>
+            
+            <tag> 异常 </tag>
             
             <tag> 错误 </tag>
             
@@ -6890,9 +6890,9 @@
             
             <tag> java </tag>
             
-            <tag> jvm </tag>
-            
             <tag> gc </tag>
+            
+            <tag> jvm </tag>
             
         </tags>
       
@@ -6921,9 +6921,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> 数组 </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -7572,9 +7572,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> linux </tag>
+            
+            <tag> shell </tag>
             
             <tag> 脚本 </tag>
             
@@ -7937,9 +7937,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> linux </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -7968,9 +7968,9 @@
             
             <tag> java </tag>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
             <tag> 项目依赖 </tag>
             
@@ -7999,9 +7999,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
         </tags>
       
@@ -8028,9 +8028,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
             <tag> 项目模型 </tag>
             
@@ -8059,9 +8059,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
         </tags>
       
@@ -8127,9 +8127,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> linux </tag>
+            
+            <tag> shell </tag>
             
             <tag> 变量 </tag>
             
@@ -8160,9 +8160,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> linux </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -8504,11 +8504,11 @@
       
         <tags>
             
+            <tag> rocketmq </tag>
+            
             <tag> mq </tag>
             
             <tag> broker </tag>
-            
-            <tag> rocketmq </tag>
             
         </tags>
       
@@ -8533,9 +8533,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> 中间件 </tag>
             
@@ -8597,9 +8597,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> architecture </tag>
             
@@ -8704,11 +8704,11 @@
       
         <tags>
             
+            <tag> 对象 </tag>
+            
             <tag> js </tag>
             
             <tag> javascript </tag>
-            
-            <tag> 对象 </tag>
             
         </tags>
       
@@ -9231,11 +9231,11 @@
       
         <tags>
             
-            <tag> mac </tag>
+            <tag> java </tag>
             
             <tag> linux </tag>
             
-            <tag> java </tag>
+            <tag> mac </tag>
             
             <tag> jdk </tag>
             
