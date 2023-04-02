@@ -119,7 +119,7 @@
       <link href="posts/4fcae1e5.html"/>
       <url>posts/4fcae1e5.html</url>
       
-        <content type="html"><![CDATA[<h2 id="泛型（generics"><a href="#泛型（generics" class="headerlink" title="泛型（generics)"></a>泛型（generics)</h2><p>rust 也有泛型，这种最早出现1970年代的<code>Ada</code>语言中，后来被许多基于对象和面向对象的语言所采用，包括BETA、 C++、java。<br>rust 也借鉴了这一特性。<br>这种特性让程序有更好的通用性。</p><h3 id="1-简单示例-结构体泛型"><a href="#1-简单示例-结构体泛型" class="headerlink" title="1.简单示例-结构体泛型"></a>1.简单示例-结构体泛型</h3><p>给结构体 <code>Point</code> 定义一个泛型 <code>T</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>不同类型泛型</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T, U&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: U,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> both_integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> both_float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> integer_and_float = Point &#123; x: <span class="number">5</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2-函数泛型-同方法泛型"><a href="#2-函数泛型-同方法泛型" class="headerlink" title="2.函数泛型-同方法泛型"></a>2.函数泛型-同方法泛型</h3><p>传入什么，就返回什么类型</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; T &#123;</span><br></pre></td></tr></table></figure><p>那会不会跟java一样，可以类泛型作用到方法。<br>rust 结构体泛型作用到 函数？</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = &amp;list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number_list = <span class="built_in">vec!</span>[<span class="number">34</span>, <span class="number">50</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">65</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;number_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The largest number is &#123;&#125;&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> char_list = <span class="built_in">vec!</span>[<span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;q&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;char_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The largest char is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-方法泛型"><a href="#3-方法泛型" class="headerlink" title="3.方法泛型"></a>3.方法泛型</h3><p>真有这个。</p><p>用法和定义同java一样。<br>实现一个Point 的方法，类型为T。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; Point&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">x</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;T &#123;</span><br><span class="line">        &amp;<span class="keyword">self</span>.x</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;p.x = &#123;&#125;&quot;</span>, p.x());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>泛型指定限制（constraint）<br>这个例子，也是实现Point，但是类型为具体类型 f32</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Point&lt;<span class="built_in">f32</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">distance_from_origin</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f32</span> &#123;</span><br><span class="line">        (<span class="keyword">self</span>.x.powi(<span class="number">2</span>) + <span class="keyword">self</span>.y.powi(<span class="number">2</span>)).sqrt()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结合 self 使用<br>注意 x 返回的是 self.x 所以是调用者 p1 自己的x</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;X1, Y1&gt; &#123;</span><br><span class="line">    x: X1,</span><br><span class="line">    y: Y1,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;X1, Y1&gt; Point&lt;X1, Y1&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">mixup</span></span>&lt;X2, Y2&gt;(<span class="keyword">self</span>, other: Point&lt;X2, Y2&gt;) -&gt; Point&lt;X1, Y2&gt; &#123;</span><br><span class="line">        Point &#123;</span><br><span class="line">            x: <span class="keyword">self</span>.x,</span><br><span class="line">            y: other.y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p1 = Point &#123; x: <span class="number">5</span>, y: <span class="number">10.4</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> p2 = Point &#123; x: <span class="string">&quot;Hello&quot;</span>, y: <span class="string">&#x27;c&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p3 = p1.mixup(p2);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;p3.x = &#123;&#125;, p3.y = &#123;&#125;&quot;</span>, p3.x, p3.y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果：<br>p3.x = 5, p3.y = c</p><p>泛型代码的性能<br>Rust 通过在编译时进行泛型代码的 <code>单态化（monomorphization）</code>来保证效率。<br>单态化是一个通过填充<strong>编译时</strong>使用的具体类型，将通用代码转换为特定代码的过程。<br>java也是一样的作用。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="泛型（generics"><a href="#泛型（generics" class="headerlink" title="泛型（generics)"></a>泛型（generics)</h2><p>rust 也有泛型，这种最早出现1970年代的<code>Ada</code>语言中，后来被许多基于对象和面向对象的语言所采用，包括BETA、 C++、java。<br>rust 也借鉴了这一特性。<br>这种特性让程序有更好的通用性。</p><h3 id="1-简单示例-结构体泛型"><a href="#1-简单示例-结构体泛型" class="headerlink" title="1.简单示例-结构体泛型"></a>1.简单示例-结构体泛型</h3><p>给结构体 <code>Point</code> 定义一个泛型 <code>T</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>不同类型泛型</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T, U&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: U,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> both_integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> both_float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> integer_and_float = Point &#123; x: <span class="number">5</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2-函数泛型-同方法泛型"><a href="#2-函数泛型-同方法泛型" class="headerlink" title="2.函数泛型-同方法泛型"></a>2.函数泛型-同方法泛型</h3><p>传入什么，就返回什么类型</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; T &#123;</span><br></pre></td></tr></table></figure><p>那会不会跟java一样，可以类泛型作用到方法。<br>rust 结构体泛型作用到 函数？</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = &amp;list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number_list = <span class="built_in">vec!</span>[<span class="number">34</span>, <span class="number">50</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">65</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;number_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The largest number is &#123;&#125;&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> char_list = <span class="built_in">vec!</span>[<span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;q&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;char_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The largest char is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-方法泛型"><a href="#3-方法泛型" class="headerlink" title="3.方法泛型"></a>3.方法泛型</h3><p>真有这个。</p><p>用法和定义同java一样。<br>实现一个Point 的方法，类型为T。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; Point&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">x</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;T &#123;</span><br><span class="line">        &amp;<span class="keyword">self</span>.x</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;p.x = &#123;&#125;&quot;</span>, p.x());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>泛型指定限制（constraint）<br>这个例子，也是实现Point，但是类型为具体类型 f32</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Point&lt;<span class="built_in">f32</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">distance_from_origin</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f32</span> &#123;</span><br><span class="line">        (<span class="keyword">self</span>.x.powi(<span class="number">2</span>) + <span class="keyword">self</span>.y.powi(<span class="number">2</span>)).sqrt()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结合 self 使用<br>注意 x 返回的是 self.x 所以是调用者 p1 自己的x</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;X1, Y1&gt; &#123;</span><br><span class="line">    x: X1,</span><br><span class="line">    y: Y1,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;X1, Y1&gt; Point&lt;X1, Y1&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">mixup</span></span>&lt;X2, Y2&gt;(<span class="keyword">self</span>, other: Point&lt;X2, Y2&gt;) -&gt; Point&lt;X1, Y2&gt; &#123;</span><br><span class="line">        Point &#123;</span><br><span class="line">            x: <span class="keyword">self</span>.x,</span><br><span class="line">            y: other.y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p1 = Point &#123; x: <span class="number">5</span>, y: <span class="number">10.4</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> p2 = Point &#123; x: <span class="string">&quot;Hello&quot;</span>, y: <span class="string">&#x27;c&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p3 = p1.mixup(p2);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;p3.x = &#123;&#125;, p3.y = &#123;&#125;&quot;</span>, p3.x, p3.y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p3.x = <span class="number">5</span>, p3.y = c</span><br></pre></td></tr></table></figure><h3 id="泛型代码的性能"><a href="#泛型代码的性能" class="headerlink" title="泛型代码的性能"></a>泛型代码的性能</h3><p>Rust 通过在编译时进行泛型代码的 <code>单态化（monomorphization）</code>来保证效率。<br>单态化是一个通过填充<strong>编译时</strong>使用的具体类型，将通用代码转换为特定代码的过程。</p><p>java也是一样的方式，通过泛型擦除来实现，就是<br>泛型信息只存在于代码编译阶段，在java的运行期(已经生成字节码文件后)与泛型相关的信息会被擦除掉。<br>所以其实也是在编译期做文章。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>rust 的很多方面，都借鉴了java的总分特性，不是指泛型，而是指后面还明更多的部分，比如<strong>迭代器</strong>，用起来很丝滑。<br>还有如<code>golang</code>部份的特性，在<code>channel</code>部分，用起来，就是像<code>golang</code>。</p>]]></content>
       
       
       <categories>
@@ -170,11 +170,11 @@
             
             <tag> tron </tag>
             
+            <tag> 波场 </tag>
+            
             <tag> witness </tag>
             
             <tag> 加载 </tag>
-            
-            <tag> 波场 </tag>
             
         </tags>
       
@@ -222,7 +222,7 @@
       <link href="posts/e28f62f.html"/>
       <url>posts/e28f62f.html</url>
       
-        <content type="html"><![CDATA[<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（系统）是 Rust 最为与众不同的特性。<br>它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。<br>所有权以及相关功能：借用（borrowing）、slice 以及 Rust 如何在内存中布局数据。</p><p>所有程序都必须管理其运行时使用计算机内存的方式。<br>一些语言中具有垃圾回收机制，如: java、python;<br>在另一些语言中，程序员必须亲自分配和释放内存，如：C/C++;</p><p>Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。</p><h2 id="内存与分配"><a href="#内存与分配" class="headerlink" title="内存与分配"></a>内存与分配</h2><p>Rust 的所有权围绕着内存分配进行，Rust 对内存管理通过其所有权展开。</p><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>它是一种 <strong>后进先出</strong> 的机制，类似我们日常的落盘子，只能一个一个向上方，然后从最上面拿一个盘子。<br>一个变量要放到栈上，那么它的大小在编译时就要明确。<code>i32</code> 类型的变量，它就占用 <code>4</code> 个字节。Rust 中可以放到栈上的数据类型，他们的大小都是固定的。<br>如果是字符串，在运行时才会赋值的变量，在编译期的时候大小是未知或不确定的。所以字符串类型存储在<strong>堆上</strong>。</p><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>用于编译时大小未知或不确定的，只有运行时才能确定的数据。在堆上存储一些动态类型的数据。堆是不受系统管理的，是用户自己管理的，也增加了内存溢出的风险。</p><h2 id="1-所有权规则"><a href="#1-所有权规则" class="headerlink" title="1.所有权规则"></a>1.所有权规则</h2><p>记住这三句话，整个所有权就是围绕这三句话，这三句话也直接概括了所有权。</p><ol><li>Rust 中的<strong>每一个值</strong>都有一个<strong>所有者（owner）</strong>。</li><li>值在<strong>任一时刻</strong>有且只有<strong>一个</strong>所有者。</li><li>当所有者（变量）离开作用域，这个值将被丢弃。</li></ol><h2 id="2-变量作用域"><a href="#2-变量作用域" class="headerlink" title="2.变量作用域"></a>2.变量作用域</h2><p>大部份编程语言都有 <strong>作用域(scope)</strong> 的概念，但是在rust中，这个概念被提到一个很重要的高度。<br>先看看rust一些变量的 <strong>作用域（scope）</strong>。<br>作用域是一个项（item）在程序中有效的范围。<br>下面这个例子，重点关注变量：<code>let s = &quot;hello&quot;</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    &#123;                      <span class="comment">// s 在这里无效, 它尚未声明</span></span><br><span class="line">        <span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;   <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 s</span></span><br><span class="line">    &#125;                      <span class="comment">// 此作用域已结束，s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当 <code>s</code> 进入作用域时，它就是有效的。<br>这一直持续到它 <strong>离开作用域</strong> 为止。</p><p>当 <code>s</code> 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 <code>drop</code>，在这里 String 的作者可以放置释放内存的代码。<br>Rust 在结尾的 <code>&#125;</code> 处<strong>自动调用</strong> <code>drop</code>。</p><p><strong>Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域后就被自动释放</strong>。<br>核心就一句话，变量出了<strong>作用域</strong>，rust帮你释放了！！</p><h2 id="3-移动"><a href="#3-移动" class="headerlink" title="3.移动"></a>3.移动</h2><p>在 rust 当中一个变量指向另一个变量，并不是地址或引用的copy，而是称之为：<strong>移动</strong>。<br>当 s2=s1 时，引用s1被移动到s2上，这和其它编程语言完全不同！！<br>下面这段代码，在其它编程语言上指针<code>s1</code>指向了指针<code>s1</code>，<code>s1</code>仍然有效，在rust当中，<code>s1</code>无效已经无效。<br>在rust中，这个操作被称为 <strong>移动（move）</strong>，而不是叫做浅拷贝。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> s2 = s1;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>运行结果:</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">error[E0382]: borrow of moved value: `s1`</span><br><span class="line"> --&gt; src/main.rs:<span class="number">5</span>:<span class="number">28</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |     <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |     <span class="keyword">let</span> s2 = s1;</span><br><span class="line">  |              -- value moved here</span><br><span class="line"><span class="number">4</span> |</span><br><span class="line"><span class="number">5</span> |     <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);   </span><br><span class="line">  |                            ^^ value borrowed here after <span class="keyword">move</span></span><br><span class="line">  |</span><br></pre></td></tr></table></figure><p>为什么要这么设计？<br>为了防止<strong>二次释放</strong>。<br>当 <code>s2</code> 和 <code>s1</code> 离开作用域，他们都会尝试释放相同的内存。<br>这是一个叫做 <strong>二次释放（double free）</strong>的错误，也是之前提到过的内存安全性 bug 之一。<br>两次释放（相同）内存会导致内存污染，它可能会导致潜在的安全漏洞。</p><h3 id="如何保证，即要、也要"><a href="#如何保证，即要、也要" class="headerlink" title="如何保证，即要、也要"></a>如何保证，即要、也要</h3><p>即要把<code>s2=s1</code>，也可保持<code>s1</code>可用，那就显示拷贝。</p><h2 id="4-引用和借用"><a href="#4-引用和借用" class="headerlink" title="4.引用和借用"></a>4.引用和借用</h2>]]></content>
+        <content type="html"><![CDATA[<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有权（系统）是 Rust 最为与众不同的特性。<br>它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。<br>所有权以及相关功能：借用（borrowing）、slice 以及 Rust 如何在内存中布局数据。</p><p>所有程序都必须管理其运行时使用计算机内存的方式。<br>一些语言中具有垃圾回收机制，如: java、python;<br>在另一些语言中，程序员必须亲自分配和释放内存，如：C/C++;</p><p>Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。</p><h2 id="内存与分配"><a href="#内存与分配" class="headerlink" title="内存与分配"></a>内存与分配</h2><p>Rust 的所有权围绕着内存分配进行，Rust 对内存管理通过其所有权展开。</p><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>它是一种 <strong>后进先出</strong> 的机制，类似我们日常的落盘子，只能一个一个向上方，然后从最上面拿一个盘子。<br>一个变量要放到栈上，那么它的大小在编译时就要明确。<code>i32</code> 类型的变量，它就占用 <code>4</code> 个字节。Rust 中可以放到栈上的数据类型，他们的大小都是固定的。<br>如果是字符串，在运行时才会赋值的变量，在编译期的时候大小是未知或不确定的。所以字符串类型存储在<strong>堆上</strong>。</p><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>用于编译时大小未知或不确定的，只有运行时才能确定的数据。在堆上存储一些动态类型的数据。堆是不受系统管理的，是用户自己管理的，也增加了内存溢出的风险。</p><h2 id="1-所有权规则"><a href="#1-所有权规则" class="headerlink" title="1.所有权规则"></a>1.所有权规则</h2><p>记住这三句话，整个所有权就是围绕这三句话，这三句话也直接概括了所有权。</p><ol><li>Rust 中的<strong>每一个值</strong>都有一个<strong>所有者（owner）</strong>。</li><li>值在<strong>任一时刻</strong>有且只有<strong>一个</strong>所有者。</li><li>当所有者（变量）离开作用域，这个值将被丢弃。</li></ol><h2 id="2-变量作用域"><a href="#2-变量作用域" class="headerlink" title="2.变量作用域"></a>2.变量作用域</h2><p>大部份编程语言都有 <strong>作用域(scope)</strong> 的概念，但是在rust中，这个概念被提到一个很重要的高度。<br>先看看rust一些变量的 <strong>作用域（scope）</strong>。<br>作用域是一个项（item）在程序中有效的范围。<br>下面这个例子，重点关注变量：<code>let s = &quot;hello&quot;</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    &#123;                      <span class="comment">// s 在这里无效, 它尚未声明</span></span><br><span class="line">        <span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;   <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 s</span></span><br><span class="line">    &#125;                      <span class="comment">// 此作用域已结束，s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当 <code>s</code> 进入作用域时，它就是有效的。<br>这一直持续到它 <strong>离开作用域</strong> 为止。</p><p>当 <code>s</code> 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 <code>drop</code>，在这里 String 的作者可以放置释放内存的代码。<br>Rust 在结尾的 <code>&#125;</code> 处<strong>自动调用</strong> <code>drop</code>。</p><p><strong>Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域后就被自动释放</strong>。<br>核心就一句话，变量出了<strong>作用域</strong>，rust帮你释放了！！</p><h2 id="3-移动"><a href="#3-移动" class="headerlink" title="3.移动"></a>3.移动</h2><p>在 rust 当中一个变量指向另一个变量，并不是地址或引用的copy，而是称之为：<strong>移动</strong>。<br>当 s2=s1 时，引用s1被移动到s2上，这和其它编程语言完全不同！！<br>下面这段代码，在其它编程语言上指针<code>s1</code>指向了指针<code>s1</code>，<code>s1</code>仍然有效，在rust当中，<code>s1</code>无效已经无效。<br>在rust中，这个操作被称为 <strong>移动（move）</strong>，而不是叫做浅拷贝。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> s2 = s1;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>运行结果:</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">error[E0382]: borrow of moved value: `s1`</span><br><span class="line"> --&gt; src/main.rs:<span class="number">5</span>:<span class="number">28</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">2</span> |     <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait</span><br><span class="line"><span class="number">3</span> |     <span class="keyword">let</span> s2 = s1;</span><br><span class="line">  |              -- value moved here</span><br><span class="line"><span class="number">4</span> |</span><br><span class="line"><span class="number">5</span> |     <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);   </span><br><span class="line">  |                            ^^ value borrowed here after <span class="keyword">move</span></span><br><span class="line">  |</span><br></pre></td></tr></table></figure><p>为什么要这么设计？<br>为了防止<strong>二次释放</strong>。<br>当 <code>s2</code> 和 <code>s1</code> 离开作用域，他们都会尝试释放相同的内存。<br>这是一个叫做 <strong>二次释放（double free）</strong>的错误，也是之前提到过的内存安全性 bug 之一。<br>两次释放（相同）内存会导致内存污染，它可能会导致潜在的安全漏洞。</p><h3 id="如何保证，即要、也要"><a href="#如何保证，即要、也要" class="headerlink" title="如何保证，即要、也要"></a>如何保证，即要、也要</h3><p>即要把<code>s2=s1</code>，也可保持<code>s1</code>可用，那就显示拷贝。</p><h2 id="4-引用和借用-reference-amp-borrowing"><a href="#4-引用和借用-reference-amp-borrowing" class="headerlink" title="4.引用和借用 reference &amp; borrowing"></a>4.引用和借用 reference &amp; borrowing</h2><h3 id="借用-borrowing"><a href="#借用-borrowing" class="headerlink" title="借用(borrowing)"></a>借用(borrowing)</h3><p>借用就是字面意思，借来的数据，你并不拥有它。<br>看个例子：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="comment">// len 借用 s1</span></span><br><span class="line">    <span class="keyword">let</span> len = calculate_length(&amp;s1);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The length of &#x27;&#123;&#125;&#x27; is &#123;&#125;.&quot;</span>, s1, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">calculate_length</span></span>(s: &amp;<span class="built_in">String</span>) -&gt; <span class="built_in">usize</span> &#123;</span><br><span class="line">    s.len()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>s1</code> 移进了 <code>calculate_length</code>，但是所有权并没有转移，这里只是借用了<code>s1</code>。<br>也就是说：指向 值 <code>s1</code> 的引用，但是并不拥有它。<br>因为并不拥有这个值，所以当引用停止使用时，它所指向的值也不会被丢弃。</p><h3 id="借用默认不允许修改值"><a href="#借用默认不允许修改值" class="headerlink" title="借用默认不允许修改值"></a>借用默认不允许修改值</h3><p>这个是反例，当去改变一个借用的数据时，就会报错。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">    change(&amp;s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">change</span></span>(some_string: &amp;<span class="built_in">String</span>) &#123;</span><br><span class="line">    some_string.push_str(<span class="string">&quot;, world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -371,7 +371,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#x75;&#x73;&#x65;&#x72;&#110;&#x61;&#109;&#x65;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;&#x2e;&#49;&#48;">&#x75;&#x73;&#x65;&#x72;&#110;&#x61;&#109;&#x65;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#49;&#48;&#x2e;&#49;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#48;&#46;&#x31;&#x30;">&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#48;&#46;&#x31;&#x30;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -477,9 +477,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
-            
             <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -566,59 +566,6 @@
     
     
     <entry>
-      <title>ethereum--Account账户模型</title>
-      <link href="posts/ff367d3d.html"/>
-      <url>posts/ff367d3d.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="以太坊帐户"><a href="#以太坊帐户" class="headerlink" title="以太坊帐户"></a>以太坊帐户</h2><p>一个以太坊帐户是一个具有以太币 (ETH) 余额的实体，可以在以太坊上发送交易。 帐户可以由用户控制，也可以作为智能合约部署。</p><h2 id="帐户类型"><a href="#帐户类型" class="headerlink" title="帐户类型"></a>帐户类型</h2><p>以太坊有两种帐户类型：</p><ol><li><strong>外部账户 (External Owned Accout, EOA)</strong>: 私钥的所有者控制<ul><li>接收、持有和发送 ETH 和 token</li></ul></li><li><strong>合约账户 (Contract Account, CA)</strong>: 一种由代码控制，部署在网络上的智能合约。<ul><li>与已部署的智能合约进行交互</li></ul></li></ol><p>外部和合约账户使用相同的数据结构，只是使用的字段不同。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StateAccount is the Ethereum consensus representation of accounts.</span></span><br><span class="line"><span class="comment">// These objects are stored in the main account trie.</span></span><br><span class="line"><span class="keyword">type</span> StateAccount <span class="keyword">struct</span> &#123;</span><br><span class="line">Nonce    <span class="keyword">uint64</span></span><br><span class="line">Balance  *big.Int</span><br><span class="line">Root     common.Hash <span class="comment">// merkle root of the storage trie</span></span><br><span class="line">CodeHash []<span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="外部账户-EOA"><a href="#外部账户-EOA" class="headerlink" title="外部账户 EOA"></a>外部账户 EOA</h2><p>特点：</p><ol><li>有私钥</li><li>用于确定每笔交易只能被处理一次的计数器（nonce）。</li><li>发送交易（以太币转账、发布合约、调用智能合约）</li><li>拥有以太币余额（以太币存放的地方，与比特币的UTXO模式不同）的balance。</li><li>没有相关联的代码</li></ol><h3 id="关键字段"><a href="#关键字段" class="headerlink" title="关键字段"></a>关键字段</h3><p>外部账户和智能合约使用的数据给构是一样的，只是外部账户只用两个字段有用：</p><ul><li><code>Nonce</code> – 显示从帐户发送的交易数量的计数器。 这将确保交易只处理一次。 在合约帐户中，这个数字代表该帐户创建的合约数量</li><li><code>Balance</code> – 这个地址拥有的 Wei 数量。 Wei 是以太币的计数单位，每个 ETH 有 1e+18 Wei。</li></ul><p>注意，因此外部账户数据中 <code>StateRootHash</code> 和 <code>CodeHash</code> 默认值是<strong>空</strong>!!!!</p><h2 id="合约账户"><a href="#合约账户" class="headerlink" title="合约账户"></a>合约账户</h2><p>存储<strong>智能合约</strong>的账户，合约代码可供调用，执行合约逻辑。</p><p>特点:</p><ol><li><strong>没有私钥</strong><br>仅有公开的地址，它的行为由合约自身包含的代码逻辑来控制</li><li><strong>拥有余额</strong></li><li><strong>有合约代码</strong></li><li><strong>能够被其它合约调用</strong><br>合约代码能够被交易或者其他合约消息调用，通过地址</li><li><strong>能够调用其他合约</strong><br>合约代码被执行时可再调用其他合约代码。</li><li><strong>能够改变数据存储</strong><br>合约代码被执行时可执行复杂运算，可永久地改变合约内部的数据存储。</li></ol><p>智能合约账户的地址创建并非由外部促成，而是在创建合约时候由代码自动生成的。</p><h3 id="关键字段-1"><a href="#关键字段-1" class="headerlink" title="关键字段"></a>关键字段</h3><ul><li><code>Nonce</code> – 显示从帐户发送的交易数量的计数器。 这将确保交易只处理一次。 在合约帐户中，这个数字代表该帐户创建的合约数量</li><li><code>Balance</code> – 这个地址拥有的 Wei 数量。 Wei 是以太币的计数单位，每个 ETH 有 1e+18 Wei。</li><li><code>CodeHash</code> - 该哈希表示以太坊虚拟机 (EVM) 上的帐户代码。 合约帐户具有编程的代码片段，可以执行不同的操作。 如果帐户收到消息调用，则执行此 EVM 代码。 与其他帐户字段不同，不能更改。 所有代码片段都被保存在状态数据库的相应哈希下，供后续检索。 此哈希值称为 codeHash。 对于外部所有的帐户，codeHash 字段是空字符串的哈希。</li><li><code>Root</code> – 有时被称为存储哈希。 Merkle Patricia trie 根节点的 256 位哈希已编码了帐户的存储内容（256 位整数值映射），并编码为 Trie，作为来自 256 的 Keccak 256 位哈希的映射位整数键，用于 RLP 编码的 256 位整数值。 此 Trie 对此帐户存储内容的哈希进行编码，默认情况下为空。</li></ul><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://learnblockchain.cn/books/geth/part1/account.html">&lt;以太坊设计与实现&gt;</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> blockchain </category>
-          
-          <category> ethereum </category>
-          
-          <category> account </category>
-          
-          <category> ethereum </category>
-          
-          <category> eth </category>
-          
-          <category> account </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> eth </tag>
-            
-            <tag> ethereum </tag>
-            
-            <tag> 原理 </tag>
-            
-            <tag> account </tag>
-            
-            <tag> 账户模型 </tag>
-            
-            <tag> 账户 </tag>
-            
-            <tag> 模型 </tag>
-            
-            <tag> 以太坊 </tag>
-            
-            <tag> 外部账户 </tag>
-            
-            <tag> 合约账户 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>ethereum原理-RLP编码</title>
       <link href="posts/12a13330.html"/>
       <url>posts/12a13330.html</url>
@@ -641,11 +588,11 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
+            <tag> 原理 </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> 编码 </tag>
             
@@ -868,6 +815,59 @@
     
     
     <entry>
+      <title>ethereum--Account账户模型</title>
+      <link href="posts/ff367d3d.html"/>
+      <url>posts/ff367d3d.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="以太坊帐户"><a href="#以太坊帐户" class="headerlink" title="以太坊帐户"></a>以太坊帐户</h2><p>一个以太坊帐户是一个具有以太币 (ETH) 余额的实体，可以在以太坊上发送交易。 帐户可以由用户控制，也可以作为智能合约部署。</p><h2 id="帐户类型"><a href="#帐户类型" class="headerlink" title="帐户类型"></a>帐户类型</h2><p>以太坊有两种帐户类型：</p><ol><li><strong>外部账户 (External Owned Accout, EOA)</strong>: 私钥的所有者控制<ul><li>接收、持有和发送 ETH 和 token</li></ul></li><li><strong>合约账户 (Contract Account, CA)</strong>: 一种由代码控制，部署在网络上的智能合约。<ul><li>与已部署的智能合约进行交互</li></ul></li></ol><p>外部和合约账户使用相同的数据结构，只是使用的字段不同。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StateAccount is the Ethereum consensus representation of accounts.</span></span><br><span class="line"><span class="comment">// These objects are stored in the main account trie.</span></span><br><span class="line"><span class="keyword">type</span> StateAccount <span class="keyword">struct</span> &#123;</span><br><span class="line">Nonce    <span class="keyword">uint64</span></span><br><span class="line">Balance  *big.Int</span><br><span class="line">Root     common.Hash <span class="comment">// merkle root of the storage trie</span></span><br><span class="line">CodeHash []<span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="外部账户-EOA"><a href="#外部账户-EOA" class="headerlink" title="外部账户 EOA"></a>外部账户 EOA</h2><p>特点：</p><ol><li>有私钥</li><li>用于确定每笔交易只能被处理一次的计数器（nonce）。</li><li>发送交易（以太币转账、发布合约、调用智能合约）</li><li>拥有以太币余额（以太币存放的地方，与比特币的UTXO模式不同）的balance。</li><li>没有相关联的代码</li></ol><h3 id="关键字段"><a href="#关键字段" class="headerlink" title="关键字段"></a>关键字段</h3><p>外部账户和智能合约使用的数据给构是一样的，只是外部账户只用两个字段有用：</p><ul><li><code>Nonce</code> – 显示从帐户发送的交易数量的计数器。 这将确保交易只处理一次。 在合约帐户中，这个数字代表该帐户创建的合约数量</li><li><code>Balance</code> – 这个地址拥有的 Wei 数量。 Wei 是以太币的计数单位，每个 ETH 有 1e+18 Wei。</li></ul><p>注意，因此外部账户数据中 <code>StateRootHash</code> 和 <code>CodeHash</code> 默认值是<strong>空</strong>!!!!</p><h2 id="合约账户"><a href="#合约账户" class="headerlink" title="合约账户"></a>合约账户</h2><p>存储<strong>智能合约</strong>的账户，合约代码可供调用，执行合约逻辑。</p><p>特点:</p><ol><li><strong>没有私钥</strong><br>仅有公开的地址，它的行为由合约自身包含的代码逻辑来控制</li><li><strong>拥有余额</strong></li><li><strong>有合约代码</strong></li><li><strong>能够被其它合约调用</strong><br>合约代码能够被交易或者其他合约消息调用，通过地址</li><li><strong>能够调用其他合约</strong><br>合约代码被执行时可再调用其他合约代码。</li><li><strong>能够改变数据存储</strong><br>合约代码被执行时可执行复杂运算，可永久地改变合约内部的数据存储。</li></ol><p>智能合约账户的地址创建并非由外部促成，而是在创建合约时候由代码自动生成的。</p><h3 id="关键字段-1"><a href="#关键字段-1" class="headerlink" title="关键字段"></a>关键字段</h3><ul><li><code>Nonce</code> – 显示从帐户发送的交易数量的计数器。 这将确保交易只处理一次。 在合约帐户中，这个数字代表该帐户创建的合约数量</li><li><code>Balance</code> – 这个地址拥有的 Wei 数量。 Wei 是以太币的计数单位，每个 ETH 有 1e+18 Wei。</li><li><code>CodeHash</code> - 该哈希表示以太坊虚拟机 (EVM) 上的帐户代码。 合约帐户具有编程的代码片段，可以执行不同的操作。 如果帐户收到消息调用，则执行此 EVM 代码。 与其他帐户字段不同，不能更改。 所有代码片段都被保存在状态数据库的相应哈希下，供后续检索。 此哈希值称为 codeHash。 对于外部所有的帐户，codeHash 字段是空字符串的哈希。</li><li><code>Root</code> – 有时被称为存储哈希。 Merkle Patricia trie 根节点的 256 位哈希已编码了帐户的存储内容（256 位整数值映射），并编码为 Trie，作为来自 256 的 Keccak 256 位哈希的映射位整数键，用于 RLP 编码的 256 位整数值。 此 Trie 对此帐户存储内容的哈希进行编码，默认情况下为空。</li></ul><p>每个账户在世界状态树中的呈现</p><p><img src="/posts/ff367d3d/%E8%B4%A6%E6%88%B7%E6%A8%A1%E5%9E%8B.png" alt="账户模型"></p><p>这还没完，账户每笔交易形成的树</p><p><img src="/posts/ff367d3d/%E8%B4%A6%E6%88%B7%E7%9A%84storageRoot.png" alt="账户的storageRoot.png"></p><p>多个区块的MPT树共享了账户状态，子块状态树和父块状态树的差别在于它指向了在子区块中被改变了的账户。这样节省了总的存储空间，方便了块的回滚操作。</p><p><img src="/posts/ff367d3d/%E8%B4%A6%E6%88%B7%E7%8A%B6%E6%80%81%E6%98%AF%E8%A2%AB%E5%85%B1%E4%BA%AB%E7%9A%84.png" alt="账户状态是被共享的.png"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>账户模型跟世界状态关联比较紧密，需要了解清楚，对构建世界状态的了解有帮助。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> ethereum </category>
+          
+          <category> account </category>
+          
+          <category> ethereum </category>
+          
+          <category> eth </category>
+          
+          <category> account </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> eth </tag>
+            
+            <tag> account </tag>
+            
+            <tag> 账户模型 </tag>
+            
+            <tag> 账户 </tag>
+            
+            <tag> 模型 </tag>
+            
+            <tag> 以太坊 </tag>
+            
+            <tag> 外部账户 </tag>
+            
+            <tag> 合约账户 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>synology 自动更新IP同步阿里云脚本</title>
       <link href="posts/bb890f3d.html"/>
       <url>posts/bb890f3d.html</url>
@@ -1065,9 +1065,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
-            
             <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> 以太坊 </tag>
             
@@ -1090,7 +1090,7 @@
       <link href="posts/53993e75.html"/>
       <url>posts/53993e75.html</url>
       
-        <content type="html"><![CDATA[<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>在<code>TRON</code>中使用到的其中二种编码：</p><ol><li>base58check</li><li>hex</li><li>byte</li></ol><p>为什么说这三种编码，主要是这三种比较常用。<br>首先用到最多的就是地方就是基于<code>byte[]</code>衍生的各种编码场景如：</p><ol><li>私钥</li><li>protobuf</li><li>leveldb存储</li></ol><p>都是先基于<code>byte</code>数据来的，其它区块链当中也有大量使用<code>byte</code>。</p><h2 id="byte"><a href="#byte" class="headerlink" title="byte"></a>byte</h2><p>使用场景：</p><ol><li>数据存储</li><li>网络传输</li></ol><p>这个比较在常用，在tron链中，越是底层的数据存储越是需要二进制，如私钥、数据存储等，就是<code>byte[]</code>这种格式。<br>使用<strong>protobuf</strong>序列化也是byte[]，leveldb 的存储也是基于byte[]。<br>可以理解为，最重要和核心的数据形式。但是byte也有一个问题，就是表现形式上，太长了，不利于人类的阅读体验。<br>数据之间需要进行转换才能使用，首先，数据存储到leveldb中，是只能存储二进制数据，也就是在源头上，数据就必须是二进制形式存在的，如果要使用转换数据是必然的行为。<br>当然你说我就要二进制，就不嫌麻烦，整套系统都用二进制操作，也不是不可以，效率是少了一步转换肯定是可以，但是内存上有没有那么大的空间。二是我调试时，看二进制没问题，完全不在话下，就要看二进制，那随意。</p><p><img src="/posts/53993e75/%E5%AD%98%E5%82%A8%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.jpg" alt="存储相关接口"></p><p>看看在内存中的表现形式，这种的表现形式，更长，更难以理解，但是leveldb在存储二进制时，还会使用到一种叫varint的压缩算法，protobuf中也有使用，这种编码后面有机会专门说一下。<br>IDEA将<code>二进制</code>自动转成了<code>十进制</code>的表现形式，这个就不赘述了。</p><p><img src="/posts/53993e75/%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F.jpg" alt="内存中的表现形式"></p><p>所以一句话，这是在tron中最基础的数据形式，为啥这么点事，我要写这么多字，因为有很多社区开发者在这一块有很多问题，总是搞混应用场景，总结来说可以简单的理解两个应用场景：</p><ol><li>数据存储是二进制</li><li>网络传输是二进制</li></ol><h2 id="base58check"><a href="#base58check" class="headerlink" title="base58check"></a>base58check</h2><p>base58check是基于base58的基础上加了一个校验码。<br>在二进制数据的传输过程中，为了防止数据传输的错误，保护数据安全，通常会加一个校验码。通过校验码的配合可以发现数据是否被破坏或者是否在发送时输入错误了。Base58Check就是Base58加上校验码，或者可以说是Base58的一种编码形式，在比特币系统中生成钱包地址的时候就使用到了这种编码形式，TRON中的地址也是使用到了这种编码。</p><p>使用场景：</p><ol><li>钱包地址</li><li>转账</li><li>配置文件</li></ol><p><strong>为什么w使用base58编码？</strong><br>因为是给人类看的。</p><p><strong>什么是base58check？</strong><br>就是在 base64的基础上去掉了6个容易混淆的字母、字符，只剩58个了，所以叫：base58。</p><p><strong>哪几个符号？</strong><br>不含Base64中的0（数字0）、O（大写字母o）、l（小写字母 L）、I（大写字母i），以及“+”和“/”两个字符。<br>简而言之，Base58就是由不包括（0，O，l，I，+，/）的大小写字母和数字组成。</p><p><strong>check是指什么意思？</strong><br>为了增加防止打印和转录错误的安全性，比特币常用的是Base58Check，它是一种内置错误校验代码的Base58编码格式。检验和是额外4个字节，被添加到正在编码的数据末端。校验和是从编码的数据的哈希值中得到的，所以可以用来检测并避免转录和输入中产生的错误。</p><p>使用Base58check编码时，解码软件会计算数据的校验和并和编码中自带的校验和进行对比。二者不匹配则表明有错误产生，这个Base58Check的数据就是无效的。这就防止输错的比特币地址被钱包软件认为是有效的地址，造成资金的丢失。</p><p>到底长啥样?长这样：</p><blockquote><p>TNNqZuYhMfQvooC4kJwTsMJEQVU3vWGa5u</p></blockquote><p><strong>怎么用？</strong></p><p>使用上，需要把base58check字符串，转成二进制byte[]，毕竟人看完了，机器也得看。</p><p><img src="/posts/53993e75/base58check%E4%BD%BF%E7%94%A8.jpg" alt="base58check使用"></p><h2 id="hex-十六进制"><a href="#hex-十六进制" class="headerlink" title="hex 十六进制"></a>hex 十六进制</h2><p>应用场景：</p><ol><li>程序内部表示地址，不是给人看的</li><li>表示hash字符串</li></ol><p>地址有两种表示形式，一是base58check，二是hex形式，第一种是给人看的，第二种程序内部使用。这两种编码形式可以互相转换。本质是代表的是一个数种，多种表现形多。仅仅是使用的对象不同而已。</p><p><strong>长什么样子？</strong><br>最多的场景是使用Hash表示的地方，都可以用十六进制表示，比二进制要表示要简短不止一点点。</p><p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6hash.jpg" alt="十六进制hash"></p><p>代码中的应用</p><p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E4%BB%A3%E7%A0%81.jpg" alt="十六进制代码"></p><p>地址有两种编码格式，下面的hexAddress就是十六进制。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;address&quot;</span>: <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;hexAddress&quot;</span>: <span class="string">&quot;415f5dc2006f98936ca054ea49b4d38d292c9429c8&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Bash58Check-测试"><a href="#Bash58Check-测试" class="headerlink" title="Bash58Check 测试"></a>Bash58Check 测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.tron.walletserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.tron.common.crypto.Sha256Sm3Hash;</span><br><span class="line"><span class="keyword">import</span> org.tron.common.utils.Base58;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022/03/02.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base58CheckTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decode58Check(String input) &#123;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeCheck = Base58.decode(input);</span><br><span class="line">    <span class="keyword">if</span> (decodeCheck.length &lt;= <span class="number">4</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeData = <span class="keyword">new</span> <span class="keyword">byte</span>[decodeCheck.length - <span class="number">4</span>];</span><br><span class="line">    System.arraycopy(decodeCheck, <span class="number">0</span>, decodeData, <span class="number">0</span>, decodeData.length);</span><br><span class="line">    <span class="keyword">byte</span>[] hash0 = Sha256Sm3Hash.hash(decodeData);</span><br><span class="line">    <span class="keyword">byte</span>[] hash1 = Sha256Sm3Hash.hash(hash0);</span><br><span class="line">    <span class="keyword">if</span> (hash1[<span class="number">0</span>] == decodeCheck[decodeData.length]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">1</span>] == decodeCheck[decodeData.length + <span class="number">1</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">2</span>] == decodeCheck[decodeData.length + <span class="number">2</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">3</span>] == decodeCheck[decodeData.length + <span class="number">3</span>]) &#123;</span><br><span class="line">      <span class="keyword">return</span> decodeData;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String bash58CheckStr = <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = decode58Check(bash58CheckStr);</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line">    System.out.println(Arrays.toString(bytes));</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>结果：</p><blockquote><p>---------<br>[65, 95, 93, -62, 0, 111, -104, -109, 108, -96, 84, -22, 73, -76, -45, -115, 41, 44, -108, 41, -56]<br>---------</p></blockquote><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>二进制、十六进制、base58check 这几种数据格式和编码都是在区块链在很常用的一套数据结构和编码，其实很多都是互相借鉴，谁也别说抄谁。<br>总的来说，了解了一个套路，再看其他的链就大同小异了。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>在<code>TRON</code>中使用到的其中二种编码：</p><ol><li>base58check</li><li>hex</li><li>byte</li></ol><p>为什么说这三种编码，主要是这三种比较常用。<br>首先用到最多的就是地方就是基于<code>byte[]</code>衍生的各种编码场景如：</p><ol><li>私钥</li><li>protobuf</li><li>leveldb存储</li></ol><p>都是先基于<code>byte</code>数据来的，其它区块链当中也有大量使用<code>byte</code>。</p><h2 id="byte"><a href="#byte" class="headerlink" title="byte"></a>byte</h2><p>使用场景：</p><ol><li>数据存储</li><li>网络传输</li></ol><p>这个比较在常用，在tron链中，越是底层的数据存储越是需要二进制，如私钥、数据存储等，就是<code>byte[]</code>这种格式。<br>使用<strong>protobuf</strong>序列化也是byte[]，leveldb 的存储也是基于byte[]。<br>可以理解为，最重要和核心的数据形式。但是byte也有一个问题，就是表现形式上，太长了，不利于人类的阅读体验。<br>数据之间需要进行转换才能使用，首先，数据存储到leveldb中，是只能存储二进制数据，也就是在源头上，数据就必须是二进制形式存在的，如果要使用转换数据是必然的行为。<br>当然你说我就要二进制，就不嫌麻烦，整套系统都用二进制操作，也不是不可以，效率是少了一步转换肯定是可以，但是内存上有没有那么大的空间。二是我调试时，看二进制没问题，完全不在话下，就要看二进制，那随意。</p><p><img src="/posts/53993e75/%E5%AD%98%E5%82%A8%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.jpg" alt="存储相关接口"></p><p>看看在内存中的表现形式，这种的表现形式，更长，更难以理解，但是leveldb在存储二进制时，还会使用到一种叫varint的压缩算法，protobuf中也有使用，这种编码后面有机会专门说一下。<br>IDEA将<code>二进制</code>自动转成了<code>十进制</code>的表现形式，这个就不赘述了。</p><p><img src="/posts/53993e75/%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F.jpg" alt="内存中的表现形式"></p><p>所以一句话，这是在tron中最基础的数据形式，为啥这么点事，我要写这么多字，因为有很多社区开发者在这一块有很多问题，总是搞混应用场景，总结来说可以简单的理解两个应用场景：</p><ol><li>数据存储是二进制</li><li>网络传输是二进制</li></ol><h2 id="base58check"><a href="#base58check" class="headerlink" title="base58check"></a>base58check</h2><p>base58check是基于base58的基础上加了一个校验码。<br>在二进制数据的传输过程中，为了防止数据传输的错误，保护数据安全，通常会加一个校验码。通过校验码的配合可以发现数据是否被破坏或者是否在发送时输入错误了。Base58Check就是Base58加上校验码，或者可以说是Base58的一种编码形式，在比特币系统中生成钱包地址的时候就使用到了这种编码形式，TRON中的地址也是使用到了这种编码。</p><p>使用场景：</p><ol><li>钱包地址</li><li>转账</li><li>配置文件</li></ol><p><strong>为什么使用base58编码？</strong><br>因为是给人类看的。</p><p><strong>什么是base58check？</strong><br>就是在 base64的基础上去掉了6个容易混淆的字母、字符，只剩58个了，所以叫：base58。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz</span><br></pre></td></tr></table></figure><p><strong>哪几个符号？</strong><br>不含Base64中的0（数字0）、O（大写字母o）、l（小写字母 L）、I（大写字母i），以及“+”和“/”两个字符。<br>简而言之，Base58就是由不包括（0，O，l，I，+，/）的大小写字母和数字组成。</p><p><strong>check是指什么意思？</strong><br>为了增加防止打印和转录错误的安全性，比特币常用的是Base58Check，它是一种内置错误校验代码的Base58编码格式。检验和是额外4个字节，被添加到正在编码的数据末端。校验和是从编码的数据的哈希值中得到的，所以可以用来检测并避免转录和输入中产生的错误。</p><p>使用Base58check编码时，解码软件会计算数据的校验和并和编码中自带的校验和进行对比。二者不匹配则表明有错误产生，这个Base58Check的数据就是无效的。这就防止输错的比特币地址被钱包软件认为是有效的地址，造成资金的丢失。</p><p>到底长啥样?长这样：</p><blockquote><p>TNNqZuYhMfQvooC4kJwTsMJEQVU3vWGa5u</p></blockquote><p><strong>怎么用？</strong></p><p>使用上，需要把base58check字符串，转成二进制byte[]，毕竟人看完了，机器也得看。</p><p><img src="/posts/53993e75/base58check%E4%BD%BF%E7%94%A8.jpg" alt="base58check使用"></p><h2 id="hex-十六进制"><a href="#hex-十六进制" class="headerlink" title="hex 十六进制"></a>hex 十六进制</h2><p>应用场景：</p><ol><li>程序内部表示地址，不是给人看的</li><li>表示hash字符串</li></ol><p>地址有两种表示形式，一是base58check，二是hex形式，第一种是给人看的，第二种程序内部使用。这两种编码形式可以互相转换。本质是代表的是一个数种，多种表现形多。仅仅是使用的对象不同而已。</p><p><strong>长什么样子？</strong><br>最多的场景是使用Hash表示的地方，都可以用十六进制表示，比二进制要表示要简短不止一点点。</p><p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6hash.jpg" alt="十六进制hash"></p><p>代码中的应用</p><p><img src="/posts/53993e75/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E4%BB%A3%E7%A0%81.jpg" alt="十六进制代码"></p><p>地址有两种编码格式，下面的hexAddress就是十六进制。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;address&quot;</span>: <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;hexAddress&quot;</span>: <span class="string">&quot;415f5dc2006f98936ca054ea49b4d38d292c9429c8&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Bash58Check-测试"><a href="#Bash58Check-测试" class="headerlink" title="Bash58Check 测试"></a>Bash58Check 测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.tron.walletserver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.tron.common.crypto.Sha256Sm3Hash;</span><br><span class="line"><span class="keyword">import</span> org.tron.common.utils.Base58;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liukai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022/03/02.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base58CheckTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decode58Check(String input) &#123;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeCheck = Base58.decode(input);</span><br><span class="line">    <span class="keyword">if</span> (decodeCheck.length &lt;= <span class="number">4</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">byte</span>[] decodeData = <span class="keyword">new</span> <span class="keyword">byte</span>[decodeCheck.length - <span class="number">4</span>];</span><br><span class="line">    System.arraycopy(decodeCheck, <span class="number">0</span>, decodeData, <span class="number">0</span>, decodeData.length);</span><br><span class="line">    <span class="keyword">byte</span>[] hash0 = Sha256Sm3Hash.hash(decodeData);</span><br><span class="line">    <span class="keyword">byte</span>[] hash1 = Sha256Sm3Hash.hash(hash0);</span><br><span class="line">    <span class="keyword">if</span> (hash1[<span class="number">0</span>] == decodeCheck[decodeData.length]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">1</span>] == decodeCheck[decodeData.length + <span class="number">1</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">2</span>] == decodeCheck[decodeData.length + <span class="number">2</span>]</span><br><span class="line">            &amp;&amp; hash1[<span class="number">3</span>] == decodeCheck[decodeData.length + <span class="number">3</span>]) &#123;</span><br><span class="line">      <span class="keyword">return</span> decodeData;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String bash58CheckStr = <span class="string">&quot;TJfTWgzey3d3QHbrautjRmANNULfk91VFj&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = decode58Check(bash58CheckStr);</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line">    System.out.println(Arrays.toString(bytes));</span><br><span class="line">    System.out.println(<span class="string">&quot;---------&quot;</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>结果：</p><blockquote><p>---------<br>[65, 95, 93, -62, 0, 111, -104, -109, 108, -96, 84, -22, 73, -76, -45, -115, 41, 44, -108, 41, -56]<br>---------</p></blockquote><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>二进制、十六进制、base58check 这几种数据格式和编码都是在区块链在很常用的一套数据结构和编码，其实很多都是互相借鉴，谁也别说抄谁。<br>总的来说，了解了一个套路，再看其他的链就大同小异了。</p>]]></content>
       
       
       <categories>
@@ -1131,7 +1131,7 @@
       <link href="posts/7470b6b7.html"/>
       <url>posts/7470b6b7.html</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>简单的说就是手续费的一种变体，本质还是转账费用，只能在设计上，功能更复杂，用处更多。<br>即然是手续费，为什么不干脆一次性收取或者设定一个转账比例，不是更简单？<br>这个后面说。</p><h2 id="Gas-说明"><a href="#Gas-说明" class="headerlink" title="Gas 说明"></a>Gas 说明</h2><p>以太坊自称要成为世界计算机，但是这个计算机是烧<code>Gas</code>而不是用电，也不知是汽化天燃气还是液化天燃气。也有可能是以太坊想说，发电要用天燃气，所以Gas代表了消耗。</p><table><thead><tr><th align="center">参数</th><th align="center">作用</th></tr></thead><tbody><tr><td align="center">Gas(也称：GasUsed)</td><td align="center">EVM中的每个操作都指定了要消耗的gas量</td></tr><tr><td align="center">Gas Price</td><td align="center">每个操作的单价，就是说这笔交易，不只一处需要使用到Gas</td></tr><tr><td align="center">Gas Limit</td><td align="center">本次交易的Gas限额</td></tr></tbody></table><p>所以一笔交易的手续费就是：</p><blockquote><p>Transaction Fee = Gas * GasPrice</p></blockquote><p>就是这么简单粗暴。</p><h3 id="Gas-操作次数"><a href="#Gas-操作次数" class="headerlink" title="Gas - 操作次数"></a>Gas - 操作次数</h3><p>Gas 的操作每一步操作步数，都是固定的。也就是说每个合约在执行时，能执行多少操作完全就可以被计算出来的。</p><p><code>ADD</code>: 3<br><code>MUL</code>: 5<br><code>SUB</code>: 3</p><p><img src="/posts/7470b6b7/gas%E6%93%8D%E4%BD%9C.jpg" alt="gas操作"></p><h3 id="GasPrice-操作单价"><a href="#GasPrice-操作单价" class="headerlink" title="GasPrice - 操作单价"></a>GasPrice - 操作单价</h3><p><code>gasprice</code>的计量单位为：gwei，一个gwei为是1g个wei，即10^9 wei。<br>由于1 wei = 10^(-18) ETH，所以: 1 gwei = 10^9 wei = 10^(-9) ETH。</p><h3 id="wei和Gwei-不一样"><a href="#wei和Gwei-不一样" class="headerlink" title="wei和Gwei 不一样"></a>wei和Gwei 不一样</h3><table><thead><tr><th align="center">单位</th><th align="center">说明</th></tr></thead><tbody><tr><td align="center">wei</td><td align="center">1wei = 10^(-18) ETH</td></tr><tr><td align="center">Gwet</td><td align="center">1gwei = 10^9 wei，1gwei = 10^(-9) ETH</td></tr><tr><td align="center"></td><td align="center"></td></tr></tbody></table><h3 id="这笔费用去了哪里？"><a href="#这笔费用去了哪里？" class="headerlink" title="这笔费用去了哪里？"></a>这笔费用去了哪里？</h3><p>最终给了矿工。</p><h2 id="gas-预测"><a href="#gas-预测" class="headerlink" title="gas 预测"></a>gas 预测</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eth.estimateGas(&#123;from:eth.accounts[<span class="number">0</span>], to:eth.account[<span class="number">1</span>], value: <span class="number">10</span>&#125;)</span><br></pre></td></tr></table></figure><h3 id="设置打包费用"><a href="#设置打包费用" class="headerlink" title="设置打包费用"></a>设置打包费用</h3><p>如果站在矿工的角度上来说，怎么设置哪些需要打包哪些不需要打包。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>简单的说就是手续费的一种变体，本质还是转账费用，只能在设计上，功能更复杂，用处更多。<br>即然是手续费，为什么不干脆一次性收取或者设定一个转账比例，不是更简单？<br>这个后面说。</p><h2 id="Gas-说明"><a href="#Gas-说明" class="headerlink" title="Gas 说明"></a>Gas 说明</h2><p>以太坊自称要成为世界计算机，但是这个计算机是烧<code>Gas</code>而不是用电，也不知是汽化天燃气还是液化天燃气。也有可能是以太坊想说，发电要用天燃气，所以Gas代表了消耗。</p><table><thead><tr><th align="center">参数</th><th align="center">作用</th></tr></thead><tbody><tr><td align="center">Gas(也称：GasUsed)</td><td align="center">EVM中的每个操作都指定了要消耗的gas量</td></tr><tr><td align="center">Gas Price</td><td align="center">每个操作的单价，就是说这笔交易，不只一处需要使用到Gas</td></tr><tr><td align="center">Gas Limit</td><td align="center">本次交易的Gas限额</td></tr></tbody></table><p>所以一笔交易的手续费就是：</p><blockquote><p>Transaction Fee = Gas * GasPrice</p></blockquote><p>就是这么简单粗暴。</p><p>作用：资源限制手段，以及网络矿工奖励手段。</p><ol><li>作为以太坊价格（具有波动性）和矿工对其工作的奖励之间的抽象层。</li><li>另一种是抵御拒绝服务攻击。</li></ol><p>为了防止网络中的意外或恶意无限循环或其他计算浪费，每个交易的发起者需要设置他们愿意花费在gas上的金额的限制。<br>因此，gas系统阻止攻击者发送垃圾邮件交易，因为他们必须按比例支付他们消耗的计算，带宽和存储资源。</p><h3 id="Gas-限制"><a href="#Gas-限制" class="headerlink" title="Gas 限制"></a>Gas 限制</h3><p>每笔交易的<code>gas</code>是的上限的，也就是<code>gasLimit</code>，而每个区块只包含<code>1250</code>万单位的gas，超过这个上限后，交易无法打包，只能等待下一个区块再打包。</p><h3 id="Gas-操作次数"><a href="#Gas-操作次数" class="headerlink" title="Gas - 操作次数"></a>Gas - 操作次数</h3><p>Gas 的操作每一步操作步数，都是固定的。也就是说每个合约在执行时，能执行多少操作完全就可以被计算出来的。</p><ol><li>添加两个数字需要<code>3</code>个gas</li><li>计算Keccak256哈希值，需要<code>30</code>个gas+ 每256位数据被哈希6个gas</li><li>发送交易成本为<code>21000</code> gas</li></ol><p><code>ADD</code>: 3<br><code>MUL</code>: 5<br><code>SUB</code>: 3</p><p><img src="/posts/7470b6b7/gas%E6%93%8D%E4%BD%9C.jpg" alt="gas操作"></p><h3 id="GasPrice-操作单价"><a href="#GasPrice-操作单价" class="headerlink" title="GasPrice - 操作单价"></a>GasPrice - 操作单价</h3><p><code>gasprice</code>的计量单位为：<code>gwei</code>，一个<code>gwei</code>为是1g个wei，即<code>10^9</code> wei。<br>由于1 wei = <code>10^(-18)</code> ETH，所以: <code>1 gwei</code> = <code>10^9 wei</code> = <code>10^(-9)</code> ETH。</p><h3 id="wei和Gwei-不一样"><a href="#wei和Gwei-不一样" class="headerlink" title="wei和Gwei 不一样"></a>wei和Gwei 不一样</h3><table><thead><tr><th align="center">单位</th><th align="center">说明</th></tr></thead><tbody><tr><td align="center">wei</td><td align="center">1wei = 10^(-18) ETH</td></tr><tr><td align="center">Gwet</td><td align="center">1gwei = 10^9 wei，1gwei = 10^(-9) ETH</td></tr><tr><td align="center"></td><td align="center"></td></tr></tbody></table><h3 id="这笔费用去了哪里？"><a href="#这笔费用去了哪里？" class="headerlink" title="这笔费用去了哪里？"></a>这笔费用去了哪里？</h3><p>最终给了矿工。</p><h2 id="gas-预测"><a href="#gas-预测" class="headerlink" title="gas 预测"></a>gas 预测</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eth.estimateGas(&#123;from:eth.accounts[<span class="number">0</span>], to:eth.account[<span class="number">1</span>], value: <span class="number">10</span>&#125;)</span><br></pre></td></tr></table></figure><h3 id="设置打包费用"><a href="#设置打包费用" class="headerlink" title="设置打包费用"></a>设置打包费用</h3><p>如果站在矿工的角度上来说，怎么设置哪些需要打包哪些不需要打包。<br>而<code>Gas</code>的收益最后归矿工所有。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.evm.codes/?fork=merge">evm.codes</a></p>]]></content>
       
       
       <categories>
@@ -1149,11 +1149,11 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
+            <tag> 原理 </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> gas </tag>
             
@@ -1226,6 +1226,37 @@
             <tag> 区块链 </tag>
             
             <tag> tron </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>小米 红米 路由器的sn计算</title>
+      <link href="posts/e574c0a8.html"/>
+      <url>posts/e574c0a8.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>计算小米路由器的<code>sn</code>的网站 <a href="https://www.oxygen7.cn/miwifi">https://www.oxygen7.cn/miwifi</a> 不能访问了，网上找了一圈，找到了这个方法，解决这个问题：<br>记录一下，懂的都懂，相要用小米路由器科学的，这一步免不了。<br>创建一个 <code>sn.py</code> 的python文件。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> sys.version_info &lt; (<span class="number">3</span>,<span class="number">7</span>):</span><br><span class="line">    print(<span class="string">&quot;python version is not supported&quot;</span>, file=sys.stderr)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">salt = &#123;<span class="string">&#x27;r1d&#x27;</span>: <span class="string">&#x27;A2E371B0-B34B-48A5-8C40-A7133F3B5D88&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;others&#x27;</span>: <span class="string">&#x27;d44fb0960aa0-a5e6-4a30-250f-6d2df50a&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_salt</span>(<span class="params">sn</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;/&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> sn:</span><br><span class="line">        <span class="keyword">return</span> salt[<span class="string">&quot;r1d&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;-&quot;</span>.join(reversed(salt[<span class="string">&quot;others&quot;</span>].split(<span class="string">&quot;-&quot;</span>)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc_passwd</span>(<span class="params">sn</span>):</span></span><br><span class="line">    passwd = sn + get_salt(sn)</span><br><span class="line">    m = hashlib.md5(passwd.encode())</span><br><span class="line">    <span class="keyword">return</span> m.hexdigest()[:<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">f&quot;Usage: <span class="subst">&#123;sys.argv[<span class="number">0</span>]&#125;</span> &lt;S/N&gt;&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    serial = sys.argv[<span class="number">1</span>]</span><br><span class="line">    print(calc_passwd(serial))</span><br></pre></td></tr></table></figure><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python sn.py &lt;你的sn&gt;</span><br></pre></td></tr></table></figure><p><img src="/posts/e574c0a8/are-u-ok.jpg" alt="are—u-ok"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> red_mi </tag>
+            
+            <tag> sn </tag>
+            
+            <tag> xiaomi </tag>
             
         </tags>
       
@@ -1450,6 +1481,47 @@
     
     
     <entry>
+      <title>tron http接口postman</title>
+      <link href="posts/48251021.html"/>
+      <url>posts/48251021.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>把官方文档中的所有http接口整理成了postman的形式，方便自己调试使用。</p><p><img src="/posts/48251021/postman%E6%8E%A5%E5%8F%A3.jpg" alt="postman接口.jpg"></p><p>使用http接口的话，需要注意的是，在代码中一个流程就可以完成的事情，在http接口下，需要一步一步执行。</p><p>比如创建一笔交易，需要调几次接口：</p><ol><li><code>createtransaction</code></li><li><code>gettransactionsign</code></li><li><code>broadcasttransaction</code></li></ol><p>这个和使用 wallet-cli 工具不同的的，wallet-cli 在一次交易构建中，在一次方法内，完成了这三步的操作。</p><h2 id="构建交易示例"><a href="#构建交易示例" class="headerlink" title="构建交易示例"></a>构建交易示例</h2><h3 id="构建一笔交易-createtransaction"><a href="#构建一笔交易-createtransaction" class="headerlink" title="构建一笔交易 createtransaction"></a>构建一笔交易 createtransaction</h3><p>构建一笔交易，需要拿到返回的结果、加私钥生成签名。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;to_address&quot;</span>: <span class="string">&quot;410932AD502E8AB6CE4B7E0E8D52D78BAA231C00B6&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;owner_address&quot;</span>: <span class="string">&quot;41AF71E98F91515D7E5D5379837B9EEFD1AB4650D2&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;amount&quot;</span>: <span class="number">9999000000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="生成签名-gettransactionsign"><a href="#生成签名-gettransactionsign" class="headerlink" title="生成签名 gettransactionsign"></a>生成签名 <code>gettransactionsign</code></h2><p><code>transaction</code> 的部份就是上一个接口执行的结果，带入到这个接口当中进行签名。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;transaction&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;txID&quot;</span>: <span class="string">&quot;4dffedb56b125c5dc3d49aabd9d5af7abf01b533e4aade5eac519fe121697345&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;raw_data&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;contract&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">&quot;parameter&quot;</span>: &#123;</span><br><span class="line">                        <span class="attr">&quot;value&quot;</span>: &#123;</span><br><span class="line">                            <span class="attr">&quot;owner_address&quot;</span>: <span class="string">&quot;418f0078f2bcf4c45305ca204ef309b3ae8261b731&quot;</span>,</span><br><span class="line">                            <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;007570646174654e616d6531353330363038383733343633&quot;</span></span><br><span class="line">                        &#125;,</span><br><span class="line">                        <span class="attr">&quot;type_url&quot;</span>: <span class="string">&quot;type.googleapis.com/protocol.WitnessCreateContract&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;WitnessCreateContract&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;ref_block_bytes&quot;</span>: <span class="string">&quot;3a0b&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;ref_block_hash&quot;</span>: <span class="string">&quot;269c9ae280d8bad0&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;expiration&quot;</span>: <span class="number">1652945508000</span>,</span><br><span class="line">            <span class="attr">&quot;timestamp&quot;</span>: <span class="number">1652345508695</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;privateKey&quot;</span>: <span class="string">&quot;testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="广播交易-broadcasttransaction"><a href="#广播交易-broadcasttransaction" class="headerlink" title="广播交易 broadcasttransaction"></a>广播交易 <code>broadcasttransaction</code></h2><p>把交易广播上链，这样这笔交易如果执行成功，就会上链。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;signature&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;97c825b41c77de2a8bd65b3df55cd4c0df59c307ce42321dcc1cc455ddba583dd9502e17cfec5945b34cad0511985a6165999092a6dec84c2bdd97e649fc01&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;txID&quot;</span>: <span class="string">&quot;454f156bf1256587ff6ccdbc56e64ad0c51e4f8efea5490dcbc720ee606bc7b8&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;raw_data&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;contract&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;parameter&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;value&quot;</span>: &#123;</span><br><span class="line">                        <span class="attr">&quot;amount&quot;</span>: <span class="number">1000</span>,</span><br><span class="line">                        <span class="attr">&quot;owner_address&quot;</span>: <span class="string">&quot;41e552f6487585c2b58bc2c9bb4492bc1f17132cd0&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;to_address&quot;</span>: <span class="string">&quot;41d1e7a6bc354106cb410e65ff8b181c600ff14292&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">&quot;type_url&quot;</span>: <span class="string">&quot;type.googleapis.com/protocol.TransferContract&quot;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;TransferContract&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;ref_block_bytes&quot;</span>: <span class="string">&quot;267e&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;ref_block_hash&quot;</span>: <span class="string">&quot;9a447d222e8de9f2&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;expiration&quot;</span>: <span class="number">1530893064000</span>,</span><br><span class="line">        <span class="attr">&quot;timestamp&quot;</span>: <span class="number">1530893006233</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>postman 的接口json，我整了一份：<a href="48251021/java-tron.postman_collection.json.zip">java-tron-postman.json</a></p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://tronprotocol.github.io/documentation-en/api/http/">tron HTTP API</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> tron </category>
+          
+          <category> blockchain </category>
+          
+          <category> tron </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> blockchain </tag>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> tron </tag>
+            
+            <tag> 波场 </tag>
+            
+            <tag> http </tag>
+            
+            <tag> 接口 </tag>
+            
+            <tag> postman </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>docker 使用wget后文件消失</title>
       <link href="posts/b91ef7ed.html"/>
       <url>posts/b91ef7ed.html</url>
@@ -1503,9 +1575,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
-            
             <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> lido </tag>
             
@@ -2015,9 +2087,9 @@
             
             <tag> tron </tag>
             
-            <tag> witness </tag>
-            
             <tag> 波场 </tag>
+            
+            <tag> witness </tag>
             
             <tag> sr </tag>
             
@@ -2213,11 +2285,11 @@
             
             <tag> blockchain </tag>
             
-            <tag> eth </tag>
+            <tag> 原理 </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> geth </tag>
             
@@ -2250,11 +2322,11 @@
             
             <tag> java </tag>
             
-            <tag> gc </tag>
-            
             <tag> jvm </tag>
             
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> FullGC </tag>
             
@@ -2285,11 +2357,11 @@
       
         <tags>
             
-            <tag> gc </tag>
-            
             <tag> jvm </tag>
             
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
         </tags>
       
@@ -3139,9 +3211,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mq </tag>
-            
             <tag> matic </tag>
+            
+            <tag> mq </tag>
             
         </tags>
       
@@ -3209,11 +3281,11 @@
             
             <tag> java </tag>
             
-            <tag> gc </tag>
-            
             <tag> jvm </tag>
             
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> 调优 </tag>
             
@@ -3277,9 +3349,9 @@
             
             <tag> 区块链 </tag>
             
-            <tag> btc </tag>
-            
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -3308,9 +3380,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> btc </tag>
-            
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
             <tag> coinbase交易 </tag>
             
@@ -3341,9 +3413,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> btc </tag>
-            
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -3372,11 +3444,11 @@
             
             <tag> 区块链 </tag>
             
-            <tag> btc </tag>
-            
             <tag> 比特币 </tag>
             
             <tag> 技术体系 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -3409,9 +3481,9 @@
             
             <tag> 架构 </tag>
             
-            <tag> btc </tag>
-            
             <tag> 比特币 </tag>
+            
+            <tag> btc </tag>
             
         </tags>
       
@@ -4401,9 +4473,9 @@
       
         <tags>
             
-            <tag> uniux </tag>
-            
             <tag> mac </tag>
+            
+            <tag> uniux </tag>
             
             <tag> iterm2 </tag>
             
@@ -4564,9 +4636,9 @@
             
             <tag> java </tag>
             
-            <tag> 问题 </tag>
-            
             <tag> 对象 </tag>
+            
+            <tag> 问题 </tag>
             
             <tag> spring </tag>
             
@@ -4671,11 +4743,11 @@
             
             <tag> java </tag>
             
-            <tag> 日志 </tag>
-            
             <tag> srping boot </tag>
             
             <tag> aop </tag>
+            
+            <tag> 日志 </tag>
             
             <tag> 切面 </tag>
             
@@ -4834,11 +4906,11 @@
       
         <tags>
             
-            <tag> 大数据 </tag>
-            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
+            
+            <tag> 大数据 </tag>
             
         </tags>
       
@@ -5085,9 +5157,9 @@
             
             <tag> spring boot </tag>
             
-            <tag> 异常 </tag>
-            
             <tag> 报错 </tag>
+            
+            <tag> 异常 </tag>
             
         </tags>
       
@@ -6411,11 +6483,11 @@
             
             <tag> java </tag>
             
+            <tag> 异常 </tag>
+            
             <tag> exception </tag>
             
             <tag> error </tag>
-            
-            <tag> 异常 </tag>
             
             <tag> 错误 </tag>
             
@@ -6890,9 +6962,9 @@
             
             <tag> java </tag>
             
-            <tag> gc </tag>
-            
             <tag> jvm </tag>
+            
+            <tag> gc </tag>
             
         </tags>
       
@@ -8504,11 +8576,11 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
             
             <tag> broker </tag>
+            
+            <tag> rocketmq </tag>
             
         </tags>
       
@@ -8533,9 +8605,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
+            
+            <tag> rocketmq </tag>
             
             <tag> 中间件 </tag>
             
@@ -8597,9 +8669,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
+            
+            <tag> rocketmq </tag>
             
             <tag> architecture </tag>
             
@@ -8704,11 +8776,11 @@
       
         <tags>
             
-            <tag> 对象 </tag>
-            
             <tag> js </tag>
             
             <tag> javascript </tag>
+            
+            <tag> 对象 </tag>
             
         </tags>
       
@@ -9235,9 +9307,9 @@
             
             <tag> linux </tag>
             
-            <tag> mac </tag>
-            
             <tag> jdk </tag>
+            
+            <tag> mac </tag>
             
         </tags>
       
