@@ -371,7 +371,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#48;&#46;&#x31;&#x30;">&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#48;&#46;&#x31;&#x30;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#49;&#48;&#46;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#x31;&#48;">&#117;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#49;&#48;&#46;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#x31;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -1810,13 +1810,13 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -2902,9 +2902,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -3180,9 +3180,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> 安装 </tag>
             
@@ -3211,9 +3211,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> matic </tag>
-            
             <tag> mq </tag>
+            
+            <tag> matic </tag>
             
         </tags>
       
@@ -4636,9 +4636,9 @@
             
             <tag> java </tag>
             
-            <tag> 对象 </tag>
-            
             <tag> 问题 </tag>
+            
+            <tag> 对象 </tag>
             
             <tag> spring </tag>
             
@@ -5347,9 +5347,9 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> shell </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -8578,9 +8578,9 @@
             
             <tag> mq </tag>
             
-            <tag> broker </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> broker </tag>
             
         </tags>
       
@@ -8776,11 +8776,11 @@
       
         <tags>
             
+            <tag> 对象 </tag>
+            
             <tag> js </tag>
             
             <tag> javascript </tag>
-            
-            <tag> 对象 </tag>
             
         </tags>
       
