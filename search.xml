@@ -4,6 +4,53 @@
   
     
     <entry>
+      <title>以太坊 EIP-4844 简述</title>
+      <link href="posts/e5fa7f4c.html"/>
+      <url>posts/e5fa7f4c.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>是由Vitalik Buterin和其他来自以太坊生态系统的程序员共同创建的，它关注的是分片技术。</p><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>EIP-4844的主要目的是在不牺牲去中心化的情况下，降低网络上的gas费用，特别是对rollup解决方案。<br><strong>Arbitrum</strong>和<strong>Optimism</strong>等rollup解决方案可以将gas费用降低100到1000倍。</p><p>EIP-4844 提案是作为以太坊2.0更新完成之前的<strong>临时</strong>解决方案。该提案解释了一种新方法，以帮助划分交易中所需的信息，如验证规则和交易格式，而无需实际实现任何分片。</p><p><strong>这是一个很大的EIP，细分下来，需要用很多篇文章才能讲完整个EIP的细节经及EIP-4844要做的事</strong>。</p><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>每个区块 12 秒的出块时间 TPS 大概为 13~30 笔交易左右，但根据目前已知以太坊的 TPS 最高可以达到每秒 45 笔交易。<br>以太坊做为最主流的区块链，这个TPS就非常拉夸，还要号称世界计算机。</p><p>所以想要成为 “世界计算机” 的以太坊每秒最多处理 45 笔交易的性能实在是太弱了。所以以太坊迫切需要扩容来解决性能问题。</p><p>以太坊由于智能合约的存在，每个交易的内容各不相同，所以每个区块可以处理多少笔交易（TPS）取决于一个区块中包含的交易的数据量大小，每个交易的数据量大小都是根据实时需求决定的。<br>下图为以太坊交易TPS表：</p><h3 id="区块链不可能三角"><a href="#区块链不可能三角" class="headerlink" title="区块链不可能三角"></a>区块链不可能三角</h3><p>&quot;区块链不可能三角&quot; 指的是一个公共区块链无法同时满足三个特性：</p><ul><li>去中心化</li><li>安全性</li><li>可扩展性</li></ul><p>去中心化：指的是节点的去中心化程度，节点越多越分散越去中心化<br>安全性：指的是整个区块链网络的安全，攻击成本越高越安全<br>可扩展性：指的是区块链的处理交易性能，每秒可处理交易越多越具备可扩展性</p><p>从这三点的重要性来看的话，会发现去中心化和安全性是权重最高的。<br>以太坊的愿景是在去中心化并且安全的前提下实现可扩展性。</p><h2 id="技术方向"><a href="#技术方向" class="headerlink" title="技术方向"></a>技术方向</h2><p>针对以上三个问题，以太坊也进行了各种偿试，目前大方向就是<strong>扩容</strong>，扩容方案有以下几种：<br>以太坊主流扩容方案</p><ol><li>rollup</li><li>分片</li><li>sharding<ol><li>sharding 1.0</li><li>sharding 2.0</li></ol></li></ol><h3 id="rollup"><a href="#rollup" class="headerlink" title="rollup"></a>rollup</h3><p>Rollup 原理是将数百笔交易在链下像摊煎饼一样打包成一笔交易发送给以太坊来实现扩容，这样每个人平摊下来上传以太坊的费用就会很便宜，同时还可以继承以太坊的安全性。</p><p>Rollup 目前分为两种类型：</p><ul><li>Optimism Rollup（乐观 Rollup)</li><li>ZK Rollup（零知识证明 Rollup）</li></ul><p>Optimism Rollup: 假设所有交易都是诚实可信的，把许多笔交易压缩成一笔交易提交给以太坊，在提交后会有一段时间窗口（挑战期-目前是一周），任何人都可以质疑发起挑战来验证交易的真实性，但用户如果要将 OP Rollup 上的 ETH 转到以太坊上则需要等待挑战期结束后才可以得到最终确认。</p><p>ZK Rollup: 则是通过生成一个零知识证明来证明所有交易都是有效的，并将所有交易执行后的最终状态变化上传至以太坊。</p><p>相比 Optimism Rollup 来说 ZK Rollup 更有前景，ZK Rollup 不需要像 Optimism Rollup 那样上传压缩后的所有交易细节，只需要上传一个零知识证明和最终的状态变化的数据即可，意味着在可扩展性上可以比 OP Rollup 压缩更多的数据，并且也不需要像 OP Rollup 那样等待长达一周的挑战期，但 ZK Rollup 最大的缺点就是开发难度极大。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md">eip-4844.md</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> ethereum </category>
+          
+          <category> eip </category>
+          
+          <category> ethereum </category>
+          
+          <category> eip </category>
+          
+          <category> 4844 </category>
+          
+          <category> eth </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> eth </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> 以太坊 </tag>
+            
+            <tag> blockchain </tag>
+            
+            <tag> eip </tag>
+            
+            <tag> eip4844 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>rust-生命周期</title>
       <link href="posts/49b9d1d2.html"/>
       <url>posts/49b9d1d2.html</url>
@@ -367,11 +414,11 @@
     
     
     <entry>
-      <title>mac m2自动登陆跳板机脚本</title>
+      <title>Mac m2自动登陆跳板机脚本</title>
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#49;&#48;&#46;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#x31;&#48;">&#117;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#49;&#48;&#46;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#x31;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌验证码。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;">&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -475,11 +522,11 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -586,13 +633,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> 编码 </tag>
             
@@ -841,11 +888,13 @@
       
         <tags>
             
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> 以太坊 </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> account </tag>
             
@@ -854,8 +903,6 @@
             <tag> 账户 </tag>
             
             <tag> 模型 </tag>
-            
-            <tag> 以太坊 </tag>
             
             <tag> 外部账户 </tag>
             
@@ -1024,9 +1071,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> eth </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1063,13 +1110,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
-            
             <tag> 以太坊 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1147,13 +1194,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> gas </tag>
             
@@ -1564,20 +1611,20 @@
           
           <category> ethereum </category>
           
-          <category> lido </category>
-          
           <category> ethereum </category>
+          
+          <category> lido </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> lido </tag>
             
@@ -1810,13 +1857,13 @@
       
         <tags>
             
+            <tag> git </tag>
+            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
-            
-            <tag> git </tag>
             
         </tags>
       
@@ -2283,13 +2330,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> geth </tag>
             
@@ -2573,9 +2620,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> 数据库 </tag>
-            
             <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
       
@@ -2902,9 +2949,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -3180,9 +3227,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> 安装 </tag>
             
@@ -3349,9 +3396,9 @@
             
             <tag> 区块链 </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -3380,9 +3427,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
             <tag> coinbase交易 </tag>
             
@@ -3413,9 +3460,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -3444,11 +3491,11 @@
             
             <tag> 区块链 </tag>
             
+            <tag> btc </tag>
+            
             <tag> 比特币 </tag>
             
             <tag> 技术体系 </tag>
-            
-            <tag> btc </tag>
             
         </tags>
       
@@ -3481,9 +3528,9 @@
             
             <tag> 架构 </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -4636,9 +4683,9 @@
             
             <tag> java </tag>
             
-            <tag> 问题 </tag>
-            
             <tag> 对象 </tag>
+            
+            <tag> 问题 </tag>
             
             <tag> spring </tag>
             
@@ -4906,11 +4953,11 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
@@ -5347,9 +5394,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> git </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -8776,11 +8823,11 @@
       
         <tags>
             
-            <tag> 对象 </tag>
-            
             <tag> js </tag>
             
             <tag> javascript </tag>
+            
+            <tag> 对象 </tag>
             
         </tags>
       
