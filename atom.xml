@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>原理翻译家</title>
+  <title>人话翻译机</title>
   
   <subtitle>有限的时间，编写先限的可能</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://liukay.com/"/>
+  <link href="https://liukai.net/"/>
   <updated>2023-05-23T17:46:50.350Z</updated>
-  <id>https://liukay.com/</id>
+  <id>https://liukai.net/</id>
   
   <author>
     <name>潇洒</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>以太坊 EIP-4844 简述</title>
-    <link href="https://liukay.com/posts/e5fa7f4c.html"/>
-    <id>https://liukay.com/posts/e5fa7f4c.html</id>
+    <link href="https://liukai.net/posts/e5fa7f4c.html"/>
+    <id>https://liukai.net/posts/e5fa7f4c.html</id>
     <published>2023-05-23T17:17:21.000Z</published>
     <updated>2023-05-23T17:46:50.350Z</updated>
     
@@ -35,67 +35,66 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
-      <category term="eip" scheme="https://liukay.com/categories/ethereum/eip/"/>
+      <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/blockchain/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
     
-      <category term="eip" scheme="https://liukay.com/categories/eip/"/>
+      <category term="eip" scheme="https://liukai.net/categories/eip/"/>
     
-      <category term="4844" scheme="https://liukay.com/categories/eip/4844/"/>
+      <category term="4844" scheme="https://liukai.net/categories/eip/4844/"/>
     
-      <category term="eth" scheme="https://liukay.com/categories/blockchain/eth/"/>
+      <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
     
     
-      <category term="eth" scheme="https://liukay.com/tags/eth/"/>
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/tags/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
     
-      <category term="以太坊" scheme="https://liukay.com/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"/>
+      <category term="以太坊" scheme="https://liukai.net/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="eip" scheme="https://liukay.com/tags/eip/"/>
+      <category term="eip" scheme="https://liukai.net/tags/eip/"/>
     
-      <category term="eip4844" scheme="https://liukay.com/tags/eip4844/"/>
+      <category term="eip4844" scheme="https://liukai.net/tags/eip4844/"/>
     
   </entry>
   
   <entry>
     <title>rust-生命周期</title>
-    <link href="https://liukay.com/posts/49b9d1d2.html"/>
-    <id>https://liukay.com/posts/49b9d1d2.html</id>
+    <link href="https://liukai.net/posts/49b9d1d2.html"/>
+    <id>https://liukai.net/posts/49b9d1d2.html</id>
     <published>2023-03-06T14:06:13.000Z</published>
-    <updated>2023-06-19T15:06:14.539Z</updated>
+    <updated>2023-06-19T16:45:15.859Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rust当中，的两个重要概念：<strong>借用</strong>和<strong>生命周期</strong>分别代是在:</p><ol><li>栈变量，需要关注【所有权】</li><li>引用(指针)，需要关注【生命周期】</li></ol><p>Rust 的每个引用都有自己的生命周期，生命周期指的是引用保持有效的作用域。<br>大多数情况下，引用是隐式的、可以被推断出来的，但当引用可能以不同的方式互相关联时，则需要手动标注生命周期。<br>这里重点就是<strong>以不同的方式互相关联时</strong>。</p><p>大多数情况下，rust 可以自己推断出引用的生拿周期，也就是只有在一些rust无法自行推断的情况下，才需要手动<strong>标注</strong>生命周期。</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Rust 中的每一个引用都有其<strong>生命周期（lifetime）</strong>，也就是引用保持有效的作用域。<br>大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。<br>类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p><p>这里还有一个需要关注的点就是<strong>关系</strong>，也就多个引用之前的关系，才是导致rust无法明确推断出引用生命周期的最根本原因。</p><h2 id="反例"><a href="#反例" class="headerlink" title="反例"></a>反例</h2><p>这段代码看着很正常，但是实际上，编译会报错，类为这里调用<code>longest</code>时，<code>longest</code>无法确认<code>x</code>、<code>y</code>的生命周期。<br>为什么无法确认？<br>因为<code>longest</code>是被调用的方法，它肯定没法知道，这两个传入在<code>main</code>方法的中的生命周期。<br>好比，你写一个接口给外部调用，你也无法知道调你的服务，传入的两个变量，在那个服务中的生命周期。<br>但是在rust中，又非常强调安全性，它必须清楚每个引用的明确的生命周期。<br>所以这个活，就落在了开发者身上，必须明确告诉rust，每个引用的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// longest函数 无法确认 x、y  在 mian 函数中的生命周期</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>报错如下：missing lifetime specifier</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">error[E0106]: missing lifetime specifier</span><br><span class="line"><span class="meta"> --&gt;</span><span class="bash"> src/main.rs:9:33</span></span><br><span class="line">  |</span><br><span class="line">9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str &#123;</span><br><span class="line">  |               ----     ----     ^ expected named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">  = help: this function&#x27;s return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`</span><br><span class="line">help: consider introducing a named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">9 | fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str &#123;</span><br><span class="line">  |           ++++     ++          ++          ++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0106`.</span><br><span class="line">error: could not compile `playground` due to previous error</span><br></pre></td></tr></table></figure><p>上面看着很正常呀，哪里有问题？</p><h2 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h2><p>即然<code>rust</code>不智能，那只能开发者辛苦一点，手动来标注了。<br><code>rust</code>的生命周期标注语法，只能表示引用的生命周期，而不能、不会改会引用的生命周期。</p><p>命名规则:</p><ol><li><code>&#39;a</code> 以 &#39; 开头</li><li>全小写</li></ol><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>     <span class="comment">// 带有显式生命周期的引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 带有显式生命周期的可变引用</span></span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先说大白话，rust 的生命周期标注，是为了明确多个变量的生命周期是否一致，仅此而已，因为如果rust不知道多个变量的生命周期是否一致，它无法确的知道这个变量是否已经被释放。这个下面再细说，先说有什么用。</p><p>rust当中，的两个重要概念：<strong>借用</strong>和<strong>生命周期</strong>分别代是在:</p><ol><li>栈变量，需要关注【所有权】</li><li>引用(指针)，需要关注【生命周期】</li></ol><p>Rust 的每个引用都有自己的生命周期，生命周期指的是引用保持有效的作用域。<br>大多数情况下，引用是隐式的、可以被推断出来的，但当引用可能以不同的方式互相关联时，则需要手动标注生命周期。<br>这里重点就是<strong>以不同的方式互相关联时</strong>。</p><p>大多数情况下，rust 可以自己推断出引用的生拿周期，也就是只有在一些rust无法自行推断的情况下，才需要手动<strong>标注</strong>生命周期。</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Rust 中的每一个引用都有其<strong>生命周期（lifetime）</strong>，也就是引用保持有效的作用域。<br>大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。<br>类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p><p>这里还有一个需要关注的点就是<strong>关系</strong>，也就多个引用之前的关系，才是导致rust无法明确推断出引用生命周期的最根本原因。</p><h2 id="反例"><a href="#反例" class="headerlink" title="反例"></a>反例</h2><p>这段代码看着很正常，但是实际上，编译会报错，类为这里调用<code>longest</code>时，<code>longest</code>无法确认<code>x</code>、<code>y</code>的生命周期。<br>为什么无法确认？<br>因为<code>longest</code>是被调用的方法，它肯定没法知道，这两个传入在<code>main</code>方法的中的生命周期。<br>好比，你写一个接口给外部调用，你也无法知道调你的服务，传入的两个变量，在那个服务中的生命周期。<br>但是在rust中，又非常强调安全性，它必须清楚每个引用的明确的生命周期。<br>所以这个活，就落在了开发者身上，必须明确告诉rust，每个引用的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// longest函数 无法确认 x、y  在 mian 函数中的生命周期</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>报错如下：missing lifetime specifier</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">error[E0106]: missing lifetime specifier</span><br><span class="line"><span class="meta"> --&gt;</span><span class="bash"> src/main.rs:9:33</span></span><br><span class="line">  |</span><br><span class="line">9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str &#123;</span><br><span class="line">  |               ----     ----     ^ expected named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">  = help: this function&#x27;s return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`</span><br><span class="line">help: consider introducing a named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">9 | fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str &#123;</span><br><span class="line">  |           ++++     ++          ++          ++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0106`.</span><br><span class="line">error: could not compile `playground` due to previous error</span><br></pre></td></tr></table></figure><p>上面看着很正常呀，哪里有问题？</p><h2 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h2><p>即然<code>rust</code>不智能，那只能开发者辛苦一点，手动来标注了。<br><code>rust</code>的生命周期标注语法，只能表示引用的生命周期，而不能、不会改会引用的生命周期。</p><p>命名规则:</p><ol><li><code>&#39;a</code> 以 &#39; 开头</li><li>全小写</li></ol><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>     <span class="comment">// 带有显式生命周期的引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 带有显式生命周期的可变引用</span></span><br></pre></td></tr></table></figure><p>单个的生命周期注解本身没有多少意义，因为生命周期注解告诉 Rust 多个引用的泛型生命周期参数如何相互联系的。</p><h2 id="函数签名中的生命周期注解"><a href="#函数签名中的生命周期注解" class="headerlink" title="函数签名中的生命周期注解"></a>函数签名中的生命周期注解</h2><p>描述了 x、y 之间的关系。<br>longest 函数定义指定了签名中所有的引用必须有相同的生命周期<code>&#39;a</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="只有一个参数，要不要标注"><a href="#只有一个参数，要不要标注" class="headerlink" title="只有一个参数，要不要标注"></a>只有一个参数，要不要标注</h2><p>那当然是不要啦！！<br>生命周期注解告诉编译器引用参数的有效范围，以便编译器可以检查代码是否合法。<br>但是，在某些情况下，编译器可以自动推断出引用参数的生命周期，因此不需要显式注解。</p><p>当一个函数或方法需要<strong>一个</strong>借用参数时，如果该参数的生命周期与函数或方法的生命周期相同，则可以省略生命周期注解。例如：<br>这个例子，标不标注都是成立的。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span> &#123;</span><br><span class="line">    x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> y = foo(&amp;x);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>但是，如果函数或方法需要一个借用参数，并且该参数的生命周期与函数或方法的生命周期不同，则必须显式注解参数的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span>&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;<span class="symbol">&#x27;a</span>&gt; Foo&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">bar</span></span>(&amp;<span class="keyword">self</span>, y: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> *y &gt; <span class="number">0</span> &#123;</span><br><span class="line">            y</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">self</span>.x</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> y = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">let</span> foo = Foo &#123; x: &amp;x &#125;;</span><br><span class="line">    <span class="keyword">let</span> z = foo.bar(&amp;y);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这个例子中，方法 bar 的第二个参数 y 的生命周期不同于 Foo 结构体中的引用 x 的生命周期，所以嘛必须显式注解参数的生命周期。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>人多了，就容易产生纠分，变量形参多了，也是这样，所以才需要标注，分个明白。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;rust当中，的两个重要概念：&lt;strong&gt;借用&lt;/strong&gt;和&lt;strong&gt;生命周期&lt;/strong&gt;分别代是在:&lt;/p&gt;
-&lt;ol
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;先说大白话，rust 的生命周期标注，是为了明确多个变量的生命周期是否一致，仅此而已，因为如果rust不知道多个变量的生命周期是否一致，它无
       
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="生命周期" scheme="https://liukay.com/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"/>
+      <category term="生命周期" scheme="https://liukai.net/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"/>
     
   </entry>
   
   <entry>
     <title>rust-vim 整合基于vimspector的debug调试环境</title>
-    <link href="https://liukay.com/posts/3e7235c0.html"/>
-    <id>https://liukay.com/posts/3e7235c0.html</id>
+    <link href="https://liukai.net/posts/3e7235c0.html"/>
+    <id>https://liukai.net/posts/3e7235c0.html</id>
     <published>2023-02-27T15:17:08.000Z</published>
     <updated>2023-03-08T09:29:03.543Z</updated>
     
@@ -110,35 +109,35 @@
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
-      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+      <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
-      <category term="ide" scheme="https://liukay.com/categories/vim/ide/"/>
+      <category term="ide" scheme="https://liukai.net/categories/vim/ide/"/>
     
-      <category term="ide" scheme="https://liukay.com/categories/rust/ide/"/>
+      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
     
-      <category term="rust" scheme="https://liukay.com/categories/vim/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/vim/rust/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="ide" scheme="https://liukay.com/tags/ide/"/>
+      <category term="ide" scheme="https://liukai.net/tags/ide/"/>
     
-      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+      <category term="vim" scheme="https://liukai.net/tags/vim/"/>
     
-      <category term="debug" scheme="https://liukay.com/tags/debug/"/>
+      <category term="debug" scheme="https://liukai.net/tags/debug/"/>
     
-      <category term="vim-ide" scheme="https://liukay.com/tags/vim-ide/"/>
+      <category term="vim-ide" scheme="https://liukai.net/tags/vim-ide/"/>
     
-      <category term="vimspector" scheme="https://liukay.com/tags/vimspector/"/>
+      <category term="vimspector" scheme="https://liukai.net/tags/vimspector/"/>
     
   </entry>
   
   <entry>
     <title>coc-java无法启动和lombok报错解决</title>
-    <link href="https://liukay.com/posts/2fd8d4c0.html"/>
-    <id>https://liukay.com/posts/2fd8d4c0.html</id>
+    <link href="https://liukai.net/posts/2fd8d4c0.html"/>
+    <id>https://liukai.net/posts/2fd8d4c0.html</id>
     <published>2023-02-21T17:33:35.000Z</published>
     <updated>2023-03-04T06:43:49.645Z</updated>
     
@@ -155,33 +154,33 @@
     
     </summary>
     
-      <category term="java" scheme="https://liukay.com/categories/java/"/>
+      <category term="java" scheme="https://liukai.net/categories/java/"/>
     
-      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+      <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
-      <category term="java" scheme="https://liukay.com/categories/vim/java/"/>
+      <category term="java" scheme="https://liukai.net/categories/vim/java/"/>
     
     
-      <category term="java" scheme="https://liukay.com/tags/java/"/>
+      <category term="java" scheme="https://liukai.net/tags/java/"/>
     
-      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+      <category term="vim" scheme="https://liukai.net/tags/vim/"/>
     
-      <category term="coc" scheme="https://liukay.com/tags/coc/"/>
+      <category term="coc" scheme="https://liukai.net/tags/coc/"/>
     
-      <category term="coc-java" scheme="https://liukay.com/tags/coc-java/"/>
+      <category term="coc-java" scheme="https://liukai.net/tags/coc-java/"/>
     
-      <category term="lombok" scheme="https://liukay.com/tags/lombok/"/>
+      <category term="lombok" scheme="https://liukai.net/tags/lombok/"/>
     
-      <category term="coc-java-lombok" scheme="https://liukay.com/tags/coc-java-lombok/"/>
+      <category term="coc-java-lombok" scheme="https://liukai.net/tags/coc-java-lombok/"/>
     
-      <category term="问題解决" scheme="https://liukay.com/tags/%E9%97%AE%E9%A1%8C%E8%A7%A3%E5%86%B3/"/>
+      <category term="问題解决" scheme="https://liukai.net/tags/%E9%97%AE%E9%A1%8C%E8%A7%A3%E5%86%B3/"/>
     
   </entry>
   
   <entry>
     <title>rust-泛型generics</title>
-    <link href="https://liukay.com/posts/4fcae1e5.html"/>
-    <id>https://liukay.com/posts/4fcae1e5.html</id>
+    <link href="https://liukai.net/posts/4fcae1e5.html"/>
+    <id>https://liukai.net/posts/4fcae1e5.html</id>
     <published>2023-02-12T06:49:53.000Z</published>
     <updated>2023-04-02T11:05:28.072Z</updated>
     
@@ -196,21 +195,21 @@
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="泛型" scheme="https://liukay.com/tags/%E6%B3%9B%E5%9E%8B/"/>
+      <category term="泛型" scheme="https://liukai.net/tags/%E6%B3%9B%E5%9E%8B/"/>
     
-      <category term="generics" scheme="https://liukay.com/tags/generics/"/>
+      <category term="generics" scheme="https://liukai.net/tags/generics/"/>
     
   </entry>
   
   <entry>
     <title>tron-节点-witness加载过程</title>
-    <link href="https://liukay.com/posts/fe400015.html"/>
-    <id>https://liukay.com/posts/fe400015.html</id>
+    <link href="https://liukai.net/posts/fe400015.html"/>
+    <id>https://liukai.net/posts/fe400015.html</id>
     <published>2023-02-04T01:43:01.000Z</published>
     <updated>2023-06-19T15:08:07.452Z</updated>
     
@@ -225,31 +224,31 @@
     
     </summary>
     
-      <category term="tron" scheme="https://liukay.com/categories/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/tron/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="tron" scheme="https://liukay.com/categories/blockchain/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/blockchain/tron/"/>
     
-      <category term="witness" scheme="https://liukay.com/categories/tron/witness/"/>
+      <category term="witness" scheme="https://liukai.net/categories/tron/witness/"/>
     
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="tron" scheme="https://liukay.com/tags/tron/"/>
+      <category term="tron" scheme="https://liukai.net/tags/tron/"/>
     
-      <category term="波场" scheme="https://liukay.com/tags/%E6%B3%A2%E5%9C%BA/"/>
+      <category term="波场" scheme="https://liukai.net/tags/%E6%B3%A2%E5%9C%BA/"/>
     
-      <category term="witness" scheme="https://liukay.com/tags/witness/"/>
+      <category term="witness" scheme="https://liukai.net/tags/witness/"/>
     
-      <category term="加载" scheme="https://liukay.com/tags/%E5%8A%A0%E8%BD%BD/"/>
+      <category term="加载" scheme="https://liukai.net/tags/%E5%8A%A0%E8%BD%BD/"/>
     
   </entry>
   
   <entry>
     <title>go结合Slash Commands使用</title>
-    <link href="https://liukay.com/posts/3c62c672.html"/>
-    <id>https://liukay.com/posts/3c62c672.html</id>
+    <link href="https://liukai.net/posts/3c62c672.html"/>
+    <id>https://liukai.net/posts/3c62c672.html</id>
     <published>2023-01-09T09:01:35.000Z</published>
     <updated>2023-03-04T06:43:49.642Z</updated>
     
@@ -264,27 +263,27 @@
     
     </summary>
     
-      <category term="go" scheme="https://liukay.com/categories/go/"/>
+      <category term="go" scheme="https://liukai.net/categories/go/"/>
     
-      <category term="slack" scheme="https://liukay.com/categories/slack/"/>
+      <category term="slack" scheme="https://liukai.net/categories/slack/"/>
     
-      <category term="slash" scheme="https://liukay.com/categories/slack/slash/"/>
+      <category term="slash" scheme="https://liukai.net/categories/slack/slash/"/>
     
     
-      <category term="go" scheme="https://liukay.com/tags/go/"/>
+      <category term="go" scheme="https://liukai.net/tags/go/"/>
     
-      <category term="slack" scheme="https://liukay.com/tags/slack/"/>
+      <category term="slack" scheme="https://liukai.net/tags/slack/"/>
     
-      <category term="slash" scheme="https://liukay.com/tags/slash/"/>
+      <category term="slash" scheme="https://liukai.net/tags/slash/"/>
     
-      <category term="conmand" scheme="https://liukay.com/tags/conmand/"/>
+      <category term="conmand" scheme="https://liukai.net/tags/conmand/"/>
     
   </entry>
   
   <entry>
     <title>rust-所有权</title>
-    <link href="https://liukay.com/posts/e28f62f.html"/>
-    <id>https://liukay.com/posts/e28f62f.html</id>
+    <link href="https://liukai.net/posts/e28f62f.html"/>
+    <id>https://liukai.net/posts/e28f62f.html</id>
     <published>2023-01-03T18:07:28.000Z</published>
     <updated>2023-04-02T11:06:00.487Z</updated>
     
@@ -299,19 +298,19 @@
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="所有权" scheme="https://liukay.com/tags/%E6%89%80%E6%9C%89%E6%9D%83/"/>
+      <category term="所有权" scheme="https://liukai.net/tags/%E6%89%80%E6%9C%89%E6%9D%83/"/>
     
   </entry>
   
   <entry>
     <title>GnuPG-2子密钥使用</title>
-    <link href="https://liukay.com/posts/38f72231.html"/>
-    <id>https://liukay.com/posts/38f72231.html</id>
+    <link href="https://liukai.net/posts/38f72231.html"/>
+    <id>https://liukai.net/posts/38f72231.html</id>
     <published>2023-01-03T17:41:20.000Z</published>
     <updated>2023-03-04T06:43:49.908Z</updated>
     
@@ -326,21 +325,21 @@
     
     </summary>
     
-      <category term="safe" scheme="https://liukay.com/categories/safe/"/>
+      <category term="safe" scheme="https://liukai.net/categories/safe/"/>
     
-      <category term="cryptography" scheme="https://liukay.com/categories/cryptography/"/>
+      <category term="cryptography" scheme="https://liukai.net/categories/cryptography/"/>
     
-      <category term="rsa" scheme="https://liukay.com/categories/rsa/"/>
+      <category term="rsa" scheme="https://liukai.net/categories/rsa/"/>
     
     
-      <category term="gnupg" scheme="https://liukay.com/tags/gnupg/"/>
+      <category term="gnupg" scheme="https://liukai.net/tags/gnupg/"/>
     
   </entry>
   
   <entry>
     <title>GnuPG-1主密钥使用</title>
-    <link href="https://liukay.com/posts/82be817.html"/>
-    <id>https://liukay.com/posts/82be817.html</id>
+    <link href="https://liukai.net/posts/82be817.html"/>
+    <id>https://liukai.net/posts/82be817.html</id>
     <published>2023-01-03T10:02:39.000Z</published>
     <updated>2023-03-04T06:43:49.907Z</updated>
     
@@ -355,21 +354,21 @@
     
     </summary>
     
-      <category term="safe" scheme="https://liukay.com/categories/safe/"/>
+      <category term="safe" scheme="https://liukai.net/categories/safe/"/>
     
-      <category term="cryptography" scheme="https://liukay.com/categories/cryptography/"/>
+      <category term="cryptography" scheme="https://liukai.net/categories/cryptography/"/>
     
-      <category term="rsa" scheme="https://liukay.com/categories/rsa/"/>
+      <category term="rsa" scheme="https://liukai.net/categories/rsa/"/>
     
     
-      <category term="gnupg" scheme="https://liukay.com/tags/gnupg/"/>
+      <category term="gnupg" scheme="https://liukai.net/tags/gnupg/"/>
     
   </entry>
   
   <entry>
     <title>随笔--2022-2023总结</title>
-    <link href="https://liukay.com/posts/9c4b5c1b.html"/>
-    <id>https://liukay.com/posts/9c4b5c1b.html</id>
+    <link href="https://liukai.net/posts/9c4b5c1b.html"/>
+    <id>https://liukai.net/posts/9c4b5c1b.html</id>
     <published>2022-12-25T09:00:47.000Z</published>
     <updated>2023-02-02T18:13:16.000Z</updated>
     
@@ -384,17 +383,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="https://liukay.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="https://liukai.net/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="随笔" scheme="https://liukay.com/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="https://liukai.net/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>rust-vim整合基于rust-analyzer</title>
-    <link href="https://liukay.com/posts/69325553.html"/>
-    <id>https://liukay.com/posts/69325553.html</id>
+    <link href="https://liukai.net/posts/69325553.html"/>
+    <id>https://liukai.net/posts/69325553.html</id>
     <published>2022-12-22T14:01:31.000Z</published>
     <updated>2023-03-04T06:43:49.714Z</updated>
     
@@ -409,35 +408,35 @@
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
-      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+      <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
-      <category term="ide" scheme="https://liukay.com/categories/vim/ide/"/>
+      <category term="ide" scheme="https://liukai.net/categories/vim/ide/"/>
     
-      <category term="ide" scheme="https://liukay.com/categories/rust/ide/"/>
+      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
     
-      <category term="rust" scheme="https://liukay.com/categories/vim/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/vim/rust/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="ide" scheme="https://liukay.com/tags/ide/"/>
+      <category term="ide" scheme="https://liukai.net/tags/ide/"/>
     
-      <category term="vim" scheme="https://liukay.com/tags/vim/"/>
+      <category term="vim" scheme="https://liukai.net/tags/vim/"/>
     
-      <category term="rust-vim" scheme="https://liukay.com/tags/rust-vim/"/>
+      <category term="rust-vim" scheme="https://liukai.net/tags/rust-vim/"/>
     
   </entry>
   
   <entry>
     <title>Mac m2自动登陆跳板机脚本</title>
-    <link href="https://liukay.com/posts/95f16259.html"/>
-    <id>https://liukay.com/posts/95f16259.html</id>
+    <link href="https://liukai.net/posts/95f16259.html"/>
+    <id>https://liukai.net/posts/95f16259.html</id>
     <published>2022-12-15T12:27:13.000Z</published>
     <updated>2023-06-19T16:13:22.645Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;">&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#110;&#x61;&#x6d;&#101;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#48;">&#117;&#x73;&#x65;&#x72;&#110;&#x61;&#x6d;&#101;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
     
     <summary type="html">
     
@@ -449,35 +448,35 @@
     
     </summary>
     
-      <category term="linux" scheme="https://liukay.com/categories/linux/"/>
+      <category term="linux" scheme="https://liukai.net/categories/linux/"/>
     
-      <category term="mac" scheme="https://liukay.com/categories/mac/"/>
+      <category term="mac" scheme="https://liukai.net/categories/mac/"/>
     
-      <category term="iterm2" scheme="https://liukay.com/categories/mac/iterm2/"/>
+      <category term="iterm2" scheme="https://liukai.net/categories/mac/iterm2/"/>
     
-      <category term="shell" scheme="https://liukay.com/categories/linux/shell/"/>
+      <category term="shell" scheme="https://liukai.net/categories/linux/shell/"/>
     
     
-      <category term="linux" scheme="https://liukay.com/tags/linux/"/>
+      <category term="linux" scheme="https://liukai.net/tags/linux/"/>
     
-      <category term="shell" scheme="https://liukay.com/tags/shell/"/>
+      <category term="shell" scheme="https://liukai.net/tags/shell/"/>
     
-      <category term="mac" scheme="https://liukay.com/tags/mac/"/>
+      <category term="mac" scheme="https://liukai.net/tags/mac/"/>
     
-      <category term="iterm2" scheme="https://liukay.com/tags/iterm2/"/>
+      <category term="iterm2" scheme="https://liukai.net/tags/iterm2/"/>
     
-      <category term="m2" scheme="https://liukay.com/tags/m2/"/>
+      <category term="m2" scheme="https://liukai.net/tags/m2/"/>
     
-      <category term="python3" scheme="https://liukay.com/tags/python3/"/>
+      <category term="python3" scheme="https://liukai.net/tags/python3/"/>
     
-      <category term="跳板机" scheme="https://liukay.com/tags/%E8%B7%B3%E6%9D%BF%E6%9C%BA/"/>
+      <category term="跳板机" scheme="https://liukai.net/tags/%E8%B7%B3%E6%9D%BF%E6%9C%BA/"/>
     
   </entry>
   
   <entry>
     <title>Merkle Tree、Merkle Patricia Tree</title>
-    <link href="https://liukay.com/posts/504d00cf.html"/>
-    <id>https://liukay.com/posts/504d00cf.html</id>
+    <link href="https://liukai.net/posts/504d00cf.html"/>
+    <id>https://liukai.net/posts/504d00cf.html</id>
     <published>2022-12-15T09:23:08.000Z</published>
     <updated>2023-06-19T15:05:38.175Z</updated>
     
@@ -492,35 +491,35 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
-      <category term="merkle" scheme="https://liukay.com/categories/ethereum/merkle/"/>
+      <category term="merkle" scheme="https://liukai.net/categories/ethereum/merkle/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/blockchain/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
     
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="merkle" scheme="https://liukay.com/tags/merkle/"/>
+      <category term="merkle" scheme="https://liukai.net/tags/merkle/"/>
     
-      <category term="树" scheme="https://liukay.com/tags/%E6%A0%91/"/>
+      <category term="树" scheme="https://liukai.net/tags/%E6%A0%91/"/>
     
-      <category term="原理" scheme="https://liukay.com/tags/%E5%8E%9F%E7%90%86/"/>
+      <category term="原理" scheme="https://liukai.net/tags/%E5%8E%9F%E7%90%86/"/>
     
-      <category term="trie" scheme="https://liukay.com/tags/trie/"/>
+      <category term="trie" scheme="https://liukai.net/tags/trie/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukai.net/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="算法" scheme="https://liukay.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://liukai.net/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>ethereum-geth常用操作</title>
-    <link href="https://liukay.com/posts/687e1894.html"/>
-    <id>https://liukay.com/posts/687e1894.html</id>
+    <link href="https://liukai.net/posts/687e1894.html"/>
+    <id>https://liukai.net/posts/687e1894.html</id>
     <published>2022-12-08T10:54:03.000Z</published>
     <updated>2023-03-04T06:43:49.562Z</updated>
     
@@ -536,33 +535,33 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/blockchain/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
     
-      <category term="geth" scheme="https://liukay.com/categories/ethereum/geth/"/>
+      <category term="geth" scheme="https://liukai.net/categories/ethereum/geth/"/>
     
     
-      <category term="eth" scheme="https://liukay.com/tags/eth/"/>
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/tags/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="ethereum原理" scheme="https://liukay.com/tags/ethereum%E5%8E%9F%E7%90%86/"/>
+      <category term="ethereum原理" scheme="https://liukai.net/tags/ethereum%E5%8E%9F%E7%90%86/"/>
     
-      <category term="节点" scheme="https://liukay.com/tags/%E8%8A%82%E7%82%B9/"/>
+      <category term="节点" scheme="https://liukai.net/tags/%E8%8A%82%E7%82%B9/"/>
     
-      <category term="geth" scheme="https://liukay.com/tags/geth/"/>
+      <category term="geth" scheme="https://liukai.net/tags/geth/"/>
     
   </entry>
   
   <entry>
     <title>rust-rustup介绍</title>
-    <link href="https://liukay.com/posts/db0a7b21.html"/>
-    <id>https://liukay.com/posts/db0a7b21.html</id>
+    <link href="https://liukai.net/posts/db0a7b21.html"/>
+    <id>https://liukai.net/posts/db0a7b21.html</id>
     <published>2022-12-05T14:09:56.000Z</published>
     <updated>2023-03-04T06:43:49.905Z</updated>
     
@@ -577,21 +576,21 @@
     
     </summary>
     
-      <category term="rust" scheme="https://liukay.com/categories/rust/"/>
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
     
-      <category term="vim" scheme="https://liukay.com/categories/vim/"/>
+      <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
     
-      <category term="rust" scheme="https://liukay.com/tags/rust/"/>
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
     
-      <category term="rustup" scheme="https://liukay.com/tags/rustup/"/>
+      <category term="rustup" scheme="https://liukai.net/tags/rustup/"/>
     
   </entry>
   
   <entry>
     <title>tron 接收交易和广播交易</title>
-    <link href="https://liukay.com/posts/c7f01f8a.html"/>
-    <id>https://liukay.com/posts/c7f01f8a.html</id>
+    <link href="https://liukai.net/posts/c7f01f8a.html"/>
+    <id>https://liukai.net/posts/c7f01f8a.html</id>
     <published>2022-11-15T14:54:25.000Z</published>
     <updated>2023-03-04T06:43:49.603Z</updated>
     
@@ -606,35 +605,35 @@
     
     </summary>
     
-      <category term="tron" scheme="https://liukay.com/categories/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/tron/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="tron" scheme="https://liukay.com/categories/blockchain/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/blockchain/tron/"/>
     
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukai.net/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="tron" scheme="https://liukay.com/tags/tron/"/>
+      <category term="tron" scheme="https://liukai.net/tags/tron/"/>
     
-      <category term="广播" scheme="https://liukay.com/tags/%E5%B9%BF%E6%92%AD/"/>
+      <category term="广播" scheme="https://liukai.net/tags/%E5%B9%BF%E6%92%AD/"/>
     
-      <category term="交易" scheme="https://liukay.com/tags/%E4%BA%A4%E6%98%93/"/>
+      <category term="交易" scheme="https://liukai.net/tags/%E4%BA%A4%E6%98%93/"/>
     
-      <category term="transaction" scheme="https://liukay.com/tags/transaction/"/>
+      <category term="transaction" scheme="https://liukai.net/tags/transaction/"/>
     
-      <category term="netty" scheme="https://liukay.com/tags/netty/"/>
+      <category term="netty" scheme="https://liukai.net/tags/netty/"/>
     
-      <category term="handler" scheme="https://liukay.com/tags/handler/"/>
+      <category term="handler" scheme="https://liukai.net/tags/handler/"/>
     
   </entry>
   
   <entry>
     <title>ethereum原理-RLP编码</title>
-    <link href="https://liukay.com/posts/12a13330.html"/>
-    <id>https://liukay.com/posts/12a13330.html</id>
+    <link href="https://liukai.net/posts/12a13330.html"/>
+    <id>https://liukai.net/posts/12a13330.html</id>
     <published>2022-10-09T09:28:28.000Z</published>
     <updated>2023-03-04T06:43:49.560Z</updated>
     
@@ -649,33 +648,33 @@
     
     </summary>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/categories/blockchain/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
     
     
-      <category term="eth" scheme="https://liukay.com/tags/eth/"/>
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
-      <category term="ethereum" scheme="https://liukay.com/tags/ethereum/"/>
+      <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="原理" scheme="https://liukay.com/tags/%E5%8E%9F%E7%90%86/"/>
+      <category term="原理" scheme="https://liukai.net/tags/%E5%8E%9F%E7%90%86/"/>
     
-      <category term="编码" scheme="https://liukay.com/tags/%E7%BC%96%E7%A0%81/"/>
+      <category term="编码" scheme="https://liukai.net/tags/%E7%BC%96%E7%A0%81/"/>
     
-      <category term="白皮书" scheme="https://liukay.com/tags/%E7%99%BD%E7%9A%AE%E4%B9%A6/"/>
+      <category term="白皮书" scheme="https://liukai.net/tags/%E7%99%BD%E7%9A%AE%E4%B9%A6/"/>
     
-      <category term="rlp" scheme="https://liukay.com/tags/rlp/"/>
+      <category term="rlp" scheme="https://liukai.net/tags/rlp/"/>
     
   </entry>
   
   <entry>
     <title>tron-网络模型-AdvService广播服务</title>
-    <link href="https://liukay.com/posts/7a9eccd0.html"/>
-    <id>https://liukay.com/posts/7a9eccd0.html</id>
+    <link href="https://liukai.net/posts/7a9eccd0.html"/>
+    <id>https://liukai.net/posts/7a9eccd0.html</id>
     <published>2022-09-30T13:12:23.000Z</published>
     <updated>2023-06-19T15:06:46.739Z</updated>
     
@@ -690,27 +689,27 @@
     
     </summary>
     
-      <category term="tron" scheme="https://liukay.com/categories/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/tron/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="tron" scheme="https://liukay.com/categories/blockchain/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/blockchain/tron/"/>
     
     
-      <category term="blockchain" scheme="https://liukay.com/tags/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
-      <category term="区块链" scheme="https://liukay.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://liukai.net/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
-      <category term="tron" scheme="https://liukay.com/tags/tron/"/>
+      <category term="tron" scheme="https://liukai.net/tags/tron/"/>
     
-      <category term="广播" scheme="https://liukay.com/tags/%E5%B9%BF%E6%92%AD/"/>
+      <category term="广播" scheme="https://liukai.net/tags/%E5%B9%BF%E6%92%AD/"/>
     
   </entry>
   
   <entry>
     <title>tron-数据库设计1-接口和内存数据库状态</title>
-    <link href="https://liukay.com/posts/e50aa4af.html"/>
-    <id>https://liukay.com/posts/e50aa4af.html</id>
+    <link href="https://liukai.net/posts/e50aa4af.html"/>
+    <id>https://liukai.net/posts/e50aa4af.html</id>
     <published>2022-08-02T09:24:08.000Z</published>
     <updated>2023-03-10T14:09:54.169Z</updated>
     
@@ -725,18 +724,18 @@
     
     </summary>
     
-      <category term="tron" scheme="https://liukay.com/categories/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/tron/"/>
     
-      <category term="blockchain" scheme="https://liukay.com/categories/blockchain/"/>
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
     
-      <category term="tron" scheme="https://liukay.com/categories/blockchain/tron/"/>
+      <category term="tron" scheme="https://liukai.net/categories/blockchain/tron/"/>
     
-      <category term="database" scheme="https://liukay.com/categories/tron/database/"/>
+      <category term="database" scheme="https://liukai.net/categories/tron/database/"/>
     
     
-      <category term="tron" scheme="https://liukay.com/tags/tron/"/>
+      <category term="tron" scheme="https://liukai.net/tags/tron/"/>
     
-      <category term="database" scheme="https://liukay.com/tags/database/"/>
+      <category term="database" scheme="https://liukai.net/tags/database/"/>
     
   </entry>
   

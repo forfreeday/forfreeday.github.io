@@ -55,7 +55,7 @@
       <link href="posts/49b9d1d2.html"/>
       <url>posts/49b9d1d2.html</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rust当中，的两个重要概念：<strong>借用</strong>和<strong>生命周期</strong>分别代是在:</p><ol><li>栈变量，需要关注【所有权】</li><li>引用(指针)，需要关注【生命周期】</li></ol><p>Rust 的每个引用都有自己的生命周期，生命周期指的是引用保持有效的作用域。<br>大多数情况下，引用是隐式的、可以被推断出来的，但当引用可能以不同的方式互相关联时，则需要手动标注生命周期。<br>这里重点就是<strong>以不同的方式互相关联时</strong>。</p><p>大多数情况下，rust 可以自己推断出引用的生拿周期，也就是只有在一些rust无法自行推断的情况下，才需要手动<strong>标注</strong>生命周期。</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Rust 中的每一个引用都有其<strong>生命周期（lifetime）</strong>，也就是引用保持有效的作用域。<br>大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。<br>类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p><p>这里还有一个需要关注的点就是<strong>关系</strong>，也就多个引用之前的关系，才是导致rust无法明确推断出引用生命周期的最根本原因。</p><h2 id="反例"><a href="#反例" class="headerlink" title="反例"></a>反例</h2><p>这段代码看着很正常，但是实际上，编译会报错，类为这里调用<code>longest</code>时，<code>longest</code>无法确认<code>x</code>、<code>y</code>的生命周期。<br>为什么无法确认？<br>因为<code>longest</code>是被调用的方法，它肯定没法知道，这两个传入在<code>main</code>方法的中的生命周期。<br>好比，你写一个接口给外部调用，你也无法知道调你的服务，传入的两个变量，在那个服务中的生命周期。<br>但是在rust中，又非常强调安全性，它必须清楚每个引用的明确的生命周期。<br>所以这个活，就落在了开发者身上，必须明确告诉rust，每个引用的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// longest函数 无法确认 x、y  在 mian 函数中的生命周期</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>报错如下：missing lifetime specifier</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">error[E0106]: missing lifetime specifier</span><br><span class="line"><span class="meta"> --&gt;</span><span class="bash"> src/main.rs:9:33</span></span><br><span class="line">  |</span><br><span class="line">9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str &#123;</span><br><span class="line">  |               ----     ----     ^ expected named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">  = help: this function&#x27;s return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`</span><br><span class="line">help: consider introducing a named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">9 | fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str &#123;</span><br><span class="line">  |           ++++     ++          ++          ++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0106`.</span><br><span class="line">error: could not compile `playground` due to previous error</span><br></pre></td></tr></table></figure><p>上面看着很正常呀，哪里有问题？</p><h2 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h2><p>即然<code>rust</code>不智能，那只能开发者辛苦一点，手动来标注了。<br><code>rust</code>的生命周期标注语法，只能表示引用的生命周期，而不能、不会改会引用的生命周期。</p><p>命名规则:</p><ol><li><code>&#39;a</code> 以 &#39; 开头</li><li>全小写</li></ol><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>     <span class="comment">// 带有显式生命周期的引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 带有显式生命周期的可变引用</span></span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先说大白话，rust 的生命周期标注，是为了明确多个变量的生命周期是否一致，仅此而已，因为如果rust不知道多个变量的生命周期是否一致，它无法确的知道这个变量是否已经被释放。这个下面再细说，先说有什么用。</p><p>rust当中，的两个重要概念：<strong>借用</strong>和<strong>生命周期</strong>分别代是在:</p><ol><li>栈变量，需要关注【所有权】</li><li>引用(指针)，需要关注【生命周期】</li></ol><p>Rust 的每个引用都有自己的生命周期，生命周期指的是引用保持有效的作用域。<br>大多数情况下，引用是隐式的、可以被推断出来的，但当引用可能以不同的方式互相关联时，则需要手动标注生命周期。<br>这里重点就是<strong>以不同的方式互相关联时</strong>。</p><p>大多数情况下，rust 可以自己推断出引用的生拿周期，也就是只有在一些rust无法自行推断的情况下，才需要手动<strong>标注</strong>生命周期。</p><h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>Rust 中的每一个引用都有其<strong>生命周期（lifetime）</strong>，也就是引用保持有效的作用域。<br>大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。<br>类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p><p>这里还有一个需要关注的点就是<strong>关系</strong>，也就多个引用之前的关系，才是导致rust无法明确推断出引用生命周期的最根本原因。</p><h2 id="反例"><a href="#反例" class="headerlink" title="反例"></a>反例</h2><p>这段代码看着很正常，但是实际上，编译会报错，类为这里调用<code>longest</code>时，<code>longest</code>无法确认<code>x</code>、<code>y</code>的生命周期。<br>为什么无法确认？<br>因为<code>longest</code>是被调用的方法，它肯定没法知道，这两个传入在<code>main</code>方法的中的生命周期。<br>好比，你写一个接口给外部调用，你也无法知道调你的服务，传入的两个变量，在那个服务中的生命周期。<br>但是在rust中，又非常强调安全性，它必须清楚每个引用的明确的生命周期。<br>所以这个活，就落在了开发者身上，必须明确告诉rust，每个引用的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// longest函数 无法确认 x、y  在 mian 函数中的生命周期</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>报错如下：missing lifetime specifier</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">error[E0106]: missing lifetime specifier</span><br><span class="line"><span class="meta"> --&gt;</span><span class="bash"> src/main.rs:9:33</span></span><br><span class="line">  |</span><br><span class="line">9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str &#123;</span><br><span class="line">  |               ----     ----     ^ expected named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">  = help: this function&#x27;s return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`</span><br><span class="line">help: consider introducing a named lifetime parameter</span><br><span class="line">  |</span><br><span class="line">9 | fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str &#123;</span><br><span class="line">  |           ++++     ++          ++          ++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0106`.</span><br><span class="line">error: could not compile `playground` due to previous error</span><br></pre></td></tr></table></figure><p>上面看着很正常呀，哪里有问题？</p><h2 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h2><p>即然<code>rust</code>不智能，那只能开发者辛苦一点，手动来标注了。<br><code>rust</code>的生命周期标注语法，只能表示引用的生命周期，而不能、不会改会引用的生命周期。</p><p>命名规则:</p><ol><li><code>&#39;a</code> 以 &#39; 开头</li><li>全小写</li></ol><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>     <span class="comment">// 带有显式生命周期的引用</span></span><br><span class="line">&amp;<span class="symbol">&#x27;a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 带有显式生命周期的可变引用</span></span><br></pre></td></tr></table></figure><p>单个的生命周期注解本身没有多少意义，因为生命周期注解告诉 Rust 多个引用的泛型生命周期参数如何相互联系的。</p><h2 id="函数签名中的生命周期注解"><a href="#函数签名中的生命周期注解" class="headerlink" title="函数签名中的生命周期注解"></a>函数签名中的生命周期注解</h2><p>描述了 x、y 之间的关系。<br>longest 函数定义指定了签名中所有的引用必须有相同的生命周期<code>&#39;a</code></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The longest string is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="只有一个参数，要不要标注"><a href="#只有一个参数，要不要标注" class="headerlink" title="只有一个参数，要不要标注"></a>只有一个参数，要不要标注</h2><p>那当然是不要啦！！<br>生命周期注解告诉编译器引用参数的有效范围，以便编译器可以检查代码是否合法。<br>但是，在某些情况下，编译器可以自动推断出引用参数的生命周期，因此不需要显式注解。</p><p>当一个函数或方法需要<strong>一个</strong>借用参数时，如果该参数的生命周期与函数或方法的生命周期相同，则可以省略生命周期注解。例如：<br>这个例子，标不标注都是成立的。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span> &#123;</span><br><span class="line">    x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> y = foo(&amp;x);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>但是，如果函数或方法需要一个借用参数，并且该参数的生命周期与函数或方法的生命周期不同，则必须显式注解参数的生命周期。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span>&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;<span class="symbol">&#x27;a</span>&gt; Foo&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">bar</span></span>(&amp;<span class="keyword">self</span>, y: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> *y &gt; <span class="number">0</span> &#123;</span><br><span class="line">            y</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">self</span>.x</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> y = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">let</span> foo = Foo &#123; x: &amp;x &#125;;</span><br><span class="line">    <span class="keyword">let</span> z = foo.bar(&amp;y);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这个例子中，方法 bar 的第二个参数 y 的生命周期不同于 Foo 结构体中的引用 x 的生命周期，所以嘛必须显式注解参数的生命周期。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>人多了，就容易产生纠分，变量形参多了，也是这样，所以才需要标注，分个明白。</p>]]></content>
       
       
       <categories>
@@ -418,7 +418,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;">&#117;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#49;&#x30;&#x2e;&#49;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是，ssh 登陆，原来登陆方式也有问题，需要。<br>还有就是原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><p>原来只需要：<br>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#110;&#x61;&#x6d;&#101;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#48;">&#117;&#x73;&#x65;&#x72;&#110;&#x61;&#x6d;&#101;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#x31;&#48;</a> 就可以登陆了，现在需要:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@10.10.10.10</span><br></pre></td></tr></table></figure><p>python3 部分</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -814,8 +814,6 @@
             
             <tag> 区块链 </tag>
             
-            <tag> 模型 </tag>
-            
             <tag> tron </tag>
             
             <tag> 能量 </tag>
@@ -823,6 +821,8 @@
             <tag> 带宽 </tag>
             
             <tag> 资源 </tag>
+            
+            <tag> 模型 </tag>
             
         </tags>
       
@@ -896,13 +896,13 @@
             
             <tag> 原理 </tag>
             
+            <tag> 模型 </tag>
+            
             <tag> account </tag>
             
             <tag> 账户模型 </tag>
             
             <tag> 账户 </tag>
-            
-            <tag> 模型 </tag>
             
             <tag> 外部账户 </tag>
             
@@ -1611,9 +1611,9 @@
           
           <category> ethereum </category>
           
-          <category> ethereum </category>
-          
           <category> lido </category>
+          
+          <category> ethereum </category>
           
       </categories>
       
@@ -1857,13 +1857,13 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -3258,9 +3258,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mq </tag>
-            
             <tag> matic </tag>
+            
+            <tag> mq </tag>
             
         </tags>
       
@@ -3857,11 +3857,11 @@
             
             <tag> 算法 </tag>
             
-            <tag> algorithm </tag>
-            
             <tag> LeetCode </tag>
             
             <tag> 栈 </tag>
+            
+            <tag> algorithm </tag>
             
         </tags>
       
@@ -4683,9 +4683,9 @@
             
             <tag> java </tag>
             
-            <tag> 对象 </tag>
-            
             <tag> 问题 </tag>
+            
+            <tag> 对象 </tag>
             
             <tag> spring </tag>
             
@@ -5394,9 +5394,9 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> shell </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -8534,9 +8534,9 @@
       
         <tags>
             
-            <tag> 计算机原理 </tag>
-            
             <tag> 数组 </tag>
+            
+            <tag> 计算机原理 </tag>
             
         </tags>
       
@@ -8786,6 +8786,8 @@
             
             <tag> 原理 </tag>
             
+            <tag> 计算机原理 </tag>
+            
             <tag> 原码 </tag>
             
             <tag> 补码 </tag>
@@ -8795,8 +8797,6 @@
             <tag> 二进制 </tag>
             
             <tag> 基础 </tag>
-            
-            <tag> 计算机原理 </tag>
             
             <tag> 编码 </tag>
             
