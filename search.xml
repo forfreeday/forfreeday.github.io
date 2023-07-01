@@ -32,13 +32,13 @@
       
         <tags>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 以太坊 </tag>
+            <tag> eth </tag>
             
-            <tag> blockchain </tag>
+            <tag> 以太坊 </tag>
             
             <tag> eip </tag>
             
@@ -143,11 +143,11 @@
             
             <tag> java </tag>
             
-            <tag> vim </tag>
-            
             <tag> coc </tag>
             
             <tag> coc-java </tag>
+            
+            <tag> vim </tag>
             
             <tag> lombok </tag>
             
@@ -418,7 +418,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#x75;&#115;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#64;&#x31;&#48;&#x2e;&#49;&#48;&#46;&#x31;&#x30;&#46;&#x31;&#48;">&#x75;&#115;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#64;&#x31;&#48;&#x2e;&#49;&#48;&#46;&#x31;&#x30;&#46;&#x31;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#x31;&#48;">&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#x31;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -522,11 +522,11 @@
       
         <tags>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum </tag>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -633,13 +633,13 @@
       
         <tags>
             
-            <tag> eth </tag>
-            
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> 编码 </tag>
             
@@ -888,13 +888,11 @@
       
         <tags>
             
-            <tag> eth </tag>
+            <tag> 原理 </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 以太坊 </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> account </tag>
             
@@ -903,6 +901,8 @@
             <tag> 账户 </tag>
             
             <tag> 模型 </tag>
+            
+            <tag> 以太坊 </tag>
             
             <tag> 外部账户 </tag>
             
@@ -1071,9 +1071,9 @@
       
         <tags>
             
-            <tag> eth </tag>
-            
             <tag> blockchain </tag>
+            
+            <tag> eth </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1110,13 +1110,13 @@
       
         <tags>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum </tag>
             
-            <tag> 以太坊 </tag>
+            <tag> eth </tag>
             
-            <tag> blockchain </tag>
+            <tag> 以太坊 </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1194,13 +1194,13 @@
       
         <tags>
             
-            <tag> eth </tag>
-            
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> gas </tag>
             
@@ -1511,11 +1511,11 @@
       
         <tags>
             
+            <tag> slack </tag>
+            
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
-            
-            <tag> slack </tag>
             
             <tag> 日志 </tag>
             
@@ -1620,11 +1620,11 @@
       
         <tags>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum </tag>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> lido </tag>
             
@@ -1751,9 +1751,9 @@
       
       <categories>
           
-          <category> docker </category>
-          
           <category> linux </category>
+          
+          <category> docker </category>
           
           <category> centos8 </category>
           
@@ -1762,9 +1762,9 @@
       
         <tags>
             
-            <tag> docker </tag>
-            
             <tag> linux </tag>
+            
+            <tag> docker </tag>
             
             <tag> centos8 </tag>
             
@@ -1857,13 +1857,13 @@
       
         <tags>
             
+            <tag> git </tag>
+            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
-            
-            <tag> git </tag>
             
         </tags>
       
@@ -1970,9 +1970,9 @@
             
             <tag> vim </tag>
             
-            <tag> 插件 </tag>
-            
             <tag> nvim </tag>
+            
+            <tag> 插件 </tag>
             
             <tag> code </tag>
             
@@ -2136,9 +2136,9 @@
             
             <tag> 波场 </tag>
             
-            <tag> witness </tag>
-            
             <tag> sr </tag>
+            
+            <tag> witness </tag>
             
             <tag> 分析 </tag>
             
@@ -2330,13 +2330,13 @@
       
         <tags>
             
-            <tag> eth </tag>
-            
-            <tag> ethereum </tag>
-            
             <tag> blockchain </tag>
             
             <tag> 原理 </tag>
+            
+            <tag> ethereum </tag>
+            
+            <tag> eth </tag>
             
             <tag> geth </tag>
             
@@ -2371,9 +2371,9 @@
             
             <tag> jvm </tag>
             
-            <tag> cms </tag>
-            
             <tag> gc </tag>
+            
+            <tag> cms </tag>
             
             <tag> FullGC </tag>
             
@@ -2406,9 +2406,9 @@
             
             <tag> jvm </tag>
             
-            <tag> cms </tag>
-            
             <tag> gc </tag>
+            
+            <tag> cms </tag>
             
         </tags>
       
@@ -2496,9 +2496,9 @@
           
           <category> spring </category>
           
-          <category> 源码阅读 </category>
-          
           <category> spring </category>
+          
+          <category> 源码阅读 </category>
           
           <category> spring </category>
           
@@ -2620,9 +2620,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> 数据库 </tag>
-            
             <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
       
@@ -2949,9 +2949,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> defer </tag>
             
@@ -3025,9 +3025,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 共识 </tag>
-            
             <tag> 源码分析 </tag>
+            
+            <tag> 共识 </tag>
             
         </tags>
       
@@ -3227,9 +3227,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> 安装 </tag>
             
@@ -3297,9 +3297,9 @@
             
             <tag> matic </tag>
             
-            <tag> checkpoint </tag>
-            
             <tag> polygon </tag>
+            
+            <tag> checkpoint </tag>
             
         </tags>
       
@@ -3330,9 +3330,9 @@
             
             <tag> jvm </tag>
             
-            <tag> cms </tag>
-            
             <tag> gc </tag>
+            
+            <tag> cms </tag>
             
             <tag> 调优 </tag>
             
@@ -3596,9 +3596,9 @@
             
             <tag> vim </tag>
             
-            <tag> oh-my-zsh </tag>
-            
             <tag> 插件 </tag>
+            
+            <tag> oh-my-zsh </tag>
             
         </tags>
       
@@ -3715,11 +3715,11 @@
             
             <tag> vim </tag>
             
-            <tag> 插件 </tag>
-            
             <tag> nvim </tag>
             
             <tag> 配置 </tag>
+            
+            <tag> 插件 </tag>
             
             <tag> plugin </tag>
             
@@ -3762,11 +3762,11 @@
             
             <tag> nvim </tag>
             
+            <tag> 配置 </tag>
+            
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
-            
-            <tag> 配置 </tag>
             
         </tags>
       
@@ -3859,9 +3859,9 @@
             
             <tag> algorithm </tag>
             
-            <tag> LeetCode </tag>
-            
             <tag> 栈 </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
@@ -3923,11 +3923,11 @@
       
         <tags>
             
-            <tag> vim </tag>
-            
             <tag> coc </tag>
             
             <tag> coc-java </tag>
+            
+            <tag> vim </tag>
             
             <tag> nvim </tag>
             
@@ -4034,9 +4034,9 @@
       
         <tags>
             
-            <tag> docker </tag>
-            
             <tag> linux </tag>
+            
+            <tag> docker </tag>
             
             <tag> 容器 </tag>
             
@@ -4369,11 +4369,11 @@
       
         <tags>
             
-            <tag> 并发 </tag>
-            
             <tag> 多线程 </tag>
             
             <tag> 死锁 </tag>
+            
+            <tag> 并发 </tag>
             
         </tags>
       
@@ -5394,9 +5394,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> git </tag>
+            
+            <tag> shell </tag>
             
         </tags>
       
@@ -6790,9 +6790,9 @@
             
             <tag> java </tag>
             
-            <tag> 并发 </tag>
-            
             <tag> 多线程 </tag>
+            
+            <tag> 并发 </tag>
             
             <tag> 生产者消费者模式 </tag>
             
@@ -7071,11 +7071,11 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> 解决 </tag>
             
             <tag> 问题 </tag>
+            
+            <tag> shell </tag>
             
             <tag> ssh </tag>
             
@@ -7412,9 +7412,9 @@
             
             <tag> java </tag>
             
-            <tag> 并发 </tag>
-            
             <tag> 多线程 </tag>
+            
+            <tag> 并发 </tag>
             
             <tag> 进程 </tag>
             
@@ -7539,6 +7539,39 @@
             <tag> jvm </tag>
             
             <tag> 分代 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>linux-内核版本说明</title>
+      <link href="posts/c8e0676f.html"/>
+      <url>posts/c8e0676f.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>最近查看 Linux core 的版本，发现这个版本号有点复杂，稍微查了一下。</p><p>例如：</p><blockquote><p>2.6.18-92.el5</p></blockquote><p>这里以点<code>.</code>作为分格符，分别是：</p><blockquote><p>主版本.次版本.释出版本-修改版本</p></blockquote><p>1.<strong>主、次版本为奇数</strong>：发展中版本(development)如 2.5.xx，这种核心版本主要用在测试与发展新功能，所以通常这种版本仅有核心开发工程师会使用。 如果有新增的核心程序代码，会加到这种版本当中，等到众多工程师测试没问题后，才加入下一版的稳定核心中；</p><p>2.<strong>主、次版本为偶数</strong>：稳定版本(stable)如 2.6.xx，等到核心功能发展成熟后会加到这类的版本中，主要用在一般家庭计算机以及企业版本中。 重点在于提供使用者一个相对稳定的 Linux 作业环境平台。</p><h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://www.kernel.org/">https://www.kernel.org/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+          <category> core </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> core </tag>
+            
+            <tag> 内核 </tag>
+            
+            <tag> 版本 </tag>
             
         </tags>
       
@@ -8623,11 +8656,11 @@
       
         <tags>
             
+            <tag> rocketmq </tag>
+            
             <tag> mq </tag>
             
             <tag> broker </tag>
-            
-            <tag> rocketmq </tag>
             
         </tags>
       
@@ -8652,9 +8685,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> 中间件 </tag>
             
@@ -8716,9 +8749,9 @@
       
         <tags>
             
-            <tag> mq </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> mq </tag>
             
             <tag> architecture </tag>
             
@@ -8823,11 +8856,11 @@
       
         <tags>
             
+            <tag> 对象 </tag>
+            
             <tag> js </tag>
             
             <tag> javascript </tag>
-            
-            <tag> 对象 </tag>
             
         </tags>
       
@@ -8984,9 +9017,9 @@
             
             <tag> java </tag>
             
-            <tag> 并发 </tag>
-            
             <tag> 多线程 </tag>
+            
+            <tag> 并发 </tag>
             
             <tag> concurrent </tag>
             
@@ -9095,9 +9128,9 @@
             
             <tag> java </tag>
             
-            <tag> 并发 </tag>
-            
             <tag> 多线程 </tag>
+            
+            <tag> 并发 </tag>
             
             <tag> concurrent </tag>
             
@@ -9350,9 +9383,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> linux </tag>
+            
+            <tag> java </tag>
             
             <tag> jdk </tag>
             
