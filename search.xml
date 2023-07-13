@@ -32,13 +32,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
-            
             <tag> 以太坊 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> eip </tag>
             
@@ -143,11 +143,11 @@
             
             <tag> java </tag>
             
+            <tag> vim </tag>
+            
             <tag> coc </tag>
             
             <tag> coc-java </tag>
-            
-            <tag> vim </tag>
             
             <tag> lombok </tag>
             
@@ -418,7 +418,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#x31;&#48;">&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#109;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#x31;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#x75;&#115;&#101;&#x72;&#110;&#97;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#48;">&#x75;&#115;&#101;&#x72;&#110;&#97;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -427,9 +427,9 @@
           
           <category> mac </category>
           
-          <category> shell </category>
-          
           <category> iterm2 </category>
+          
+          <category> shell </category>
           
       </categories>
       
@@ -442,11 +442,11 @@
             
             <tag> mac </tag>
             
+            <tag> iterm2 </tag>
+            
             <tag> m2 </tag>
             
             <tag> python3 </tag>
-            
-            <tag> iterm2 </tag>
             
             <tag> 跳板机 </tag>
             
@@ -522,11 +522,11 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -633,13 +633,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> 编码 </tag>
             
@@ -888,11 +888,13 @@
       
         <tags>
             
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> 以太坊 </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> account </tag>
             
@@ -901,8 +903,6 @@
             <tag> 账户 </tag>
             
             <tag> 模型 </tag>
-            
-            <tag> 以太坊 </tag>
             
             <tag> 外部账户 </tag>
             
@@ -1071,9 +1071,9 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
             <tag> eth </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1110,13 +1110,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
-            
             <tag> 以太坊 </tag>
+            
+            <tag> blockchain </tag>
             
             <tag> ethereum原理 </tag>
             
@@ -1194,13 +1194,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> gas </tag>
             
@@ -1620,11 +1620,11 @@
       
         <tags>
             
-            <tag> blockchain </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
             
             <tag> lido </tag>
             
@@ -1970,9 +1970,9 @@
             
             <tag> vim </tag>
             
-            <tag> nvim </tag>
-            
             <tag> 插件 </tag>
+            
+            <tag> nvim </tag>
             
             <tag> code </tag>
             
@@ -2136,9 +2136,9 @@
             
             <tag> 波场 </tag>
             
-            <tag> sr </tag>
-            
             <tag> witness </tag>
+            
+            <tag> sr </tag>
             
             <tag> 分析 </tag>
             
@@ -2330,13 +2330,13 @@
       
         <tags>
             
-            <tag> blockchain </tag>
-            
-            <tag> 原理 </tag>
+            <tag> eth </tag>
             
             <tag> ethereum </tag>
             
-            <tag> eth </tag>
+            <tag> blockchain </tag>
+            
+            <tag> 原理 </tag>
             
             <tag> geth </tag>
             
@@ -2371,9 +2371,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> FullGC </tag>
             
@@ -2406,9 +2406,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
         </tags>
       
@@ -2496,9 +2496,9 @@
           
           <category> spring </category>
           
-          <category> spring </category>
-          
           <category> 源码阅读 </category>
+          
+          <category> spring </category>
           
           <category> spring </category>
           
@@ -2620,9 +2620,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mysql </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> mysql </tag>
             
         </tags>
       
@@ -2949,9 +2949,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> defer </tag>
             
@@ -3025,9 +3025,9 @@
             
             <tag> BlockChain </tag>
             
-            <tag> 源码分析 </tag>
-            
             <tag> 共识 </tag>
+            
+            <tag> 源码分析 </tag>
             
         </tags>
       
@@ -3227,9 +3227,9 @@
       
         <tags>
             
-            <tag> go </tag>
-            
             <tag> golang </tag>
+            
+            <tag> go </tag>
             
             <tag> 安装 </tag>
             
@@ -3297,9 +3297,9 @@
             
             <tag> matic </tag>
             
-            <tag> polygon </tag>
-            
             <tag> checkpoint </tag>
+            
+            <tag> polygon </tag>
             
         </tags>
       
@@ -3330,9 +3330,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> 调优 </tag>
             
@@ -3596,9 +3596,9 @@
             
             <tag> vim </tag>
             
-            <tag> 插件 </tag>
-            
             <tag> oh-my-zsh </tag>
+            
+            <tag> 插件 </tag>
             
         </tags>
       
@@ -3715,11 +3715,11 @@
             
             <tag> vim </tag>
             
+            <tag> 插件 </tag>
+            
             <tag> nvim </tag>
             
             <tag> 配置 </tag>
-            
-            <tag> 插件 </tag>
             
             <tag> plugin </tag>
             
@@ -3762,11 +3762,11 @@
             
             <tag> nvim </tag>
             
-            <tag> 配置 </tag>
-            
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
+            
+            <tag> 配置 </tag>
             
         </tags>
       
@@ -3859,9 +3859,40 @@
             
             <tag> algorithm </tag>
             
+            <tag> LeetCode </tag>
+            
             <tag> 栈 </tag>
             
-            <tag> LeetCode </tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>jetty 流只能读一次问题分析</title>
+      <link href="posts/94508d38.html"/>
+      <url>posts/94508d38.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>服务端报了一个异常：<code>java.lang.IllegalStateException: STREAMED</code>，详细堆栈如下。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">11:30:51.359 ERROR [qtp463355-1242] [API](GetServlet.java:77)</span><br><span class="line">java.lang.IllegalStateException: STREAMED</span><br><span class="line">    at org.eclipse.jetty.server.Request.getReader(Request.java:1188)</span><br><span class="line">    at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)</span><br><span class="line">    at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)</span><br></pre></td></tr></table></figure><p>这个从堆栈上看是jetty的问题，看着是框架的问题，但是还是得分析分析。<br>看了一个代码，是代码是同时使用了jetty的两个API，原是是不能同时使用下面这两个方法，就是在一次请求里，不能同时使用这两个：</p><ul><li>request.getReader()</li><li>request.getParameter()</li></ul><p>原是为什么，官方文档也有说明：</p><blockquote><p>If the parameter data was sent in the request body, such as occurs with an HTTP POST request, then reading the body directly via getInputStream() or getReader() can interfere with the execution of this method.</p></blockquote><p><a href="https://tomcat.apache.org/tomcat-5.5-doc/servletapi/javax/servlet/ServletRequest.html#getParameter(java.lang.String)">https://tomcat.apache.org/tomcat-5.5-doc/servletapi/javax/servlet/ServletRequest.html#getParameter(java.lang.String)</a></p><p>具体是什么原因，那处好好分析一下。</p><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>先说源码层面的原因：流状态被置为已读取，当有其它方法来读取，判断状态已读取，直接抛异常。<br>HTTP 接口使用 form 表单形式和 json 表单形式的内部处理机制不同导致form只能读一次，而 json 可以反复读取。tomcat 和 jetty 使用了相同的设计。</p><p>发看生问题的方法: <code>getInputStream()</code>。<br>先看发生问题的地方，再分析<code>getParameter()</code>和 <code>getReader()</code> 为什么会报错。</p><h3 id="getInputStream-方法"><a href="#getInputStream-方法" class="headerlink" title="getInputStream 方法"></a>getInputStream 方法</h3><p>流处理方法： <code>getInputStream()</code>，HTTP 的读取状态会存储在 <code>_input</code>中。是否已经被读取的状态由 <code>_inputState</code> 控制。<br>如果只有要这个方法被读次一次，那么<code>_inputState = INPUT_STREAM</code>，下面代码中的第8行就行判断是否被读取。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @see javax.servlet.ServletRequest#getInputStream()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ServletInputStream <span class="title">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 如果不是 INPUT_NONE、INPUT_STREAM 状态，流已经被读取过，状态已变更</span></span><br><span class="line">    <span class="keyword">if</span> (_inputState != INPUT_NONE &amp;&amp; _inputState != INPUT_STREAM)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;READER&quot;</span>);</span><br><span class="line">    <span class="comment">// _inputState 变更为 INPUT_STREAM</span></span><br><span class="line">    _inputState = INPUT_STREAM;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_channel.isExpecting100Continue())</span><br><span class="line">        _channel.continue100(_input.available());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="Request-类"><a href="#Request-类" class="headerlink" title="Request 类"></a>Request 类</h3><p>这个是发生问题的类：<code>org.eclipse.jetty.server.Request</code>，如果状态已被读取: <code>_inputState = INPUT_STREAM</code>。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Request</span> <span class="keyword">implements</span> <span class="title">HttpServletRequest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 未读取状态</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INPUT_NONE = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 已读取状态!!!</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INPUT_STREAM = <span class="number">1</span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Request <span class="title">getBaseRequest</span><span class="params">(ServletRequest request)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 读取状态，默认 INPUT_NONE</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> _inputState = INPUT_NONE;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="getParamter-分析"><a href="#getParamter-分析" class="headerlink" title="getParamter() 分析"></a>getParamter() 分析</h3><p>调用栈</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request.getParameters()</span><br><span class="line">|--getParameters()</span><br><span class="line">   |--extractContentParameters()</span><br><span class="line">      |--extractFormParameters(MultiMap&lt;String&gt; params)</span><br><span class="line">         |--InputStream in = getInputStream();    <span class="comment">//在这个位置  getInputStream</span></span><br></pre></td></tr></table></figure><h2 id="getParameter-分析"><a href="#getParameter-分析" class="headerlink" title="getParameter 分析"></a>getParameter 分析</h2><p>可以读取到 表单提交的数据、GET 方法参数，但是无法读取 JSON 数据。</p><p>所以如果是以 JSON 形式提交的数据，不会被它操作到，也不会去操作 <strong>Stream</strong>。</p><ul><li><code>extractContentParameters</code>：从流中读取 POST 传入的数据<ul><li>判断是<code>content-type</code>否为 <code>application/x-www-form-urlencoded</code><ul><li><code>extractFormParameters</code>：解析 form 表单数据，读取，调用 <code>getInputStream</code> 方法</li></ul></li></ul></li><li><code>extractQueryParameters</code>：从 GET 的URI 中 解析请求参数</li></ul><h3 id="form-处理流程"><a href="#form-处理流程" class="headerlink" title="form 处理流程"></a>form 处理流程</h3><p>涉及方法:</p><ul><li>Request.getParameter()</li><li>Request.getInputStream()</li></ul><p>提交 <strong>form</strong> 表单是处理时，<code>Request.getParameter()</code>会调用 <code>getInputStream()</code>，具体调用栈分析：</p><figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request.getParameters(&quot;xxx&quot;)</span><br><span class="line">|--getParameters()</span><br><span class="line">   |--extractContentParameters()</span><br><span class="line">      |--extractFormParameters(_contentParameters)  &#x2F;&#x2F; 注意在这里会调用 getInputStream()</span><br><span class="line">         |--getInputStream()</span><br></pre></td></tr></table></figure><p>所以这个问题的关键在于 <code>Request.getParameter()</code> 方法，会调用 <code>getInputStream()</code>;</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">extractFormParameters</span><span class="params">(MultiMap&lt;String&gt; params)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        InputStream in = getInputStream();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (IOException e)</span><br><span class="line">    &#123;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="JSON-处理流程"><a href="#JSON-处理流程" class="headerlink" title="JSON 处理流程"></a>JSON 处理流程</h3><p>在读到 <code>Request.getParameter()</code>在读取 JSON 数据时，并不会走读取流的逻辑，因为会判断<code>content-type</code>是否为 <code>application/x-www-form-urlencoded</code>，</p><p>JSON 的 <code>content-type</code> 为：<code>application/json</code>。<br>所以，提交的是JSON请求时，<code>getParameter()</code>直接返回空。</p><h2 id="getReader-方法"><a href="#getReader-方法" class="headerlink" title="getReader() 方法"></a>getReader() 方法</h2><p>这个方法，比较直观，上来直接就是 <code>getInputStream()</code>读取流。<br>getReader 只能处理 POST 请求参数，没有处理 URI 的功能。<br>所以如果 getParameter 提前把流读取了，getReader() 就无法获取到流，直接抛异常。</p><figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public BufferedReader getReader() throws IOException</span><br><span class="line">&#123;</span><br><span class="line">    if (_inputState !&#x3D; INPUT_NONE &amp;&amp; _inputState !&#x3D; INPUT_READER)</span><br><span class="line">        throw new IllegalStateException(&quot;STREAMED&quot;);</span><br><span class="line"></span><br><span class="line">    if (_inputState &#x3D;&#x3D; INPUT_READER)</span><br><span class="line">        return _reader;</span><br><span class="line"></span><br><span class="line">    String encoding &#x3D; getCharacterEncoding();</span><br><span class="line">    if (encoding &#x3D;&#x3D; null)</span><br><span class="line">        encoding &#x3D; StringUtil.__ISO_8859_1;</span><br><span class="line"></span><br><span class="line">    if (_reader &#x3D;&#x3D; null || !encoding.equalsIgnoreCase(_readerEncoding))</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 读取流</span><br><span class="line">        final ServletInputStream in &#x3D; getInputStream();</span><br><span class="line">        _readerEncoding &#x3D; encoding;</span><br><span class="line">        _reader &#x3D; new BufferedReader(new InputStreamReader(in, encoding))</span><br><span class="line">        &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void close() throws IOException</span><br><span class="line">            &#123;</span><br><span class="line">                in.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    _inputState &#x3D; INPUT_READER;</span><br><span class="line">    return _reader;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p><code>getParameter</code> 方法，可以读到：</p><ul><li>POST from 表单数据<ul><li>但是无法读取 JSON 数据，因为从源码中看，它只处理<code>/x-www-form-urlencoded</code>。</li></ul></li><li>GET 数据<br><code>getReader</code> 方法则是直接读取 JSON 数据。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> jetty </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> 问题处理 </tag>
+            
+            <tag> jetty </tag>
             
         </tags>
       
@@ -3923,11 +3954,11 @@
       
         <tags>
             
+            <tag> vim </tag>
+            
             <tag> coc </tag>
             
             <tag> coc-java </tag>
-            
-            <tag> vim </tag>
             
             <tag> nvim </tag>
             
@@ -4369,11 +4400,11 @@
       
         <tags>
             
+            <tag> 并发 </tag>
+            
             <tag> 多线程 </tag>
             
             <tag> 死锁 </tag>
-            
-            <tag> 并发 </tag>
             
         </tags>
       
@@ -4522,9 +4553,9 @@
             
             <tag> mac </tag>
             
-            <tag> iterm2 </tag>
-            
             <tag> uniux </tag>
+            
+            <tag> iterm2 </tag>
             
         </tags>
       
@@ -4683,9 +4714,9 @@
             
             <tag> java </tag>
             
-            <tag> 问题 </tag>
-            
             <tag> 对象 </tag>
+            
+            <tag> 问题 </tag>
             
             <tag> spring </tag>
             
@@ -6786,13 +6817,13 @@
       
         <tags>
             
-            <tag> 设计模式 </tag>
-            
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
+            <tag> 设计模式 </tag>
             
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> 生产者消费者模式 </tag>
             
@@ -7071,11 +7102,11 @@
       
         <tags>
             
+            <tag> shell </tag>
+            
             <tag> 解决 </tag>
             
             <tag> 问题 </tag>
-            
-            <tag> shell </tag>
             
             <tag> ssh </tag>
             
@@ -7412,9 +7443,9 @@
             
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> 进程 </tag>
             
@@ -7883,9 +7914,9 @@
       
         <tags>
             
-            <tag> design </tag>
-            
             <tag> 设计模式 </tag>
+            
+            <tag> design </tag>
             
             <tag> 单例模式 </tag>
             
@@ -8231,9 +8262,9 @@
       
       <categories>
           
-          <category> 设计模式 </category>
-          
           <category> design </category>
+          
+          <category> 设计模式 </category>
           
           <category> proxy </category>
           
@@ -8244,9 +8275,9 @@
       
         <tags>
             
-            <tag> 设计模式 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 设计模式 </tag>
             
             <tag> 代理模式 </tag>
             
@@ -8656,9 +8687,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
+            
+            <tag> rocketmq </tag>
             
             <tag> broker </tag>
             
@@ -8685,9 +8716,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
+            
+            <tag> rocketmq </tag>
             
             <tag> 中间件 </tag>
             
@@ -8749,9 +8780,9 @@
       
         <tags>
             
-            <tag> rocketmq </tag>
-            
             <tag> mq </tag>
+            
+            <tag> rocketmq </tag>
             
             <tag> architecture </tag>
             
@@ -8918,9 +8949,9 @@
       
         <tags>
             
-            <tag> design </tag>
-            
             <tag> 设计模式 </tag>
+            
+            <tag> design </tag>
             
             <tag> 策略模式 </tag>
             
@@ -9017,9 +9048,9 @@
             
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> concurrent </tag>
             
@@ -9128,9 +9159,9 @@
             
             <tag> java </tag>
             
-            <tag> 多线程 </tag>
-            
             <tag> 并发 </tag>
+            
+            <tag> 多线程 </tag>
             
             <tag> concurrent </tag>
             
