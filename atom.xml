@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukai.net/"/>
-  <updated>2023-05-23T17:46:50.350Z</updated>
+  <updated>2023-07-15T15:25:46.993Z</updated>
   <id>https://liukai.net/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://liukai.net/posts/e5fa7f4c.html"/>
     <id>https://liukai.net/posts/e5fa7f4c.html</id>
     <published>2023-05-23T17:17:21.000Z</published>
-    <updated>2023-05-23T17:46:50.350Z</updated>
+    <updated>2023-07-15T15:25:46.993Z</updated>
     
     <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>是由Vitalik Buterin和其他来自以太坊生态系统的程序员共同创建的，它关注的是分片技术。</p><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>EIP-4844的主要目的是在不牺牲去中心化的情况下，降低网络上的gas费用，特别是对rollup解决方案。<br><strong>Arbitrum</strong>和<strong>Optimism</strong>等rollup解决方案可以将gas费用降低100到1000倍。</p><p>EIP-4844 提案是作为以太坊2.0更新完成之前的<strong>临时</strong>解决方案。该提案解释了一种新方法，以帮助划分交易中所需的信息，如验证规则和交易格式，而无需实际实现任何分片。</p><p><strong>这是一个很大的EIP，细分下来，需要用很多篇文章才能讲完整个EIP的细节经及EIP-4844要做的事</strong>。</p><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>每个区块 12 秒的出块时间 TPS 大概为 13~30 笔交易左右，但根据目前已知以太坊的 TPS 最高可以达到每秒 45 笔交易。<br>以太坊做为最主流的区块链，这个TPS就非常拉夸，还要号称世界计算机。</p><p>所以想要成为 “世界计算机” 的以太坊每秒最多处理 45 笔交易的性能实在是太弱了。所以以太坊迫切需要扩容来解决性能问题。</p><p>以太坊由于智能合约的存在，每个交易的内容各不相同，所以每个区块可以处理多少笔交易（TPS）取决于一个区块中包含的交易的数据量大小，每个交易的数据量大小都是根据实时需求决定的。<br>下图为以太坊交易TPS表：</p><h3 id="区块链不可能三角"><a href="#区块链不可能三角" class="headerlink" title="区块链不可能三角"></a>区块链不可能三角</h3><p>&quot;区块链不可能三角&quot; 指的是一个公共区块链无法同时满足三个特性：</p><ul><li>去中心化</li><li>安全性</li><li>可扩展性</li></ul><p>去中心化：指的是节点的去中心化程度，节点越多越分散越去中心化<br>安全性：指的是整个区块链网络的安全，攻击成本越高越安全<br>可扩展性：指的是区块链的处理交易性能，每秒可处理交易越多越具备可扩展性</p><p>从这三点的重要性来看的话，会发现去中心化和安全性是权重最高的。<br>以太坊的愿景是在去中心化并且安全的前提下实现可扩展性。</p><h2 id="技术方向"><a href="#技术方向" class="headerlink" title="技术方向"></a>技术方向</h2><p>针对以上三个问题，以太坊也进行了各种偿试，目前大方向就是<strong>扩容</strong>，扩容方案有以下几种：<br>以太坊主流扩容方案</p><ol><li>rollup</li><li>分片</li><li>sharding<ol><li>sharding 1.0</li><li>sharding 2.0</li></ol></li></ol><h3 id="rollup"><a href="#rollup" class="headerlink" title="rollup"></a>rollup</h3><p>Rollup 原理是将数百笔交易在链下像摊煎饼一样打包成一笔交易发送给以太坊来实现扩容，这样每个人平摊下来上传以太坊的费用就会很便宜，同时还可以继承以太坊的安全性。</p><p>Rollup 目前分为两种类型：</p><ul><li>Optimism Rollup（乐观 Rollup)</li><li>ZK Rollup（零知识证明 Rollup）</li></ul><p>Optimism Rollup: 假设所有交易都是诚实可信的，把许多笔交易压缩成一笔交易提交给以太坊，在提交后会有一段时间窗口（挑战期-目前是一周），任何人都可以质疑发起挑战来验证交易的真实性，但用户如果要将 OP Rollup 上的 ETH 转到以太坊上则需要等待挑战期结束后才可以得到最终确认。</p><p>ZK Rollup: 则是通过生成一个零知识证明来证明所有交易都是有效的，并将所有交易执行后的最终状态变化上传至以太坊。</p><p>相比 Optimism Rollup 来说 ZK Rollup 更有前景，ZK Rollup 不需要像 Optimism Rollup 那样上传压缩后的所有交易细节，只需要上传一个零知识证明和最终的状态变化的数据即可，意味着在可扩展性上可以比 OP Rollup 压缩更多的数据，并且也不需要像 OP Rollup 那样等待长达一周的挑战期，但 ZK Rollup 最大的缺点就是开发难度极大。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md">eip-4844.md</a></p>]]></content>
     
@@ -39,9 +39,13 @@
     
       <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
+    
       <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
     
-      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
+      <category term="eth" scheme="https://liukai.net/categories/eth/"/>
+    
+      <category term="eip" scheme="https://liukai.net/categories/eth/eip/"/>
     
       <category term="eip" scheme="https://liukai.net/categories/eip/"/>
     
@@ -50,17 +54,44 @@
       <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
     
     
-      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
       <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
     
-      <category term="以太坊" scheme="https://liukai.net/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"/>
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
-      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
+      <category term="以太坊" scheme="https://liukai.net/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/"/>
     
       <category term="eip" scheme="https://liukai.net/tags/eip/"/>
     
       <category term="eip4844" scheme="https://liukai.net/tags/eip4844/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用IDEA开发rust提示file is not included in module tree</title>
+    <link href="https://liukai.net/posts/750b0a4e.html"/>
+    <id>https://liukai.net/posts/750b0a4e.html</id>
+    <published>2023-04-18T18:08:57.000Z</published>
+    <updated>2023-07-18T18:24:15.880Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>用了很长一段时间nvim写rust，还没有用IDEA这样的IDE来写rust。就准备用一下，一用发现，还不太会在IDEA上用rust。<br>碰到的第一个问题就是 IDEA 提示:</p><blockquote><p>file is not included in module tree, analysis is not available</p></blockquote><p>fn main 也没有可以运行的按钮，但是命令行使用 cargo run 正常。这个说明应该是IDEA的配置的问题。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>IDEA 用 rust 我也不熟，猜测应该是跟项目构建有关，就类似IDEA 使用 maven 的构建，也需要对应的设置一样。</p><p>右键一下 Cargo.toml看一下，还真有一个Attach Cargo Project这一项，然后只要把项目添加到 IDEA 中就可以：</p><p>右键--&gt; Cargo.toml--&gt;Attach Cargo Project</p><p><img src="/posts/750b0a4e/n3zLjlSsji8AQJvDZNCH2nnVGI-l4gytOOh4TWGsexA.png" alt="image"></p><p>之后运行就正常了，记录一下，虽然是个小问题，但是可能也会帮助到同样出现这个问题的小伙伴。</p><p><img src="/posts/750b0a4e/0vP5KwFuq-jRdsn4IJ4EgCwOiKRBLnVF2BGeI54heu0.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;用了很长一段时间nvim写rust，还没有用IDEA这样的IDE来写rust。就准备用一下，一用发现，还不太会在IDEA上用rust。&lt;br
+      
+    
+    </summary>
+    
+      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
+    
+    
+      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
+    
+      <category term="idea" scheme="https://liukai.net/tags/idea/"/>
     
   </entry>
   
@@ -436,7 +467,7 @@
     <published>2022-12-15T12:27:13.000Z</published>
     <updated>2023-06-26T13:31:38.717Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#x75;&#115;&#101;&#x72;&#110;&#97;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#48;">&#x75;&#115;&#101;&#x72;&#110;&#97;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#97;&#109;&#101;&#x40;&#x31;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;">&#117;&#x73;&#101;&#x72;&#x6e;&#97;&#109;&#101;&#x40;&#x31;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
     
     <summary type="html">
     
@@ -544,11 +575,11 @@
       <category term="geth" scheme="https://liukai.net/categories/ethereum/geth/"/>
     
     
-      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
       <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
     
-      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
       <category term="ethereum原理" scheme="https://liukai.net/tags/ethereum%E5%8E%9F%E7%90%86/"/>
     
@@ -655,13 +686,13 @@
       <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
     
     
-      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
-    
-      <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
-    
       <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
     
       <category term="原理" scheme="https://liukai.net/tags/%E5%8E%9F%E7%90%86/"/>
+    
+      <category term="ethereum" scheme="https://liukai.net/tags/ethereum/"/>
+    
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
     
       <category term="编码" scheme="https://liukai.net/tags/%E7%BC%96%E7%A0%81/"/>
     
@@ -703,39 +734,6 @@
       <category term="tron" scheme="https://liukai.net/tags/tron/"/>
     
       <category term="广播" scheme="https://liukai.net/tags/%E5%B9%BF%E6%92%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tron-数据库设计1-接口和内存数据库状态</title>
-    <link href="https://liukai.net/posts/e50aa4af.html"/>
-    <id>https://liukai.net/posts/e50aa4af.html</id>
-    <published>2022-08-02T09:24:08.000Z</published>
-    <updated>2023-03-10T14:09:54.169Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p><code>tron</code>的数据库设计是在基于<code>leveldb</code>的基础上抽像自己的相关业务，设计出基于自己的业务数据操作类。<br>有两大块分别是：</p><ol><li>内存数据库</li><li>持久化数据库</li></ol><p>从两个角度进行梳理:</p><ol><li>代码设计</li><li>业务应用</li></ol><ul><li>代码结构<ul><li>代码结构设计</li><li>接口关系、主要功能方面着手了解。</li></ul></li><li>业务使用<ul><li>generateBlock</li><li>pushBlock</li><li>pushTransaction</li><li>switchFork</li></ul></li></ul><h2 id="一、ITronChainBase-存储操作接口"><a href="#一、ITronChainBase-存储操作接口" class="headerlink" title="一、ITronChainBase 存储操作接口"></a>一、ITronChainBase 存储操作接口</h2><p>数据库相关的接口比较多，有些关系结构看起来功能相似，反而不容易区分出差异。下面按照功能职责划分。</p><p>作用：提供基础数据库基础操作方法。<br><img src="/posts/e50aa4af/ITronChainBase.png" alt="ITronChainBase.png"></p><ol><li><strong>ITronChainBase</strong>: 顶层接口，提供如：<code>put</code>、<code>get</code>、<code>delete</code>等相关操作，包含两个抽象类。</li><li><strong>TronStoreWithRevoking</strong>: 抽象类，提供构造器中包含初始化方法。各个Store的初始化从这里开始，包含36个Store，如：<br>a. AccountStore<br>b. BlockStore<br>c. BlockIndexStore</li><li><strong>TronDatabase</strong>：抽象类，提供的方法大部分为抽像方法，这样的话，实现类可以根据需要，自行实现自己业务相关的数据库操作。<br>构造器也提供初始化功能，其构造器中的初始化 DbSourceInter，直接操作数据库。<br>子类如：<br>a. KhaosDatabase：内存数据库<br>b. CheckTmpStore：并没有真正实现ITronChainBase接口方法 ，接口方法都是空实现。<br>从设计上看，只是将跟数据库操作相关的类，使用相同接口进行规范。</li></ol><h2 id="二、RevokingDatabase-可回退数据库"><a href="#二、RevokingDatabase-可回退数据库" class="headerlink" title="二、RevokingDatabase 可回退数据库"></a>二、RevokingDatabase 可回退数据库</h2><p><img src="/posts/e50aa4af/RevokingDatabase.png" alt="RevokingDatabase.png"></p><p>作用：提供基于可回退的数据库操作。提供内存快照功能，管理指针对Session的处理：</p><ol><li>快照创建</li><li>数据合并</li><li>快照销毁</li></ol><p>相关接口、类如下:</p><ol><li><strong>RevokingDatabase</strong>: 接口，提供buildSession、merge等操作。</li><li><strong>RevokingStore</strong>：快照存储v1版本，实现类主要功能依赖抽像类AbstractRevokingStore</li><li><strong>SnapshotManager</strong>：快照存储v2版本，当前主要实现类。</li><li><strong>v1、v2区别</strong>:<br>a. <code>db.version = 1</code>， 方式：向数据库写入数据之前，将修改过程保存到内存，然后再将数据写到数据库，当需要数据回退的时候，根据内存保存的数据修改过程，还原数据库中的数据。<br>b. <code>db.version = 2</code>，方式：向数据库写入的数据都是不可回退的数据，而将可回退的数据写入到内存，当可回退的数据变成不可回退的时候即固化，再将数据写入到数据库。<br>c. <code>db.version=1</code> 这种方式，如果服务出现异常，回退就丢失了，不利于回退。</li></ol><h3 id="1-SnapshotManager-内存快照管理"><a href="#1-SnapshotManager-内存快照管理" class="headerlink" title="1.SnapshotManager 内存快照管理"></a>1.SnapshotManager 内存快照管理</h3><p>作用：维护session状态，包括：创建、合并、刷盘等操作。<br>顶层接口：<strong>RevokingDatabase</strong>，数据库模型：构建内存快照链表。<br>使用可回退数据库模型<strong>TronStoreWithRevoking</strong>，未固化块均存在于内存快照中，固化块存在于底层数据库<strong>LevelDB</strong>或者<strong>rocksDB</strong>中。<br>基于SnapshotRoot快照模型</p><p><img src="/posts/e50aa4af/%E5%9F%BA%E4%BA%8ESnapshotRoot%E5%BF%AB%E7%85%A7%E6%A8%A1%E5%9E%8B.png" alt="基于SnapshotRoot快照模型.png"></p><p>每一个<code>Snapshot</code>就是内存当中的一个数据结构，是当前整个数据库的状态，是整个数据库的状态。<br>就是说，每一个Snapshot保存的是某个块高的快照状态。</p><p>怎么理解？<br>首先，状态只跟区块有关，每个Snapshot对应一个当前区块状态，如：<br>Snapshot1 对应 block=10001。</p><p>比如：block=10001的状态是：<br>account1=100<br>account2=222</p><p>Snapshot2 对应 block=10002。</p><p>比如：block=10001的状态是：<br>account1=110<br>account2=333</p><p>至于为什么是这样对应，为什么要这样设计，这样设计的用意、为了解决什么问题、好处、可能出现的问题，后面讲。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;数据库设计&quot;&gt;&lt;a href=&quot;#数据库设计&quot; class=&quot;headerlink&quot; title=&quot;数据库设计&quot;&gt;&lt;/a&gt;数据库设计&lt;/h2&gt;&lt;p&gt;&lt;code&gt;tron&lt;/code&gt;的数据库设计是在基于&lt;code&gt;leveldb&lt;/code&gt;的基础上抽像自己的相关
-      
-    
-    </summary>
-    
-      <category term="tron" scheme="https://liukai.net/categories/tron/"/>
-    
-      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
-    
-      <category term="tron" scheme="https://liukai.net/categories/blockchain/tron/"/>
-    
-      <category term="database" scheme="https://liukai.net/categories/tron/database/"/>
-    
-    
-      <category term="tron" scheme="https://liukai.net/tags/tron/"/>
-    
-      <category term="database" scheme="https://liukai.net/tags/database/"/>
     
   </entry>
   
