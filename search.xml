@@ -449,7 +449,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#97;&#109;&#101;&#x40;&#x31;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;">&#117;&#x73;&#101;&#x72;&#x6e;&#97;&#109;&#101;&#x40;&#x31;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#x65;&#114;&#110;&#97;&#x6d;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#x73;&#x65;&#114;&#110;&#97;&#x6d;&#x65;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
       
       
       <categories>
@@ -745,6 +745,33 @@
             <tag> tron </tag>
             
             <tag> database </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>WOL 唤醒内网设备</title>
+      <link href="posts/84a6f8be.html"/>
+      <url>posts/84a6f8be.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>使用在内网发起一个数据包来唤醒支持WOL的设备。<br>但是这有几个前提：</p><ol><li>设备支持WOL</li></ol><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>使用UDP，设置广播模式，往目标或者直接全网段广播就行。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> net.liukai.tool;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.DatagramPacket;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WakeOnLanTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">wakeUp</span><span class="params">(String macAddress)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] macBytes = getMacBytes(macAddress);</span><br><span class="line">            <span class="keyword">byte</span>[] magicPacket = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">102</span>];</span><br><span class="line">            <span class="comment">// 添加6个FF字节</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">                magicPacket[i] = (<span class="keyword">byte</span>) <span class="number">0xff</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 添加16次MAC地址</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">6</span>; i &lt; magicPacket.length; i += <span class="number">6</span>) &#123;</span><br><span class="line">                System.arraycopy(macBytes, <span class="number">0</span>, magicPacket, i, <span class="number">6</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 创建用于发送UDP数据报的Socket</span></span><br><span class="line">            DatagramSocket socket = <span class="keyword">new</span> DatagramSocket();</span><br><span class="line">            <span class="comment">// 发送数据报到目标主机的255.255.255.255端口</span></span><br><span class="line">            DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(magicPacket, magicPacket.length, InetAddress.getByName(<span class="string">&quot;255.255.255.255&quot;</span>), <span class="number">9</span>);</span><br><span class="line">            socket.send(packet);</span><br><span class="line">            <span class="comment">// 关闭Socket</span></span><br><span class="line">            socket.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getMacBytes(String macAddress) <span class="keyword">throws</span> IllegalArgumentException &#123;</span><br><span class="line">        String[] hex = macAddress.split(<span class="string">&quot;(\\:|\\-)&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (hex.length != <span class="number">6</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Invalid MAC address.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">6</span>];</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">                bytes[i] = (<span class="keyword">byte</span>) Integer.parseInt(hex[i], <span class="number">16</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Invalid hex digit in MAC address.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bytes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String macAddress = <span class="string">&quot;11:22:33:44:55:66&quot;</span>; <span class="comment">// 替换为目标设备的MAC地址</span></span><br><span class="line">        wakeUp(macAddress);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h2><p>使用这种方式唤醒，如果是在双路由器的情况下，NAS的<strong>网络</strong>服务顺序会被改变。多次测试确实是这样，但是原理想不通。<br>原来默认网关出是是A路由器，使用代码后，就会成B路由器。使用synology官方的唤醒工具就没有这个问题。<br>为什么要用两个路由器，因为其中一个刷了固件，懂的都懂。<br>顺序变了有什么影响？当然有，默认B路由器的网走的不是常规网络，外部访问不了。<br>但是，如果NAS是使用了FRP，FRP的功能不受影响，因为FRP指定了内网IP和端口。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> synology </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> wol </tag>
+            
+            <tag> synology </tag>
             
         </tags>
       
@@ -3138,11 +3165,11 @@
             
             <tag> Tendermint </tag>
             
+            <tag> BlockChain </tag>
+            
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
-            
-            <tag> BlockChain </tag>
             
         </tags>
       
@@ -3427,9 +3454,9 @@
             
             <tag> 区块链 </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -3458,9 +3485,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
             <tag> coinbase交易 </tag>
             
@@ -3491,9 +3518,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -3522,11 +3549,11 @@
             
             <tag> 区块链 </tag>
             
+            <tag> btc </tag>
+            
             <tag> 比特币 </tag>
             
             <tag> 技术体系 </tag>
-            
-            <tag> btc </tag>
             
         </tags>
       
@@ -3559,9 +3586,9 @@
             
             <tag> 架构 </tag>
             
-            <tag> 比特币 </tag>
-            
             <tag> btc </tag>
+            
+            <tag> 比特币 </tag>
             
         </tags>
       
@@ -4745,9 +4772,9 @@
             
             <tag> java </tag>
             
-            <tag> 对象 </tag>
-            
             <tag> 问题 </tag>
+            
+            <tag> 对象 </tag>
             
             <tag> spring </tag>
             
@@ -8182,9 +8209,9 @@
             
             <tag> java </tag>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
             <tag> 项目依赖 </tag>
             
@@ -8213,9 +8240,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
         </tags>
       
@@ -8242,9 +8269,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
             <tag> 项目模型 </tag>
             
@@ -8273,9 +8300,9 @@
       
         <tags>
             
-            <tag> 项目构建 </tag>
-            
             <tag> maven </tag>
+            
+            <tag> 项目构建 </tag>
             
         </tags>
       
