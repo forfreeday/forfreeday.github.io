@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>rust 继承、封装、多态</title>
+      <link href="posts/4cbcc746.html"/>
+      <url>posts/4cbcc746.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="封装（encapsulation）"><a href="#封装（encapsulation）" class="headerlink" title="封装（encapsulation）"></a>封装（encapsulation）</h2><p>rust 的封装是基于结构体，而不是对象，结构体就是 rust 的对象，这个和go一样。<br>默认情况下，结构体只有字段。<br>注意，结构体自身被标记为 pub，这样其他代码就可以使用这个结构体，但是在结构体内部的字段仍然是私有的！！！！<br>可以通过实现结构体，来为结构体添加方法，也是和go一样的特性！！</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">AveragedCollection</span></span> &#123;</span><br><span class="line">    list: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt;,</span><br><span class="line">    average: <span class="built_in">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> AveragedCollection &#123;</span><br><span class="line">    <span class="comment">// 这个 self 是不是有熟悉的感觉，python 中大量使用 self</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>, value: <span class="built_in">i32</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.list.push(value);</span><br><span class="line">        <span class="keyword">self</span>.update_average();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">remove</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) -&gt; <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> result = <span class="keyword">self</span>.list.pop();</span><br><span class="line">        <span class="keyword">match</span> result &#123;</span><br><span class="line">            <span class="literal">Some</span>(value) =&gt; &#123;</span><br><span class="line">                <span class="keyword">self</span>.update_average();</span><br><span class="line">                <span class="literal">Some</span>(value)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="literal">None</span> =&gt; <span class="literal">None</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">average</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.average</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">update_average</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> total: <span class="built_in">i32</span> = <span class="keyword">self</span>.list.iter().sum();</span><br><span class="line">        <span class="keyword">self</span>.average = total <span class="keyword">as</span> <span class="built_in">f64</span> / <span class="keyword">self</span>.list.len() <span class="keyword">as</span> <span class="built_in">f64</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> average = AveragedCollection &#123;</span><br><span class="line">        list: <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">        average: <span class="number">3.0</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 注意看，这个里用 . 而不是 ::，在rust中对象使用是. 进行调用</span></span><br><span class="line">    average.add(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="继承（Inheritance）-rust-没有继续机制！！"><a href="#继承（Inheritance）-rust-没有继续机制！！" class="headerlink" title="继承（Inheritance）--rust 没有继续机制！！"></a>继承（Inheritance）--rust 没有继续机制！！</h2><p>是一个很多编程语言都提供的机制，一个对象可以定义为继承另一个对象定义中的元素，这使其可以获得父对象的数据和行为，而无需重新定义。<br>如果一个语言必须有继承才能被称为面向对象语言的话，那么 Rust 就不是面向对象的。因为没有宏则无法定义一个结构体继承父结构体的成员和方法。<br>其实 go 也是这么干的，这两哥们都不愿意使用继承，而都是通过组合的形式。</p><p><strong>rust 如何实现代码复用？</strong><br>Rust 代码中可以使用默认 trait 方法实现来进行有限的共享。  </p><h2 id="多态（Polymorphism）"><a href="#多态（Polymorphism）" class="headerlink" title="多态（Polymorphism）"></a>多态（Polymorphism）</h2><p>Rust 则通过泛型来对不同的可能类型进行抽象，并通过 <strong>trait bounds</strong> 对这些类型所必须提供的内容施加约束。<br>这有时被称为 bounded parametric polymorphism。<br>Rust 选择了一个不同的途径，使用 trait 对象而不是继承。<br>其实 trait 就是类似于其它语言的接口(Interface)，然后以这种形式实现多态。</p><p>举个例子：</p><p>定义一下<code>Shape</code>的Trait，其中包含一个<code>area</code>方法。<br>然后，分别为<code>Circle</code>和<code>Rectangle</code>结构体实现了Shape Trait。<br>最后，编写了一个<code>print_area</code>函数，它接受一个实现了Shape Trait的参数，并打印出其面积。</p><p>通过Trait和动态分发，可以在运行时选择不同的实现，并实现多态的效果。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Shape</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f64</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Circle</span></span> &#123;</span><br><span class="line">    radius: <span class="built_in">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Shape <span class="keyword">for</span> Circle &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f64</span> &#123;</span><br><span class="line">        std::<span class="built_in">f64</span>::consts::PI * <span class="keyword">self</span>.radius * <span class="keyword">self</span>.radius</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Rectangle</span></span> &#123;</span><br><span class="line">    width: <span class="built_in">f64</span>,</span><br><span class="line">    height: <span class="built_in">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Shape <span class="keyword">for</span> Rectangle &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.width * <span class="keyword">self</span>.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">print_area</span></span>(shape: &amp;<span class="keyword">dyn</span> Shape) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Area: &#123;&#125;&quot;</span>, shape.area());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> circle = Circle &#123; radius: <span class="number">1.0</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> rectangle = Rectangle &#123; width: <span class="number">2.0</span>, height: <span class="number">3.0</span> &#125;;</span><br><span class="line"></span><br><span class="line">    print_area(&amp;circle);</span><br><span class="line">    print_area(&amp;rectangle);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这个其实和go实现多态的方式是一样的，也是基于实现接口的方式。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Rust 和 go 这两哥们都不支持基于继承的面向对象，都是基于组合的形式，主要是因为rust的设计理念不同。<br>Rust选择不使用继承来实现多态，而是使用trait和泛型来实现多态性。这是因为Rust的设计目标之一是提供内存安全和无运行时开销的抽象机制。<br>使用继承来实现多态性的语言，如C++和Java，通常需要在运行时进行动态分派，这需要额外的运行时开销。此外，继承关系还引入了对象的大小和布局的问题。<br>Rust通过trait和泛型的组合提供了一种更安全、更灵活的多态性实现方式。trait是一种抽象机制，允许定义一组方法的契约，并让类型来实现这些方法。泛型允许在编写代码时引入抽象的类型参数，以便代码可以适用于不同的具体类型。这种静态的泛型多态性在编译时进行类型检查，并且没有运行时开销。<br>使用trait和泛型实现多态性的优势包括：</p><ol><li>零运行时开销：Rust的trait和泛型在编译时进行静态分派，不需要额外的运行时开销。</li><li>内存安全：Rust的trait和泛型机制保证了类型安全和内存安全，避免了继承层次带来的一些问题，如对象切片的大小和布局问题。</li><li>更灵活的抽象：使用trait和泛型，可以根据需要定义和使用不同的行为集合，而不受固定的继承关系的限制。</li></ol><p>综上，Rust选择使用trait和泛型来实现多态性，以提供更安全、更高效、更灵活的抽象机制，并符合Rust的设计目标和哲学。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> rust </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> rust </tag>
+            
+            <tag> 面像对象 </tag>
+            
+            <tag> 继承 </tag>
+            
+            <tag> 封装 </tag>
+            
+            <tag> 多态 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>以太坊 EIP-4844 简述</title>
       <link href="posts/e5fa7f4c.html"/>
       <url>posts/e5fa7f4c.html</url>
@@ -449,7 +482,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#x75;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#49;&#48;">&#x75;&#x73;&#x65;&#x72;&#110;&#97;&#109;&#101;&#x40;&#x31;&#x30;&#x2e;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#101;&#x72;&#110;&#97;&#x6d;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#x30;">&#117;&#x73;&#101;&#x72;&#110;&#97;&#x6d;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#49;&#x30;&#x2e;&#49;&#x30;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
       
       
       <categories>
@@ -802,9 +835,9 @@
             
             <tag> blockchain </tag>
             
-            <tag> tron </tag>
-            
             <tag> java </tag>
+            
+            <tag> tron </tag>
             
             <tag> 参与度 </tag>
             
@@ -1096,9 +1129,9 @@
       
         <tags>
             
-            <tag> tron </tag>
-            
             <tag> java </tag>
+            
+            <tag> tron </tag>
             
             <tag> checkpoint </tag>
             
@@ -1569,11 +1602,11 @@
       
         <tags>
             
-            <tag> slack </tag>
-            
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> slack </tag>
             
             <tag> 日志 </tag>
             
@@ -1915,13 +1948,13 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -2429,9 +2462,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> FullGC </tag>
             
@@ -2464,9 +2497,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
         </tags>
       
@@ -3165,11 +3198,11 @@
             
             <tag> Tendermint </tag>
             
+            <tag> BlockChain </tag>
+            
             <tag> 快速入门 </tag>
             
             <tag> ABCI </tag>
-            
-            <tag> BlockChain </tag>
             
         </tags>
       
@@ -3316,9 +3349,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> mq </tag>
-            
             <tag> matic </tag>
+            
+            <tag> mq </tag>
             
         </tags>
       
@@ -3388,9 +3421,9 @@
             
             <tag> jvm </tag>
             
-            <tag> gc </tag>
-            
             <tag> cms </tag>
+            
+            <tag> gc </tag>
             
             <tag> 调优 </tag>
             
@@ -3915,11 +3948,11 @@
             
             <tag> 算法 </tag>
             
-            <tag> algorithm </tag>
+            <tag> 栈 </tag>
             
             <tag> LeetCode </tag>
             
-            <tag> 栈 </tag>
+            <tag> algorithm </tag>
             
         </tags>
       
@@ -5042,11 +5075,11 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
@@ -5483,9 +5516,9 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> shell </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -7716,9 +7749,9 @@
       
         <tags>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> final </tag>
             
@@ -8747,9 +8780,9 @@
             
             <tag> mq </tag>
             
-            <tag> broker </tag>
-            
             <tag> rocketmq </tag>
+            
+            <tag> broker </tag>
             
         </tags>
       
@@ -9411,6 +9444,35 @@
     
     
     <entry>
+      <title>java-计算概率</title>
+      <link href="posts/bc857395.html"/>
+      <url>posts/bc857395.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>有一个需求，就是计算一个请求的命中概率，这个命中的概率是作用于单次的请求，而非整体，也就是每一次请求过来都只有20%的命中率。</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProbabilityDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 设置命中概率为20%</span></span><br><span class="line">        <span class="keyword">double</span> hitProbability = <span class="number">0.2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建随机数生成器</span></span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生成一个0到1之间的随机数</span></span><br><span class="line">        <span class="keyword">double</span> randomValue = random.nextDouble();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断随机数是否小于等于命中概率</span></span><br><span class="line">        <span class="keyword">if</span> (randomValue &lt;= hitProbability) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;命中！&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;未命中！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>比较简单的一个写法，记录一下。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> java </tag>
+            
+            <tag> 概率 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JUC 多线程01--线程、进程概念</title>
       <link href="posts/27434.html"/>
       <url>posts/27434.html</url>
@@ -9433,9 +9495,9 @@
             
             <tag> 原理 </tag>
             
-            <tag> 概念 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 概念 </tag>
             
             <tag> 线程 </tag>
             
