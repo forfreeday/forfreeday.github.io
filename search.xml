@@ -4,6 +4,47 @@
   
     
     <entry>
+      <title>ETH-EIP-4337</title>
+      <link href="posts/752261e8.html"/>
+      <url>posts/752261e8.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="EIP-4337"><a href="#EIP-4337" class="headerlink" title="EIP-4337"></a>EIP-4337</h1><p>首先声明以下几点：</p><ol><li>用户钱包都采用 <strong>contract</strong> 实现，每个用户对应一个合约地址</li><li>用户初次发起交易时，会<strong>自动创建合约</strong></li><li>用户可以指定一个 payment 合约地址，用该地址中的余额支付手续费</li></ol><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p><img src="/posts/752261e8/%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.png" alt="image"></p><p>ERC-4337 定义了一个基于 ETH 的账户抽象标准，以下为简单介绍。</p><ul><li>UserOperation：类比原生交易，不过为另一种格式的交易，比如支持携带自定义签名、交易的基础信息（gas、sender、limit等）</li><li>UserOperation mempool：专门的一些节点搭建的P2P网络构成的交易缓存池，用于接受UserOperation</li><li>Bundler：负责收集、校验、打包UserOperation，并将打包好的交易发送给产块人，交易上链的费用由Bundler支付，但是Bundler会从UserOperation中获取用户的手续费作为奖励。</li></ul><p>Note：本质上是启动了一个独立于主链的P2P网络，用于接收抽象账户的交易并打包上链。</p><p><a href="https://github.com/ethereum/EIPs/blob/3fd65b1a782912bfc18cb975c62c55f733c7c96e/EIPS/eip-4337.md">https://github.com/ethereum/EIPs/blob/3fd65b1a782912bfc18cb975c62c55f733c7c96e/EIPS/eip-4337.md</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blockchain </category>
+          
+          <category> ethereum </category>
+          
+          <category> eth </category>
+          
+          <category> 4337 </category>
+          
+          <category> eip </category>
+          
+          <category> eth </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> blockchain </tag>
+            
+            <tag> eth </tag>
+            
+            <tag> eip </tag>
+            
+            <tag> 4337 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Cosmos 普通交易手续费调研</title>
       <link href="posts/819a1e2d.html"/>
       <url>posts/819a1e2d.html</url>
@@ -56,9 +97,9 @@
           
           <category> eth </category>
           
-          <category> eip </category>
-          
           <category> 4844 </category>
+          
+          <category> eip </category>
           
           <category> eth </category>
           
@@ -126,17 +167,17 @@
           
           <category> ethereum </category>
           
+          <category> eth </category>
+          
           <category> ethereum </category>
           
-          <category> eth </category>
-          
-          <category> eip </category>
-          
-          <category> eip </category>
-          
           <category> eip </category>
           
           <category> eth </category>
+          
+          <category> eip </category>
+          
+          <category> eip </category>
           
           <category> 4844 </category>
           
@@ -558,7 +599,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#97;&#x6d;&#101;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#x73;&#x65;&#x72;&#x6e;&#97;&#x6d;&#101;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
       
       
       <categories>
@@ -1042,11 +1083,11 @@
           
           <category> ethereum </category>
           
+          <category> eth </category>
+          
           <category> account </category>
           
           <category> ethereum </category>
-          
-          <category> eth </category>
           
           <category> account </category>
           
@@ -1678,11 +1719,11 @@
       
         <tags>
             
-            <tag> slack </tag>
-            
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> slack </tag>
             
             <tag> 日志 </tag>
             
@@ -2126,9 +2167,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2206,9 +2247,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2247,9 +2288,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2387,9 +2428,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2451,9 +2492,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -2663,9 +2704,9 @@
           
           <category> spring </category>
           
-          <category> spring </category>
-          
           <category> 源码阅读 </category>
+          
+          <category> spring </category>
           
           <category> spring </category>
           
@@ -3425,9 +3466,9 @@
             
             <tag> 安装 </tag>
             
-            <tag> matic </tag>
-            
             <tag> mq </tag>
+            
+            <tag> matic </tag>
             
         </tags>
       
@@ -3789,9 +3830,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -3828,9 +3869,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -3869,9 +3910,9 @@
           
           <category> vim </category>
           
-          <category> 插件 </category>
-          
           <category> plugin </category>
+          
+          <category> 插件 </category>
           
       </categories>
       
@@ -3929,11 +3970,11 @@
             
             <tag> nvim </tag>
             
-            <tag> 配置 </tag>
-            
             <tag> on-my-zsh </tag>
             
             <tag> zsh </tag>
+            
+            <tag> 配置 </tag>
             
         </tags>
       
@@ -5151,11 +5192,11 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> map 任务 </tag>
             
             <tag> hadoop </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
@@ -7465,9 +7506,9 @@
       
         <tags>
             
-            <tag> c </tag>
-            
             <tag> 指针 </tag>
+            
+            <tag> c </tag>
             
         </tags>
       
@@ -8152,9 +8193,9 @@
           
           <category> algorithm </category>
           
-          <category> struct </category>
-          
           <category> tree </category>
+          
+          <category> struct </category>
           
           <category> 算法 </category>
           
@@ -8202,9 +8243,9 @@
             
             <tag> algorithm </tag>
             
-            <tag> tree </tag>
-            
             <tag> 二叉树 </tag>
+            
+            <tag> tree </tag>
             
         </tags>
       
@@ -8775,9 +8816,9 @@
       
         <tags>
             
-            <tag> 计算机原理 </tag>
-            
             <tag> 数组 </tag>
+            
+            <tag> 计算机原理 </tag>
             
         </tags>
       
@@ -9027,6 +9068,8 @@
             
             <tag> 原理 </tag>
             
+            <tag> 计算机原理 </tag>
+            
             <tag> 原码 </tag>
             
             <tag> 补码 </tag>
@@ -9036,8 +9079,6 @@
             <tag> 二进制 </tag>
             
             <tag> 基础 </tag>
-            
-            <tag> 计算机原理 </tag>
             
             <tag> 编码 </tag>
             
@@ -9064,11 +9105,11 @@
       
         <tags>
             
+            <tag> 对象 </tag>
+            
             <tag> js </tag>
             
             <tag> javascript </tag>
-            
-            <tag> 对象 </tag>
             
         </tags>
       

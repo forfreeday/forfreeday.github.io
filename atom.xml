@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liukai.net/"/>
-  <updated>2023-11-20T15:36:38.470Z</updated>
+  <updated>2023-11-20T15:46:16.396Z</updated>
   <id>https://liukai.net/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH-EIP-4337</title>
+    <link href="https://liukai.net/posts/752261e8.html"/>
+    <id>https://liukai.net/posts/752261e8.html</id>
+    <published>2023-11-20T15:40:48.000Z</published>
+    <updated>2023-11-20T15:46:16.396Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="EIP-4337"><a href="#EIP-4337" class="headerlink" title="EIP-4337"></a>EIP-4337</h1><p>首先声明以下几点：</p><ol><li>用户钱包都采用 <strong>contract</strong> 实现，每个用户对应一个合约地址</li><li>用户初次发起交易时，会<strong>自动创建合约</strong></li><li>用户可以指定一个 payment 合约地址，用该地址中的余额支付手续费</li></ol><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p><img src="/posts/752261e8/%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.png" alt="image"></p><p>ERC-4337 定义了一个基于 ETH 的账户抽象标准，以下为简单介绍。</p><ul><li>UserOperation：类比原生交易，不过为另一种格式的交易，比如支持携带自定义签名、交易的基础信息（gas、sender、limit等）</li><li>UserOperation mempool：专门的一些节点搭建的P2P网络构成的交易缓存池，用于接受UserOperation</li><li>Bundler：负责收集、校验、打包UserOperation，并将打包好的交易发送给产块人，交易上链的费用由Bundler支付，但是Bundler会从UserOperation中获取用户的手续费作为奖励。</li></ul><p>Note：本质上是启动了一个独立于主链的P2P网络，用于接收抽象账户的交易并打包上链。</p><p><a href="https://github.com/ethereum/EIPs/blob/3fd65b1a782912bfc18cb975c62c55f733c7c96e/EIPS/eip-4337.md">https://github.com/ethereum/EIPs/blob/3fd65b1a782912bfc18cb975c62c55f733c7c96e/EIPS/eip-4337.md</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;EIP-4337&quot;&gt;&lt;a href=&quot;#EIP-4337&quot; class=&quot;headerlink&quot; title=&quot;EIP-4337&quot;&gt;&lt;/a&gt;EIP-4337&lt;/h1&gt;&lt;p&gt;首先声明以下几点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户钱包都采用 &lt;strong&gt;contrac
+      
+    
+    </summary>
+    
+      <category term="blockchain" scheme="https://liukai.net/categories/blockchain/"/>
+    
+      <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
+    
+      <category term="eth" scheme="https://liukai.net/categories/eth/"/>
+    
+      <category term="4337" scheme="https://liukai.net/categories/eth/4337/"/>
+    
+      <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
+    
+      <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
+    
+    
+      <category term="blockchain" scheme="https://liukai.net/tags/blockchain/"/>
+    
+      <category term="eth" scheme="https://liukai.net/tags/eth/"/>
+    
+      <category term="eip" scheme="https://liukai.net/tags/eip/"/>
+    
+      <category term="4337" scheme="https://liukai.net/tags/4337/"/>
+    
+  </entry>
   
   <entry>
     <title>Cosmos 普通交易手续费调研</title>
@@ -77,9 +120,9 @@
     
       <category term="eth" scheme="https://liukai.net/categories/eth/"/>
     
-      <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
-    
       <category term="4844" scheme="https://liukai.net/categories/eth/4844/"/>
+    
+      <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
     
       <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
     
@@ -148,17 +191,17 @@
     
       <category term="ethereum" scheme="https://liukai.net/categories/ethereum/"/>
     
-      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
-    
       <category term="eth" scheme="https://liukai.net/categories/eth/"/>
     
+      <category term="ethereum" scheme="https://liukai.net/categories/blockchain/ethereum/"/>
+    
       <category term="eip" scheme="https://liukai.net/categories/ethereum/eip/"/>
+    
+      <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
     
       <category term="eip" scheme="https://liukai.net/categories/eth/eip/"/>
     
       <category term="eip" scheme="https://liukai.net/categories/eip/"/>
-    
-      <category term="eth" scheme="https://liukai.net/categories/blockchain/eth/"/>
     
       <category term="4844" scheme="https://liukai.net/categories/eip/4844/"/>
     
@@ -253,9 +296,9 @@
     
       <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
-      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
-    
       <category term="ide" scheme="https://liukai.net/categories/vim/ide/"/>
+    
+      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
     
       <category term="rust" scheme="https://liukai.net/categories/vim/rust/"/>
     
@@ -552,9 +595,9 @@
     
       <category term="vim" scheme="https://liukai.net/categories/vim/"/>
     
-      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
-    
       <category term="ide" scheme="https://liukai.net/categories/vim/ide/"/>
+    
+      <category term="ide" scheme="https://liukai.net/categories/rust/ide/"/>
     
       <category term="rust" scheme="https://liukai.net/categories/vim/rust/"/>
     
@@ -576,7 +619,7 @@
     <published>2022-12-15T12:27:13.000Z</published>
     <updated>2023-08-29T09:25:37.069Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#x73;&#x65;&#x72;&#x6e;&#97;&#x6d;&#101;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#x73;&#x65;&#x72;&#x6e;&#97;&#x6d;&#101;&#x40;&#49;&#48;&#46;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
     
     <summary type="html">
     
@@ -695,35 +738,6 @@
       <category term="节点" scheme="https://liukai.net/tags/%E8%8A%82%E7%82%B9/"/>
     
       <category term="geth" scheme="https://liukai.net/tags/geth/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rust-rustup介绍</title>
-    <link href="https://liukai.net/posts/db0a7b21.html"/>
-    <id>https://liukai.net/posts/db0a7b21.html</id>
-    <published>2022-12-05T14:09:56.000Z</published>
-    <updated>2023-03-04T06:43:49.905Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="rustup-工具链管理"><a href="#rustup-工具链管理" class="headerlink" title="rustup 工具链管理"></a>rustup 工具链管理</h2><p>这个可能很少人在意，一般只有在安装rust的时候通过脚本安装了<code>rustup</code>，但是后面很少会用到。<br>这几天在折腾<code>rust-vim</code>的时候，发现还是会用到，记录一下。<br>这个工具不止是安装、御载，还是一个工具链管理工具。</p><p>有几个作用：</p><ul><li>安装rust</li><li>卸载rust</li><li>升级rust</li><li>安装工具链，就是rust相关的工具链</li></ul><h2 id="官方说明"><a href="#官方说明" class="headerlink" title="官方说明"></a>官方说明</h2><blockquote><p>Rust 由工具 rustup 安装和管理。Rust 有着以 6 星期为周期的 快速版本迭代机制，支持 大量平台，因而不同时期存在大量不同的 Rust 构建版本。 rustup 用于管理不同平台下的 Rust 构建版本并使其互相兼容， 支持安装由 Beta 和 Nightly 频道发布的版本，并支持其他用于交叉编译的编译版本。<br>如果您曾经安装过 rustup，可以执行 rustup update 来升级 Rust。</p></blockquote><h3 id="安装rust"><a href="#安装rust" class="headerlink" title="安装rust"></a>安装rust</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure><p>选<code>1</code>默认安装</p><p><img src="/posts/db0a7b21/%E5%AE%89%E8%A3%85.jpg" alt="安装"></p><p>再按照提示执行一下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source $HOME/.cargo/env</span><br></pre></td></tr></table></figure><h3 id="更新-rust"><a href="#更新-rust" class="headerlink" title="更新 rust"></a>更新 rust</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup update</span><br></pre></td></tr></table></figure><h3 id="卸载-Rust"><a href="#卸载-Rust" class="headerlink" title="卸载 Rust"></a>卸载 Rust</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup self uninstall</span><br></pre></td></tr></table></figure><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>官方文档中还有说明：</p><blockquote><p>This is similar to Ruby&#39;s rbenv, Python&#39;s pyenv, or Node&#39;s nvm.</p></blockquote><p>也就是说，还可以进行版本切换。</p><h3 id="频道-channel"><a href="#频道-channel" class="headerlink" title="频道 channel"></a>频道 channel</h3><blockquote><p>channel — Rust is released to three different &quot;channels&quot;: stable, beta, and nightly. See the Channels chapter for more details.</p></blockquote><p>就是说rust会发布：<code>稳定版</code>、<code>beta</code>版、<code>nightly</code>版本。<br>可以切换版本，有点类似于node的<code>nvm</code>版本切换。<br>要切换更多的版本之前，需要先安装一下版本:</p><p>安装一下<code>nightly</code>版本：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup toolchain install nightly</span><br></pre></td></tr></table></figure><p><img src="/posts/db0a7b21/%E5%AE%89%E8%A3%85nightly%E7%89%88%E6%9C%AC.jpg" alt="安装nightly版本"></p><p>更多参考: <a href="https://rust-lang.github.io/rustup/concepts/channels.html">https://rust-lang.github.io/rustup/concepts/channels.html</a></p><p>看看我装了几个版本：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup toolchain list</span><br></pre></td></tr></table></figure><p><img src="/posts/db0a7b21/%E7%89%88%E6%9C%AC%E5%88%97%E8%A1%A8.jpg" alt="版本列表"></p><h3 id="组件-component"><a href="#组件-component" class="headerlink" title="组件 component"></a>组件 component</h3><p>每个工具链都有几个“组件”，其中一些是必需的（如 rustc），一些是可选的。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup toolchain install nightly --component rust-docs</span><br></pre></td></tr></table></figure><p>可以使用以下rustup component命令将组件添加到已安装的工具链中：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup component add rust-docs</span><br></pre></td></tr></table></figure><p>我在配置rust-vim时，用到了下面几种组件：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup component add rls rust-analysis rust-src</span><br></pre></td></tr></table></figure><p>更多参考：<a href="https://rust-lang.github.io/rustup/concepts/components.html">https://rust-lang.github.io/rustup/concepts/components.html</a></p><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://rust-lang.github.io/rustup/index.html">https://rust-lang.github.io/rustup/index.html</a><br><a href="https://rustup.rs/">https://rustup.rs/</a><br><a href="https://github.com/rust-lang/rustup">https://github.com/rust-lang/rustup</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;rustup-工具链管理&quot;&gt;&lt;a href=&quot;#rustup-工具链管理&quot; class=&quot;headerlink&quot; title=&quot;rustup 工具链管理&quot;&gt;&lt;/a&gt;rustup 工具链管理&lt;/h2&gt;&lt;p&gt;这个可能很少人在意，一般只有在安装rust的时候通过脚本安装
-      
-    
-    </summary>
-    
-      <category term="rust" scheme="https://liukai.net/categories/rust/"/>
-    
-      <category term="vim" scheme="https://liukai.net/categories/vim/"/>
-    
-    
-      <category term="rust" scheme="https://liukai.net/tags/rust/"/>
-    
-      <category term="rustup" scheme="https://liukai.net/tags/rustup/"/>
     
   </entry>
   
