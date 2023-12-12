@@ -97,9 +97,9 @@
           
           <category> eth </category>
           
-          <category> 4844 </category>
-          
           <category> eip </category>
+          
+          <category> 4844 </category>
           
           <category> eth </category>
           
@@ -599,7 +599,7 @@
       <link href="posts/95f16259.html"/>
       <url>posts/95f16259.html</url>
       
-        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;">&#117;&#115;&#x65;&#114;&#x6e;&#x61;&#109;&#101;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>需求很简单，通过脚本自动登陆跳板机。<br>因为最近换的是mac M2，然后碰到了一堆问题。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从<strong>intel</strong>芯片换到<strong>m2</strong>出现很多问题。<br>首先mac m2 没有python2，默认是python3，所以脚本的命令要调整成python3相关的。<br>然后是 ssh 登陆，原来正常可以登陆方式也有问题，默认的ssh密钥失效，需要替换成新的密钥。<br>就导致原来的免密登陆也失效了，添加了公钥，依然需要输密码，下面的脚本，有一段是补偿输入密码的操作，<br>如果不需要，可以删了输密码的部份。</p><h2 id="自动登陆脚本"><a href="#自动登陆脚本" class="headerlink" title="自动登陆脚本"></a>自动登陆脚本</h2><p>需要准备两个脚本：</p><ol><li>login.sh, shell 脚本</li><li>jump.python, python3脚本</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">expect -c &quot;</span><br><span class="line">set pwd you_pass_word</span><br><span class="line">spawn ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa test@10.10.10.10</span><br><span class="line">set timeout 2</span><br><span class="line">expect &quot;*assword:*&quot;</span><br><span class="line">send \&quot;\$pwd\r\&quot;</span><br><span class="line"></span><br><span class="line">set timeout 2</span><br><span class="line">expect \&quot;\[MFA auth\]:\&quot;</span><br><span class="line">set password \&quot;`python3 ~/.ssh/jump.python`\&quot;</span><br><span class="line">send \&quot;\$password\r\&quot;</span><br><span class="line">interact</span><br><span class="line">&quot;</span><br></pre></td></tr></table></figure><h3 id="解释上面的脚本"><a href="#解释上面的脚本" class="headerlink" title="解释上面的脚本"></a>解释上面的脚本</h3><p>说明一下，新的 ssh 需要输入：</p><blockquote><p>ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa</p></blockquote><p>原来 ssh 只需要：</p><blockquote><p>ssh <a href="mailto:&#x75;&#x73;&#x65;&#114;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#x30;&#x2e;&#x31;&#48;&#46;&#49;&#48;">&#x75;&#x73;&#x65;&#114;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#x31;&#x30;&#46;&#49;&#x30;&#x2e;&#x31;&#48;&#46;&#49;&#48;</a> 就可以登陆了</p></blockquote><h2 id="python3-部分"><a href="#python3-部分" class="headerlink" title="python3 部分"></a>python3 部分</h2><p>python3 脚本提取google验证码。</p><p><code>my_secret</code> 是谷歌的密钥。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> onetimepass <span class="keyword">as</span> otp</span><br><span class="line"></span><br><span class="line">my_secret = <span class="string">&#x27;XXXXXXXXXXXXX&#x27;</span></span><br><span class="line">my_token = otp.get_totp(my_secret)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">&quot;%06d&quot;</span> % my_token)</span><br></pre></td></tr></table></figure><h2 id="iterm2-配置"><a href="#iterm2-配置" class="headerlink" title="iterm2 配置"></a>iterm2 配置</h2><p>在 Open Profiles 中添加一下自动登陆脚本：</p><p><img src="/posts/95f16259/iterm2%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E9%85%8D%E7%BD%AE.jpg" alt="iterm2自动登陆配置.jpg"></p><p>login shell 或 Command 都可以，用<code>sh</code>:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>不要使用 <code>expect</code> 开头：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect ~/.ssh/jump.sh</span><br></pre></td></tr></table></figure><p>这样就可以登陆成功了，即不需要输密码，也不需要验证码。<br>需要注意的是，如果需要使用<code>lrzsz</code> 这样的功能的话，不可以使用<code>expect</code>执行脚本，会失败，只能使用<code>sh</code>进行登陆。</p>]]></content>
       
       
       <categories>
@@ -608,9 +608,9 @@
           
           <category> mac </category>
           
-          <category> iterm2 </category>
-          
           <category> shell </category>
+          
+          <category> iterm2 </category>
           
       </categories>
       
@@ -623,11 +623,11 @@
             
             <tag> mac </tag>
             
-            <tag> iterm2 </tag>
-            
             <tag> m2 </tag>
             
             <tag> python3 </tag>
+            
+            <tag> iterm2 </tag>
             
             <tag> 跳板机 </tag>
             
@@ -2038,9 +2038,9 @@
             
             <tag> go </tag>
             
-            <tag> 关键字 </tag>
-            
             <tag> import </tag>
+            
+            <tag> 关键字 </tag>
             
         </tags>
       
@@ -2065,13 +2065,13 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> hexo </tag>
             
             <tag> shell </tag>
             
             <tag> 脚本 </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -2577,11 +2577,11 @@
             
             <tag> java </tag>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
             <tag> FullGC </tag>
             
@@ -2612,11 +2612,11 @@
       
         <tags>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
         </tags>
       
@@ -3157,13 +3157,13 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
             
-            <tag> defer </tag>
+            <tag> golang </tag>
             
             <tag> 关键字 </tag>
+            
+            <tag> defer </tag>
             
         </tags>
       
@@ -3435,9 +3435,9 @@
       
         <tags>
             
-            <tag> golang </tag>
-            
             <tag> go </tag>
+            
+            <tag> golang </tag>
             
             <tag> 安装 </tag>
             
@@ -3536,11 +3536,11 @@
             
             <tag> java </tag>
             
+            <tag> gc </tag>
+            
             <tag> jvm </tag>
             
             <tag> cms </tag>
-            
-            <tag> gc </tag>
             
             <tag> 调优 </tag>
             
@@ -4761,9 +4761,9 @@
             
             <tag> mac </tag>
             
-            <tag> uniux </tag>
-            
             <tag> iterm2 </tag>
+            
+            <tag> uniux </tag>
             
         </tags>
       
@@ -5029,11 +5029,11 @@
             
             <tag> java </tag>
             
+            <tag> 日志 </tag>
+            
             <tag> srping boot </tag>
             
             <tag> aop </tag>
-            
-            <tag> 日志 </tag>
             
             <tag> 切面 </tag>
             
@@ -5443,9 +5443,9 @@
             
             <tag> spring boot </tag>
             
-            <tag> 报错 </tag>
-            
             <tag> 异常 </tag>
+            
+            <tag> 报错 </tag>
             
         </tags>
       
@@ -5633,9 +5633,9 @@
       
         <tags>
             
-            <tag> git </tag>
-            
             <tag> shell </tag>
+            
+            <tag> git </tag>
             
         </tags>
       
@@ -5813,6 +5813,18 @@
       
         <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在使用<code>springboot</code>时，发现有个同事报了一个错：</p><blockquote><p>getWriter() has already been called for this response<br>错误提示也比较明显，是被调用过了。</p></blockquote><p>出错的部分代码如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">//有问题的部份</span></span><br><span class="line">  <span class="comment">//PrintWriter out = null;</span></span><br><span class="line">  <span class="comment">//out = response.getWriter();</span></span><br><span class="line">  <span class="comment">//String json = new ObjectMapper().writeValueAsString(map);</span></span><br><span class="line">  <span class="comment">//out.write(json);</span></span><br><span class="line">  <span class="comment">//out.flush();</span></span><br><span class="line">  <span class="comment">//out.close();</span></span><br><span class="line">  </span><br><span class="line">  outputStream = response.getOutputStream();</span><br><span class="line">  String json = <span class="keyword">new</span> ObjectMapper().writeValueAsString(map);</span><br><span class="line">  outputStream.write(json.getBytes());</span><br><span class="line">  outputStream.flush();</span><br><span class="line">  outputStream.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">  LOGGER.error(e.getMessage(), e);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (outputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      outputStream.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>注释部份为有问题的写法。</p><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p><code>response.getWriter()</code> 是流的形式，只能被调用一次，老问题了，代码的下面部分写法解决这个问题。</p>]]></content>
       
+      
+      <categories>
+          
+          <category> java </category>
+          
+          <category> spring </category>
+          
+          <category> spring </category>
+          
+          <category> springboot </category>
+          
+      </categories>
       
       
         <tags>
@@ -6769,11 +6781,11 @@
             
             <tag> java </tag>
             
-            <tag> 异常 </tag>
-            
             <tag> exception </tag>
             
             <tag> error </tag>
+            
+            <tag> 异常 </tag>
             
             <tag> 错误 </tag>
             
@@ -7201,7 +7213,7 @@
       <link href="posts/48481.html"/>
       <url>posts/48481.html</url>
       
-        <content type="html"><![CDATA[ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description: 一维数组去重</span></span><br><span class="line"><span class="comment"> * Author liu kai</span></span><br><span class="line"><span class="comment"> * Data 2016/7/25 14:02</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">(<span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;        <span class="comment">//标记去重的次数</span></span><br><span class="line">    <span class="keyword">int</span> newLen = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] newArray;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] == -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (arr[i] == arr[j]) &#123;</span><br><span class="line">                    arr[j] = -<span class="number">1</span>;</span><br><span class="line">                    len++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//不使用 list 的情况下，用数组重新封装结果</span></span><br><span class="line">    newArray = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length - len];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] != -<span class="number">1</span>) &#123;</span><br><span class="line">            newArray[newLen] = arr[i];</span><br><span class="line">            newLen++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    printResult (newArray);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printResult</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        System.out.println(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">7</span>&#125;;</span><br><span class="line">    test(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>这段代码的思路是使用两个循环来对数组进行去重操作，并将结果重新封装到一个新的数组中。<br>整体思路是通过两个循环遍历数组，将重复出现的元素标记为 -1，然后根据标记的情况创建一个新的数组来存储去重后的结果。</p><p>代码的时间复杂度为 <code>O(n^2)</code>，其中 n 是输入数组的长度。<br>外层循环从 0 到 n-2 进行迭代，内层循环从外层循环的下一个元素开始迭代到 n-1。因此，内层循环的迭代次数会逐渐减少。<br>在最坏情况下，即数组中没有重复元素时，内层循环将完全执行 n-1 + n-2 + ... + 1 = (n-1)n/2 次。这是一个等差数列求和公式。<br>然而，在内层循环中，当发现重复元素时，会将重复元素标记为 -1，并增加 len 计数器。内层循环在后续迭代中会跳过被标记为 -1 的元素。<br>因此，当数组中有 k 个重复元素时，内层循环的迭代次数将会减少 k 次。<br>最后，创建新数组的循环将迭代 n 次，其中 n 是输入数组的长度。</p><p>因此，总体来说，该代码的时间复杂度为 O(n^2)。在最坏情况下，即数组中没有重复元素时，时间复杂度为 O(n^2)。在最好情况下，即数组中所有元素都是重复的，时间复杂度为 O(n)。平均情况下，时间复杂度仍然是 O(n^2)。</p><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">(<span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;        <span class="comment">//标记去重的次数</span></span><br><span class="line">    <span class="keyword">int</span> newLen = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] newArray;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] == -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (arr[i] == arr[j]) &#123;</span><br><span class="line">                    arr[j] = -<span class="number">1</span>;</span><br><span class="line">                    len++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//不使用 list 的情况下，用数组重新封装结果</span></span><br><span class="line">    newArray = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length - len];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] != -<span class="number">1</span>) &#123;</span><br><span class="line">            newArray[newLen] = arr[i];</span><br><span class="line">            newLen++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    printResult (newArray);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printResult</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        System.out.println(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">7</span>&#125;;</span><br><span class="line">    test(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -7248,9 +7260,9 @@
             
             <tag> java </tag>
             
-            <tag> jvm </tag>
-            
             <tag> gc </tag>
+            
+            <tag> jvm </tag>
             
         </tags>
       
@@ -7506,9 +7518,9 @@
       
         <tags>
             
-            <tag> 指针 </tag>
-            
             <tag> c </tag>
+            
+            <tag> 指针 </tag>
             
         </tags>
       
@@ -8369,9 +8381,9 @@
             
             <tag> java </tag>
             
-            <tag> maven </tag>
-            
             <tag> 项目构建 </tag>
+            
+            <tag> maven </tag>
             
             <tag> 项目依赖 </tag>
             
@@ -8400,9 +8412,9 @@
       
         <tags>
             
-            <tag> maven </tag>
-            
             <tag> 项目构建 </tag>
+            
+            <tag> maven </tag>
             
         </tags>
       
@@ -8429,9 +8441,9 @@
       
         <tags>
             
-            <tag> maven </tag>
-            
             <tag> 项目构建 </tag>
+            
+            <tag> maven </tag>
             
             <tag> 项目模型 </tag>
             
@@ -8460,9 +8472,9 @@
       
         <tags>
             
-            <tag> maven </tag>
-            
             <tag> 项目构建 </tag>
+            
+            <tag> maven </tag>
             
         </tags>
       
@@ -8816,9 +8828,9 @@
       
         <tags>
             
-            <tag> 数组 </tag>
-            
             <tag> 计算机原理 </tag>
+            
+            <tag> 数组 </tag>
             
         </tags>
       
@@ -9068,8 +9080,6 @@
             
             <tag> 原理 </tag>
             
-            <tag> 计算机原理 </tag>
-            
             <tag> 原码 </tag>
             
             <tag> 补码 </tag>
@@ -9079,6 +9089,8 @@
             <tag> 二进制 </tag>
             
             <tag> 基础 </tag>
+            
+            <tag> 计算机原理 </tag>
             
             <tag> 编码 </tag>
             
@@ -9105,11 +9117,11 @@
       
         <tags>
             
-            <tag> 对象 </tag>
-            
             <tag> js </tag>
             
             <tag> javascript </tag>
+            
+            <tag> 对象 </tag>
             
         </tags>
       
@@ -9700,9 +9712,9 @@
             
             <tag> java </tag>
             
-            <tag> jdk </tag>
-            
             <tag> mac </tag>
+            
+            <tag> jdk </tag>
             
         </tags>
       
